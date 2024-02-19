@@ -21,10 +21,10 @@ public class ProductEntity {
     private String productName;
     @ManyToOne
     @JoinColumn(name = "id_input_node")
-    private InputNodeEntity inputNodeEntity;
+    private InputNodeEntity inputNode;
     @ManyToOne
     @JoinColumn(name = "id_reducer")
-    private ReducerEntity reducerEntity;
+    private ReducerEntity reducer;
     @Column(name = "shaft_dimension")
     private Double shaftDimension;
     @Column(name = "flange_diameter")

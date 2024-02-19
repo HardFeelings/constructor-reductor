@@ -21,7 +21,7 @@ public class GearboxVersionEntity {
     private String gearboxVersionName;
     @ManyToOne
     @JoinColumn(name = "id_reducer_type")
-    private ReducerTypeEntity reducerTypeEntity;
+    private ReducerTypeEntity reducerType;
     @Column(name = "image_path")
     private String imagePath;
 

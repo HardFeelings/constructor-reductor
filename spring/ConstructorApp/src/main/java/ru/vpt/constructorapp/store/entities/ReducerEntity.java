@@ -21,10 +21,10 @@ public class ReducerEntity {
     private Double gearRatio;
     @ManyToOne
     @JoinColumn(name = "id_gearbox_version")
-    private GearboxVersionEntity gearboxVersionEntity;
+    private GearboxVersionEntity gearboxVersion;
     @ManyToOne
     @JoinColumn(name = "id_shaft_version")
-    private ShaftVersionEntity shaftVersionEntity;
+    private ShaftVersionEntity shaftVersion;
     @Column(name = "image_path")
     private String imagePath;
 
