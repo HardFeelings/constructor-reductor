@@ -7,4 +7,6 @@ import java.util.List;
 public interface GearboxVersionService {
     List<GearboxVersionDto> getAllGearboxVersion();
     GearboxVersionDto getById(Long id);
+
+    List<GearboxVersionDto> getByReducerTypeId(Long id);
 }

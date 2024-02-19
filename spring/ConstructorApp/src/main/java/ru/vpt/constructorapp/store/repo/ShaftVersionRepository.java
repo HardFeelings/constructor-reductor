@@ -11,4 +11,5 @@ import java.util.Optional;
 public interface ShaftVersionRepository extends CrudRepository<ShaftVersionEntity,Long> {
     List<ShaftVersionEntity> findAll();
     Optional<ShaftVersionEntity> findById(Long id);
+    List<ShaftVersionEntity> findShaftVersionEntitiesByReducerType_IdReducerType(Long id);
 }

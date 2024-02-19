@@ -11,4 +11,5 @@ import java.util.Optional;
 public interface GearboxVersionRepository extends CrudRepository<GearboxVersionEntity,Long> {
     List<GearboxVersionEntity> findAll();
     Optional<GearboxVersionEntity> findById(Long id);
+    List<GearboxVersionEntity> findGearboxVersionEntitiesByReducerType_IdReducerType(Long id);
 }

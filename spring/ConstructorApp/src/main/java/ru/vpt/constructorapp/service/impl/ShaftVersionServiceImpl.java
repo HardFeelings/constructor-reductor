@@ -33,4 +33,13 @@ public class ShaftVersionServiceImpl implements ShaftVersionService {
             return null;
         return shaftVersionMapper.toDTO(entity);
     }
+
+    @Override
+    public List<ShaftVersionDto> getByReducerTypeId(Long id) {
+        List<ShaftVersionDto> shaftVersionDtos = new ArrayList<>();
+        shaftVersionRepository.findShaftVersionEntitiesByReducerType_IdReducerType(id).forEach(item -> {
+            shaftVersionDtos.add(shaftVersionMapper.toDTO(item));
+        });
+        return shaftVersionDtos;
+    }
 }

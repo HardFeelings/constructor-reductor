@@ -16,4 +16,7 @@ public interface GearboxVersionApi {
 
     @GetMapping("/{id}")
     ResponseEntity<ResponseDto<GearboxVersionDto>> getById(@PathVariable Long id);
+
+    @GetMapping("/byReducerTypeId/{id}")
+    ResponseEntity<ResponseDto<List<GearboxVersionDto>>> getByReducerTypeId(@PathVariable Long id);
 }

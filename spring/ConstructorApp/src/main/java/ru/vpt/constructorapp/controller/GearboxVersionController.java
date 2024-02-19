@@ -23,4 +23,10 @@ public class GearboxVersionController extends AbstractResponseController impleme
     public ResponseEntity<ResponseDto<GearboxVersionDto>> getById(Long id) {
         return response(gearboxVersionService.getById(id));
     }
+
+    @Override
+    public ResponseEntity<ResponseDto<List<GearboxVersionDto>>> getByReducerTypeId(Long id) {
+        return response(gearboxVersionService.getByReducerTypeId(id));
+    }
+
 }

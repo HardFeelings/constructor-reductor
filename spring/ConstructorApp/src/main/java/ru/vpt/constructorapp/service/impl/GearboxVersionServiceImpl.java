@@ -32,4 +32,13 @@ public class GearboxVersionServiceImpl implements GearboxVersionService {
             return null;
         return gearboxVersionMapper.toDTO(entity);
     }
+
+    @Override
+    public List<GearboxVersionDto> getByReducerTypeId(Long id) {
+        List<GearboxVersionDto> gearboxVersionDtos = new ArrayList<>();
+        gearboxVersionRepository.findGearboxVersionEntitiesByReducerType_IdReducerType(id).forEach(item -> {
+            gearboxVersionDtos.add(gearboxVersionMapper.toDTO(item));
+        });
+        return gearboxVersionDtos;
+    }
 }

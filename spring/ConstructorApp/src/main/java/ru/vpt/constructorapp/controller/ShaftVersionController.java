@@ -23,4 +23,11 @@ public class ShaftVersionController extends AbstractResponseController implement
     public ResponseEntity<ResponseDto<ShaftVersionDto>> getById(Long id) {
         return response(shaftVersionService.getById(id));
     }
+
+    @Override
+    public ResponseEntity<ResponseDto<List<ShaftVersionDto>>> getByReducerTypeId(Long id) {
+        return response(shaftVersionService.getByReducerTypeId(id));
+    }
+
+
 }

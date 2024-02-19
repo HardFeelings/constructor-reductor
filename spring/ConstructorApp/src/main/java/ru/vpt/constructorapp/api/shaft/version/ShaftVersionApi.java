@@ -16,4 +16,7 @@ public interface ShaftVersionApi {
 
     @GetMapping("/{id}")
     ResponseEntity<ResponseDto<ShaftVersionDto>> getById(@PathVariable Long id);
+
+    @GetMapping("/byReducerTypeId/{id}")
+    ResponseEntity<ResponseDto<List<ShaftVersionDto>>> getByReducerTypeId(@PathVariable Long id);
 }
