@@ -9,7 +9,7 @@ import ru.vpt.constructorapp.api.util.ResponseDto;
 
 import java.util.List;
 
-@RequestMapping("api/v1/products")
+@RequestMapping("api/v1/product")
 public interface ProductApi {
     @GetMapping
     ResponseEntity<ResponseDto<List<ProductDto>>> getAllProduct();
