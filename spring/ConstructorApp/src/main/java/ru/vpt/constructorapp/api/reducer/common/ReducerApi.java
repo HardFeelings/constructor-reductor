@@ -12,8 +12,8 @@ import java.util.List;
 @RequestMapping("api/v1/reducer")
 public interface ReducerApi {
     @GetMapping
-    ResponseEntity<ResponseDto<List<ReducerDto>>> getAllReducer();
+    ResponseEntity<ResponseDto<List<ReducerDto>>> getAllReducerAdapterTypes();
 
     @GetMapping("/{id}")
-    ResponseEntity<ResponseDto<ReducerDto>> getById(@PathVariable Long id);
+    ResponseEntity<ResponseDto<ReducerDto>> getById(@PathVariable("id") Long id);
 }
