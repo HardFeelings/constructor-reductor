@@ -9,7 +9,7 @@ import ru.vpt.constructorapp.store.entities.reducer.ReducerInputTypeEntity;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-03-31T01:05:19+0300",
+    date = "2024-04-17T13:11:29+0300",
     comments = "version: 1.5.3.Final, compiler: javac, environment: Java 21.0.1 (Oracle Corporation)"
 )
 @Component

@@ -16,4 +16,7 @@ public interface ReducerSizeApi {
 
     @GetMapping("/{id}")
     ResponseEntity<ResponseDto<ReducerSizeDto>> getById(@PathVariable("id") Long id);
+
+    @GetMapping("/byReducerTypeId/{id}")
+    ResponseEntity<ResponseDto<List<ReducerSizeDto>>> getByReducerTypeId(@PathVariable("id") Long id);
 }

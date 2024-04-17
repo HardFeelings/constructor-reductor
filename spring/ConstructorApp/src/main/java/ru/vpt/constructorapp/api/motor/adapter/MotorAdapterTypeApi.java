@@ -16,4 +16,7 @@ public interface MotorAdapterTypeApi {
 
     @GetMapping("/{id}")
     ResponseEntity<ResponseDto<MotorAdapterTypeDto>> getById(@PathVariable("id") Long id);
+
+    @GetMapping("/byMotorTypeId/{id}")
+    ResponseEntity<ResponseDto<List<MotorAdapterTypeDto>>> getByMotorTypeId(@PathVariable("id") Long id);
 }

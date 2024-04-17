@@ -16,4 +16,7 @@ public interface ProductOptionApi {
 
     @GetMapping("/{id}")
     ResponseEntity<ResponseDto<ProductOptionDto>> getById(@PathVariable("id") Long id);
+
+    @GetMapping("/byProductTypeId/{id}")
+    ResponseEntity<ResponseDto<List<ProductOptionDto>>> getByProductTypeId(@PathVariable("id") Long id);
 }
