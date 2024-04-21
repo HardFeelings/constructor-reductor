@@ -5,3 +5,32 @@
 select {
   margin-left: 20px;
 }
+
+.product {
+  text-align: center;
+  padding: 10px;
+  border: 1px solid;
+  border-radius: 10px;
+}
+
+.product_block {
+  justify-content: center;
+  display: flex
+}
+
+.product_choise {
+  width: 33%;
+  margin: 10px;
+  height: 40pt;
+  background: none;
+
+  transition: border 0.1s ease;
+  transition: box-shadow 0.1s ease;
+  border: 1px solid;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.product_choise:hover {
+  box-shadow: 3px 5px 5px #333;
+}
