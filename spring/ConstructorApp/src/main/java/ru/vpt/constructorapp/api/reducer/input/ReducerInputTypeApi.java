@@ -1,15 +1,13 @@
 package ru.vpt.constructorapp.api.reducer.input;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import ru.vpt.constructorapp.api.reducer.input.dto.ReducerInputTypeDto;
 import ru.vpt.constructorapp.api.util.ResponseDto;
 
 import java.util.List;
 
-@RequestMapping("api/v1/reducerInputType")
+@RequestMapping("/security/reducerInputType")
 public interface ReducerInputTypeApi {
     @GetMapping
     ResponseEntity<ResponseDto<List<ReducerInputTypeDto>>> getAllReducerInputTypes();
@@ -19,4 +17,10 @@ public interface ReducerInputTypeApi {
 
     @GetMapping("/byReducerTypeId/{id}")
     ResponseEntity<ResponseDto<List<ReducerInputTypeDto>>> getByReducerTypeId(@PathVariable("id") Long id);
+
+    @PostMapping
+    ResponseEntity<ResponseDto<ReducerInputTypeDto>> save(@RequestBody ReducerInputTypeDto reducerInputTypeDto);
+
+    @DeleteMapping("/{id}")
+    ResponseEntity<ResponseDto<Boolean>> delete(@PathVariable("id") Long id);
 }
