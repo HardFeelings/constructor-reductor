@@ -56,7 +56,7 @@ public class ProductTypeServiceImpl implements ProductTypeService {
   @Override
   public ProductTypeEntity findById(Long id) {
     if (Objects.isNull(id)) {
-      throw new RuntimeException("Невозможно получить тип мотора: id равен null");
+      throw new RuntimeException("Невозможно получить тип продукта: id равен null");
     }
     return productTypeRepo.findById(id).orElse(null);
   }
