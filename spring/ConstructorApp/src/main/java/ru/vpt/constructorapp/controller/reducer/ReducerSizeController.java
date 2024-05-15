@@ -31,4 +31,14 @@ public class ReducerSizeController extends AbstractController implements Reducer
     public ResponseEntity<ResponseDto<List<ReducerSizeDto>>> getByReducerTypeId(Long id) {
         return response(reducerSizeService.getAllReducerSizesByReducerTypeId(id));
     }
+
+    @Override
+    public ResponseEntity<ResponseDto<ReducerSizeDto>> save(ReducerSizeDto reducerSizeDto) {
+        return response(reducerSizeService.saveReducerSize(reducerSizeDto));
+    }
+
+    @Override
+    public ResponseEntity<ResponseDto<Boolean>> delete(Long id) {
+        return response(reducerSizeService.deleteReducerSize(id));
+    }
 }
