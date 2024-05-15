@@ -26,4 +26,14 @@ public class MotorTypeController extends AbstractController implements MotorType
     public ResponseEntity<ResponseDto<MotorTypeDto>> getById(Long id) {
         return response(motorTypeService.getMotorTypeById(id));
     }
+
+    @Override
+    public ResponseEntity<ResponseDto<MotorTypeDto>> save(MotorTypeDto motorTypeDto) {
+        return response(motorTypeService.saveMotorType(motorTypeDto));
+    }
+
+    @Override
+    public ResponseEntity<ResponseDto<Boolean>> delete(Long id) {
+        return response(motorTypeService.deleteMotorType(id));
+    }
 }

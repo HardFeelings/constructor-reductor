@@ -8,4 +8,6 @@ public interface MotorAdapterTypeService {
     List<MotorAdapterTypeDto> getAllMotorAdapterTypes();
     MotorAdapterTypeDto getMotorAdapterTypeById(Long id);
     List<MotorAdapterTypeDto> getAllMotorAdapterTypesByMotorTypesId(Long id);
+    MotorAdapterTypeDto saveMotorAdapterType(MotorAdapterTypeDto motorAdapterTypeDto);
+    Boolean deleteMotorAdapterType(Long id);
 }
