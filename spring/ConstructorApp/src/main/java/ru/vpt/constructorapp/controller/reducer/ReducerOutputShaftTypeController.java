@@ -30,4 +30,14 @@ public class ReducerOutputShaftTypeController extends AbstractController impleme
     public ResponseEntity<ResponseDto<List<ReducerOutputShaftTypeDto>>> getByReducerTypeId(Long id) {
         return response(reducerOutputShaftTypeService.getAllReducerOutputShaftTypesByReducerTypeId(id));
     }
+
+    @Override
+    public ResponseEntity<ResponseDto<ReducerOutputShaftTypeDto>> save(ReducerOutputShaftTypeDto reducerOutputShaftTypeDto) {
+        return response(reducerOutputShaftTypeService.saveReducerOutputShaftTypes(reducerOutputShaftTypeDto));
+    }
+
+    @Override
+    public ResponseEntity<ResponseDto<Boolean>> delete(Long id) {
+        return response(reducerOutputShaftTypeService.deleteReducerOutputShaftTypes(id));
+    }
 }
