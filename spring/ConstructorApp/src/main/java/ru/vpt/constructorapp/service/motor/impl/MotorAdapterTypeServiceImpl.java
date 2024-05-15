@@ -67,4 +67,12 @@ public class MotorAdapterTypeServiceImpl implements MotorAdapterTypeService {
         motorAdapterTypeRepo.deleteById(id);
         return true;
     }
+
+    @Override
+    public MotorAdapterTypeEntity findById(Long id) {
+        if (Objects.isNull(id)) {
+            throw new RuntimeException("Невозможно получить адаптер типа мотора: id равен null");
+        }
+        return motorAdapterTypeRepo.findById(id).orElse(null);
+    }
 }
