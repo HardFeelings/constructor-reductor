@@ -20,7 +20,7 @@ public class ReducerSizeServiceImpl implements ReducerSizeService {
 
     private final ReducerSizeMapper reducerSizeMapper;
     private final ReducerSizeRepo reducerSizeRepo;
-    private final ReducerTypeService reducerTypeService;
+    private final ReducerTypeServiceImpl reducerTypeService;
 
     @Override
     public List<ReducerSizeDto> getAllReducerSizes() {

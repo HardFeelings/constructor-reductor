@@ -20,7 +20,7 @@ public class ReducerOutputShaftTypeServiceImpl implements ReducerOutputShaftType
 
     private final ReducerOutputShaftTypeMapper reducerOutputShaftTypeMapper;
     private final ReducerOutputShaftTypeRepo reducerOutputShaftTypeRepo;
-    private final ReducerTypeService reducerTypeService;
+    private final ReducerTypeServiceImpl reducerTypeService;
 
     @Override
     public List<ReducerOutputShaftTypeDto> getAllReducerOutputShaftTypes() {

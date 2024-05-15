@@ -1,15 +1,13 @@
 package ru.vpt.constructorapp.api.reducer.installation;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import ru.vpt.constructorapp.api.reducer.installation.dto.ReducerInstallationTypeDto;
 import ru.vpt.constructorapp.api.util.ResponseDto;
 
 import java.util.List;
 
-@RequestMapping("api/v1/reducerInstallationType")
+@RequestMapping("/security/reducerInstallationType")
 public interface ReducerInstallationTypeApi {
     @GetMapping
     ResponseEntity<ResponseDto<List<ReducerInstallationTypeDto>>> getAllReducerInstallationTypes();
@@ -19,4 +17,10 @@ public interface ReducerInstallationTypeApi {
 
     @GetMapping("/byReducerTypeId/{id}")
     ResponseEntity<ResponseDto<List<ReducerInstallationTypeDto>>> getByReducerTypeId(@PathVariable("id") Long id);
+
+    @PostMapping
+    ResponseEntity<ResponseDto<ReducerInstallationTypeDto>> save(@RequestBody ReducerInstallationTypeDto reducerInstallationTypeDto);
+
+    @DeleteMapping("/{id}")
+    ResponseEntity<ResponseDto<Boolean>> delete(@PathVariable("id") Long id);
 }
