@@ -31,4 +31,14 @@ public class ProductOptionController extends AbstractController implements Produ
     public ResponseEntity<ResponseDto<List<ProductOptionDto>>> getByProductTypeId(Long id) {
         return response(productOptionService.getAllProductOptionsByProductTypeId(id));
     }
+
+  @Override
+  public ResponseEntity<ResponseDto<ProductOptionDto>> save(ProductOptionDto productOptionDto) {
+    return response(productOptionService.saveProductOption(productOptionDto));
+  }
+
+  @Override
+  public ResponseEntity<ResponseDto<Boolean>> delete(Long id) {
+    return response(productOptionService.deleteProductOption(id));
+  }
 }

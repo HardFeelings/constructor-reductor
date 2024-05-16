@@ -10,6 +10,8 @@ import ru.vpt.constructorapp.store.repo.reducer.ReducerMountingRepo;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -30,5 +32,34 @@ public class ReducerMountingServiceImpl implements ReducerMountingService {
     public ReducerMountingDto getReducerMountingById(Long id) {
         ReducerMountingEntity entity = reducerMountingRepo.findById(id).get();
         return reducerMountingMapper.toDTO(entity);
+    }
+
+    @Override
+    public ReducerMountingDto saveReducerMounting(ReducerMountingDto dto) {
+        if (Objects.isNull(dto)) {
+            throw new RuntimeException("Невозможно сохранить крепление редуктора: dto равен null");
+        }
+        ReducerMountingEntity entity = reducerMountingMapper.toEntity(dto);
+        return reducerMountingMapper.toDTO(reducerMountingRepo.save(entity));
+    }
+
+    @Override
+    public Boolean deleteReducerMounting(Long id) {
+        if (Objects.isNull(id)) {
+            throw new RuntimeException("Невозможно удалить крепление редуктора: id равен null");
+        }
+        if (!reducerMountingRepo.existsById(id)) {
+            throw new RuntimeException("Невозможно удалить крепление редуктора: не найден объект с id: " + id);
+        }
+        reducerMountingRepo.deleteById(id);
+        return true;
+    }
+
+    @Override
+    public Optional<ReducerMountingEntity> findById(Long id) {
+        if (Objects.isNull(id)) {
+            throw new RuntimeException("Невозможно получить крепление редуктора: id равен null");
+        }
+        return reducerMountingRepo.findById(id);
     }
 }

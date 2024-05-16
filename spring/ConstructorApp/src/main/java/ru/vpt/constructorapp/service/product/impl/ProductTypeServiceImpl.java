@@ -10,6 +10,8 @@ import ru.vpt.constructorapp.store.repo.product.ProductTypeRepo;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -30,4 +32,33 @@ public class ProductTypeServiceImpl implements ProductTypeService {
         ProductTypeEntity entity = productTypeRepo.findById(id).get();
         return productTypeMapper.toDTO(entity);
     }
+
+  @Override
+  public ProductTypeDto saveProductType(ProductTypeDto productTypeDto) {
+    if (Objects.isNull(productTypeDto)) {
+      throw new RuntimeException("Невозможно сохранить тип продукта: dto равен null");
+    }
+    ProductTypeEntity entity = productTypeMapper.toEntity(productTypeDto);
+    return productTypeMapper.toDTO(productTypeRepo.save(entity));
+  }
+
+  @Override
+  public Boolean deleteProductType(Long id) {
+    if (Objects.isNull(id)) {
+      throw new RuntimeException("Невозможно удалить тип продукта: id равен null");
+    }
+    if (!productTypeRepo.existsById(id)) {
+      throw new RuntimeException("Невозможно удалить тип продукта: не найден объект с id: " + id);
+    }
+    productTypeRepo.deleteById(id);
+    return true;
+  }
+
+  @Override
+  public Optional<ProductTypeEntity> findById(Long id) {
+    if (Objects.isNull(id)) {
+      throw new RuntimeException("Невозможно получить тип продукта: id равен null");
+    }
+    return productTypeRepo.findById(id);
+  }
 }

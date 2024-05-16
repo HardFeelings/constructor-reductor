@@ -31,4 +31,14 @@ public class ReducerInputTypeController extends AbstractController implements Re
     public ResponseEntity<ResponseDto<List<ReducerInputTypeDto>>> getByReducerTypeId(Long id) {
         return response(reducerInputTypeService.getAllReducerInputTypesByReducerTypeId(id));
     }
+
+    @Override
+    public ResponseEntity<ResponseDto<ReducerInputTypeDto>> save(ReducerInputTypeDto reducerInputTypeDto) {
+        return response(reducerInputTypeService.saveReducerInputType(reducerInputTypeDto));
+    }
+
+    @Override
+    public ResponseEntity<ResponseDto<Boolean>> delete(Long id) {
+        return response(reducerInputTypeService.deleteReducerInputType(id));
+    }
 }

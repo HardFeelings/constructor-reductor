@@ -6,5 +6,10 @@ import java.util.List;
 
 public interface ProductService {
     List<ProductDto> getAllProducts();
+
     ProductDto getProductById(Long id);
+
+    ProductDto saveProduct(ProductDto productDto);
+
+    Boolean deleteProduct(Long id);
 }

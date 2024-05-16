@@ -1,15 +1,13 @@
 package ru.vpt.constructorapp.api.reducer.size;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import ru.vpt.constructorapp.api.reducer.size.dto.ReducerSizeDto;
 import ru.vpt.constructorapp.api.util.ResponseDto;
 
 import java.util.List;
 
-@RequestMapping("api/v1/reducerSize")
+@RequestMapping("/security/reducerSize")
 public interface ReducerSizeApi {
     @GetMapping
     ResponseEntity<ResponseDto<List<ReducerSizeDto>>> getAllReducerSizes();
@@ -19,4 +17,10 @@ public interface ReducerSizeApi {
 
     @GetMapping("/byReducerTypeId/{id}")
     ResponseEntity<ResponseDto<List<ReducerSizeDto>>> getByReducerTypeId(@PathVariable("id") Long id);
+
+    @PostMapping
+    ResponseEntity<ResponseDto<ReducerSizeDto>> save(@RequestBody ReducerSizeDto reducerSizeDto);
+
+    @DeleteMapping("/{id}")
+    ResponseEntity<ResponseDto<Boolean>> delete(@PathVariable("id") Long id);
 }

@@ -31,4 +31,14 @@ public class MotorAdapterTypeController extends AbstractController implements Mo
     public ResponseEntity<ResponseDto<List<MotorAdapterTypeDto>>> getByMotorTypeId(Long id) {
         return response(motorAdapterTypeService.getAllMotorAdapterTypesByMotorTypesId(id));
     }
+
+    @Override
+    public ResponseEntity<ResponseDto<MotorAdapterTypeDto>> save(MotorAdapterTypeDto motorAdapterTypeDto) {
+        return response(motorAdapterTypeService.saveMotorAdapterType(motorAdapterTypeDto));
+    }
+
+    @Override
+    public ResponseEntity<ResponseDto<Boolean>> delete(Long id) {
+        return response(motorAdapterTypeService.deleteMotorAdapterType(id));
+    }
 }

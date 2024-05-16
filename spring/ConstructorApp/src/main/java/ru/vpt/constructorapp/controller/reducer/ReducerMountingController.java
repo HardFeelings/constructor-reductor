@@ -26,4 +26,14 @@ public class ReducerMountingController extends AbstractController implements Red
     public ResponseEntity<ResponseDto<ReducerMountingDto>> getById(Long id) {
         return response(reducerMountingService.getReducerMountingById(id));
     }
+
+    @Override
+    public ResponseEntity<ResponseDto<ReducerMountingDto>> save(ReducerMountingDto reducerMountingDto) {
+        return response(reducerMountingService.saveReducerMounting(reducerMountingDto));
+    }
+
+    @Override
+    public ResponseEntity<ResponseDto<Boolean>> delete(Long id) {
+        return response(reducerMountingService.deleteReducerMounting(id));
+    }
 }

@@ -30,4 +30,14 @@ public class ReducerInstallationTypeController extends AbstractController implem
     public ResponseEntity<ResponseDto<List<ReducerInstallationTypeDto>>> getByReducerTypeId(Long id) {
         return response(reducerInstallationTypeService.getAllReducerInstallationTypesByReducerTypeId(id));
     }
+
+    @Override
+    public ResponseEntity<ResponseDto<ReducerInstallationTypeDto>> save(ReducerInstallationTypeDto reducerInstallationTypeDto) {
+        return response(reducerInstallationTypeService.saveReducerInstallationType(reducerInstallationTypeDto));
+    }
+
+    @Override
+    public ResponseEntity<ResponseDto<Boolean>> delete(Long id) {
+        return response(reducerInstallationTypeService.deleteReducerInstallationType(id));
+    }
 }

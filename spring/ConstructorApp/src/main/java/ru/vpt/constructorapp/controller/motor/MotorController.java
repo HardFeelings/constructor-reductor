@@ -26,4 +26,15 @@ public class MotorController extends AbstractController implements MotorApi {
     public ResponseEntity<ResponseDto<MotorDto>> getById(Long id) {
         return response(motorService.getMotorById(id));
     }
+
+    @Override
+    public ResponseEntity<ResponseDto<MotorDto>> save(MotorDto motorDto) {
+        return response(motorService.saveMotor(motorDto));
+    }
+
+    @Override
+    public ResponseEntity<ResponseDto<Boolean>> delete(Long id) {
+        return response(motorService.deleteMotor(id));
+    }
+
 }

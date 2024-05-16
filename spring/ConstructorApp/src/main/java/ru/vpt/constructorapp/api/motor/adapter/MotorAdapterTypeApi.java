@@ -1,15 +1,13 @@
 package ru.vpt.constructorapp.api.motor.adapter;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import ru.vpt.constructorapp.api.motor.adapter.dto.MotorAdapterTypeDto;
 import ru.vpt.constructorapp.api.util.ResponseDto;
 
 import java.util.List;
 
-@RequestMapping("api/v1/motorAdapterType")
+@RequestMapping("/security/motorAdapterType")
 public interface MotorAdapterTypeApi {
     @GetMapping
     ResponseEntity<ResponseDto<List<MotorAdapterTypeDto>>> getAllMotorAdapterTypes();
@@ -19,4 +17,10 @@ public interface MotorAdapterTypeApi {
 
     @GetMapping("/byMotorTypeId/{id}")
     ResponseEntity<ResponseDto<List<MotorAdapterTypeDto>>> getByMotorTypeId(@PathVariable("id") Long id);
+
+    @PostMapping
+    ResponseEntity<ResponseDto<MotorAdapterTypeDto>> save(@RequestBody MotorAdapterTypeDto motorAdapterTypeDto);
+
+    @DeleteMapping("/{id}")
+    ResponseEntity<ResponseDto<Boolean>> delete(@PathVariable("id") Long id);
 }
