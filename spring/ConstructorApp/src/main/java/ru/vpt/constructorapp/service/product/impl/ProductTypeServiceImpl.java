@@ -11,6 +11,7 @@ import ru.vpt.constructorapp.store.repo.product.ProductTypeRepo;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -54,10 +55,10 @@ public class ProductTypeServiceImpl implements ProductTypeService {
   }
 
   @Override
-  public ProductTypeEntity findById(Long id) {
+  public Optional<ProductTypeEntity> findById(Long id) {
     if (Objects.isNull(id)) {
       throw new RuntimeException("Невозможно получить тип продукта: id равен null");
     }
-    return productTypeRepo.findById(id).orElse(null);
+    return productTypeRepo.findById(id);
   }
 }

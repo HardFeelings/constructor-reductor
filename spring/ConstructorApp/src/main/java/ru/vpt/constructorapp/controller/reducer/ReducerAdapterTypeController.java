@@ -31,4 +31,14 @@ public class ReducerAdapterTypeController extends AbstractController implements 
     public ResponseEntity<ResponseDto<List<ReducerAdapterTypeDto>>> getByReducerTypeId(Long id) {
         return response(reducerAdapterTypeService.getAllReducerAdapterTypesByReducerTypeId(id));
     }
+
+    @Override
+    public ResponseEntity<ResponseDto<ReducerAdapterTypeDto>> save(ReducerAdapterTypeDto reducerAdapterTypeDto) {
+        return response(reducerAdapterTypeService.saveReducerAdapterType(reducerAdapterTypeDto));
+    }
+
+    @Override
+    public ResponseEntity<ResponseDto<Boolean>> delete(Long id) {
+        return response(reducerAdapterTypeService.deleteReducerAdapterType(id));
+    }
 }

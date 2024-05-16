@@ -13,6 +13,7 @@ import ru.vpt.constructorapp.store.repo.motor.MotorRepo;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -36,31 +37,39 @@ public class MotorServiceImpl implements MotorService {
         return motorMapper.toDTO(entity);
     }
 
-  @Override
-  public MotorDto saveMotor(MotorDto motorDto) {
-    if (Objects.isNull(motorDto)) {
-      throw new RuntimeException("Невозможно сохранить мотор: dto равен null");
+    @Override
+    public MotorDto saveMotor(MotorDto motorDto) {
+        if (Objects.isNull(motorDto)) {
+            throw new RuntimeException("Невозможно сохранить мотор: dto равен null");
+        }
+        MotorTypeEntity motorTypeEntity = motorTypeService.findById(motorDto.getMotorTypeId());
+        MotorAdapterTypeEntity motorAdapterTypeEntity = motorAdapterTypeService.findById(motorDto.getMotorAdapterTypeId());
+        if (Objects.isNull(motorTypeEntity) || Objects.isNull(motorAdapterTypeEntity)) {
+            throw new RuntimeException("Невозможно сохранить мотор: не найден тип мотора или адаптер типа мотора");
+        }
+        MotorEntity entity = motorMapper.toEntity(motorDto);
+        entity.setMotorType(motorTypeEntity);
+        entity.setMotorAdapterType(motorAdapterTypeEntity);
+        return motorMapper.toDTO(motorRepo.save(entity));
     }
-    MotorTypeEntity motorTypeEntity = motorTypeService.findById(motorDto.getMotorTypeId());
-    MotorAdapterTypeEntity motorAdapterTypeEntity = motorAdapterTypeService.findById(motorDto.getMotorAdapterTypeId());
-    if (Objects.isNull(motorTypeEntity) || Objects.isNull(motorAdapterTypeEntity)) {
-      throw new RuntimeException("Невозможно сохранить мотор: не найден тип мотора или адаптер типа мотора");
-    }
-    MotorEntity entity = motorMapper.toEntity(motorDto);
-    entity.setMotorType(motorTypeEntity);
-    entity.setMotorAdapterType(motorAdapterTypeEntity);
-    return motorMapper.toDTO(motorRepo.save(entity));
-  }
 
-  @Override
-  public Boolean deleteMotor(Long id) {
-    if (Objects.isNull(id)) {
-      throw new RuntimeException("Невозможно удалить объект: id равен null");
+    @Override
+    public Boolean deleteMotor(Long id) {
+        if (Objects.isNull(id)) {
+            throw new RuntimeException("Невозможно удалить объект: id равен null");
+        }
+        if (!motorRepo.existsById(id)) {
+            throw new RuntimeException("Невозможно удалить объект: не найден объект с id: " + id);
+        }
+        motorRepo.deleteById(id);
+        return true;
     }
-    if (!motorRepo.existsById(id)) {
-      throw new RuntimeException("Невозможно удалить объект: не найден объект с id: " + id);
+
+    @Override
+    public Optional<MotorEntity> findById(Long id) {
+        if (Objects.isNull(id)) {
+            throw new RuntimeException("Невозможно получить мотор: id равен null");
+        }
+        return motorRepo.findById(id);
     }
-    motorRepo.deleteById(id);
-    return true;
-  }
 }

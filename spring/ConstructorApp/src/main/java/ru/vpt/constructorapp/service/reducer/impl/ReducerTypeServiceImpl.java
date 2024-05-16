@@ -11,6 +11,7 @@ import ru.vpt.constructorapp.store.repo.reducer.ReducerTypeRepo;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -55,10 +56,10 @@ public class ReducerTypeServiceImpl implements ReducerTypeService {
     }
 
     @Override
-    public ReducerTypeEntity findById(Long id) {
+    public Optional<ReducerTypeEntity> findById(Long id) {
         if (Objects.isNull(id)) {
             throw new RuntimeException("Невозможно получить тип редуктора: id равен null");
         }
-        return reducerTypeRepo.findById(id).orElse(null);
+        return reducerTypeRepo.findById(id);
     }
 }

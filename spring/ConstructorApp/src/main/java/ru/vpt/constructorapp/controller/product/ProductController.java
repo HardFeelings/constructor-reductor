@@ -26,4 +26,14 @@ public class ProductController extends AbstractController implements ProductApi 
     public ResponseEntity<ResponseDto<ProductDto>> getById(Long id) {
         return response(productService.getProductById(id));
     }
+
+    @Override
+    public ResponseEntity<ResponseDto<ProductDto>> save(ProductDto productDto) {
+        return response(productService.saveProduct(productDto));
+    }
+
+    @Override
+    public ResponseEntity<ResponseDto<Boolean>> delete(Long id) {
+        return response(productService.deleteProduct(id));
+    }
 }

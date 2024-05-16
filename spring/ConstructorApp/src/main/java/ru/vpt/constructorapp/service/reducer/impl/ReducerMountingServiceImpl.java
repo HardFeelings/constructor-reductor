@@ -11,6 +11,7 @@ import ru.vpt.constructorapp.store.repo.reducer.ReducerMountingRepo;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -55,10 +56,10 @@ public class ReducerMountingServiceImpl implements ReducerMountingService {
     }
 
     @Override
-    public ReducerMountingEntity findById(Long id) {
+    public Optional<ReducerMountingEntity> findById(Long id) {
         if (Objects.isNull(id)) {
             throw new RuntimeException("Невозможно получить крепление редуктора: id равен null");
         }
-        return reducerMountingRepo.findById(id).orElse(null);
+        return reducerMountingRepo.findById(id);
     }
 }

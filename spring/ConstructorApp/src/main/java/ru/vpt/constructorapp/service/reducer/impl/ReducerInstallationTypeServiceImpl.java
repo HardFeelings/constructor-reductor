@@ -12,6 +12,7 @@ import ru.vpt.constructorapp.store.repo.reducer.ReducerInstallationTypeRepo;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -48,10 +49,8 @@ public class ReducerInstallationTypeServiceImpl implements ReducerInstallationTy
         if (Objects.isNull(dto)) {
             throw new RuntimeException("Невозможно сохранить тип установки редуктора: dto равен null");
         }
-        ReducerTypeEntity reducerTypeEntity = reducerTypeService.findById(dto.getReducerTypeId());
-        if (Objects.isNull(reducerTypeEntity)) {
-            throw new RuntimeException("Невозможно сохранить тип установки редуктора: не найден тип редуктора с id: " + dto.getReducerTypeId());
-        }
+        ReducerTypeEntity reducerTypeEntity = reducerTypeService.findById(dto.getReducerTypeId())
+                .orElseThrow(() -> new RuntimeException("Невозможно сохранить тип установки редуктора: не найден тип редуктора с id: " + dto.getReducerTypeId()));
         ReducerInstallationTypeEntity entity = reducerInstallationTypeMapper.toEntity(dto);
         entity.setReducerType(reducerTypeEntity);
         return reducerInstallationTypeMapper.toDTO(reducerInstallationTypeRepo.save(entity));
@@ -70,10 +69,10 @@ public class ReducerInstallationTypeServiceImpl implements ReducerInstallationTy
     }
 
     @Override
-    public ReducerInstallationTypeEntity findById(Long id) {
+    public Optional<ReducerInstallationTypeEntity> findById(Long id) {
         if (Objects.isNull(id)) {
             throw new RuntimeException("Невозможно получить тип установки редуктора: id равен null");
         }
-        return reducerInstallationTypeRepo.findById(id).orElse(null);
+        return reducerInstallationTypeRepo.findById(id);
     }
 }

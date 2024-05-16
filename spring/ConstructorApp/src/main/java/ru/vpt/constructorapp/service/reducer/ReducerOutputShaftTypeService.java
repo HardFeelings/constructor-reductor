@@ -4,6 +4,7 @@ import ru.vpt.constructorapp.api.reducer.output.dto.ReducerOutputShaftTypeDto;
 import ru.vpt.constructorapp.store.entities.reducer.ReducerOutputShaftTypeEntity;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ReducerOutputShaftTypeService {
     List<ReducerOutputShaftTypeDto> getAllReducerOutputShaftTypes();
@@ -16,5 +17,5 @@ public interface ReducerOutputShaftTypeService {
 
     Boolean deleteReducerOutputShaftTypes(Long id);
 
-    ReducerOutputShaftTypeEntity findById(Long id);
+    Optional<ReducerOutputShaftTypeEntity> findById(Long id);
 }

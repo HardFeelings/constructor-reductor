@@ -13,6 +13,7 @@ import ru.vpt.constructorapp.store.repo.product.ProductOptionRepo;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -49,10 +50,8 @@ public class ProductOptionServiceImpl implements ProductOptionService {
     if (Objects.isNull(dto)) {
       throw new RuntimeException("Невозможно сохранить опции продукта: dto равен null");
     }
-    ProductTypeEntity productTypeEntity = productTypeService.findById(dto.getProductTypeId());
-    if (Objects.isNull(productTypeEntity)) {
-      throw new RuntimeException("Невозможно сохранить опции продукта: не найден тип продукта с id: " + dto.getProductTypeId());
-    }
+    ProductTypeEntity productTypeEntity = productTypeService.findById(dto.getProductTypeId())
+            .orElseThrow(() -> new RuntimeException("Невозможно сохранить опции продукта: не найден тип продукта с id: " + dto.getProductTypeId()));
     ProductOptionEntity entity = productOptionMapper.toEntity(dto);
     entity.setProductType(productTypeEntity);
     return productOptionMapper.toDTO(productOptionRepo.save(entity));
@@ -71,10 +70,10 @@ public class ProductOptionServiceImpl implements ProductOptionService {
   }
 
   @Override
-  public ProductOptionEntity findById(Long id) {
+  public Optional<ProductOptionEntity> findById(Long id) {
     if (Objects.isNull(id)) {
       throw new RuntimeException("Невозможно получить опции продукта: id равен null");
     }
-    return productOptionRepo.findById(id).orElse(null);
+    return productOptionRepo.findById(id);
   }
 }

@@ -4,6 +4,7 @@ import ru.vpt.constructorapp.api.reducer.installation.dto.ReducerInstallationTyp
 import ru.vpt.constructorapp.store.entities.reducer.ReducerInstallationTypeEntity;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ReducerInstallationTypeService {
     List<ReducerInstallationTypeDto> getAllReducerInstallationTypes();
@@ -16,5 +17,5 @@ public interface ReducerInstallationTypeService {
 
     Boolean deleteReducerInstallationType(Long id);
 
-    ReducerInstallationTypeEntity findById(Long id);
+    Optional<ReducerInstallationTypeEntity> findById(Long id);
 }

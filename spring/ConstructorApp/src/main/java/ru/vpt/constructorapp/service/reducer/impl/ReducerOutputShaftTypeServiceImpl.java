@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 import ru.vpt.constructorapp.api.reducer.output.dto.ReducerOutputShaftTypeDto;
 import ru.vpt.constructorapp.api.reducer.output.mapper.ReducerOutputShaftTypeMapper;
 import ru.vpt.constructorapp.service.reducer.ReducerOutputShaftTypeService;
-import ru.vpt.constructorapp.service.reducer.ReducerTypeService;
 import ru.vpt.constructorapp.store.entities.reducer.ReducerOutputShaftTypeEntity;
 import ru.vpt.constructorapp.store.entities.reducer.ReducerTypeEntity;
 import ru.vpt.constructorapp.store.repo.reducer.ReducerOutputShaftTypeRepo;
@@ -13,6 +12,7 @@ import ru.vpt.constructorapp.store.repo.reducer.ReducerOutputShaftTypeRepo;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -49,10 +49,8 @@ public class ReducerOutputShaftTypeServiceImpl implements ReducerOutputShaftType
         if (Objects.isNull(dto)) {
             throw new RuntimeException("Невозможно сохранить тип выходного вала: dto равен null");
         }
-        ReducerTypeEntity reducerTypeEntity = reducerTypeService.findById(dto.getReducerTypeId());
-        if (Objects.isNull(reducerTypeEntity)) {
-            throw new RuntimeException("Невозможно сохранить тип выходного вала: не найден тип редуктора с id: " + dto.getReducerTypeId());
-        }
+        ReducerTypeEntity reducerTypeEntity = reducerTypeService.findById(dto.getReducerTypeId())
+                .orElseThrow(() -> new RuntimeException("Невозможно сохранить тип выходного вала: не найден тип редуктора с id: " + dto.getReducerTypeId()));
         ReducerOutputShaftTypeEntity entity = reducerOutputShaftTypeMapper.toEntity(dto);
         entity.setReducerType(reducerTypeEntity);
         return reducerOutputShaftTypeMapper.toDTO(reducerOutputShaftTypeRepo.save(entity));
@@ -71,10 +69,10 @@ public class ReducerOutputShaftTypeServiceImpl implements ReducerOutputShaftType
     }
 
     @Override
-    public ReducerOutputShaftTypeEntity findById(Long id) {
+    public Optional<ReducerOutputShaftTypeEntity> findById(Long id) {
         if (Objects.isNull(id)) {
             throw new RuntimeException("Невозможно получить тип выходного вала: id равен null");
         }
-        return reducerOutputShaftTypeRepo.findById(id).orElse(null);
+        return reducerOutputShaftTypeRepo.findById(id);
     }
 }

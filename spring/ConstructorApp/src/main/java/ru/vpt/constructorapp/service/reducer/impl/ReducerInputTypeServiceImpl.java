@@ -12,6 +12,7 @@ import ru.vpt.constructorapp.store.repo.reducer.ReducerInputTypeRepo;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -48,10 +49,8 @@ public class ReducerInputTypeServiceImpl implements ReducerInputTypeService {
         if (Objects.isNull(dto)) {
             throw new RuntimeException("Невозможно сохранить тип входа редуктора: dto равен null");
         }
-        ReducerTypeEntity reducerTypeEntity = reducerTypeService.findById(dto.getReducerTypeId());
-        if (Objects.isNull(reducerTypeEntity)) {
-            throw new RuntimeException("Невозможно сохранить тип входа редуктора: не найден тип редуктора с id: " + dto.getReducerTypeId());
-        }
+        ReducerTypeEntity reducerTypeEntity = reducerTypeService.findById(dto.getReducerTypeId())
+                .orElseThrow(() -> new RuntimeException("Невозможно сохранить тип входа редуктора: не найден тип редуктора с id: " + dto.getReducerTypeId()));
         ReducerInputTypeEntity entity = reducerInputTypeMapper.toEntity(dto);
         entity.setReducerType(reducerTypeEntity);
         return reducerInputTypeMapper.toDTO(reducerInputTypeRepo.save(entity));
@@ -70,10 +69,10 @@ public class ReducerInputTypeServiceImpl implements ReducerInputTypeService {
     }
 
     @Override
-    public ReducerInputTypeEntity findById(Long id) {
+    public Optional<ReducerInputTypeEntity> findById(Long id) {
         if (Objects.isNull(id)) {
             throw new RuntimeException("Невозможно получить тип входа редуктора: id равен null");
         }
-        return reducerInputTypeRepo.findById(id).orElse(null);
+        return reducerInputTypeRepo.findById(id);
     }
 }
