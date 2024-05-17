@@ -8,17 +8,17 @@ import ru.vpt.constructorapp.api.util.ResponseDto;
 
 import java.util.List;
 
-@RequestMapping("/security/motorType")
+@RequestMapping
 public interface MotorTypeApi {
-    @GetMapping
+    @GetMapping("/motorType")
     ResponseEntity<ResponseDto<List<MotorTypeDto>>> getAllMotorTypes();
 
-    @GetMapping("/{id}")
+    @GetMapping("/motorType/{id}")
     ResponseEntity<ResponseDto<MotorTypeDto>> getById(@PathVariable("id") Long id);
 
-    @PostMapping
+    @PostMapping("/security/motorType")
     ResponseEntity<ResponseDto<MotorTypeDto>> save(@RequestBody MotorTypeDto motorTypeDto);
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/security/motorType/{id}")
     ResponseEntity<ResponseDto<Boolean>> delete(@PathVariable("id") Long id);
 }

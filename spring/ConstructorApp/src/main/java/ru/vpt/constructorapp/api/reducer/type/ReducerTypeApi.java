@@ -7,18 +7,18 @@ import ru.vpt.constructorapp.api.util.ResponseDto;
 
 import java.util.List;
 
-@RequestMapping("/security/reducerType")
+@RequestMapping
 public interface ReducerTypeApi {
 
-    @GetMapping
+    @GetMapping("/reducerType")
     ResponseEntity<ResponseDto<List<ReducerTypeDto>>> getAllReducerTypes();
 
-    @GetMapping("/{id}")
+    @GetMapping("/reducerType/{id}")
     ResponseEntity<ResponseDto<ReducerTypeDto>> getById(@PathVariable("id") Long id);
 
-    @PostMapping
+    @PostMapping("/security/reducerType")
     ResponseEntity<ResponseDto<ReducerTypeDto>> save(@RequestBody ReducerTypeDto reducerTypeDto);
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/security/reducerType/{id}")
     ResponseEntity<ResponseDto<Boolean>> delete(@PathVariable("id") Long id);
 }

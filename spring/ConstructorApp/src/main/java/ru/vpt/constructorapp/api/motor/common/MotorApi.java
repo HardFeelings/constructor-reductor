@@ -7,17 +7,17 @@ import ru.vpt.constructorapp.api.util.ResponseDto;
 
 import java.util.List;
 
-@RequestMapping("/security/motor")
+@RequestMapping
 public interface MotorApi {
-    @GetMapping
+    @GetMapping("/motor")
     ResponseEntity<ResponseDto<List<MotorDto>>> getAllMotors();
 
-    @GetMapping("/{id}")
+    @GetMapping("/motor/{id}")
     ResponseEntity<ResponseDto<MotorDto>> getById(@PathVariable("id") Long id);
 
-    @PostMapping
+    @PostMapping("/security/motor")
     ResponseEntity<ResponseDto<MotorDto>> save(@RequestBody MotorDto motorDto);
 
-    @DeleteMapping(value = "/{id}")
+    @DeleteMapping(value = "/security/motor/{id}")
     ResponseEntity<ResponseDto<Boolean>> delete(@PathVariable Long id);
 }

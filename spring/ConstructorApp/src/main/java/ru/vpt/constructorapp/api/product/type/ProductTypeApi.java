@@ -7,17 +7,17 @@ import ru.vpt.constructorapp.api.util.ResponseDto;
 
 import java.util.List;
 
-@RequestMapping("/security/productType")
+@RequestMapping
 public interface ProductTypeApi {
-    @GetMapping
+    @GetMapping("/productType")
     ResponseEntity<ResponseDto<List<ProductTypeDto>>> getAllProductTypes();
 
-    @GetMapping("/{id}")
+    @GetMapping("/productType/{id}")
     ResponseEntity<ResponseDto<ProductTypeDto>> getById(@PathVariable("id") Long id);
 
-    @PostMapping
+    @PostMapping("/security/productType")
     ResponseEntity<ResponseDto<ProductTypeDto>> save(@RequestBody ProductTypeDto productTypeDto);
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/security/productType/{id}")
     ResponseEntity<ResponseDto<Boolean>> delete(@PathVariable("id") Long id);
 }
