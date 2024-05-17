@@ -48,19 +48,19 @@ public class ProductServiceImpl implements ProductService {
         if (Objects.isNull(dto)) {
             throw new RuntimeException("Невозможно сохранить продукт: dto равен null");
         }
-        ProductTypeEntity productType = productTypeService.findById(dto.getProductType().getIdProductType())
-                .orElseThrow(() -> new RuntimeException("Невозможно сохранить продукт: не найден тип продукта с id: " + dto.getProductType().getIdProductType()));
-        ReducerEntity reducer = reducerService.findById(dto.getReducer().getIdReducer())
-                .orElseThrow(() -> new RuntimeException("Невозможно сохранить продукт: не найден редуктор с id: " + dto.getReducer().getIdReducer()));
-        MotorEntity motor = motorService.findById(dto.getMotor().getIdMotor())
-                .orElseThrow(() -> new RuntimeException("Невозможно сохранить продукт: не найден мотор с id: " + dto.getMotor().getIdMotor()));
-        ProductOptionEntity productOption = productOptionService.findById(dto.getProductOption().getIdProductOption())
-                .orElseThrow(() -> new RuntimeException("Невозможно сохранить продукт: не найдены опции продукта с id: " + dto.getProductOption().getIdProductOption()));
         ProductEntity entity = productMapper.toEntity(dto);
-        entity.setProductType(productType);
-        entity.setReducer(reducer);
-        entity.setMotor(motor);
-        entity.setProductOption(productOption);
+        entity.setProductType(productTypeService.findById(dto.getProductType().getIdProductType())
+                .orElseThrow(() -> new RuntimeException("Невозможно сохранить продукт: не найден тип продукта с id: " + dto.getProductType().getIdProductType())));
+        if (Objects.nonNull(dto.getReducer()) && Objects.nonNull(dto.getReducer().getIdReducer())) {
+            entity.setReducer(reducerService.findById(dto.getReducer().getIdReducer())
+                    .orElseThrow(() -> new RuntimeException("Невозможно сохранить продукт: не найден редуктор с id: " + dto.getReducer().getIdReducer())));
+        }
+        if (Objects.nonNull(dto.getMotor()) && Objects.nonNull(dto.getMotor().getIdMotor())) {
+            entity.setMotor(motorService.findById(dto.getMotor().getIdMotor())
+                    .orElseThrow(() -> new RuntimeException("Невозможно сохранить продукт: не найден мотор с id: " + dto.getMotor().getIdMotor())));
+        }
+        entity.setProductOption(productOptionService.findById(dto.getProductOption().getIdProductOption())
+                .orElseThrow(() -> new RuntimeException("Невозможно сохранить продукт: не найдены опции продукта с id: " + dto.getProductOption().getIdProductOption())));
         return productMapper.toDTO(productRepo.save(entity));
     }
 
