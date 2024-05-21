@@ -7,20 +7,20 @@ import ru.vpt.constructorapp.api.util.ResponseDto;
 
 import java.util.List;
 
-@RequestMapping("/security/reducerOutputShaftType")
+@RequestMapping
 public interface ReducerOutputShaftTypeApi {
-    @GetMapping
+    @GetMapping("/reducerOutputShaftType")
     ResponseEntity<ResponseDto<List<ReducerOutputShaftTypeDto>>> getAllReducerOutputShaftTypes();
 
-    @GetMapping("/{id}")
+    @GetMapping("/reducerOutputShaftType/{id}")
     ResponseEntity<ResponseDto<ReducerOutputShaftTypeDto>> getById(@PathVariable("id") Long id);
 
-    @GetMapping("/byReducerTypeId/{id}")
+    @GetMapping("/reducerOutputShaftType/byReducerTypeId/{id}")
     ResponseEntity<ResponseDto<List<ReducerOutputShaftTypeDto>>> getByReducerTypeId(@PathVariable("id") Long id);
 
-    @PostMapping
+    @PostMapping("/security/reducerOutputShaftType")
     ResponseEntity<ResponseDto<ReducerOutputShaftTypeDto>> save(@RequestBody ReducerOutputShaftTypeDto reducerOutputShaftTypeDto);
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/security/reducerOutputShaftType/{id}")
     ResponseEntity<ResponseDto<Boolean>> delete(@PathVariable("id") Long id);
 }
