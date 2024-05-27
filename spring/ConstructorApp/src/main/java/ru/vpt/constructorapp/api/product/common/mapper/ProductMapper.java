@@ -18,7 +18,7 @@ public interface ProductMapper {
 
     @Mapping(target = "productType", ignore = true)
     @Mapping(target = "reducer", ignore = true)
-    @Mapping(target = "productOption", ignore = true)
+    @Mapping(target = "options", ignore = true)
     @Mapping(target = "motor", ignore = true)
     ProductEntity toEntity(ProductDto dto);
 }

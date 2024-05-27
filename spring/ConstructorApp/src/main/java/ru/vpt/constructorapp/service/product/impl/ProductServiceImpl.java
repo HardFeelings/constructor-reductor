@@ -18,6 +18,8 @@ import ru.vpt.constructorapp.store.repo.product.ProductRepo;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -51,16 +53,15 @@ public class ProductServiceImpl implements ProductService {
         ProductEntity entity = productMapper.toEntity(dto);
         entity.setProductType(productTypeService.findById(dto.getProductType().getIdProductType())
                 .orElseThrow(() -> new RuntimeException("Невозможно сохранить продукт: не найден тип продукта с id: " + dto.getProductType().getIdProductType())));
-        if (Objects.nonNull(dto.getReducer()) && Objects.nonNull(dto.getReducer().getIdReducer())) {
-            entity.setReducer(reducerService.findById(dto.getReducer().getIdReducer())
-                    .orElseThrow(() -> new RuntimeException("Невозможно сохранить продукт: не найден редуктор с id: " + dto.getReducer().getIdReducer())));
-        }
-        if (Objects.nonNull(dto.getMotor()) && Objects.nonNull(dto.getMotor().getIdMotor())) {
-            entity.setMotor(motorService.findById(dto.getMotor().getIdMotor())
-                    .orElseThrow(() -> new RuntimeException("Невозможно сохранить продукт: не найден мотор с id: " + dto.getMotor().getIdMotor())));
-        }
-        entity.setProductOption(productOptionService.findById(dto.getProductOption().getIdProductOption())
-                .orElseThrow(() -> new RuntimeException("Невозможно сохранить продукт: не найдены опции продукта с id: " + dto.getProductOption().getIdProductOption())));
+        if (dto.getReducer() != null)
+            entity.setReducer(reducerService.findById(dto.getReducer().getIdReducer()).get());
+        else entity.setReducer(null);
+
+        if (dto.getMotor() != null)
+            entity.setMotor(motorService.findById(dto.getMotor().getIdMotor()).get());
+        else entity.setMotor(null);
+
+        entity.setOptions(dto.getOptions().stream().map(item -> productOptionService.findById(item.getIdProductOption()).get()).collect(Collectors.toSet()));
         return productMapper.toDTO(productRepo.save(entity));
     }
 

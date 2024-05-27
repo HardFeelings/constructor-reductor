@@ -8,6 +8,8 @@ import lombok.Setter;
 import ru.vpt.constructorapp.store.entities.motor.MotorEntity;
 import ru.vpt.constructorapp.store.entities.reducer.ReducerEntity;
 
+import java.util.Set;
+
 @Entity
 @Setter
 @Getter
@@ -19,6 +21,9 @@ public class ProductEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id_product")
     private Long idProduct;
+
+    @Column(name = "name")
+    private String name;
 
     @ManyToOne
     @JoinColumn(name = "id_product_type")
@@ -38,7 +43,10 @@ public class ProductEntity {
     @JoinColumn(name = "id_motor")
     private MotorEntity motor;
 
-    @ManyToOne
-    @JoinColumn(name = "id_product_option")
-    private ProductOptionEntity productOption;
+    @ManyToMany
+    @JoinTable(
+            name = "products_options",
+            joinColumns = @JoinColumn(name = "id_product"),
+            inverseJoinColumns = @JoinColumn(name = "id_product_option"))
+    private Set<ProductOptionEntity> options;
 }

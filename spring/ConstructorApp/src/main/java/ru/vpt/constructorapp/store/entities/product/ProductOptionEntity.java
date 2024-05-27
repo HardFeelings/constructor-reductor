@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import ru.vpt.constructorapp.store.entities.reducer.ReducerMountingEntity;
 
+import java.util.Set;
+
 @Entity
 @Setter
 @Getter
@@ -24,4 +26,5 @@ public class ProductOptionEntity {
     @ManyToOne
     @JoinColumn(name = "id_product_type")
     private ProductTypeEntity productType;
+
 }

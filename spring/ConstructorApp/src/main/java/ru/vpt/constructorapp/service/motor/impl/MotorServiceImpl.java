@@ -43,13 +43,16 @@ public class MotorServiceImpl implements MotorService {
             throw new RuntimeException("Невозможно сохранить мотор: dto равен null");
         }
         MotorTypeEntity motorTypeEntity = motorTypeService.findById(motorDto.getMotorTypeId());
-        MotorAdapterTypeEntity motorAdapterTypeEntity = motorAdapterTypeService.findById(motorDto.getMotorAdapterTypeId());
-        if (Objects.isNull(motorTypeEntity) || Objects.isNull(motorAdapterTypeEntity)) {
-            throw new RuntimeException("Невозможно сохранить мотор: не найден тип мотора или адаптер типа мотора");
-        }
         MotorEntity entity = motorMapper.toEntity(motorDto);
+        if (Objects.isNull(motorTypeEntity)) {
+            throw new RuntimeException("Невозможно сохранить мотор: не найден тип мотора");
+        }
+        entity.setMotorAdapterType(null);
+        if(motorDto.getMotorAdapterTypeId() != null){
+            MotorAdapterTypeEntity motorAdapterTypeEntity = motorAdapterTypeService.findById(motorDto.getMotorAdapterTypeId());
+            entity.setMotorAdapterType(motorAdapterTypeEntity);
+        }
         entity.setMotorType(motorTypeEntity);
-        entity.setMotorAdapterType(motorAdapterTypeEntity);
         return motorMapper.toDTO(motorRepo.save(entity));
     }
 
