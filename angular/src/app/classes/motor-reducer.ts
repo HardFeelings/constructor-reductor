@@ -1,9 +1,9 @@
-import { ReducerInstallationType, ReducerOutputShaftType, ReducerSize, ReducerType } from "./reducer"
+import { DiameterOutputShaft, ReducerInstallationType, ReducerOutputShaftType, ReducerSize, ReducerType } from "./reducer"
 
 export class MotorReducer {
     type: ReducerType
     size: ReducerSize
-    diameterOutputShaft: Number | null
+    diameterOutputShaft: DiameterOutputShaft
     outputShaftType: ReducerOutputShaftType
     motorPower: Number | null
     torqueMoment: Number | null
@@ -15,7 +15,7 @@ export class MotorReducer {
     constructor() {
         this.type = new ReducerType()
         this.size = new ReducerSize()
-        this.diameterOutputShaft = null
+        this.diameterOutputShaft = new DiameterOutputShaft()
         this.outputShaftType = new ReducerOutputShaftType()
         this.motorPower = null
         this.torqueMoment = null

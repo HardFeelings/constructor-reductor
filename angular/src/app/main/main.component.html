@@ -17,8 +17,8 @@
           {{value}}</option>
       </select>
     </div>
-    <br />
     <div *ngIf="motor.type.value=='двигатель стандарта DIN'">
+      <br />
       <span>Тип фланца</span>
       <select [(ngModel)]="motor.adapterType.value">
         <option disabled selected hidden></option>
@@ -65,18 +65,25 @@
     <br />
     <div>
       <span>Размер редуктора</span>
-      <input [(ngModel)]="reducer.size.sizeMin" type="number" />
-      <input [(ngModel)]="reducer.size.sizeMax" type="number" />
+      <select [(ngModel)]="reducer.size.value">
+        <option disabled selected hidden></option>
+        <option *ngFor="let value of reducer.size.variants">
+          {{value}}</option>
+      </select>
     </div>
     <br />
     <div>
       <span>Диаметр входного вала</span>
-      <input [(ngModel)]="reducer.diameterInputShaft" type="number" />
+      <input [(ngModel)]="reducer.diameterInputShaft.value" type="number" />
+      <span>+-</span>
+      <input [(ngModel)]="reducer.diameterInputShaft.eps" type="number" />
     </div>
     <br />
     <div>
       <span>Диаметр выходного вала</span>
-      <input [(ngModel)]="reducer.diameterOutputShaft" type="number" />
+      <input [(ngModel)]="reducer.diameterOutputShaft.value" type="number" />
+      <span>+-</span>
+      <input [(ngModel)]="reducer.diameterOutputShaft.eps" type="number" />
     </div>
     <br />
     <div>
@@ -88,15 +95,19 @@
       </select>
     </div>
     <br />
-    <div>
-      <span>Размер адаптера IEC</span>
-      <select [(ngModel)]="reducer.adapterType.value">
-        <option disabled selected hidden></option>
-        <option *ngFor="let value of reducer.adapterType.variants">
-          {{value}}</option>
-      </select>
+    <div *ngIf="reducer.inputType.value=='Адаптер IEC'">
+      <div>
+        <span>Размер адаптера IEC</span>
+        <select [(ngModel)]="reducer.adapterType.value">
+          <option disabled selected hidden></option>
+          <option *ngFor="let value of reducer.adapterType.variants">
+            {{value}}</option>
+        </select>
+
+      </div>
+      <br />
     </div>
-    <br />
+
     <div>
       <span>Форма выходного вала</span>
       <select [(ngModel)]="reducer.outputShaftType.value">
@@ -104,11 +115,6 @@
         <option *ngFor="let value of reducer.outputShaftType.variants">
           {{value}}</option>
       </select>
-    </div>
-    <br />
-    <div>
-      <span>Мощность двигателя</span>
-      <input [(ngModel)]="reducer.motorPower" type="number" />
     </div>
     <br />
     <div>
@@ -132,7 +138,11 @@
     <br />
     <div>
       <span>Монтажное положение</span>
-      <input [(ngModel)]="reducer.mounting" type="number" />
+      <select [(ngModel)]="reducer.mounting.value">
+        <option disabled selected hidden></option>
+        <option *ngFor="let value of reducer.mounting.variants">
+          {{value}}</option>
+      </select>
     </div>
     <hr />
   </div>
@@ -149,13 +159,18 @@
     <br />
     <div>
       <span>Размер редуктора</span>
-      <input [(ngModel)]="motorReducer.size.sizeMin" type="number" />
-      <input [(ngModel)]="motorReducer.size.sizeMax" type="number" />
+      <select [(ngModel)]="motorReducer.size.value">
+        <option disabled selected hidden></option>
+        <option *ngFor="let value of motorReducer.size.variants">
+          {{value}}</option>
+      </select>
     </div>
     <br />
     <div>
       <span>Диаметр выходного вала</span>
-      <input [(ngModel)]="motorReducer.diameterOutputShaft" type="number" />
+      <input [(ngModel)]="motorReducer.diameterOutputShaft.value" type="number" />
+      <span>+-</span>
+      <input [(ngModel)]="motorReducer.diameterOutputShaft.eps" type="number" />
     </div>
     <br />
     <div>
