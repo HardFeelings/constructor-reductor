@@ -4,14 +4,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.vpt.constructorapp.api.reducer.common.dto.ReducerDto;
 import ru.vpt.constructorapp.api.reducer.common.mapper.ReducerMapper;
+import ru.vpt.constructorapp.api.reducer.output.dto.ReducerOutputShaftTypeDto;
 import ru.vpt.constructorapp.service.reducer.ReducerService;
 import ru.vpt.constructorapp.store.entities.reducer.*;
 import ru.vpt.constructorapp.store.repo.reducer.ReducerRepo;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -32,7 +31,7 @@ public class ReducerServiceImpl implements ReducerService {
         List<ReducerEntity> entities = reducerRepo.findAll();
         List<ReducerDto> dtos = new ArrayList<>();
         entities.forEach(item -> dtos.add(reducerMapper.toDTO(item)));
-        return dtos;
+        return dtos.stream().sorted(Comparator.comparingLong(ReducerDto::getIdReducer)).collect(Collectors.toList());
     }
 
     @Override

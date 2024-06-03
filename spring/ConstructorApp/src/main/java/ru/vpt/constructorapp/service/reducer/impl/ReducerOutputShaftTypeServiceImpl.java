@@ -2,6 +2,7 @@ package ru.vpt.constructorapp.service.reducer.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import ru.vpt.constructorapp.api.reducer.mounting.dto.ReducerMountingDto;
 import ru.vpt.constructorapp.api.reducer.output.dto.ReducerOutputShaftTypeDto;
 import ru.vpt.constructorapp.api.reducer.output.mapper.ReducerOutputShaftTypeMapper;
 import ru.vpt.constructorapp.service.reducer.ReducerOutputShaftTypeService;
@@ -9,10 +10,8 @@ import ru.vpt.constructorapp.store.entities.reducer.ReducerOutputShaftTypeEntity
 import ru.vpt.constructorapp.store.entities.reducer.ReducerTypeEntity;
 import ru.vpt.constructorapp.store.repo.reducer.ReducerOutputShaftTypeRepo;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -27,7 +26,7 @@ public class ReducerOutputShaftTypeServiceImpl implements ReducerOutputShaftType
         List<ReducerOutputShaftTypeEntity> entities = reducerOutputShaftTypeRepo.findAll();
         List<ReducerOutputShaftTypeDto> dtos = new ArrayList<>();
         entities.forEach(item -> dtos.add(reducerOutputShaftTypeMapper.toDTO(item)));
-        return dtos;
+        return dtos.stream().sorted(Comparator.comparingLong(ReducerOutputShaftTypeDto::getIdReducerOutputShaftType)).collect(Collectors.toList());
     }
 
     @Override
@@ -41,7 +40,7 @@ public class ReducerOutputShaftTypeServiceImpl implements ReducerOutputShaftType
         List<ReducerOutputShaftTypeEntity> entities = reducerOutputShaftTypeRepo.findReducerOutputShaftTypeEntitiesByReducerType_IdReducerType(id);
         List<ReducerOutputShaftTypeDto> dtos = new ArrayList<>();
         entities.forEach(item -> dtos.add(reducerOutputShaftTypeMapper.toDTO(item)));
-        return dtos;
+        return dtos.stream().sorted(Comparator.comparingLong(ReducerOutputShaftTypeDto::getIdReducerOutputShaftType)).collect(Collectors.toList());
     }
 
     @Override

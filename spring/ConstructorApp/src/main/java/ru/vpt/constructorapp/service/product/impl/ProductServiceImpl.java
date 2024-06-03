@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.vpt.constructorapp.api.product.common.dto.ProductDto;
 import ru.vpt.constructorapp.api.product.common.mapper.ProductMapper;
+import ru.vpt.constructorapp.api.product.option.dto.ProductOptionDto;
 import ru.vpt.constructorapp.service.motor.impl.MotorServiceImpl;
 import ru.vpt.constructorapp.service.product.ProductService;
 import ru.vpt.constructorapp.service.reducer.impl.ReducerServiceImpl;
@@ -15,10 +16,7 @@ import ru.vpt.constructorapp.store.entities.reducer.ReducerEntity;
 import ru.vpt.constructorapp.store.repo.product.ProductRepo;
 
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -36,7 +34,7 @@ public class ProductServiceImpl implements ProductService {
         List<ProductEntity> entities = productRepo.findAll();
         List<ProductDto> dtos = new ArrayList<>();
         entities.forEach(item -> dtos.add(productMapper.toDTO(item)));
-        return dtos;
+        return dtos.stream().sorted(Comparator.comparingLong(ProductDto::getIdProduct)).collect(Collectors.toList());
     }
 
     @Override

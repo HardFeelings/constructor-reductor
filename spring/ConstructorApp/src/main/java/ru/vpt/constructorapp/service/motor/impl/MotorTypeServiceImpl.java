@@ -2,6 +2,7 @@ package ru.vpt.constructorapp.service.motor.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import ru.vpt.constructorapp.api.motor.adapter.dto.MotorAdapterTypeDto;
 import ru.vpt.constructorapp.api.motor.type.dto.MotorTypeDto;
 import ru.vpt.constructorapp.api.motor.type.mapper.MotorTypeMapper;
 import ru.vpt.constructorapp.service.motor.MotorTypeService;
@@ -9,8 +10,10 @@ import ru.vpt.constructorapp.store.entities.motor.MotorTypeEntity;
 import ru.vpt.constructorapp.store.repo.motor.MotorTypeRepo;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -24,7 +27,7 @@ public class MotorTypeServiceImpl implements MotorTypeService {
         List<MotorTypeEntity> entities = motorTypeRepo.findAll();
         List<MotorTypeDto> dtos = new ArrayList<>();
         entities.forEach(item -> dtos.add(motorTypeMapper.toDTO(item)));
-        return dtos;
+        return dtos.stream().sorted(Comparator.comparingLong(MotorTypeDto::getIdMotorType)).collect(Collectors.toList());
 
     }
 

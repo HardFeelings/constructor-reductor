@@ -4,14 +4,17 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.vpt.constructorapp.api.motor.adapter.dto.MotorAdapterTypeDto;
 import ru.vpt.constructorapp.api.motor.adapter.mapper.MotorAdapterTypeMapper;
+import ru.vpt.constructorapp.api.motor.common.dto.MotorDto;
 import ru.vpt.constructorapp.service.motor.MotorAdapterTypeService;
 import ru.vpt.constructorapp.store.entities.motor.MotorAdapterTypeEntity;
 import ru.vpt.constructorapp.store.entities.motor.MotorTypeEntity;
 import ru.vpt.constructorapp.store.repo.motor.MotorAdapterTypeRepo;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -25,7 +28,7 @@ public class MotorAdapterTypeServiceImpl implements MotorAdapterTypeService {
         List<MotorAdapterTypeEntity> entities = motorAdapterTypeRepo.findAll();
         List<MotorAdapterTypeDto> dtos = new ArrayList<>();
         entities.forEach(item -> dtos.add(motorAdapterTypeMapper.toDTO(item)));
-        return dtos;
+        return dtos.stream().sorted(Comparator.comparingLong(MotorAdapterTypeDto::getIdMotorAdapterType)).collect(Collectors.toList());
     }
 
     @Override
@@ -39,7 +42,7 @@ public class MotorAdapterTypeServiceImpl implements MotorAdapterTypeService {
         List<MotorAdapterTypeEntity> entities = motorAdapterTypeRepo.findMotorAdapterTypeEntitiesByMotorType_IdMotorType(id);
         List<MotorAdapterTypeDto> dtos = new ArrayList<>();
         entities.forEach(item -> dtos.add(motorAdapterTypeMapper.toDTO(item)));
-        return dtos;
+        return dtos.stream().sorted(Comparator.comparingLong(MotorAdapterTypeDto::getIdMotorAdapterType)).collect(Collectors.toList());
     }
 
     @Override

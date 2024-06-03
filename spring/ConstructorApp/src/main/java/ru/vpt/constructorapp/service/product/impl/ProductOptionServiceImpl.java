@@ -2,6 +2,7 @@ package ru.vpt.constructorapp.service.product.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import ru.vpt.constructorapp.api.motor.adapter.dto.MotorAdapterTypeDto;
 import ru.vpt.constructorapp.api.product.option.dto.ProductOptionDto;
 import ru.vpt.constructorapp.api.product.option.mapper.ProductOptionMapper;
 import ru.vpt.constructorapp.service.product.ProductOptionService;
@@ -10,10 +11,8 @@ import ru.vpt.constructorapp.store.entities.product.ProductOptionEntity;
 import ru.vpt.constructorapp.store.entities.product.ProductTypeEntity;
 import ru.vpt.constructorapp.store.repo.product.ProductOptionRepo;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -28,7 +27,7 @@ public class ProductOptionServiceImpl implements ProductOptionService {
     List<ProductOptionEntity> entities = productOptionRepo.findAll();
     List<ProductOptionDto> dtos = new ArrayList<>();
     entities.forEach(item -> dtos.add(productOptionMapper.toDTO(item)));
-    return dtos;
+    return dtos.stream().sorted(Comparator.comparingLong(ProductOptionDto::getIdProductOption)).collect(Collectors.toList());
   }
 
   @Override
@@ -42,7 +41,7 @@ public class ProductOptionServiceImpl implements ProductOptionService {
     List<ProductOptionEntity> entities = productOptionRepo.findProductOptionEntitiesByProductType_IdProductType(id);
     List<ProductOptionDto> dtos = new ArrayList<>();
     entities.forEach(item -> dtos.add(productOptionMapper.toDTO(item)));
-    return dtos;
+    return dtos.stream().sorted(Comparator.comparingLong(ProductOptionDto::getIdProductOption)).collect(Collectors.toList());
   }
 
   @Override

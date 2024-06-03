@@ -2,6 +2,7 @@ package ru.vpt.constructorapp.service.reducer.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import ru.vpt.constructorapp.api.reducer.input.dto.ReducerInputTypeDto;
 import ru.vpt.constructorapp.api.reducer.installation.dto.ReducerInstallationTypeDto;
 import ru.vpt.constructorapp.api.reducer.installation.mapper.ReducerInstallationTypeMapper;
 import ru.vpt.constructorapp.service.reducer.ReducerInstallationTypeService;
@@ -9,10 +10,8 @@ import ru.vpt.constructorapp.store.entities.reducer.ReducerInstallationTypeEntit
 import ru.vpt.constructorapp.store.entities.reducer.ReducerTypeEntity;
 import ru.vpt.constructorapp.store.repo.reducer.ReducerInstallationTypeRepo;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -27,7 +26,7 @@ public class ReducerInstallationTypeServiceImpl implements ReducerInstallationTy
         List<ReducerInstallationTypeEntity> entities = reducerInstallationTypeRepo.findAll();
         List<ReducerInstallationTypeDto> dtos = new ArrayList<>();
         entities.forEach(item -> dtos.add(reducerInstallationTypeMapper.toDTO(item)));
-        return dtos;
+        return dtos.stream().sorted(Comparator.comparingLong(ReducerInstallationTypeDto::getIdReducerInstallationType)).collect(Collectors.toList());
     }
 
     @Override
@@ -41,7 +40,7 @@ public class ReducerInstallationTypeServiceImpl implements ReducerInstallationTy
         List<ReducerInstallationTypeEntity> entities = reducerInstallationTypeRepo.findReducerInstallationTypeEntitiesByReducerType_IdReducerType(id);
         List<ReducerInstallationTypeDto> dtos = new ArrayList<>();
         entities.forEach(item -> dtos.add(reducerInstallationTypeMapper.toDTO(item)));
-        return dtos;
+        return dtos.stream().sorted(Comparator.comparingLong(ReducerInstallationTypeDto::getIdReducerInstallationType)).collect(Collectors.toList());
     }
 
     @Override

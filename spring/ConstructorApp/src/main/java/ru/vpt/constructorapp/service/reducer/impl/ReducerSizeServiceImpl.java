@@ -2,6 +2,7 @@ package ru.vpt.constructorapp.service.reducer.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import ru.vpt.constructorapp.api.reducer.common.dto.ReducerDto;
 import ru.vpt.constructorapp.api.reducer.size.dto.ReducerSizeDto;
 import ru.vpt.constructorapp.api.reducer.size.mapper.ReducerSizeMapper;
 import ru.vpt.constructorapp.service.reducer.ReducerSizeService;
@@ -9,10 +10,8 @@ import ru.vpt.constructorapp.store.entities.reducer.ReducerSizeEntity;
 import ru.vpt.constructorapp.store.entities.reducer.ReducerTypeEntity;
 import ru.vpt.constructorapp.store.repo.reducer.ReducerSizeRepo;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -27,7 +26,7 @@ public class ReducerSizeServiceImpl implements ReducerSizeService {
         List<ReducerSizeEntity> entities = reducerSizeRepo.findAll();
         List<ReducerSizeDto> dtos = new ArrayList<>();
         entities.forEach(item -> dtos.add(reducerSizeMapper.toDTO(item)));
-        return dtos;
+        return dtos.stream().sorted(Comparator.comparingLong(ReducerSizeDto::getIdReducerSize)).collect(Collectors.toList());
     }
 
     @Override
@@ -41,7 +40,7 @@ public class ReducerSizeServiceImpl implements ReducerSizeService {
         List<ReducerSizeEntity> entities = reducerSizeRepo.findReducerSizeEntitiesByReducerType_IdReducerType(id);
         List<ReducerSizeDto> dtos = new ArrayList<>();
         entities.forEach(item -> dtos.add(reducerSizeMapper.toDTO(item)));
-        return dtos;
+        return dtos.stream().sorted(Comparator.comparingLong(ReducerSizeDto::getIdReducerSize)).collect(Collectors.toList());
     }
 
     @Override

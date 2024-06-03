@@ -2,16 +2,15 @@ package ru.vpt.constructorapp.service.reducer.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import ru.vpt.constructorapp.api.reducer.installation.dto.ReducerInstallationTypeDto;
 import ru.vpt.constructorapp.api.reducer.mounting.dto.ReducerMountingDto;
 import ru.vpt.constructorapp.api.reducer.mounting.mapper.ReducerMountingMapper;
 import ru.vpt.constructorapp.service.reducer.ReducerMountingService;
 import ru.vpt.constructorapp.store.entities.reducer.ReducerMountingEntity;
 import ru.vpt.constructorapp.store.repo.reducer.ReducerMountingRepo;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -25,7 +24,7 @@ public class ReducerMountingServiceImpl implements ReducerMountingService {
         List<ReducerMountingEntity> entities = reducerMountingRepo.findAll();
         List<ReducerMountingDto> dtos = new ArrayList<>();
         entities.forEach(item -> dtos.add(reducerMountingMapper.toDTO(item)));
-        return dtos;
+        return dtos.stream().sorted(Comparator.comparingLong(ReducerMountingDto::getIdReducerMounting)).collect(Collectors.toList());
     }
 
     @Override

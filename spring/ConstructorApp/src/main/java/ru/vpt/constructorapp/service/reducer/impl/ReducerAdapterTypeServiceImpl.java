@@ -2,6 +2,7 @@ package ru.vpt.constructorapp.service.reducer.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import ru.vpt.constructorapp.api.product.type.dto.ProductTypeDto;
 import ru.vpt.constructorapp.api.reducer.adapter.dto.ReducerAdapterTypeDto;
 import ru.vpt.constructorapp.api.reducer.adapter.mapper.ReducerAdapterTypeMapper;
 import ru.vpt.constructorapp.service.reducer.ReducerAdapterTypeService;
@@ -9,10 +10,8 @@ import ru.vpt.constructorapp.store.entities.reducer.ReducerAdapterTypeEntity;
 import ru.vpt.constructorapp.store.entities.reducer.ReducerTypeEntity;
 import ru.vpt.constructorapp.store.repo.reducer.ReducerAdapterTypeRepo;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -27,7 +26,7 @@ public class ReducerAdapterTypeServiceImpl implements ReducerAdapterTypeService 
         List<ReducerAdapterTypeEntity> entities = reducerAdapterTypeRepo.findAll();
         List<ReducerAdapterTypeDto> dtos = new ArrayList<>();
         entities.forEach(item -> dtos.add(reducerAdapterTypeMapper.toDTO(item)));
-        return dtos;
+        return dtos.stream().sorted(Comparator.comparingLong(ReducerAdapterTypeDto::getIdReducerAdapterType)).collect(Collectors.toList());
     }
 
     @Override
@@ -41,7 +40,7 @@ public class ReducerAdapterTypeServiceImpl implements ReducerAdapterTypeService 
         List<ReducerAdapterTypeEntity> entities = reducerAdapterTypeRepo.findReducerAdapterTypeEntitiesByReducerType_IdReducerType(id);
         List<ReducerAdapterTypeDto> dtos = new ArrayList<>();
         entities.forEach(item -> dtos.add(reducerAdapterTypeMapper.toDTO(item)));
-        return dtos;
+        return dtos.stream().sorted(Comparator.comparingLong(ReducerAdapterTypeDto::getIdReducerAdapterType)).collect(Collectors.toList());
     }
 
     @Override

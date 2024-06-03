@@ -10,10 +10,8 @@ import ru.vpt.constructorapp.store.entities.motor.MotorEntity;
 import ru.vpt.constructorapp.store.entities.motor.MotorTypeEntity;
 import ru.vpt.constructorapp.store.repo.motor.MotorRepo;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -28,7 +26,7 @@ public class MotorServiceImpl implements MotorService {
         List<MotorEntity> entities = motorRepo.findAll();
         List<MotorDto> dtos = new ArrayList<>();
         entities.forEach(item -> dtos.add(motorMapper.toDTO(item)));
-        return dtos;
+        return dtos.stream().sorted(Comparator.comparingLong(MotorDto::getIdMotor)).collect(Collectors.toList());
     }
 
     @Override
