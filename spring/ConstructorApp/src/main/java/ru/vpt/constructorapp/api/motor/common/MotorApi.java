@@ -19,5 +19,5 @@ public interface MotorApi {
     ResponseEntity<ResponseDto<MotorDto>> save(@RequestBody MotorDto motorDto);
 
     @DeleteMapping(value = "/security/motor/{id}")
-    ResponseEntity<ResponseDto<Boolean>> delete(@PathVariable Long id);
+    ResponseEntity<ResponseDto<Boolean>> delete(@PathVariable("id") Long id);
 }

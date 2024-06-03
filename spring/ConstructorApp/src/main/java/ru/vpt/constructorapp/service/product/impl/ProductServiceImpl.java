@@ -71,7 +71,7 @@ public class ProductServiceImpl implements ProductService {
         if (!productRepo.existsById(id)) {
             throw new RuntimeException("Невозможно удалить продукт: не найден объект с id: " + id);
         }
-        productRepo.deleteById(id);
+        productRepo.existsById(id);
         return true;
     }
 }
