@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Админка</title>
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="sidebar">
+            <span (click)="setid(0)">Motor</span>
+            <span (click)="setid(1)">MotorType</span>
+            <span (click)="setid(2)">MotorAdapteType</span>
+            <span (click)="setid(3)">Option 4</span>
+            <span (click)="setid(4)">Option 5</span>
+        </div>
+        <div class="content">
+            <div *ngIf="id==0">
+                <div class="buttons">
+                    <button (click)="addMotor()"> Новый </button>
+                </div>
+                <div class="table-container">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>adapterType</th>
+                                <th>frequency</th>
+                                <th>power</th>
+                                <th>rpm</th>
+                                <th>type</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let i of motor_list">
+                                <td><textarea class="editable" [(ngModel)]="i.id"></textarea></td>
+                                <td><textarea class="editable" [(ngModel)]="i.adapterType.id"></textarea></td>
+                                <td><textarea class="editable" [(ngModel)]="i.frequency.value"></textarea></td>
+                                <td><textarea class="editable" [(ngModel)]="i.power"></textarea></td>
+                                <td><textarea class="editable" [(ngModel)]="i.rpm.value"></textarea></td>
+                                <td><textarea class="editable" [(ngModel)]="i.type.id"></textarea></td>
+                                <td class="row-buttons">
+                                    <button (click)="i.save(getHttp())"> Сохранить </button>
+                                    <button (click)="i.delete(getHttp())"> Удалить </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div *ngIf="id==1">
+                <div class=" buttons">
+                    <button (click)="addMotorType()"> Новый </button>
+                </div>
+                <div class="table-container">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>motorTypeName</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let i of motorType_list">
+                                <td><textarea class="editable" [(ngModel)]="i.id"></textarea></td>
+                                <td><textarea class="editable" [(ngModel)]="i.value"></textarea></td>
+                                <td class="row-buttons">
+                                    <button (click)="i.save(getHttp())"> Сохранить </button>
+                                    <button (click)="i.delete(getHttp())"> Удалить </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div *ngIf="id==2">
+                <div class="buttons">
+                    <button (click)="addMotorAdapterType()"> Новый </button>
+                </div>
+                <div class="table-container">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>idMotorAdapterType</th>
+                                <th>motorAdapterTypeValue</th>
+                                <th>motorTypeId</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let i of motorAdapterType_list">
+                                <td><textarea class="editable" [(ngModel)]="i.id"></textarea></td>
+                                <td><textarea class="editable" [(ngModel)]="i.value"></textarea></td>
+                                <td><textarea class="editable" [(ngModel)]="i.typeid"></textarea></td>
+                                <td class="row-buttons">
+                                    <button (click)="i.save(getHttp())"> Сохранить </button>
+                                    <button (click)="i.delete(getHttp())"> Удалить </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+
+</html>

@@ -1,4 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Configurator</title>
+    <link rel="stylesheet" href="main.component.css">
+    
+</head>
+
+<body>
+
+
 <main class="container">
+  
   <div class="product">
     <h1>Продукт</h1>
     <div class="product_block">
@@ -7,9 +21,10 @@
       </button>
     </div>
   </div>
-  <div class="motor" *ngIf="product_selected == product_enum.Motor">
+
+  <div class="configurator" *ngIf="product_selected == product_enum.Motor">
     <h1>Конфигуратор двигателя</h1>
-    <div>
+    <div class = "memberConfigurator">
       <span>Тип двигателя</span>
       <select [(ngModel)]="motor.type.value">
         <option disabled selected hidden></option>
@@ -17,7 +32,8 @@
           {{value}}</option>
       </select>
     </div>
-    <div *ngIf="motor.type.value=='двигатель стандарта DIN'">
+
+    <div class = "memberConfigurator" *ngIf="motor.type.value=='двигатель стандарта DIN'">
       <br />
       <span>Тип фланца</span>
       <select [(ngModel)]="motor.adapterType.value">
@@ -26,13 +42,14 @@
           {{value}}</option>
       </select>
     </div>
+
     <br />
-    <div>
+    <div class = "memberConfigurator">
       <span>Мощность</span>
       <input [(ngModel)]="motor.power" type="number" />
     </div>
     <br />
-    <div>
+    <div class = "memberConfigurator">
       <span>Частота переменного тока Hz </span>
       <select [(ngModel)]="motor.frequency.value">
         <option disabled selected hidden></option>
@@ -41,7 +58,7 @@
       </select>
     </div>
     <br />
-    <div>
+    <div class = "memberConfigurator">
       <span>Число оборотов об/мин </span>
       <select [(ngModel)]="motor.rpm.value">
         <option disabled selected hidden></option>
@@ -52,9 +69,13 @@
     <br />
     <hr />
   </div>
-  <div class="reducer" *ngIf="product_selected == product_enum.Reducer">
+
+
+
+
+  <div class="configurator" *ngIf="product_selected == product_enum.Reducer">
     <h1>Конфигуратор редуктора</h1>
-    <div>
+    <div class = "memberConfigurator">
       <span>Тип редуктора</span>
       <select [(ngModel)]="reducer.type.value">
         <option disabled selected hidden></option>
@@ -63,7 +84,7 @@
       </select>
     </div>
     <br />
-    <div>
+    <div class = "memberConfigurator">
       <span>Размер редуктора</span>
       <select [(ngModel)]="reducer.size.value">
         <option disabled selected hidden></option>
@@ -72,21 +93,21 @@
       </select>
     </div>
     <br />
-    <div>
+    <div class = "memberConfigurator">
       <span>Диаметр входного вала</span>
       <input [(ngModel)]="reducer.diameterInputShaft.value" type="number" />
       <span>+-</span>
       <input [(ngModel)]="reducer.diameterInputShaft.eps" type="number" />
     </div>
     <br />
-    <div>
+    <div class = "memberConfigurator">
       <span>Диаметр выходного вала</span>
       <input [(ngModel)]="reducer.diameterOutputShaft.value" type="number" />
       <span>+-</span>
       <input [(ngModel)]="reducer.diameterOutputShaft.eps" type="number" />
     </div>
     <br />
-    <div>
+    <div class = "memberConfigurator">
       <span>Тип входа</span>
       <select [(ngModel)]="reducer.inputType.value">
         <option disabled selected hidden></option>
@@ -95,7 +116,7 @@
       </select>
     </div>
     <br />
-    <div *ngIf="reducer.inputType.value=='Адаптер IEC'">
+    <div class = "memberConfigurator" *ngIf="reducer.inputType.value=='Адаптер IEC'">
       <div>
         <span>Размер адаптера IEC</span>
         <select [(ngModel)]="reducer.adapterType.value">
@@ -108,7 +129,7 @@
       <br />
     </div>
 
-    <div>
+    <div class = "memberConfigurator"> 
       <span>Форма выходного вала</span>
       <select [(ngModel)]="reducer.outputShaftType.value">
         <option disabled selected hidden></option>
@@ -117,17 +138,17 @@
       </select>
     </div>
     <br />
-    <div>
+    <div class = "memberConfigurator">
       <span>Крутящий момент</span>
       <input [(ngModel)]="reducer.torqueMoment" type="number" />
     </div>
     <br />
-    <div>
+    <div class = "memberConfigurator">
       <span>Передаточное отношение</span>
       <input [(ngModel)]="reducer.iRatio" type="number" />
     </div>
     <br />
-    <div>
+    <div class = "memberConfigurator">
       <span>Тип крепления редуктора</span>
       <select [(ngModel)]="reducer.installationType.value">
         <option disabled selected hidden></option>
@@ -136,7 +157,7 @@
       </select>
     </div>
     <br />
-    <div>
+    <div class = "memberConfigurator">
       <span>Монтажное положение</span>
       <select [(ngModel)]="reducer.mounting.value">
         <option disabled selected hidden></option>
@@ -146,9 +167,11 @@
     </div>
     <hr />
   </div>
-  <div class="motor-reducer" *ngIf="product_selected == product_enum.MotorReducer">
+
+
+  <div class="configurator" *ngIf="product_selected == product_enum.MotorReducer">
     <h1>Конфигуратор мотор-редуктора</h1>
-    <div>
+    <div class = "memberConfigurator">
       <span>Тип редуктора</span>
       <select [(ngModel)]="motorReducer.type.value">
         <option disabled selected hidden></option>
@@ -157,7 +180,7 @@
       </select>
     </div>
     <br />
-    <div>
+    <div class = "memberConfigurator">
       <span>Размер редуктора</span>
       <select [(ngModel)]="motorReducer.size.value">
         <option disabled selected hidden></option>
@@ -166,14 +189,14 @@
       </select>
     </div>
     <br />
-    <div>
+    <div class = "memberConfigurator">
       <span>Диаметр выходного вала</span>
       <input [(ngModel)]="motorReducer.diameterOutputShaft.value" type="number" />
       <span>+-</span>
       <input [(ngModel)]="motorReducer.diameterOutputShaft.eps" type="number" />
     </div>
     <br />
-    <div>
+    <div class = "memberConfigurator">
       <span>Форма выходного вала</span>
       <select [(ngModel)]="motorReducer.outputShaftType.value">
         <option disabled selected hidden></option>
@@ -182,22 +205,22 @@
       </select>
     </div>
     <br />
-    <div>
+    <div class = "memberConfigurator">
       <span>Мощность двигателя</span>
       <input [(ngModel)]="motorReducer.motorPower" type="number" />
     </div>
     <br />
-    <div>
+    <div class = "memberConfigurator">
       <span>Крутящий момент</span>
       <input [(ngModel)]="motorReducer.torqueMoment" type="number" />
     </div>
     <br />
-    <div>
+    <div class = "memberConfigurator">
       <span>Передаточное отношение</span>
       <input [(ngModel)]="motorReducer.iRatio" type="number" />
     </div>
     <br />
-    <div>
+    <div class = "memberConfigurator">
       <span>Тип крепления редуктора</span>
       <select [(ngModel)]="motorReducer.installationType.value">
         <option disabled selected hidden></option>
@@ -206,15 +229,18 @@
       </select>
     </div>
     <br />
-    <div>
+    <div class = "memberConfigurator">
       <span>Монтажное положение</span>
       <input [(ngModel)]="reducer.mounting" type="number" />
     </div>
     <br />
-    <div>
+    <div class = "memberConfigurator">
       <span>Мощность</span>
       <input [(ngModel)]="motor.power" type="number" />
     </div>
   </div>
+
   <button *ngIf="product_selected != null" (click)="search()">Найти</button>
 </main>
+
+</body>

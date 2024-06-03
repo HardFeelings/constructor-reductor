@@ -12,7 +12,7 @@ import { FormsModule } from '@angular/forms';
   selector: 'app-root',
   standalone: true,
   imports: [RouterOutlet, HeaderComponent, FooterComponent, MainComponent, HttpClientModule, FormsModule],
-  templateUrl: './app.component.html' // e:/constructor-reductor/src/app/app.component.ts: '123'
+  templateUrl: './app.component.html' // e:/constructor-reductor/src/app/app.component.ts: '123',
 })
 export class AppComponent {
   title = 'constructor-reductor';
