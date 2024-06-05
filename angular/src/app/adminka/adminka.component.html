@@ -14,7 +14,7 @@
             <span (click)="setid(0)">Motor</span>
             <span (click)="setid(1)">MotorType</span>
             <span (click)="setid(2)">MotorAdapteType</span>
-            <span (click)="setid(3)">Option 4</span>
+            <span (click)="setid(3)">Product</span>
             <span (click)="setid(4)">Option 5</span>
         </div>
         <div class="content">
@@ -105,7 +105,44 @@
                     </table>
                 </div>
             </div>
-
+            <div *ngIf="id==3">
+                <div class="buttons">
+                    <button (click)="addProduct()"> Новый </button>
+                </div>
+                <div class="table-container">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>idProduct</th>
+                                <th>idProductType</th>
+                                <th>name</th>
+                                <th>weight</th>
+                                <th>price</th>
+                                <th>idReducer</th>
+                                <th>idMotor</th>
+                                <th>options</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let i of product_list">
+                                <td><input class="editable" [(ngModel)]="i.id"></td>
+                                <td><input class="editable" [(ngModel)]="i.productTypeId"></td>
+                                <td><input class="editable" [(ngModel)]="i.name"></td>
+                                <td><input class="editable" [(ngModel)]="i.weight"></td>
+                                <td><input class="editable" [(ngModel)]="i.price"></td>
+                                <td><input class="editable" [(ngModel)]="i.reducerId"></td>
+                                <td><input class="editable" [(ngModel)]="i.motorId"></td>
+                                <td><input class="editable" [(ngModel)]="i.optionsString"></td>
+                                <td class="row-buttons">
+                                    <button (click)="i.save(getHttp())"> Сохранить </button>
+                                    <button (click)="i.delete(getHttp())"> Удалить </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
 

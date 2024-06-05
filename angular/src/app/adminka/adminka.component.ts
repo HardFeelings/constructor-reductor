@@ -40,6 +40,7 @@ export class AdminkaComponent {
     this.getMotorList()
     this.getMotorTypeList()
     this.getMotorAdapterTypeList()
+    this.getProductList()
   }
 
   addMotor() {
@@ -85,29 +86,19 @@ export class AdminkaComponent {
   }
 
   getProductList() {
-    this.http.get('/api/v1/зкщвгсе').subscribe({
+    this.http.get('/api/v1/product').subscribe({
       next: (data: any) => {
         data.data.forEach((e: { [x: string]: any; }) => {
-          var motor = new Motor()
-          var productType = new ProductType()
-          var reducer = null
           var product = new Product()
           product.id = e["idProduct"]
-          productType.id = e["idProductType"]["idProduct"]
-          productType.value = e["idProductType"]["productTypeValue"]
-          product.productType = productType
+          product.productTypeId = e["productTypeId"]
           product.name = e["name"]
           product.weight = e["weight"]
           product.price = e["price"]
-          product.reducer = reducer
-          motor.id = e["motor"]["idMotor"]
-          motor.frequency.value = e["motor"]["frequency"]
-          motor.adapterType.id = e["motor"]["motorAdapterTypeId"]
-          motor.power = e["motor"]["power"]
-          motor.rpm.value = e["motor"]["rpm"]
-          motor.type.id = e["motor"]["motorTypeId"]
-          product.motor = motor
-          // product.options =
+          product.reducerId = e["reducerId"]
+          product.motorId = e["motorId"]
+          product.optionsIds = e["optionsIds"]
+          product.optionsString = product.optionsIds.join(',')
           this.product_list.push(product)
         })
       },

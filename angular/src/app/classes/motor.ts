@@ -8,14 +8,31 @@ export class Motor {
     frequency: MotorFrequency
     rpm: MotorRPM
 
-    constructor() {
+    constructor();
+    constructor(http?: HttpClient, id?: number) {
         this.id = 0
         this.type = new MotorType()
         this.adapterType = new MotorAdapterType()
         this.power = null
         this.frequency = new MotorFrequency()
         this.rpm = new MotorRPM()
+        if (http != undefined) {
+            http.get(`/api/v1/motor/${id}`).subscribe({
+                next: (data: any) => {
+                    data.data.forEach((e: { [x: string]: any; }) => {
+                        this.id = e["idMotor"]
+                        this.frequency.value = e["frequency"]
+                        this.adapterType.id = e["motorAdapterTypeId"]
+                        this.power = e["power"]
+                        this.rpm.value = e["rpm"]
+                        this.type.id = e["motorTypeId"]
+                    })
+                },
+                error: error => { console.log(error); }
+            });
+        }
     }
+
 
     ser(): any {
         return {

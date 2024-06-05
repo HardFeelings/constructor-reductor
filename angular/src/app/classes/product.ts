@@ -3,34 +3,39 @@ import { Motor } from "./motor"
 
 export class Product {
     id: number
-    productType: ProductType
+    productTypeId: number
     name: string
     weight: number
     price: number
-    reducer: null
-    motor: Motor
-    options: Array<null>
+    reducerId: number | null
+    motorId: number | null
+    optionsIds: Array<number>
+    optionsString: string
 
     constructor() {
         this.id = 0
-        this.productType = new ProductType()
+        this.productTypeId = 0
         this.name = ""
         this.weight = 0
         this.price = 0
-        this.reducer = null
-        this.motor = new Motor()
-        this.options = new Array<null>()
+        this.reducerId = null
+        this.motorId = null
+        this.optionsIds = new Array<number>()
+        this.optionsString = ""
     }
 
     ser(): any {
         return {
             idProduct: this.id,
-            productType: this.productType.ser(),
+            productTypeId: this.productTypeId,
             name: this.name,
             weight: this.weight,
-            reducer: this.reducer,
-            motor: this.motor.ser(),
-            options: this.options
+            price: this.price,
+            reducerId: this.reducerId,
+            motorId: this.motorId,
+            optionsIds: this.optionsString == "" ? new Array<number>() : this.optionsString.split(',').map(function (item) {
+                return parseInt(item, 10);
+            })
         }
     }
 
@@ -48,7 +53,7 @@ export class Product {
     }
 
     save(http: HttpClient) {
-        console.log(this)
+        console.log(this.ser())
         http.post('/api/v1/security/product', this.ser()
         ).subscribe({
             next: (data: any) => {
