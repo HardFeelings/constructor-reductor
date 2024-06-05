@@ -49,17 +49,17 @@ public class ProductServiceImpl implements ProductService {
             throw new RuntimeException("Невозможно сохранить продукт: dto равен null");
         }
         ProductEntity entity = productMapper.toEntity(dto);
-        entity.setProductType(productTypeService.findById(dto.getProductType().getIdProductType())
-                .orElseThrow(() -> new RuntimeException("Невозможно сохранить продукт: не найден тип продукта с id: " + dto.getProductType().getIdProductType())));
-        if (dto.getReducer() != null)
-            entity.setReducer(reducerService.findById(dto.getReducer().getIdReducer()).get());
+        entity.setProductType(productTypeService.findById(dto.getProductTypeId())
+                .orElseThrow(() -> new RuntimeException("Невозможно сохранить продукт: не найден тип продукта с id: " + dto.getProductTypeId())));
+        if (dto.getReducerId() != null)
+            entity.setReducer(reducerService.findById(dto.getReducerId()).get());
         else entity.setReducer(null);
 
-        if (dto.getMotor() != null)
-            entity.setMotor(motorService.findById(dto.getMotor().getIdMotor()).get());
+        if (dto.getMotorId() != null)
+            entity.setMotor(motorService.findById(dto.getMotorId()).get());
         else entity.setMotor(null);
 
-        entity.setOptions(dto.getOptions().stream().map(item -> productOptionService.findById(item.getIdProductOption()).get()).collect(Collectors.toSet()));
+        entity.setOptions(dto.getOptionsIds().stream().map(item -> productOptionService.findById(item).get()).collect(Collectors.toSet()));
         return productMapper.toDTO(productRepo.save(entity));
     }
 

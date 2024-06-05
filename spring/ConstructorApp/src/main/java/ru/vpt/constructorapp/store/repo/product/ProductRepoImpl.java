@@ -20,6 +20,13 @@ public class ProductRepoImpl implements ProductCustomRepo{
                 .from(productEntity)
                 .where(QPredicates.builder()
                         .add(filter.getProductTypeId(), productEntity.productType.idProductType::eq)
+                        .add(filter.getProductOptions(), productEntity.options.any().idProductOption::in)
+                        .add(filter.getMotorTypeId(), productEntity.motor.idMotor::eq)
+                        .add(filter.getMotorAdapterTypeId(), productEntity.motor.motorAdapterType.idMotorAdapterType::eq)
+                        .add(filter.getPower(), productEntity.motor.power::eq)
+                        .add(filter.getFrequency(), productEntity.motor.frequency::eq)
+                        .add(filter.getRpm(), productEntity.motor.frequency::eq)
+
                         .buildAnd())
                 .fetch();
     }

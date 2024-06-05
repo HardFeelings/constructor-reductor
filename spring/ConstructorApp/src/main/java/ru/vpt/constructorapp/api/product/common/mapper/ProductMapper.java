@@ -9,11 +9,17 @@ import ru.vpt.constructorapp.api.product.option.mapper.ProductOptionMapper;
 import ru.vpt.constructorapp.api.product.type.mapper.ProductTypeMapper;
 import ru.vpt.constructorapp.api.reducer.common.mapper.ReducerMapper;
 import ru.vpt.constructorapp.store.entities.product.ProductEntity;
+import ru.vpt.constructorapp.store.entities.product.ProductOptionEntity;
 
 @Mapper(componentModel = "spring",uses = {ProductTypeMapper.class, ReducerMapper.class,
         MotorMapper.class, ProductOptionMapper.class}, injectionStrategy = InjectionStrategy.CONSTRUCTOR)
 public interface ProductMapper {
 
+
+    @Mapping(target = "productTypeId", source = "productType.idProductType")
+    @Mapping(target = "reducerId", source = "reducer.idReducer")
+    @Mapping(target = "motorId", source = "motor.idMotor")
+    @Mapping(target = "optionsIds", source = "options")
     ProductDto toDTO(ProductEntity entity);
 
     @Mapping(target = "productType", ignore = true)
@@ -21,5 +27,9 @@ public interface ProductMapper {
     @Mapping(target = "options", ignore = true)
     @Mapping(target = "motor", ignore = true)
     ProductEntity toEntity(ProductDto dto);
+
+    default Long toId(ProductOptionEntity entity){
+        return entity.getIdProductOption();
+    }
 }
 

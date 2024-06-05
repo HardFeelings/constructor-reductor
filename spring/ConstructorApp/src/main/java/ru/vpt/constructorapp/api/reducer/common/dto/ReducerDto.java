@@ -18,13 +18,13 @@ import ru.vpt.constructorapp.api.reducer.type.dto.ReducerTypeDto;
 @Builder
 public class ReducerDto {
     private Long idReducer;
-    private ReducerTypeDto reducerType;
-    private ReducerSizeDto reducerSize;
-    private ReducerInputTypeDto reducerInputType;
-    private ReducerAdapterTypeDto reducerAdapterType;
-    private ReducerOutputShaftTypeDto reducerOutputShaftType;
-    private ReducerInstallationTypeDto reducerInstallationType;
-    private ReducerMountingDto reducerMounting;
+    private Long reducerTypeId;
+    private Long reducerSizeId;
+    private Long reducerInputTypeId;
+    private Long reducerAdapterTypeId;
+    private Long reducerOutputShaftTypeId;
+    private Long reducerInstallationTypeId;
+    private Long reducerMountingId;
     private Integer diameterInputShaft;
     private Integer diameterOutputShaft;
     private Double ratio;

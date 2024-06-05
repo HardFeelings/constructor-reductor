@@ -17,11 +17,15 @@ import java.util.Set;
 @Builder
 public class ProductDto {
     private Long idProduct;
-    private ProductTypeDto productType;
+    private Long productTypeId;
+    //private ProductTypeDto productType;
     private String name;
     private Double weight;
     private Double price;
-    private ReducerDto reducer;
-    private MotorDto motor;
-    private Set<ProductOptionDto> options;
+    private Long reducerId;
+    //private ReducerDto reducer;
+    private Long motorId;
+    //private MotorDto motor;
+   // private Set<ProductOptionDto> options;
+    private Set<Long> optionsIds;
 }
