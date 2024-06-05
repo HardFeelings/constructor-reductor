@@ -26,7 +26,19 @@ public class ProductRepoImpl implements ProductCustomRepo{
                         .add(filter.getPower(), productEntity.motor.power::eq)
                         .add(filter.getFrequency(), productEntity.motor.frequency::eq)
                         .add(filter.getRpm(), productEntity.motor.frequency::eq)
-
+                        .add(filter.getIdReducerType(), productEntity.reducer.reducerType.idReducerType::eq)
+                        .add(filter.getIdReducerSize(), productEntity.reducer.reducerSize.idReducerSize::eq)
+                        .add(filter.getDiamInput() - filter.getDiamInputAllowance(),productEntity.reducer.diameterInputShaft::goe)
+                        .add(filter.getDiamInput() + filter.getDiamInputAllowance(),productEntity.reducer.diameterInputShaft::loe)
+                        .add(filter.getDiamOutput() - filter.getDiamOutputAllowance(),productEntity.reducer.diameterOutputShaft::goe)
+                        .add(filter.getDiamOutput() + filter.getDiamOutputAllowance(),productEntity.reducer.diameterOutputShaft::loe)
+                        .add(filter.getIdReducerInputType(), productEntity.reducer.reducerInputType.idReducerInputType::eq)
+                        .add(filter.getIdReducerAdapterInputType(), productEntity.reducer.reducerAdapterType.idReducerAdapterType::eq)
+                        .add(filter.getIdReducerOutputShaftType(), productEntity.reducer.reducerOutputShaftType.idReducerOutputShaftType::eq)
+                        .add(filter.getTorqueMoment(), productEntity.reducer.torqueMoment::eq)
+                        .add(filter.getRatio(), productEntity.reducer.ratio::eq)
+                        .add(filter.getIdReducerInstallationType(), productEntity.reducer.reducerInstallationType.idReducerInstallationType::eq)
+                        .add(filter.getIdReducerMounting(), productEntity.reducer.reducerMounting.idReducerMounting::eq)
                         .buildAnd())
                 .fetch();
     }
