@@ -83,9 +83,40 @@ export class ProductType {
         }
     }
 
+    public static getAll(http: HttpClient): Array<ProductType> {
+        var list: ProductType[] = new Array<ProductType>()
+        http.get('/api/v1/productType')
+            .subscribe({
+                next: (data: any) => {
+                    console.log("get all")
+                    data.data.forEach((e: { [x: string]: any; }) => {
+                        var productList = new ProductType()
+                        productList.id = e["idProductType"]
+                        productList.value = e["productTypeValue"]
+                        list.push(productList)
+                    })
+                },
+                error: error => {
+                    console.log(error)
+                }
+            });
+        return list;
+    }
+
     delete(http: HttpClient) {
-        console.log(this)
         http.delete(`/api/v1/security/productType/${this.id}`)
+            .subscribe({
+                next: (data: any) => {
+                    return data.data
+                },
+                error: error => {
+                    console.log(error)
+                }
+            });
+    }
+
+    save(http: HttpClient) {
+        http.post('/api/v1/security/productType', this.ser())
             .subscribe({
                 next: (data: any) => {
                     console.log(data.data)
@@ -95,17 +126,71 @@ export class ProductType {
                 }
             });
     }
+}
+
+
+
+export class ProductOption {
+    idProductOption: number
+    productOptionValue: string
+    productTypeId: number
+
+    constructor() {
+        this.idProductOption = 0
+        this.productOptionValue = ""
+        this.productTypeId = 0
+    }
+
+    ser(): any {
+        return {
+            idProductOption: this.idProductOption,
+            productOptionValue: this.productOptionValue,
+            productTypeId: this.productTypeId
+        }
+    }
+
+    public static getAll(http: HttpClient): Array<ProductOption> {
+        var list: ProductOption[] = new Array<ProductOption>()
+        http.get('/api/v1/productOption')
+            .subscribe({
+                next: (data: any) => {
+                    console.log("get all")
+                    data.data.forEach((e: { [x: string]: any; }) => {
+                        var productOption = new ProductOption()
+                        productOption.idProductOption = e["idProductOption"]
+                        productOption.productOptionValue = e["productOptionValue"]
+                        productOption.productTypeId = e["productTypeId"]
+                        list.push(productOption)
+                    })
+                },
+                error: error => {
+                    console.log(error)
+                }
+            });
+        return list;
+    }
+
+    delete(http: HttpClient) {
+        http.delete(`/api/v1/security/productOption/${this.idProductOption}`)
+            .subscribe({
+                next: (data: any) => {
+                    return data.data
+                },
+                error: error => {
+                    console.log(error)
+                }
+            });
+    }
 
     save(http: HttpClient) {
-        console.log(this)
-        http.post('/api/v1/security/productType', this.ser()
-        ).subscribe({
-            next: (data: any) => {
-                console.log(data.data)
-            },
-            error: error => {
-                console.log(error)
-            }
-        });
+        http.post('/api/v1/security/productOption', this.ser())
+            .subscribe({
+                next: (data: any) => {
+                    console.log(data.data)
+                },
+                error: error => {
+                    console.log(error)
+                }
+            });
     }
 }

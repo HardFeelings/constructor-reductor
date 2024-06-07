@@ -15,7 +15,16 @@
             <span (click)="setid(1)">MotorType</span>
             <span (click)="setid(2)">MotorAdapteType</span>
             <span (click)="setid(3)">Product</span>
-            <span (click)="setid(4)">Option 5</span>
+            <span (click)="setid(4)">ProductType</span>
+            <span (click)="setid(5)">ProductOption</span>
+            <span (click)="setid(6)">Reducer</span>
+            <span (click)="setid(7)">ReducerType</span>
+            <span (click)="setid(8)">ReducerSize</span>
+            <span (click)="setid(9)">ReducerOutputShaft</span>
+            <span (click)="setid(10)">ReducerMounting</span>
+            <span (click)="setid(11)">ReducerInstallationType</span>
+            <span (click)="setid(12)">ReducerInputType</span>
+            <span (click)="setid(13)">ReducerAdapterType</span>
         </div>
         <div class="content">
             <div *ngIf="id==0">
@@ -137,6 +146,298 @@
                                 <td class="row-buttons">
                                     <button (click)="i.save(getHttp())"> Сохранить </button>
                                     <button (click)="i.delete(getHttp())"> Удалить </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div *ngIf="id==4">
+                <div class="buttons">
+                    <button (click)="addProductType()"> Новый </button>
+                </div>
+                <div class="table-container">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>idProductType</th>
+                                <th>productTypeValue</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let i of productType_list">
+                                <td><input class="editable" [(ngModel)]="i.id"></td>
+                                <td><input class="editable" [(ngModel)]="i.value"></td>
+                                <td class="row-buttons">
+                                    <button (click)="saveProductType(i)"> Сохранить </button>
+                                    <button (click)="deleteProductType(i)"> Удалить </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div *ngIf="id==5">
+                <div class="buttons">
+                    <button (click)="addProductOption()"> Новый </button>
+                </div>
+                <div class="table-container">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>idProductOption</th>
+                                <th>productOptionValue</th>
+                                <th>productTypeId</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let i of productOption_list">
+                                <td><input class="editable" [(ngModel)]="i.idProductOption"></td>
+                                <td><input class="editable" [(ngModel)]="i.productOptionValue"></td>
+                                <td><input class="editable" [(ngModel)]="i.productTypeId"></td>
+                                <td class="row-buttons">
+                                    <button (click)="saveProductOptions(i)"> Сохранить </button>
+                                    <button (click)="deleteProductOption(i)"> Удалить </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div *ngIf="id==6">
+                <div class="buttons">
+                    <button (click)="addReducer()"> Новый </button>
+                </div>
+                <div class="table-container">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>idReducer</th>
+                                <th>reducerTypeId</th>
+                                <th>reducerSizeId</th>
+                                <th>reducerInputTypeId</th>
+                                <th>reducerAdapterTypeId</th>
+                                <th>reducerOutputShaftTypeId</th>
+                                <th>reducerInstallationTypeId</th>
+                                <th>reducerMountingId</th>
+                                <th>diameterInputShaft</th>
+                                <th>diameterOutputShaft</th>
+                                <th>ratio</th>
+                                <th>torqueMoment</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let i of reducer_list">
+                                <td><input class="editable" [(ngModel)]="i.idReducer"></td>
+                                <td><input class="editable" [(ngModel)]="i.reducerTypeId"></td>
+                                <td><input class="editable" [(ngModel)]="i.reducerSizeId"></td>
+                                <td><input class="editable" [(ngModel)]="i.reducerInputTypeId"></td>
+                                <td><input class="editable" [(ngModel)]="i.reducerAdapterTypeId"></td>
+                                <td><input class="editable" [(ngModel)]="i.reducerOutputShaftTypeId"></td>
+                                <td><input class="editable" [(ngModel)]="i.reducerInstallationTypeId"></td>
+                                <td><input class="editable" [(ngModel)]="i.reducerMountingId"></td>
+                                <td><input class="editable" [(ngModel)]="i.diameterInputShaft"></td>
+                                <td><input class="editable" [(ngModel)]="i.diameterOutputShaft"></td>
+                                <td><input class="editable" [(ngModel)]="i.ratio"></td>
+                                <td><input class="editable" [(ngModel)]="i.torqueMoment"></td>
+                                <td class="row-buttons">
+                                    <button (click)="saveReducer(i)"> Сохранить </button>
+                                    <button (click)="deleteReducer(i)"> Удалить </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div *ngIf="id==7">
+                <div class="buttons">
+                    <button (click)="addReducerType()"> Новый </button>
+                </div>
+                <div class="table-container">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>idReducerType</th>
+                                <th>value</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let i of reducerType_list">
+                                <td><input class="editable" [(ngModel)]="i.idReducerType"></td>
+                                <td><input class="editable" [(ngModel)]="i.value"></td>
+                                <td class="row-buttons">
+                                    <button (click)="saveReducerType(i)"> Сохранить </button>
+                                    <button (click)="deleteReducerType(i)"> Удалить </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div *ngIf="id==8">
+                <div class="buttons">
+                    <button (click)="addReducerSize()"> Новый </button>
+                </div>
+                <div class="table-container">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>idReducerSize</th>
+                                <th>value</th>
+                                <th>reducerTypeId</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let i of reducerSize_list">
+                                <td><input class="editable" [(ngModel)]="i.idReducerSize"></td>
+                                <td><input class="editable" [(ngModel)]="i.value"></td>
+                                <td><input class="editable" [(ngModel)]="i.reducerTypeId"></td>
+                                <td class="row-buttons">
+                                    <button (click)="saveReducerSize(i)"> Сохранить </button>
+                                    <button (click)="deleteReducerSize(i)"> Удалить </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div *ngIf="id==9">
+                <div class="buttons">
+                    <button (click)="addReducerOutputShaft()"> Новый </button>
+                </div>
+                <div class="table-container">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>idReducerOutputShaftType</th>
+                                <th>value</th>
+                                <th>reducerTypeId</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let i of reducerOutput_list">
+                                <td><input class="editable" [(ngModel)]="i.idReducerOutputShaftType"></td>
+                                <td><input class="editable" [(ngModel)]="i.value"></td>
+                                <td><input class="editable" [(ngModel)]="i.reducerTypeId"></td>
+                                <td class="row-buttons">
+                                    <button (click)="saveReducerOutputShaft(i)"> Сохранить </button>
+                                    <button (click)="deleteReducerOutputShaft(i)"> Удалить </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div *ngIf="id==10">
+                <div class="buttons">
+                    <button (click)="addReducerMounting()"> Новый </button>
+                </div>
+                <div class="table-container">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>idReducerMounting</th>
+                                <th>value</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let i of reducerMounting_list">
+                                <td><input class="editable" [(ngModel)]="i.idReducerMounting"></td>
+                                <td><input class="editable" [(ngModel)]="i.value"></td>
+                                <td class="row-buttons">
+                                    <button (click)="saveReducerMounting(i)"> Сохранить </button>
+                                    <button (click)="deleteReducerMounting(i)"> Удалить </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div *ngIf="id==11">
+                <div class="buttons">
+                    <button (click)="addReducerInstallationType()"> Новый </button>
+                </div>
+                <div class="table-container">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>idReducerInstallationType</th>
+                                <th>value</th>
+                                <th>reducerTypeId</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let i of reducerInstallationType_list">
+                                <td><input class="editable" [(ngModel)]="i.idReducerInstallationType"></td>
+                                <td><input class="editable" [(ngModel)]="i.value"></td>
+                                <td><input class="editable" [(ngModel)]="i.reducerTypeId"></td>
+                                <td class="row-buttons">
+                                    <button (click)="saveReducerInstallationType(i)"> Сохранить </button>
+                                    <button (click)="deleteReducerInstallationType(i)"> Удалить </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div *ngIf="id==12">
+                <div class="buttons">
+                    <button (click)="addReducerInputType()"> Новый </button>
+                </div>
+                <div class="table-container">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>idReducerInputType</th>
+                                <th>value</th>
+                                <th>reducerTypeId</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let i of reducerInputType_list">
+                                <td><input class="editable" [(ngModel)]="i.idReducerInputType"></td>
+                                <td><input class="editable" [(ngModel)]="i.value"></td>
+                                <td><input class="editable" [(ngModel)]="i.reducerTypeId"></td>
+                                <td class="row-buttons">
+                                    <button (click)="saveReducerInputType(i)"> Сохранить </button>
+                                    <button (click)="deleteReducerInputType(i)"> Удалить </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div *ngIf="id==13">
+                <div class="buttons">
+                    <button (click)="addReducerAdapterType()"> Новый </button>
+                </div>
+                <div class="table-container">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>idReducerAdapterType</th>
+                                <th>value</th>
+                                <th>reducerTypeId</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let i of reducerAdapterType_list">
+                                <td><input class="editable" [(ngModel)]="i.idReducerAdapterType"></td>
+                                <td><input class="editable" [(ngModel)]="i.value"></td>
+                                <td><input class="editable" [(ngModel)]="i.reducerTypeId"></td>
+                                <td class="row-buttons">
+                                    <button (click)="saveReducerIAdapterType(i)"> Сохранить </button>
+                                    <button (click)="deleteReducerAdapterType(i)"> Удалить </button>
                                 </td>
                             </tr>
                         </tbody>
