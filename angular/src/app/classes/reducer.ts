@@ -1,4 +1,5 @@
 import { HttpClient } from "@angular/common/http"
+import { Observable } from "rxjs"
 
 export class Reducer {
     idReducer: Number
@@ -105,16 +106,8 @@ export class Reducer {
             });
     }
 
-    save(http: HttpClient) {
-        http.post('/api/v1/security/reducer', this.ser())
-            .subscribe({
-                next: (data: any) => {
-                    console.log(data.data)
-                },
-                error: error => {
-                    console.log(error)
-                }
-            });
+    save(http: HttpClient): Observable<Reducer> {
+        return http.post<Reducer>('/api/v1/security/reducer', this.ser())
     }
 }
 
@@ -168,16 +161,8 @@ export class ReducerType {
             });
     }
 
-    save(http: HttpClient) {
-        http.post('/api/v1/security/reducerType', this.ser())
-            .subscribe({
-                next: (data: any) => {
-                    console.log(data.data)
-                },
-                error: error => {
-                    console.log(error)
-                }
-            });
+    save(http: HttpClient): Observable<ReducerType> {
+        return http.post<ReducerType>('/api/v1/security/reducerType', this.ser())
     }
 }
 
@@ -234,16 +219,8 @@ export class ReducerSize {
             });
     }
 
-    save(http: HttpClient) {
-        http.post('/api/v1/security/reducerSize', this.ser())
-            .subscribe({
-                next: (data: any) => {
-                    console.log(data.data)
-                },
-                error: error => {
-                    console.log(error)
-                }
-            });
+    save(http: HttpClient): Observable<ReducerSize> {
+        return http.post<ReducerSize>('/api/v1/security/reducerSize', this.ser())
     }
 }
 
@@ -320,16 +297,8 @@ export class ReducerInputType {
             });
     }
 
-    save(http: HttpClient) {
-        http.post('/api/v1/security/reducerInputType', this.ser())
-            .subscribe({
-                next: (data: any) => {
-                    console.log(data.data)
-                },
-                error: error => {
-                    console.log(error)
-                }
-            });
+    save(http: HttpClient) : Observable<ReducerInputType> {
+        return http.post<ReducerInputType>('/api/v1/security/reducerInputType', this.ser())
     }
 }
 
@@ -386,16 +355,8 @@ export class ReducerAdapterType {
             });
     }
 
-    save(http: HttpClient) {
-        http.post('/api/v1/security/reducerAdapterType', this.ser())
-            .subscribe({
-                next: (data: any) => {
-                    console.log(data.data)
-                },
-                error: error => {
-                    console.log(error)
-                }
-            });
+    save(http: HttpClient): Observable<ReducerAdapterType> {
+        return http.post<ReducerAdapterType>('/api/v1/security/reducerAdapterType', this.ser())
     }
 }
 
@@ -453,16 +414,8 @@ export class ReducerOutputShaftType {
             });
     }
 
-    save(http: HttpClient) {
-        http.post('/api/v1/security/reducerOutputShaftType', this.ser())
-            .subscribe({
-                next: (data: any) => {
-                    console.log(data.data)
-                },
-                error: error => {
-                    console.log(error)
-                }
-            });
+    save(http: HttpClient): Observable<ReducerOutputShaftType> {
+        return http.post<ReducerOutputShaftType>('/api/v1/security/reducerOutputShaftType', this.ser())
     }
 }
 
@@ -520,16 +473,8 @@ export class ReducerInstallationType {
             });
     }
 
-    save(http: HttpClient) {
-        http.post('/api/v1/security/reducerInstallationType', this.ser())
-            .subscribe({
-                next: (data: any) => {
-                    console.log(data.data)
-                },
-                error: error => {
-                    console.log(error)
-                }
-            });
+    save(http: HttpClient):Observable<ReducerInstallationType> {
+        return http.post<ReducerInstallationType>('/api/v1/security/reducerInstallationType', this.ser())
     }
 }
 
@@ -582,15 +527,7 @@ export class MountingPoint {
             });
     }
 
-    save(http: HttpClient) {
-        http.post('/api/v1/security/reducerMounting', this.ser())
-            .subscribe({
-                next: (data: any) => {
-                    console.log(data.data)
-                },
-                error: error => {
-                    console.log(error)
-                }
-            });
+    save(http: HttpClient): Observable<MountingPoint> {
+        return http.post<MountingPoint>('/api/v1/security/reducerMounting', this.ser())
     }
 }

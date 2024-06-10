@@ -1,5 +1,6 @@
 import { HttpClient } from "@angular/common/http"
 import { Motor } from "./motor"
+import { Observable } from 'rxjs';
 
 export class Product {
     id: number
@@ -52,17 +53,9 @@ export class Product {
             });
     }
 
-    save(http: HttpClient) {
+    save(http: HttpClient): Observable<Product> {
         console.log(this.ser())
-        http.post('/api/v1/security/product', this.ser()
-        ).subscribe({
-            next: (data: any) => {
-                console.log(data.data)
-            },
-            error: error => {
-                console.log(error)
-            }
-        });
+       return http.post<Product>('/api/v1/security/product', this.ser())
     }
 }
 
@@ -115,16 +108,8 @@ export class ProductType {
             });
     }
 
-    save(http: HttpClient) {
-        http.post('/api/v1/security/productType', this.ser())
-            .subscribe({
-                next: (data: any) => {
-                    console.log(data.data)
-                },
-                error: error => {
-                    console.log(error)
-                }
-            });
+    save(http: HttpClient): Observable<ProductType>{
+        return http.post<ProductType>('/api/v1/security/productType', this.ser())
     }
 }
 
@@ -182,15 +167,7 @@ export class ProductOption {
             });
     }
 
-    save(http: HttpClient) {
-        http.post('/api/v1/security/productOption', this.ser())
-            .subscribe({
-                next: (data: any) => {
-                    console.log(data.data)
-                },
-                error: error => {
-                    console.log(error)
-                }
-            });
+    save(http: HttpClient): Observable<ProductOption> {
+    return http.post<ProductOption>('/api/v1/security/productOption', this.ser())
     }
 }

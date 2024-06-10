@@ -98,9 +98,11 @@ export class AdminkaComponent {
     this.productType_list = ProductType.getAll(this.http)
   }
 
-  saveProductType(i: ProductType) {
-    i.save(this.http)
-  }
+saveProductType(productType: ProductType) {
+  productType.save(this.http).subscribe(() => {
+    this.getProductType()
+  });
+}
 
   addProductType() {
     var productType = new ProductType()
@@ -117,7 +119,9 @@ export class AdminkaComponent {
   }
 
   saveProductOptions(i: ProductOption) {
-    i.save(this.http)
+    i.save(this.http).subscribe(() => {
+      this.getProductOption()
+    });
   }
 
   addProductOption() {
@@ -136,7 +140,9 @@ export class AdminkaComponent {
   }
 
   saveReducer(i: Reducer) {
-    i.save(this.http)
+    i.save(this.http).subscribe(() => {
+      this.getReducer()
+    });
   }
 
   addReducer() {
@@ -155,7 +161,9 @@ export class AdminkaComponent {
   }
 
   saveReducerType(i: ReducerType) {
-    i.save(this.http)
+    i.save(this.http).subscribe(() => {
+      this.getReducerType();
+    })
   }
 
   addReducerType() {
@@ -174,7 +182,9 @@ export class AdminkaComponent {
   }
 
   saveReducerSize(i: ReducerSize) {
-    i.save(this.http)
+    i.save(this.http).subscribe(() => {
+      this.getReducerSize()
+    });
   }
 
   addReducerSize() {
@@ -193,7 +203,9 @@ export class AdminkaComponent {
   }
 
   saveReducerOutputShaft(i: ReducerOutputShaftType) {
-    i.save(this.http)
+    i.save(this.http).subscribe(() => {
+      this.getReducerOutputShaft()
+    });
   }
 
   addReducerOutputShaft() {
@@ -212,7 +224,9 @@ export class AdminkaComponent {
   }
 
   saveReducerMounting(i: MountingPoint) {
-    i.save(this.http)
+    i.save(this.http).subscribe(() => {
+      this.getReducerMounting()
+    });
   }
 
   addReducerMounting() {
@@ -232,7 +246,9 @@ export class AdminkaComponent {
   }
 
   saveReducerInstallationType(i: ReducerInstallationType) {
-    i.save(this.http)
+    i.save(this.http).subscribe(() => {
+      this.getReducerInstallationType()
+    });
   }
 
   addReducerInstallationType() {
@@ -250,8 +266,10 @@ export class AdminkaComponent {
     this.reducerInputType_list = ReducerInputType.getAll(this.http)
   }
 
-  saveReducerInputType(i: ReducerInputType) {
-    i.save(this.http)
+  saveReducerInputType(i: ReducerInputType){
+    i.save(this.http).subscribe(() => {
+      this.getReducerInputType()
+    });
   }
 
   addReducerInputType() {
@@ -270,7 +288,9 @@ export class AdminkaComponent {
   }
 
   saveReducerIAdapterType(i: ReducerAdapterType) {
-    i.save(this.http)
+    i.save(this.http).subscribe(() => {
+      this.getReducerAdapterType()
+    });
   }
 
   addReducerAdapterType() {
