@@ -45,7 +45,7 @@
                         </thead>
                         <tbody>
                             <tr *ngFor="let i of motor_list">
-                                <td><textarea class="editable" [(ngModel)]="i.id"></textarea></td>
+                                <td>{{i.id}}</td>
                                 <td><textarea class="editable" [(ngModel)]="i.adapterType.id"></textarea></td>
                                 <td><textarea class="editable" [(ngModel)]="i.frequency.value"></textarea></td>
                                 <td><textarea class="editable" [(ngModel)]="i.power"></textarea></td>
@@ -75,7 +75,7 @@
                         </thead>
                         <tbody>
                             <tr *ngFor="let i of motorType_list">
-                                <td><textarea class="editable" [(ngModel)]="i.id"></textarea></td>
+                                <td>{{i.id}}</td>
                                 <td><textarea class="editable" [(ngModel)]="i.value"></textarea></td>
                                 <td class="row-buttons">
                                     <button (click)="i.save(getHttp())"> Сохранить </button>
@@ -102,7 +102,7 @@
                         </thead>
                         <tbody>
                             <tr *ngFor="let i of motorAdapterType_list">
-                                <td><textarea class="editable" [(ngModel)]="i.id"></textarea></td>
+                                <td>{{i.id}}</td>
                                 <td><textarea class="editable" [(ngModel)]="i.value"></textarea></td>
                                 <td><textarea class="editable" [(ngModel)]="i.typeid"></textarea></td>
                                 <td class="row-buttons">
@@ -135,7 +135,7 @@
                         </thead>
                         <tbody>
                             <tr *ngFor="let i of product_list">
-                                <td><input class="editable" [(ngModel)]="i.id"></td>
+                                <td>{{i.id}}</td>
                                 <td><input class="editable" [(ngModel)]="i.productTypeId"></td>
                                 <td><input class="editable" [(ngModel)]="i.name"></td>
                                 <td><input class="editable" [(ngModel)]="i.weight"></td>
@@ -167,7 +167,7 @@
                         </thead>
                         <tbody>
                             <tr *ngFor="let i of productType_list">
-                                <td><input class="editable" [(ngModel)]="i.id"></td>
+                                <td>{{i.id}}</td>
                                 <td><input class="editable" [(ngModel)]="i.value"></td>
                                 <td class="row-buttons">
                                     <button (click)="saveProductType(i)"> Сохранить </button>
@@ -194,7 +194,7 @@
                         </thead>
                         <tbody>
                             <tr *ngFor="let i of productOption_list">
-                                <td><input class="editable" [(ngModel)]="i.idProductOption"></td>
+                                <td>{{i.idProductOption}}</td>
                                 <td><input class="editable" [(ngModel)]="i.productOptionValue"></td>
                                 <td><input class="editable" [(ngModel)]="i.productTypeId"></td>
                                 <td class="row-buttons">
@@ -231,7 +231,7 @@
                         </thead>
                         <tbody>
                             <tr *ngFor="let i of reducer_list">
-                                <td><input class="editable" [(ngModel)]="i.idReducer"></td>
+                                <td>{{i.idReducer}}</td>
                                 <td><input class="editable" [(ngModel)]="i.reducerTypeId"></td>
                                 <td><input class="editable" [(ngModel)]="i.reducerSizeId"></td>
                                 <td><input class="editable" [(ngModel)]="i.reducerInputTypeId"></td>
@@ -267,7 +267,7 @@
                         </thead>
                         <tbody>
                             <tr *ngFor="let i of reducerType_list">
-                                <td><input class="editable" [(ngModel)]="i.idReducerType"></td>
+                                <td>{{i.idReducerType}}</td>
                                 <td><input class="editable" [(ngModel)]="i.value"></td>
                                 <td class="row-buttons">
                                     <button (click)="saveReducerType(i)"> Сохранить </button>
@@ -294,7 +294,7 @@
                         </thead>
                         <tbody>
                             <tr *ngFor="let i of reducerSize_list">
-                                <td><input class="editable" [(ngModel)]="i.idReducerSize"></td>
+                                <td>{{i.idReducerSize}}</td>
                                 <td><input class="editable" [(ngModel)]="i.value"></td>
                                 <td><input class="editable" [(ngModel)]="i.reducerTypeId"></td>
                                 <td class="row-buttons">
@@ -322,7 +322,7 @@
                         </thead>
                         <tbody>
                             <tr *ngFor="let i of reducerOutput_list">
-                                <td><input class="editable" [(ngModel)]="i.idReducerOutputShaftType"></td>
+                                <td>{{i.idReducerOutputShaftType}}</td>
                                 <td><input class="editable" [(ngModel)]="i.value"></td>
                                 <td><input class="editable" [(ngModel)]="i.reducerTypeId"></td>
                                 <td class="row-buttons">
@@ -349,7 +349,7 @@
                         </thead>
                         <tbody>
                             <tr *ngFor="let i of reducerMounting_list">
-                                <td><input class="editable" [(ngModel)]="i.idReducerMounting"></td>
+                                <td>{{i.idReducerMounting}}</td>
                                 <td><input class="editable" [(ngModel)]="i.value"></td>
                                 <td class="row-buttons">
                                     <button (click)="saveReducerMounting(i)"> Сохранить </button>
@@ -376,7 +376,7 @@
                         </thead>
                         <tbody>
                             <tr *ngFor="let i of reducerInstallationType_list">
-                                <td><input class="editable" [(ngModel)]="i.idReducerInstallationType"></td>
+                                <td>{{i.idReducerInstallationType}}</td>
                                 <td><input class="editable" [(ngModel)]="i.value"></td>
                                 <td><input class="editable" [(ngModel)]="i.reducerTypeId"></td>
                                 <td class="row-buttons">
@@ -404,7 +404,7 @@
                         </thead>
                         <tbody>
                             <tr *ngFor="let i of reducerInputType_list">
-                                <td><input class="editable" [(ngModel)]="i.idReducerInputType"></td>
+                                <td>{{i.idReducerInputType}}</td>
                                 <td><input class="editable" [(ngModel)]="i.value"></td>
                                 <td><input class="editable" [(ngModel)]="i.reducerTypeId"></td>
                                 <td class="row-buttons">
@@ -432,7 +432,7 @@
                         </thead>
                         <tbody>
                             <tr *ngFor="let i of reducerAdapterType_list">
-                                <td><input class="editable" [(ngModel)]="i.idReducerAdapterType"></td>
+                                <td>{{i.idReducerAdapterType}}</td>
                                 <td><input class="editable" [(ngModel)]="i.value"></td>
                                 <td><input class="editable" [(ngModel)]="i.reducerTypeId"></td>
                                 <td class="row-buttons">

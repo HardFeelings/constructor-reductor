@@ -112,8 +112,6 @@ export class AdminkaComponent {
     this.getProductType()
   }
 
-
-
   getProductOption() {
     this.productOption_list = ProductOption.getAll(this.http)
   }
