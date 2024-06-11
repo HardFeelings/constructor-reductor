@@ -49,8 +49,16 @@ export class AdminkaComponent {
     this.reducerAdapterType_list = new Array<ReducerAdapterType>();
   }
 
-  setid(i: number) {
-    this.id = i
+  setid(id: number) {
+    this.id = id;
+    const spans = document.querySelectorAll('.sidebar span');
+    spans.forEach((span, index) => {
+        if (index === id) {
+            span.classList.add('selected');
+        } else {
+            span.classList.remove('selected');
+        }
+    });
   }
 
   getHttp() {
@@ -72,6 +80,7 @@ export class AdminkaComponent {
     this.getReducerInstallationType()
     this.getReducerInputType()
     this.getReducerAdapterType()
+    this.setid(0);
   }
 
   addMotor() {
