@@ -13,7 +13,7 @@
         <div class="sidebar">
             <span (click)="setid(0)">Motor</span>
             <span (click)="setid(1)">MotorType</span>
-            <span (click)="setid(2)">MotorAdapteType</span>
+            <span (click)="setid(2)">MotorAdapterType</span>
             <span (click)="setid(3)">Product</span>
             <span (click)="setid(4)">ProductType</span>
             <span (click)="setid(5)">ProductOption</span>
@@ -52,7 +52,7 @@
                                 <td><textarea class="editable" [(ngModel)]="i.rpm.value"></textarea></td>
                                 <td><textarea class="editable" [(ngModel)]="i.type.id"></textarea></td>
                                 <td class="row-buttons">
-                                    <button (click)="i.save(getHttp())"> Сохранить </button>
+                                    <button (click)="saveMotor(i)"> Сохранить </button>
                                     <button (click)="i.delete(getHttp())"> Удалить </button>
                                 </td>
                             </tr>
@@ -78,7 +78,7 @@
                                 <td>{{i.id}}</td>
                                 <td><textarea class="editable" [(ngModel)]="i.value"></textarea></td>
                                 <td class="row-buttons">
-                                    <button (click)="i.save(getHttp())"> Сохранить </button>
+                                    <button (click)="saveMotorType(i)"> Сохранить </button>
                                     <button (click)="i.delete(getHttp())"> Удалить </button>
                                 </td>
                             </tr>
@@ -106,7 +106,7 @@
                                 <td><textarea class="editable" [(ngModel)]="i.value"></textarea></td>
                                 <td><textarea class="editable" [(ngModel)]="i.typeid"></textarea></td>
                                 <td class="row-buttons">
-                                    <button (click)="i.save(getHttp())"> Сохранить </button>
+                                    <button (click)="saveMotorAdapterType(i)"> Сохранить </button>
                                     <button (click)="i.delete(getHttp())"> Удалить </button>
                                 </td>
                             </tr>
@@ -144,7 +144,7 @@
                                 <td><input class="editable" [(ngModel)]="i.motorId"></td>
                                 <td><input class="editable" [(ngModel)]="i.optionsString"></td>
                                 <td class="row-buttons">
-                                    <button (click)="i.save(getHttp())"> Сохранить </button>
+                                    <button (click)="saveProduct(i)"> Сохранить </button>
                                     <button (click)="i.delete(getHttp())"> Удалить </button>
                                 </td>
                             </tr>
@@ -268,7 +268,7 @@
                         <tbody>
                             <tr *ngFor="let i of reducerType_list">
                                 <td>{{i.idReducerType}}</td>
-                                <td><input class="editable" [(ngModel)]="i.value"></td>
+                                <td><input class="editable" [(ngModel)]="i.reducerTypeName"></td>
                                 <td class="row-buttons">
                                     <button (click)="saveReducerType(i)"> Сохранить </button>
                                     <button (click)="deleteReducerType(i)"> Удалить </button>
@@ -295,7 +295,7 @@
                         <tbody>
                             <tr *ngFor="let i of reducerSize_list">
                                 <td>{{i.idReducerSize}}</td>
-                                <td><input class="editable" [(ngModel)]="i.value"></td>
+                                <td><input class="editable" [(ngModel)]="i.reducerSizeValue"></td>
                                 <td><input class="editable" [(ngModel)]="i.reducerTypeId"></td>
                                 <td class="row-buttons">
                                     <button (click)="saveReducerSize(i)"> Сохранить </button>

@@ -1,4 +1,5 @@
 import { HttpClient } from "@angular/common/http"
+import { Observable } from "rxjs"
 
 export class Motor {
     id: number
@@ -58,17 +59,9 @@ export class Motor {
             });
     }
 
-    save(http: HttpClient) {
+    save(http: HttpClient): Observable<Motor>{
         console.log(this)
-        http.post('/api/v1/security/motor', this.ser()
-        ).subscribe({
-            next: (data: any) => {
-                console.log(data.data)
-            },
-            error: error => {
-                console.log(error)
-            }
-        });
+        return http.post<Motor>('/api/v1/security/motor', this.ser())
     }
 }
 
@@ -90,17 +83,9 @@ export class MotorType {
         }
     }
 
-    save(http: HttpClient) {
+    save(http: HttpClient) :Observable<MotorType>{
         console.log(this)
-        http.post('/api/v1/security/motorType', this.ser()
-        ).subscribe({
-            next: (data: any) => {
-                console.log(data.data)
-            },
-            error: error => {
-                console.log(error)
-            }
-        });
+       return http.post<MotorType>('/api/v1/security/motorType', this.ser())
     }
 
     delete(http: HttpClient) {
@@ -138,17 +123,9 @@ export class MotorAdapterType {
         }
     }
 
-    save(http: HttpClient) {
+    save(http: HttpClient) : Observable<MotorAdapterType> {
         console.log(this)
-        http.post('/api/v1/security/motorAdapterType', this.ser()
-        ).subscribe({
-            next: (data: any) => {
-                console.log(data.data)
-            },
-            error: error => {
-                console.log(error)
-            }
-        });
+        return http.post<MotorAdapterType>('/api/v1/security/motorAdapterType', this.ser())
     }
 
     delete(http: HttpClient) {

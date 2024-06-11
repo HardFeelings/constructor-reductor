@@ -79,9 +79,32 @@ export class AdminkaComponent {
     this.motor_list.push(motor)
   }
 
+  saveMotor(motor: Motor) {
+    motor.save(this.http).subscribe((data:any) => {
+      const index = this.motor_list.findIndex(item => item.id === data.data.idMotor);
+      if (index !== -1) {
+        this.motor_list[index].id = data.data.idMotor;
+      } else if (this.motor_list[this.motor_list.length -1].id === 0){
+        this.motor_list[this.motor_list.length -1].id = data.data.idMotor;
+      }
+    });
+  }
   addMotorType() {
     var motorType = new MotorType()
     this.motorType_list.push(motorType)
+  }
+
+  saveMotorType(motorType: MotorType) {
+    motorType.save(this.http).subscribe((data:any) => {
+      const index = this.motorType_list.findIndex(item => item.id === data.data.idMotorType);
+      if (index !== -1) {
+        this.motorType_list[index].id = data.data.idMotorType;
+        this.motorType_list[index].value = data.data.motorTypeName;
+      } else if (this.motorType_list[this.motorType_list.length -1].id === 0){
+        this.motorType_list[this.motorType_list.length -1].id = data.data.idMotorType;
+        this.motorType_list[this.motorType_list.length -1].value = data.data.motorTypeName;
+      }
+    });
   }
 
   addMotorAdapterType() {
@@ -89,9 +112,39 @@ export class AdminkaComponent {
     this.motorAdapterType_list.push(motorAdapterType)
   }
 
+  saveMotorAdapterType(motorAdapterType: MotorAdapterType) {
+    motorAdapterType.save(this.http).subscribe((data:any) => {
+      const index = this.motorAdapterType_list.findIndex(item => item.id === data.data.idMotorAdapterType);
+      if (index !== -1) {
+        this.motorAdapterType_list[index].id = data.data.idMotorAdapterType;
+        this.motorAdapterType_list[index].value = data.data.motorAdapterTypeValue;
+        this.motorAdapterType_list[index].typeid = data.data.motorTypeId;
+      } else if (this.motorAdapterType_list[this.motorAdapterType_list.length -1].id === 0){
+        this.motorAdapterType_list[this.motorAdapterType_list.length -1].id = data.data.idMotorAdapterType;
+        this.motorAdapterType_list[this.motorAdapterType_list.length -1].value = data.data.motorAdapterTypeValue;
+        this.motorAdapterType_list[this.motorAdapterType_list.length -1].typeid = data.data.motorTypeId;
+      }
+    });
+  }
+
   addProduct() {
     var product = new Product()
     this.product_list.push(product)
+  }
+
+  saveProduct(product: Product) {
+    product.save(this.http).subscribe((data:any) => {
+      const index = this.product_list.findIndex(item => item.id === data.data.idProduct);
+      if (index !== -1) {
+        this.product_list[index] = data.data;
+        this.product_list[index].id = data.data.idProduct;
+        this.product_list[index].optionsString = data.data.optionsIds.join(",");
+      } else if (this.product_list[this.product_list.length -1].id === 0){
+        this.product_list[this.product_list.length -1] = data.data;
+        this.product_list[this.product_list.length -1].id = data.data.idProduct;
+        this.product_list[this.product_list.length -1].optionsString = data.data.optionsIds.join(",");
+      }
+    });
   }
 
   getProductType() {
@@ -99,8 +152,15 @@ export class AdminkaComponent {
   }
 
 saveProductType(productType: ProductType) {
-  productType.save(this.http).subscribe(() => {
-    this.getProductType()
+  productType.save(this.http).subscribe((data) => {
+    const index = this.productType_list.findIndex(item => item.id === data.data.idProductType);
+    if (index !== -1) {
+      this.productType_list[index].id = data.data.idProductType;
+      this.productType_list[index].value = data.data.productTypeValue;
+    } else if (this.productType_list[this.productType_list.length -1].id === 0){
+      this.productType_list[this.productType_list.length -1].id = data.data.idProductType;
+      this.productType_list[this.productType_list.length -1].value = data.data.productTypeValue;
+    }
   });
 }
 
@@ -119,8 +179,13 @@ saveProductType(productType: ProductType) {
   }
 
   saveProductOptions(i: ProductOption) {
-    i.save(this.http).subscribe(() => {
-      this.getProductOption()
+    i.save(this.http).subscribe((data:any) => {
+      const index = this.productOption_list.findIndex(item => item.idProductOption === data.data.idProductOption);
+      if (index !== -1) {
+        this.productOption_list[index] = data.data
+      } else if (this.productOption_list[this.productOption_list.length -1].idProductOption === 0){
+        this.productOption_list[this.productOption_list.length -1] = data.data
+      }
     });
   }
 
@@ -140,8 +205,13 @@ saveProductType(productType: ProductType) {
   }
 
   saveReducer(i: Reducer) {
-    i.save(this.http).subscribe(() => {
-      this.getReducer()
+    i.save(this.http).subscribe((data:any) => {
+     const index = this.reducer_list.findIndex(item => item.idReducer === data.data.idReducer);
+      if (index !== -1) {
+        this.reducer_list[index] = data.data;
+      } else if (this.reducer_list[this.reducer_list.length -1].idReducer === 0){
+        this.reducer_list[this.reducer_list.length -1] = data.data;
+      }
     });
   }
 
@@ -161,8 +231,13 @@ saveProductType(productType: ProductType) {
   }
 
   saveReducerType(i: ReducerType) {
-    i.save(this.http).subscribe(() => {
-      this.getReducerType();
+    i.save(this.http).subscribe((data:any) => {
+      const index = this.reducerType_list.findIndex(item => item.idReducerType === data.data.idReducerType);
+      if (index !== -1) {
+        this.reducerType_list[index] = data.data;
+      } else if (this.reducerType_list[this.reducerType_list.length -1].idReducerType === 0){
+        this.reducerType_list[this.reducerType_list.length -1] = data.data;
+      }
     })
   }
 
@@ -182,9 +257,14 @@ saveProductType(productType: ProductType) {
   }
 
   saveReducerSize(i: ReducerSize) {
-    i.save(this.http).subscribe(() => {
-      this.getReducerSize()
-    });
+    i.save(this.http).subscribe((data:any) => {
+      const index = this.reducerSize_list.findIndex(item => item.idReducerSize === data.data.idReducerSize);
+      if (index !== -1) {
+        this.reducerSize_list[index] = data.data;
+      } else if (this.reducerSize_list[this.reducerSize_list.length -1].idReducerSize === 0){
+        this.reducerSize_list[this.reducerSize_list.length -1] = data.data;
+      }
+    })
   }
 
   addReducerSize() {
@@ -203,8 +283,15 @@ saveProductType(productType: ProductType) {
   }
 
   saveReducerOutputShaft(i: ReducerOutputShaftType) {
-    i.save(this.http).subscribe(() => {
-      this.getReducerOutputShaft()
+    i.save(this.http).subscribe((data:any) => {
+      const index = this.reducerOutput_list.findIndex(item => item.idReducerOutputShaftType === data.data.idReducerOutputShaftType);
+      if (index !== -1) {
+        this.reducerOutput_list[index] = data.data;
+        this.reducerOutput_list[index].value = data.data.reducerOutputShaftTypeValue;
+      } else if (this.reducerOutput_list[this.reducerOutput_list.length -1].idReducerOutputShaftType === 0){
+        this.reducerOutput_list[this.reducerOutput_list.length -1] = data.data;
+        this.reducerOutput_list[this.reducerOutput_list.length -1].value = data.data.reducerOutputShaftTypeValue;
+      }
     });
   }
 
@@ -224,8 +311,15 @@ saveProductType(productType: ProductType) {
   }
 
   saveReducerMounting(i: MountingPoint) {
-    i.save(this.http).subscribe(() => {
-      this.getReducerMounting()
+    i.save(this.http).subscribe((data:any) => {
+      const index = this.reducerMounting_list.findIndex(item => item.idReducerMounting === data.data.idReducerMounting);
+      if (index !== -1) {
+        this.reducerMounting_list[index] = data.data;
+        this.reducerMounting_list[index].value = data.data.reducerMountingValue;
+      } else if (this.reducerMounting_list[this.reducerMounting_list.length -1].idReducerMounting === 0){
+        this.reducerMounting_list[this.reducerMounting_list.length -1] = data.data;
+        this.reducerMounting_list[this.reducerMounting_list.length -1].value = data.data.reducerMountingValue;
+      }
     });
   }
 
@@ -246,8 +340,15 @@ saveProductType(productType: ProductType) {
   }
 
   saveReducerInstallationType(i: ReducerInstallationType) {
-    i.save(this.http).subscribe(() => {
-      this.getReducerInstallationType()
+    i.save(this.http).subscribe((data:any) => {
+      const index = this.reducerInstallationType_list.findIndex(item => item.idReducerInstallationType === data.data.idReducerInstallationType);
+      if (index !== -1) {
+        this.reducerInstallationType_list[index] = data.data;
+        this.reducerInstallationType_list[index].value = data.data.reducerInstallationTypeValue;
+      } else if (this.reducerInstallationType_list[this.reducerInstallationType_list.length -1].idReducerInstallationType === 0){
+        this.reducerInstallationType_list[this.reducerInstallationType_list.length -1] = data.data;
+        this.reducerInstallationType_list[this.reducerInstallationType_list.length -1].value = data.data.reducerInstallationTypeValue;
+      }
     });
   }
 
@@ -267,8 +368,15 @@ saveProductType(productType: ProductType) {
   }
 
   saveReducerInputType(i: ReducerInputType){
-    i.save(this.http).subscribe(() => {
-      this.getReducerInputType()
+    i.save(this.http).subscribe((data:any) => {
+      const index = this.reducerInputType_list.findIndex(item => item.idReducerInputType === data.data.idReducerInputType);
+      if (index !== -1) {
+        this.reducerInputType_list[index] = data.data;
+        this.reducerInputType_list[index].value = data.data.reducerInputTypeValue;
+      } else if (this.reducerInputType_list[this.reducerInputType_list.length -1].idReducerInputType === 0){
+        this.reducerInputType_list[this.reducerInputType_list.length -1] = data.data;
+        this.reducerInputType_list[this.reducerInputType_list.length -1].value = data.data.reducerInputTypeValue;
+      }
     });
   }
 
@@ -288,8 +396,15 @@ saveProductType(productType: ProductType) {
   }
 
   saveReducerIAdapterType(i: ReducerAdapterType) {
-    i.save(this.http).subscribe(() => {
-      this.getReducerAdapterType()
+    i.save(this.http).subscribe((data:any) => {
+      const index = this.reducerAdapterType_list.findIndex(item => item.idReducerAdapterType === data.data.idReducerAdapterType);
+      if (index !== -1) {
+        this.reducerAdapterType_list[index] = data.data;
+        this.reducerAdapterType_list[index].value = data.data.reducerAdapterTypeValue;
+      } else if (this.reducerAdapterType_list[this.reducerAdapterType_list.length -1].idReducerAdapterType === 0){
+        this.reducerAdapterType_list[this.reducerAdapterType_list.length -1] = data.data;
+        this.reducerAdapterType_list[this.reducerAdapterType_list.length -1].value = data.data.reducerAdapterTypeValue;
+      }
     });
   }
 

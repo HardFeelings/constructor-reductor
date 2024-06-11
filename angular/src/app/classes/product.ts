@@ -108,8 +108,8 @@ export class ProductType {
             });
     }
 
-    save(http: HttpClient): Observable<ProductType>{
-        return http.post<ProductType>('/api/v1/security/productType', this.ser())
+    save(http: HttpClient): Observable<any>{
+        return http.post<any>('/api/v1/security/productType', this.ser())
     }
 }
 

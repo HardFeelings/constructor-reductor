@@ -78,7 +78,7 @@
       <h1>Конфигуратор редуктора</h1>
       <div class="memberConfigurator">
         <span>Тип редуктора</span>
-        <select [(ngModel)]="reducer.type.value">
+        <select [(ngModel)]="reducer.type.reducerTypeName">
           <option disabled selected hidden></option>
           <option *ngFor="let value of reducer.type.variants">
             {{value}}</option>
@@ -87,7 +87,7 @@
       <br />
       <div class="memberConfigurator">
         <span>Размер редуктора</span>
-        <select [(ngModel)]="reducer.size.value">
+        <select [(ngModel)]="reducer.size.reducerSizeValue">
           <option disabled selected hidden></option>
           <option *ngFor="let value of reducer.size.variants">
             {{value}}</option>
@@ -174,7 +174,7 @@
       <h1>Конфигуратор мотор-редуктора</h1>
       <div class="memberConfigurator">
         <span>Тип редуктора</span>
-        <select [(ngModel)]="motorReducer.type.value">
+        <select [(ngModel)]="motorReducer.type.reducerTypeName">
           <option disabled selected hidden></option>
           <option *ngFor="let value of reducer.type.variants">
             {{value}}</option>
@@ -183,7 +183,7 @@
       <br />
       <div class="memberConfigurator">
         <span>Размер редуктора</span>
-        <select [(ngModel)]="motorReducer.size.value">
+        <select [(ngModel)]="motorReducer.size.reducerSizeValue">
           <option disabled selected hidden></option>
           <option *ngFor="let value of motorReducer.size.variants">
             {{value}}</option>

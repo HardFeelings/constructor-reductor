@@ -113,12 +113,12 @@ export class Reducer {
 
 export class ReducerType {
     idReducerType: number
-    value: string | null
+    reducerTypeName: string | null
     variants: string[]
 
     constructor() {
         this.variants = ["червячный", "соосно-цилиндрический", "плоскоцилиндрический", "конический"]
-        this.value = null
+        this.reducerTypeName = null
         this.idReducerType = 0
     }
 
@@ -126,7 +126,7 @@ export class ReducerType {
     ser(): any {
         return {
             idReducerType: this.idReducerType,
-            reducerTypeName: this.value
+            reducerTypeName: this.reducerTypeName
         }
     }
 
@@ -138,7 +138,7 @@ export class ReducerType {
                     data.data.forEach((e: { [x: string]: any; }) => {
                         var reducerType = new ReducerType()
                         reducerType.idReducerType = e["idReducerType"]
-                        reducerType.value = e["reducerTypeName"]
+                        reducerType.reducerTypeName = e["reducerTypeName"]
                         list.push(reducerType)
                     })
                 },
@@ -168,13 +168,13 @@ export class ReducerType {
 
 export class ReducerSize {
     idReducerSize: number
-    value: number | null
+    reducerSizeValue: number | null
     variants: number[]
     reducerTypeId: number
 
     constructor() {
         this.variants = [100, 50]
-        this.value = null
+        this.reducerSizeValue = null
         this.idReducerSize = 0
         this.reducerTypeId = 0
     }
@@ -182,7 +182,7 @@ export class ReducerSize {
     ser(): any {
         return {
             idReducerSize: this.idReducerSize,
-            reducerSizeValue: this.value,
+            reducerSizeValue: this.reducerSizeValue,
             reducerTypeId: this.reducerTypeId
         }
     }
@@ -195,7 +195,7 @@ export class ReducerSize {
                     data.data.forEach((e: { [x: string]: any; }) => {
                         var reducerSize = new ReducerSize()
                         reducerSize.idReducerSize = e["idReducerSize"]
-                        reducerSize.value = e["reducerSizeValue"]
+                        reducerSize.reducerSizeValue = e["reducerSizeValue"]
                         reducerSize.reducerTypeId = e["reducerTypeId"]
                         list.push(reducerSize)
                     })
