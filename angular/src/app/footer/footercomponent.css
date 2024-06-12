@@ -19,30 +19,15 @@ h1 {
     color: black;
 }
 
-.product, .configurator {
+.configurator {
     margin-bottom: 20px;
 }
 
-.product_block, .memberConfigurator {
+.memberConfigurator {
     display: flex;
     flex-direction: column;
     gap: 10px;
     margin-bottom: 20px;
-}
-
-.product_choise {
-    background-color: #fcb331;
-    color: #ffffff;
-    border: none;
-    padding: 15px 40px;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    width: 150px;
-}
-
-.product_choise:hover {
-    background-color: #083b57;
 }
 
 select, input[type="number"] {

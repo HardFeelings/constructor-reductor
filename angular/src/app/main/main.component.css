@@ -24,9 +24,9 @@ body {
 
 .product_block, .memberConfigurator {
     display: flex;
-    flex-direction: column;
-    gap: 10px;
+    gap: 5%;
     margin-bottom: 20px;
+    justify-content: center;
 }
 
 .product_choise {
