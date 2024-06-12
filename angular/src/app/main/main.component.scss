@@ -34,3 +34,51 @@ select {
 .product_choise:hover {
   box-shadow: 3px 5px 5px #333;
 }
+
+.configurator {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.configurator_header {
+  display: flex;
+  justify-content: center;
+}
+.container_element_configurator {
+  display: flex;
+  justify-content: center;
+  gap: 8%; /* Spacing between elements */
+  align-items: center;
+}
+
+.element_configurator {
+  display: flex;
+  flex-direction: column;
+  align-items: baseline;
+}
+
+.element_configurator select,
+.element_configurator input {
+  width: 30vh;
+  margin: 2vh 0;
+}
+
+.rate_element_configurator {
+ display: flex;
+ align-items: flex-end;
+ gap: 5%;
+}
+
+.rate_header{
+  padding-bottom: 3vh;
+}
+
+br {
+  display: none; /* Remove the line breaks for better layout */
+}
+
+span {
+  font-weight: bold;
+  color: black;
+  font-size: 14px;
+}

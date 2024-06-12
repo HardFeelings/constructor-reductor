@@ -18,11 +18,11 @@ body {
 }
 
 
-.product, .configurator {
+.product {
     margin-bottom: 20px;
 }
 
-.product_block, .memberConfigurator {
+.product_block {
     display: flex;
     gap: 5%;
     margin-bottom: 20px;
@@ -67,11 +67,7 @@ select:focus, input[type="number"]:focus {
     color: #ffffff;
 }
 
-span {
-    font-weight: bold;
-    color: black;
-    font-size: 14px;
-}
+
 
 button {
     width: 100px;
