@@ -94,16 +94,8 @@ export class Reducer {
         return list;
     }
 
-    delete(http: HttpClient) {
-        http.delete(`/api/v1/security/reducer/${this.idReducer}`)
-            .subscribe({
-                next: (data: any) => {
-                    return data.data
-                },
-                error: error => {
-                    console.log(error)
-                }
-            });
+    delete(http: HttpClient) : Observable<boolean>{
+       return http.delete<boolean>(`/api/v1/security/reducer/${this.idReducer}`)
     }
 
     save(http: HttpClient): Observable<Reducer> {
@@ -149,16 +141,8 @@ export class ReducerType {
         return list;
     }
 
-    delete(http: HttpClient) {
-        http.delete(`/api/v1/security/reducerType/${this.idReducerType}`)
-            .subscribe({
-                next: (data: any) => {
-                    return data.data
-                },
-                error: error => {
-                    console.log(error)
-                }
-            });
+    delete(http: HttpClient) : Observable<boolean> {
+      return  http.delete<boolean>(`/api/v1/security/reducerType/${this.idReducerType}`)
     }
 
     save(http: HttpClient): Observable<ReducerType> {
@@ -207,16 +191,8 @@ export class ReducerSize {
         return list;
     }
 
-    delete(http: HttpClient) {
-        http.delete(`/api/v1/security/reducerSize/${this.idReducerSize}`)
-            .subscribe({
-                next: (data: any) => {
-                    return data.data
-                },
-                error: error => {
-                    console.log(error)
-                }
-            });
+    delete(http: HttpClient) : Observable<boolean>{
+        return http.delete<boolean>(`/api/v1/security/reducerSize/${this.idReducerSize}`)
     }
 
     save(http: HttpClient): Observable<ReducerSize> {
@@ -285,16 +261,8 @@ export class ReducerInputType {
         return list;
     }
 
-    delete(http: HttpClient) {
-        http.delete(`/api/v1/security/reducerInputType/${this.idReducerInputType}`)
-            .subscribe({
-                next: (data: any) => {
-                    return data.data
-                },
-                error: error => {
-                    console.log(error)
-                }
-            });
+    delete(http: HttpClient) : Observable<boolean> {
+        return http.delete<boolean>(`/api/v1/security/reducerInputType/${this.idReducerInputType}`)
     }
 
     save(http: HttpClient) : Observable<ReducerInputType> {
@@ -343,16 +311,8 @@ export class ReducerAdapterType {
         return list;
     }
 
-    delete(http: HttpClient) {
-        http.delete(`/api/v1/security/reducerAdapterType/${this.idReducerAdapterType}`)
-            .subscribe({
-                next: (data: any) => {
-                    return data.data
-                },
-                error: error => {
-                    console.log(error)
-                }
-            });
+    delete(http: HttpClient) : Observable<boolean>{
+        return http.delete<boolean>(`/api/v1/security/reducerAdapterType/${this.idReducerAdapterType}`)
     }
 
     save(http: HttpClient): Observable<ReducerAdapterType> {
@@ -402,16 +362,8 @@ export class ReducerOutputShaftType {
         return list;
     }
 
-    delete(http: HttpClient) {
-        http.delete(`/api/v1/security/reducerOutputShaftType/${this.idReducerOutputShaftType}`)
-            .subscribe({
-                next: (data: any) => {
-                    return data.data
-                },
-                error: error => {
-                    console.log(error)
-                }
-            });
+    delete(http: HttpClient) : Observable<boolean>{
+      return  http.delete<boolean>(`/api/v1/security/reducerOutputShaftType/${this.idReducerOutputShaftType}`)
     }
 
     save(http: HttpClient): Observable<ReducerOutputShaftType> {
@@ -461,16 +413,8 @@ export class ReducerInstallationType {
         return list;
     }
 
-    delete(http: HttpClient) {
-        http.delete(`/api/v1/security/reducerInstallationType/${this.idReducerInstallationType}`)
-            .subscribe({
-                next: (data: any) => {
-                    return data.data
-                },
-                error: error => {
-                    console.log(error)
-                }
-            });
+    delete(http: HttpClient) : Observable<boolean>{
+        return http.delete<boolean>(`/api/v1/security/reducerInstallationType/${this.idReducerInstallationType}`)
     }
 
     save(http: HttpClient):Observable<ReducerInstallationType> {
@@ -515,16 +459,8 @@ export class MountingPoint {
         return list;
     }
 
-    delete(http: HttpClient) {
-        http.delete(`/api/v1/security/reducerMounting/${this.idReducerMounting}`)
-            .subscribe({
-                next: (data: any) => {
-                    return data.data
-                },
-                error: error => {
-                    console.log(error)
-                }
-            });
+    delete(http: HttpClient) : Observable<boolean>{
+      return  http.delete<boolean>(`/api/v1/security/reducerMounting/${this.idReducerMounting}`)
     }
 
     save(http: HttpClient): Observable<MountingPoint> {

@@ -46,17 +46,9 @@ export class Motor {
         }
     }
 
-    delete(http: HttpClient) {
+    delete(http: HttpClient) : Observable<boolean> {
         console.log(this)
-        http.delete(`/api/v1/security/motor/${this.id}`)
-            .subscribe({
-                next: (data: any) => {
-                    console.log(data.data)
-                },
-                error: error => {
-                    console.log(error)
-                }
-            });
+        return http.delete<boolean>(`/api/v1/security/motor/${this.id}`)
     }
 
     save(http: HttpClient): Observable<Motor>{
@@ -88,17 +80,9 @@ export class MotorType {
        return http.post<MotorType>('/api/v1/security/motorType', this.ser())
     }
 
-    delete(http: HttpClient) {
+    delete(http: HttpClient): Observable<boolean> {
         console.log(this)
-        http.delete(`/api/v1/security/motorType/${this.id}`)
-            .subscribe({
-                next: (data: any) => {
-                    console.log(data.data)
-                },
-                error: error => {
-                    console.log(error)
-                }
-            });
+       return http.delete<boolean>(`/api/v1/security/motorType/${this.id}`)
     }
 }
 
@@ -128,17 +112,9 @@ export class MotorAdapterType {
         return http.post<MotorAdapterType>('/api/v1/security/motorAdapterType', this.ser())
     }
 
-    delete(http: HttpClient) {
+    delete(http: HttpClient): Observable<boolean> {
         console.log(this)
-        http.delete(`/api/v1/security/motorAdapterType/${this.id}`)
-            .subscribe({
-                next: (data: any) => {
-                    console.log(data.data)
-                },
-                error: error => {
-                    console.log(error)
-                }
-            });
+        return http.delete<boolean>(`/api/v1/security/motorAdapterType/${this.id}`)
     }
 }
 

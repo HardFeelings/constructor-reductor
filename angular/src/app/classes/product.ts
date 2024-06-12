@@ -40,17 +40,9 @@ export class Product {
         }
     }
 
-    delete(http: HttpClient) {
+    delete(http: HttpClient) : Observable<boolean>{
         console.log(this)
-        http.delete(`/api/v1/security/product/${this.id}`)
-            .subscribe({
-                next: (data: any) => {
-                    console.log(data.data)
-                },
-                error: error => {
-                    console.log(error)
-                }
-            });
+        return http.delete<boolean>(`/api/v1/security/product/${this.id}`)
     }
 
     save(http: HttpClient): Observable<Product> {
@@ -96,16 +88,9 @@ export class ProductType {
         return list;
     }
 
-    delete(http: HttpClient) {
-        http.delete(`/api/v1/security/productType/${this.id}`)
-            .subscribe({
-                next: (data: any) => {
-                    return data.data
-                },
-                error: error => {
-                    console.log(error)
-                }
-            });
+    delete(http: HttpClient) : Observable<boolean>{
+       return http.delete<boolean>(`/api/v1/security/productType/${this.id}`)
+
     }
 
     save(http: HttpClient): Observable<any>{
@@ -155,16 +140,8 @@ export class ProductOption {
         return list;
     }
 
-    delete(http: HttpClient) {
-        http.delete(`/api/v1/security/productOption/${this.idProductOption}`)
-            .subscribe({
-                next: (data: any) => {
-                    return data.data
-                },
-                error: error => {
-                    console.log(error)
-                }
-            });
+    delete(http: HttpClient) : Observable<boolean>{
+       return http.delete<boolean>(`/api/v1/security/productOption/${this.idProductOption}`)
     }
 
     save(http: HttpClient): Observable<ProductOption> {

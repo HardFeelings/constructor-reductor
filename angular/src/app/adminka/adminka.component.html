@@ -53,7 +53,7 @@
                                 <td><textarea class="editable" [(ngModel)]="i.type.id"></textarea></td>
                                 <td class="row-buttons">
                                     <button (click)="saveMotor(i)"> Сохранить </button>
-                                    <button (click)="i.delete(getHttp())"> Удалить </button>
+                                    <button (click)="deleteMotor(i)"> Удалить </button>
                                 </td>
                             </tr>
                         </tbody>
@@ -79,7 +79,7 @@
                                 <td><textarea class="editable" [(ngModel)]="i.value"></textarea></td>
                                 <td class="row-buttons">
                                     <button (click)="saveMotorType(i)"> Сохранить </button>
-                                    <button (click)="i.delete(getHttp())"> Удалить </button>
+                                    <button (click)="deleteMotorType(i)"> Удалить </button>
                                 </td>
                             </tr>
                         </tbody>
@@ -107,7 +107,7 @@
                                 <td><textarea class="editable" [(ngModel)]="i.typeid"></textarea></td>
                                 <td class="row-buttons">
                                     <button (click)="saveMotorAdapterType(i)"> Сохранить </button>
-                                    <button (click)="i.delete(getHttp())"> Удалить </button>
+                                    <button (click)="deleteMotorAdapterType(i)"> Удалить </button>
                                 </td>
                             </tr>
                         </tbody>
@@ -145,7 +145,7 @@
                                 <td><input class="editable" [(ngModel)]="i.optionsString"></td>
                                 <td class="row-buttons">
                                     <button (click)="saveProduct(i)"> Сохранить </button>
-                                    <button (click)="i.delete(getHttp())"> Удалить </button>
+                                    <button (click)="deleteProduct(i)"> Удалить </button>
                                 </td>
                             </tr>
                         </tbody>
