@@ -17,8 +17,12 @@
     <div class="product">
       <h1>Продукт</h1>
       <div class="product_block">
-        <button class="product_choise" *ngFor="let product of product_variants" (click)="pickProduct(product)">
-          {{ product }}
+        <button
+          class="product_choise"
+          *ngFor="let product of product_variants"
+          [class.selected_product]="isSelectedProduct(product)"
+          (click)="pickProduct(product)">
+            {{ product }}
         </button>
       </div>
     </div>

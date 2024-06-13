@@ -74,6 +74,10 @@ export class MainComponent {
         break
     }
   }
+
+  isSelectedProduct(product: string): boolean {
+    return product === this.product_selected;
+  }
 }
 
 enum Product {

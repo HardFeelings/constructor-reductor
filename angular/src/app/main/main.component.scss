@@ -24,8 +24,7 @@ select {
   height: 40pt;
   background: none;
 
-  transition: border 0.1s ease;
-  transition: box-shadow 0.1s ease;
+  transition: border 0.1s ease, box-shadow 0.1s ease;
   border: 1px solid;
   border-radius: 10px;
   cursor: pointer;
@@ -33,6 +32,17 @@ select {
 
 .product_choise:hover {
   box-shadow: 3px 5px 5px #333;
+}
+
+.product_choise.selected_product {
+  transition: background-color 0.4s, box-shadow 0.5s;
+  background-color: #083b57;
+  box-shadow: 2px 3px 3px #202020;
+}
+
+.product_choise.selected_product:hover {
+  background-color: #0c547a;;
+  color: #ffffff;
 }
 
 .configurator {
