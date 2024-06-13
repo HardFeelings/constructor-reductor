@@ -7,8 +7,8 @@ export class Reducer {
     type: ReducerType
     reducerSizeId: Number
     size: ReducerSize
-    diameterInputShaft: Number
-    diameterOutputShaft: Number
+    diameterInputShaft: Number | null
+    diameterOutputShaft: Number | null
     reducerInputTypeId: Number
     inputType: ReducerInputType
     reducerAdapterTypeId: Number
@@ -20,16 +20,16 @@ export class Reducer {
     reducerMountingId: Number
     mounting: MountingPoint
 
-    torqueMoment: Number
-    ratio: Number
+    torqueMoment: Number | null
+    ratio: Number | null
 
 
 
     constructor() {
         this.type = new ReducerType()
         this.size = new ReducerSize()
-        this.diameterInputShaft = 0
-        this.diameterOutputShaft = 0
+        this.diameterInputShaft = null
+        this.diameterOutputShaft = null
         this.inputType = new ReducerInputType()
         this.adapterType = new ReducerAdapterType()
         this.outputShaftType = new ReducerOutputShaftType()
@@ -43,8 +43,8 @@ export class Reducer {
         this.reducerAdapterTypeId = 0
         this.reducerInstallationTypeId = 0
         this.reducerMountingId = 0
-        this.torqueMoment = 0
-        this.ratio = 0
+        this.torqueMoment = null
+        this.ratio = null
     }
 
     ser(): any {
