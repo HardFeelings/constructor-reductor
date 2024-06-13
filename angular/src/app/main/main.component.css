@@ -44,19 +44,6 @@ body {
     background-color: #083b57;
 }
 
-select, input[type="number"] {
-    font-family: 'Roboto';
-    font-weight: 500;
-    width: auto;
-    max-width: 300px;
-    padding: 10px;
-    margin-top: 5px;
-    margin-bottom: 15px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    transition: border-color 0.3s ease;
-}
-
 select:focus, input[type="number"]:focus {
     border-color: #083b57;
     outline: none;
@@ -66,8 +53,6 @@ select:focus, input[type="number"]:focus {
     background-color: #fcb331;
     color: #ffffff;
 }
-
-
 
 button {
     width: 100px;
