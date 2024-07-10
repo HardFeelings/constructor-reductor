@@ -13,17 +13,17 @@ export class Product {
     optionsIds: Array<number>
     optionsString: string
 
-    constructor() {
-        this.id = 0
-        this.productTypeId = 0
-        this.name = ""
-        this.weight = 0
-        this.price = 0
-        this.reducerId = null
-        this.motorId = null
-        this.optionsIds = new Array<number>()
-        this.optionsString = ""
-    }
+    // constructor() {
+    //     this.id = 0
+    //     this.productTypeId = 0
+    //     this.name = ""
+    //     this.weight = 0
+    //     this.price = 0
+    //     this.reducerId = null
+    //     this.motorId = null
+    //     this.optionsIds = new Array<number>()
+    //     this.optionsString = ""
+    // }
 
     ser(): any {
         return {
@@ -147,4 +147,15 @@ export class ProductOption {
     save(http: HttpClient): Observable<ProductOption> {
     return http.post<ProductOption>('/api/v1/security/productOption', this.ser())
     }
+
+
+
+
 }
+
+  export enum enProduct {
+    Motor = "Двигатель",
+    Reducer = "Редуктор",
+    MotorReducer = "Мотор-редуктор"
+  }
+

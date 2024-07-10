@@ -1,12 +1,19 @@
-import { Routes } from '@angular/router';
+
+import { RouterModule,Routes } from '@angular/router';
 import { MainComponent } from './main/main.component';
 import { AdminkaComponent } from './adminka/adminka.component';
+import { NgModule } from '@angular/core';
 
 
 // add another rote with path "admin" and compontnt AdminkaComponent
-export const routes: Routes = [
+ const routes: Routes = [
     { path: '', component: MainComponent },
     { path: 'admin', component: AdminkaComponent }
 ];
 
-// test branch
+@NgModule({
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule]
+})
+export class AppRoutingModule { }
+

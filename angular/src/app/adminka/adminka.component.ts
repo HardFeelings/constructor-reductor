@@ -8,10 +8,8 @@ import { MountingPoint, Reducer, ReducerAdapterType, ReducerInputType, ReducerIn
 
 @Component({
   selector: 'app-adminka',
-  standalone: true,
-  imports: [CommonModule, FormsModule],
   templateUrl: './adminka.component.html',
-  styleUrl: './adminka.component.scss'
+  styleUrls: ['./adminka.component.scss']
 })
 export class AdminkaComponent {
 
@@ -66,20 +64,20 @@ export class AdminkaComponent {
   }
 
   ngOnInit() {
-    this.getMotorList()
-    this.getMotorTypeList()
-    this.getMotorAdapterTypeList()
-    this.getProductList()
-    this.getProductType()
-    this.getProductOption()
-    this.getReducer()
-    this.getReducerSize()
-    this.getReducerType()
-    this.getReducerOutputShaft()
-    this.getReducerMounting()
-    this.getReducerInstallationType()
-    this.getReducerInputType()
-    this.getReducerAdapterType()
+    // this.getMotorList()
+    // this.getMotorTypeList()
+    // this.getMotorAdapterTypeList()
+    // this.getProductList()
+    // this.getProductType()
+    // this.getProductOption()
+    // this.getReducer()
+    // this.getReducerSize()
+    // this.getReducerType()
+    // this.getReducerOutputShaft()
+    // this.getReducerMounting()
+    // this.getReducerInstallationType()
+    // this.getReducerInputType()
+    // this.getReducerAdapterType()
     this.setid(0);
   }
 

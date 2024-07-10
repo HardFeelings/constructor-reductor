@@ -1,3 +1,5 @@
+import { Engine, EngineType } from './../models/engine';
+import { MotorService } from '../sevices/motor.service';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
@@ -6,71 +8,51 @@ import { Router } from "@angular/router";
 import { Motor, MotorAdapterType, MotorType } from '../classes/motor';
 import { Reducer } from '../classes/reducer';
 import { MotorReducer } from '../classes/motor-reducer';
+import { enProduct, Product } from '../classes/product';
 
 @Component({
   selector: 'app-main',
-  standalone: true,
-  imports: [CommonModule, FormsModule],
   templateUrl: './main.component.html',
-  styleUrl: './main.component.scss'
+  styleUrls: ['./main.component.scss']
 })
 
 export class MainComponent {
-  product_variants = Object.values(Product)
-  product_selected: Product | null = null
-  product_enum = Product
+  product_variants = Object.values(enProduct);
+  product_selected: enProduct | null = null;
+  product_enum = enProduct;
+  allEngineTypes: EngineType[];
 
-  motor: Motor
-  reducer: Reducer
-  motorReducer: MotorReducer
+  motor: Motor;
+  reducer: Reducer;
+  motorReducer: MotorReducer;
 
-  constructor(private http: HttpClient) {
-    this.motor = new Motor()
-    this.reducer = new Reducer()
-    this.motorReducer = new MotorReducer()
+  constructor() {
   }
 
-  ngOnInit() {
-    // this.http.get('/api/v1/reducerType').subscribe({
-    //   next: (data: any) => {
-    //     console.log(data.data)
-    //     this.items1 = data.data
-    //   },
-    //   error: error => { console.log(error); }
-    // });
-    // this.http.get('/api/v1/inputNode').subscribe({
-    //   next: (data: any) => {
-    //     console.log(data.data)
-    //     this.items2 = data.data
-    //   },
-    //   error: error => { console.log(error) }
-    // });
-  }
-
-  search() {
-    switch (this.product_selected) {
-      case Product.Reducer:
-        alert(JSON.stringify(this.reducer))
-        break
-      case Product.Motor:
-        alert(JSON.stringify(this.motor))
-        break
-      case Product.MotorReducer:
-        alert(JSON.stringify(this.motorReducer))
-        break
-    }
-  }
+  // search() {
+  //   switch (this.product_selected) {
+  //     case enProduct.Reducer:
+  //       alert(JSON.stringify(this.reducer))
+  //       break
+  //     case enProduct.Motor:
+  //       alert(JSON.stringify(this.motor))
+  //       break
+  //     case enProduct.MotorReducer:
+  //       alert(JSON.stringify(this.motorReducer))
+  //       break
+  //   }
+  // }
 
   pickProduct(m: string) {
     switch (m) {
-      case Product.Motor.valueOf():
-        this.product_selected = Product.Motor
+      case enProduct.Motor.valueOf():
+        this.product_selected = enProduct.Motor;
         break
-      case Product.Reducer.valueOf():
-        this.product_selected = Product.Reducer
+      case enProduct.Reducer.valueOf():
+        this.product_selected = enProduct.Reducer
         break
-      case Product.MotorReducer.valueOf():
-        this.product_selected = Product.MotorReducer
+      case enProduct.MotorReducer.valueOf():
+        this.product_selected = enProduct.MotorReducer
         break
     }
   }
@@ -79,12 +61,5 @@ export class MainComponent {
     return product === this.product_selected;
   }
 }
-
-enum Product {
-  Motor = "Двигатель",
-  Reducer = "Редуктор",
-  MotorReducer = "Мотор-редуктор"
-}
-
 
 
