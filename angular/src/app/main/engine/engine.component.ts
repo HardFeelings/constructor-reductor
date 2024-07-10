@@ -1,8 +1,10 @@
-import { Component } from '@angular/core';
-import { Motor } from 'src/app/classes/motor';
+import { Component, Input } from '@angular/core';
 import { Engine, EngineAdapterType, EngineType } from 'src/app/models/engine';
+import { Filter } from 'src/app/models/filter';
+import { Product, ProductOption } from 'src/app/models/product';
 import { ResponseInfo } from 'src/app/models/responesInfo';
 import { MotorService } from 'src/app/sevices/motor.service';
+import { ProductService } from 'src/app/sevices/product.service';
 
 @Component({
   selector: 'app-engine',
@@ -10,55 +12,37 @@ import { MotorService } from 'src/app/sevices/motor.service';
   styleUrls: ['./engine.component.scss']
 })
 export class EngineComponent {
-motor: Motor;
+  engineAdapterTypeByMotorTypeId: EngineAdapterType[];
+  motorType: EngineType[];
+  productOption: ProductOption[];
+  frequencyArray: number[]=[50,60];
+  rpmArray: number[]=[750, 1000, 1500, 3000];
 
-constructor(private motorService: MotorService){
-  this.motor = new Motor();
-}
-
-
-ngOnInit() {
-  this.getAllMotors();
-  this.gerMotorbyId(1);
-
-  this.getAllMotorType();
-  // this.gerMotorTypebyId(1);
-
-  this.getAllMotoraAdapterType();
-  // this.getMotorAdapterById(1);
-  // this.getMotorAdapterByMotorTypeId(1);
-
-}
+  @Input() idProductType: number;
+  motorTypeId: number;
+  // motorAdapterTypeId!: number;
+  power!: number;
+  // frequency!:number;
+  // rpm!:number;
+  options: number[] = [];
+  filter: Filter = new Filter();
+  foundProducts: Product[];
 
 
-  //motor-controller and motor-type-controller
-
-  getAllMotors() {
-    this.motorService.getAllMotor().subscribe(
-      (respones: ResponseInfo<Engine[]>) => {
-        console.log("Data getAllMotors: ", respones.data);
-      },
-      (exepcion: any) => {
-        console.error("Error getAllMotors:", exepcion.error);
-      }
-    );
+  constructor(private motorService: MotorService, private productService: ProductService){
   }
 
-  gerMotorbyId(id:number) {
-    this.motorService.getMotorById(id).subscribe(
-      (data: ResponseInfo<Engine>)=>{
-      console.log("Data gerMotorbyId", data);
-      },
-      (error:any) =>{
-        console.error("Error gerMotorbyId:", error);
-      }
-    );
+  ngOnInit() {
+    this.getAllMotorType();
+    this.getByProductTypeOptionId(this.idProductType);
+    this.filter.productTypeId = this.idProductType;
   }
 
   getAllMotorType() {
     this.motorService.getAllMotorType().subscribe(
       (respones: ResponseInfo<EngineType[]>) => {
         console.log("Data getAllMotorType: ", respones.data);
+        this.motorType = respones.data;
       },
       (exepcion: any) => {
         console.error("Error getAllMotorType:", exepcion.error);
@@ -66,44 +50,11 @@ ngOnInit() {
     );
   }
 
-  gerMotorTypebyId(id:number) {
-    this.motorService.getMotorTypeById(id).subscribe(
-      (respones: ResponseInfo<EngineType>)=>{
-      console.log("Data gerMotorTypebyId", respones.data);
-      },
-      (error:any) =>{
-        console.error("Error gerMotorTypebyId:", error);
-      }
-    );
-  }
-
-
-  getAllMotoraAdapterType() {
-    this.motorService.getAllMotorAdapterType().subscribe(
-      (response) => {
-        console.log('Data getAllMotoraAdapterType:', response.data);
-      },
-      (error) => {
-        console.error('Error getAllMotoraAdapterType:', error);
-      }
-    );
-  }
-
-  getMotorAdapterById(id:number) {
-    this.motorService.getMotorAdapterById(id).subscribe(
-      (respones: ResponseInfo<EngineAdapterType>)=>{
-      console.log("Data getMotorAdapterById", respones.data);
-      },
-      (error:any) =>{
-        console.error("Error getMotorAdapterById:", error);
-      }
-    );
-  }
-
   getMotorAdapterByMotorTypeId(id:number) {
     this.motorService.getMotorAdapterByMotorTypeId(id).subscribe(
       (respones: ResponseInfo<EngineAdapterType[]>)=>{
-      console.log("Data getMotorAdapterByMotorTypeId", respones.data);
+        console.log("Data getMotorAdapterByMotorTypeId", respones.data);
+        this.engineAdapterTypeByMotorTypeId = respones.data;
       },
       (error:any) =>{
         console.error("Error getMotorAdapterByMotorTypeId:", error);
@@ -111,10 +62,111 @@ ngOnInit() {
     );
   }
 
+  getByProductTypeOptionId(id:number) {
+    this.productService.getByProductTypeOptionId(id).subscribe(
+      (respones: ResponseInfo<ProductOption[]>)=>{
+        console.log("Data getByProductTypeOptionId", respones.data);
+        this.productOption = respones.data;
+      },
+      (error:any) =>{
+        console.error("Error getByProductTypeOptionId:", error);
+      }
+    );
+  }
 
+  idMotorTypeSelected(event: Event) {
+    const selectedElement = event.target as HTMLSelectElement;
+    const selectedValue = selectedElement.value;
+    console.log('Выбранное значение MotorType:', selectedValue);
+    const selectedMotor = this.motorType.find(type => type.motorTypeName === selectedValue);
 
+    if (selectedMotor) {
+      this.motorTypeId = selectedMotor.idMotorType;
+      this.filter.motorTypeId = selectedMotor.idMotorType;
+      console.log('ID выбранного типа двигателя:', this.motorTypeId);
+      this.getMotorAdapterByMotorTypeId(this.motorTypeId);
+    } else {
+      console.error('Такой тип двигателя не найден');
+    }
+  }
 
+  idMotorAdapterTypeSelected(event: Event) {
+    const selectedElement = event.target as HTMLSelectElement;
+    const selectedValue = selectedElement.value;
+    console.log('Выбранное значение AdapterType:', selectedValue);
+    const selectedAdapter = this.engineAdapterTypeByMotorTypeId.find(type => type.motorAdapterTypeValue === selectedValue);
 
+    if (selectedAdapter) {
+      // this.motorAdapterTypeId = selectedAdapter.idMotorAdapterType;
+      this.filter.motorAdapterTypeId = selectedAdapter.idMotorAdapterType;
+      console.log('ID выбранного фланца двигателя:', this.motorTypeId);
+      this.getMotorAdapterByMotorTypeId(this.motorTypeId);
+    } else {
+      console.error('Такой фланц двигателя не найден');
+    }
+  }
 
+  frequencySelected(event: Event) {
+    const selectedElement = event.target as HTMLSelectElement;
+    const selectedValue = selectedElement.value;
+    console.log('Выбранное значение frequency:', selectedValue);
+    const intselectedValue: number = parseInt(selectedValue, 10);
+    console.log('Выбранное значение int frequency:', selectedValue);
+
+    if (intselectedValue) {
+      // this.frequency = intselectedValue;
+      this.filter.frequency = intselectedValue;
+    }
+  }
+
+  rpmSelected(event: Event) {
+    const selectedElement = event.target as HTMLSelectElement;
+    const selectedValue = selectedElement.value;
+    console.log('Выбранное значение rpm:', selectedValue);
+    const intselectedValue: number = parseInt(selectedValue, 10);
+    console.log('Выбранное значение int rpm:', selectedValue);
+
+    if (intselectedValue) {
+      // this.rpm = intselectedValue;
+      this.filter.rpm = intselectedValue;
+    }
+  }
+
+  onCheckboxChange(event: Event, optionId: number) {
+    const target = event.target as HTMLInputElement;
+    if (target.checked) {
+      this.options.push(optionId);
+      this.filter.productOptions = this.options;
+      // this.filter.productOptions.push(optionId);
+      console.log(`Checkbox with id ${optionId} is checked.`);
+      console.log(this.filter.productOptions);
+      // console.log(`this.options checked ${this.options} `);
+    }
+    else {
+      const index = this.options.indexOf(optionId);
+      // const index = this.filter.productOptions.indexOf(optionId);
+      if (index !== -1) {
+        this.options.splice(index, 1);
+        this.filter.productOptions = this.options;
+      }
+      console.log(`Checkbox with id ${optionId} is unchecked.`);
+      console.log(this.filter.productOptions);
+      // console.log(`this.options unchecked ${this.options} `);
+    }
+  }
+
+  searchProduct(filter: Filter){
+    filter.power = this.power;
+    console.log('filter', filter);
+    this.productService.postFilter(filter).subscribe(
+      (respones: ResponseInfo<Product[]>)=>{
+        console.log("Data searchProduct", respones.data);
+        this.foundProducts = respones.data;
+      },
+      (error:any) =>{
+        console.error("Error searchProduct:", error);
+      }
+    );
+  }
 
 }

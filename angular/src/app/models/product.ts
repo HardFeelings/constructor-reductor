@@ -1,5 +1,5 @@
 export class Product {
-  id: number;
+  idProduct: number;
   productTypeId: number;
   name: string;
   weight: number;
@@ -11,13 +11,19 @@ export class Product {
 
 }
 export class ProductType{
-  id: number
-  value: string
+  idProductType: number
+  productTypeValue: string
 }
 
 export class ProductOption {
-  id: number
+  idProductOption: number
   productOptionValue: string
   productTypeId: ProductType
 
 }
+export enum enProduct {
+  Motor = "Двигатель",
+  Reducer = "Редуктор",
+  MotorReducer = "Мотор-редуктор"
+}
+

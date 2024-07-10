@@ -17,18 +17,15 @@
     <div class="product">
       <h1>Продукт</h1>
       <div class="product_block">
-        <button
-          class="product_choise"
-          *ngFor="let product of product_variants"
-          [class.selected_product]="isSelectedProduct(product)"
-          (click)="pickProduct(product)">
-            {{ product }}
+        <button  class="product_choise" *ngFor="let productType of productTypes" (click)="pickProduct(productType.productTypeValue, productType.idProductType)">
+          {{ productType.productTypeValue }}
         </button>
-      </div>
     </div>
+  </div>
 
     <div class="configurator" *ngIf="product_selected == product_enum.Motor">
-      <app-engine></app-engine>
+      <app-engine [idProductType]="idProductType" ></app-engine>
+
     </div>
 
 

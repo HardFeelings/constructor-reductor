@@ -1,14 +1,12 @@
-import { Engine, EngineType } from './../models/engine';
-import { MotorService } from '../sevices/motor.service';
-import { CommonModule } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
+import { EngineType } from './../models/engine';
 import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { Router } from "@angular/router";
 import { Motor, MotorAdapterType, MotorType } from '../classes/motor';
 import { Reducer } from '../classes/reducer';
 import { MotorReducer } from '../classes/motor-reducer';
 import { enProduct, Product } from '../classes/product';
+import { ProductService } from '../sevices/product.service';
+import { ProductType } from '../models/product';
+import { ResponseInfo } from '../models/responesInfo';
 
 @Component({
   selector: 'app-main',
@@ -17,18 +15,18 @@ import { enProduct, Product } from '../classes/product';
 })
 
 export class MainComponent {
-  product_variants = Object.values(enProduct);
-  product_selected: enProduct | null = null;
+  product_selected: enProduct;
   product_enum = enProduct;
-  allEngineTypes: EngineType[];
+  productTypes: ProductType[];
+  idProductType: number;
 
-  motor: Motor;
-  reducer: Reducer;
-  motorReducer: MotorReducer;
-
-  constructor() {
+  constructor(private productService: ProductService) {
   }
 
+
+  ngOnInit() {
+    this.getAllProductTypes();
+  }
   // search() {
   //   switch (this.product_selected) {
   //     case enProduct.Reducer:
@@ -42,24 +40,41 @@ export class MainComponent {
   //       break
   //   }
   // }
+  getAllProductTypes(){
+    this.productService.getAllProductTypes().subscribe(
+      (respones: ResponseInfo<ProductType[]>) => {
+        console.log("Data getAllProductTypes: ", respones.data);
+        this.productTypes = respones.data;
+        console.log(" this.productTypes ",  this.productTypes);
+      },
+      (exepcion: any) => {
+        console.error("Error getAllProductTypes:", exepcion.error);
+      }
+    );
+  }
 
-  pickProduct(m: string) {
+
+  pickProduct(m: string, idType:number) {
+    console.log(m);
     switch (m) {
       case enProduct.Motor.valueOf():
         this.product_selected = enProduct.Motor;
+        this.idProductType = idType;
         break
       case enProduct.Reducer.valueOf():
         this.product_selected = enProduct.Reducer
+        this.idProductType = idType;
         break
       case enProduct.MotorReducer.valueOf():
         this.product_selected = enProduct.MotorReducer
+        this.idProductType = idType;
         break
     }
   }
 
-  isSelectedProduct(product: string): boolean {
-    return product === this.product_selected;
-  }
+  // isSelectedProduct(product: string): boolean {
+  //   return product === this.product_selected;
+  // }
 }
 
 

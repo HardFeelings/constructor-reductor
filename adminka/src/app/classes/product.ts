@@ -154,7 +154,7 @@ export class ProductOption {
 }
 
   export enum enProduct {
-    Motor = "Мотор",
+    Motor = "Двигатель",
     Reducer = "Редуктор",
     MotorReducer = "Мотор-редуктор"
   }

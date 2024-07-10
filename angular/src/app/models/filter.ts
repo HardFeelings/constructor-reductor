@@ -5,10 +5,10 @@ export class Filter{
 
   // motor param
   motorTypeId: number;
-  motorAdapterTypeId: number;
-  power: number;
-  frequency: number;
-  rpm: number;
+  motorAdapterTypeId!: number;
+  power!: number;
+  frequency!: number;
+  rpm!: number;
 
   // reducer param
 
