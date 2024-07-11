@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ABaseServiceService } from './abase-service.service';
 import { HttpClient } from '@angular/common/http';
-import { Reducer, ReducerAdapterType, ReducerInputType, ReducerInstallationType, MountingPoint, ReducerType, ReducerSize, ReducerOutputShaftType } from '../models/reducer';
+import { Reducer, ReducerAdapterType, ReducerInputType, ReducerInstallationType, ReducerMounting, ReducerType, ReducerSize, ReducerOutputShaftType } from '../models/reducer';
 import { ResponseInfo } from '../models/responesInfo';
 import { Observable } from 'rxjs';
 
@@ -76,12 +76,12 @@ export class ReducerService extends ABaseServiceService{
   }
 
 ///////////// MountingPoint /////////////
-  getAllReducerMounting(): Observable<ResponseInfo<MountingPoint[]>> {
-    return this.getwp<ResponseInfo<MountingPoint[]>>(this.reducerMounting);
+  getAllReducerMounting(): Observable<ResponseInfo<ReducerMounting[]>> {
+    return this.getwp<ResponseInfo<ReducerMounting[]>>(this.reducerMounting);
   }
 
-  getReducerMountingById(id:number): Observable<ResponseInfo<MountingPoint>> {
-    return this.getwp<ResponseInfo<MountingPoint>>(`${this.reducerMounting}/${id}`);
+  getReducerMountingById(id:number): Observable<ResponseInfo<ReducerMounting>> {
+    return this.getwp<ResponseInfo<ReducerMounting>>(`${this.reducerMounting}/${id}`);
   }
 
 ///////////// ReducerType /////////////

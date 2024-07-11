@@ -1,6 +1,6 @@
 
 export class Reducer {
-    id: number;
+    idReducer: number;
     reducerTypeId: number;
     reducerSizeId: number;
     diameterInputShaft!: number;
@@ -25,44 +25,44 @@ export class Reducer {
 
 
 export class ReducerType {
-  id: number;
+  idReducerType: number;
   reducerTypeName!: string;
 }
 
 
 export class ReducerAdapterType {
-  id: number;
-  value!: string;
+  idReducerAdapterType: number;
+  reducerAdapterTypeValue!: string;
   reducerTypeId: number;
 }
 
-export class MountingPoint {
-  id: number;
-  value!: string;
+export class ReducerMounting {
+  idReducerMounting: number;
+  reducerMountingValue!: string;
 }
 
 
 export class ReducerSize {
-  id: number
+  idReducerSize: number
   reducerSizeValue!: string;
   reducerTypeId: number
 }
 
 
 export class ReducerInputType {
-  id: number
-  value!: string
+  idReducerInputType: number
+  reducerInputTypeValue!: string
   reducerTypeId: number
 }
 
 export class ReducerOutputShaftType {
-  id: number
-  value!: string
+  idReducerOutputShaftType: number
+  reducerOutputShaftTypeValue!: string
   reducerTypeId: number
 }
 
 export class ReducerInstallationType {
-  id: number
-  value: string
+  idReducerInstallationType: number
+  reducerInstallationTypeValue: string
   reducerTypeId: number
 }

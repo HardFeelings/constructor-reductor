@@ -32,12 +32,12 @@
 
 
     <div class="configurator" *ngIf="product_selected == product_enum.Reducer">
-      <app-reductor></app-reductor>
+      <app-reductor [idProductType]="idProductType"></app-reductor>
     </div>
 
 
     <div class="configurator" *ngIf="product_selected == product_enum.MotorReducer">
-      <app-engine-reductor></app-engine-reductor>
+      <app-engine-reductor [idProductType]="idProductType"></app-engine-reductor>
     </div>
 
     <!-- <button *ngIf="product_selected != null" (click)="search()">Найти</button> -->

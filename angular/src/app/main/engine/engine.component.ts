@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Engine, EngineAdapterType, EngineType } from 'src/app/models/engine';
+import { EngineAdapterType, EngineType } from 'src/app/models/engine';
 import { Filter } from 'src/app/models/filter';
 import { Product, ProductOption } from 'src/app/models/product';
 import { ResponseInfo } from 'src/app/models/responesInfo';
@@ -20,10 +20,7 @@ export class EngineComponent {
 
   @Input() idProductType: number;
   motorTypeId: number;
-  // motorAdapterTypeId!: number;
   power!: number;
-  // frequency!:number;
-  // rpm!:number;
   options: number[] = [];
   filter: Filter = new Filter();
   foundProducts: Product[];
@@ -84,7 +81,9 @@ export class EngineComponent {
       this.motorTypeId = selectedMotor.idMotorType;
       this.filter.motorTypeId = selectedMotor.idMotorType;
       console.log('ID выбранного типа двигателя:', this.motorTypeId);
-      this.getMotorAdapterByMotorTypeId(this.motorTypeId);
+      if(selectedMotor.idMotorType && selectedMotor.idMotorType !== 1){
+        this.getMotorAdapterByMotorTypeId(this.motorTypeId);
+      }
     } else {
       console.error('Такой тип двигателя не найден');
     }
@@ -97,10 +96,8 @@ export class EngineComponent {
     const selectedAdapter = this.engineAdapterTypeByMotorTypeId.find(type => type.motorAdapterTypeValue === selectedValue);
 
     if (selectedAdapter) {
-      // this.motorAdapterTypeId = selectedAdapter.idMotorAdapterType;
       this.filter.motorAdapterTypeId = selectedAdapter.idMotorAdapterType;
-      console.log('ID выбранного фланца двигателя:', this.motorTypeId);
-      this.getMotorAdapterByMotorTypeId(this.motorTypeId);
+      console.log('ID выбранного фланца двигателя:', selectedAdapter.idMotorAdapterType);
     } else {
       console.error('Такой фланц двигателя не найден');
     }
@@ -114,7 +111,6 @@ export class EngineComponent {
     console.log('Выбранное значение int frequency:', selectedValue);
 
     if (intselectedValue) {
-      // this.frequency = intselectedValue;
       this.filter.frequency = intselectedValue;
     }
   }
@@ -127,7 +123,6 @@ export class EngineComponent {
     console.log('Выбранное значение int rpm:', selectedValue);
 
     if (intselectedValue) {
-      // this.rpm = intselectedValue;
       this.filter.rpm = intselectedValue;
     }
   }
@@ -137,21 +132,17 @@ export class EngineComponent {
     if (target.checked) {
       this.options.push(optionId);
       this.filter.productOptions = this.options;
-      // this.filter.productOptions.push(optionId);
       console.log(`Checkbox with id ${optionId} is checked.`);
       console.log(this.filter.productOptions);
-      // console.log(`this.options checked ${this.options} `);
     }
     else {
       const index = this.options.indexOf(optionId);
-      // const index = this.filter.productOptions.indexOf(optionId);
       if (index !== -1) {
         this.options.splice(index, 1);
         this.filter.productOptions = this.options;
       }
       console.log(`Checkbox with id ${optionId} is unchecked.`);
       console.log(this.filter.productOptions);
-      // console.log(`this.options unchecked ${this.options} `);
     }
   }
 
@@ -161,6 +152,7 @@ export class EngineComponent {
     this.productService.postFilter(filter).subscribe(
       (respones: ResponseInfo<Product[]>)=>{
         console.log("Data searchProduct", respones.data);
+        console.log("respones searchProduct", respones);
         this.foundProducts = respones.data;
       },
       (error:any) =>{

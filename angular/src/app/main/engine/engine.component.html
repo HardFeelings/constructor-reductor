@@ -38,6 +38,7 @@
           </select>
         </div>
       </div>
+      <br />
       <div *ngFor="let option of productOption">
         <input type="checkbox" [id]="'checkbox_' + option.idProductOption" [value]="option.idProductOption" (change)="onCheckboxChange($event, option.idProductOption)">
         <label [for]="'checkbox_' + option.idProductOption">{{ option.productOptionValue }}</label>
