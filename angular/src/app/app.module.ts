@@ -8,7 +8,6 @@ import { NgModule } from "@angular/core";
 import { MainComponent } from "./main/main.component";
 import { FooterComponent } from "./footer/footer.component";
 import { HeaderComponent } from "./header/header.component";
-import { AdminkaComponent } from "./adminka/adminka.component";
 import { EngineComponent } from "./main/engine/engine.component";
 import { EngineReductorComponent } from "./main/engine-reductor/engine-reductor.component";
 import { ReductorComponent } from "./main/reductor/reductor.component";
@@ -21,7 +20,6 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     HeaderComponent,
     FooterComponent,
     MainComponent,
-    AdminkaComponent,
     EngineComponent,
     EngineReductorComponent,
     ReductorComponent,

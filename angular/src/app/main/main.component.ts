@@ -1,11 +1,7 @@
-import { EngineType } from './../models/engine';
+
 import { Component } from '@angular/core';
-import { Motor, MotorAdapterType, MotorType } from '../classes/motor';
-import { Reducer } from '../classes/reducer';
-import { MotorReducer } from '../classes/motor-reducer';
-import { enProduct, Product } from '../classes/product';
 import { ProductService } from '../sevices/product.service';
-import { ProductType } from '../models/product';
+import { ProductType, enProduct } from '../models/product';
 import { ResponseInfo } from '../models/responesInfo';
 
 @Component({
@@ -27,19 +23,7 @@ export class MainComponent {
   ngOnInit() {
     this.getAllProductTypes();
   }
-  // search() {
-  //   switch (this.product_selected) {
-  //     case enProduct.Reducer:
-  //       alert(JSON.stringify(this.reducer))
-  //       break
-  //     case enProduct.Motor:
-  //       alert(JSON.stringify(this.motor))
-  //       break
-  //     case enProduct.MotorReducer:
-  //       alert(JSON.stringify(this.motorReducer))
-  //       break
-  //   }
-  // }
+
   getAllProductTypes(){
     this.productService.getAllProductTypes().subscribe(
       (respones: ResponseInfo<ProductType[]>) => {
@@ -72,9 +56,6 @@ export class MainComponent {
     }
   }
 
-  // isSelectedProduct(product: string): boolean {
-  //   return product === this.product_selected;
-  // }
 }
 
 
