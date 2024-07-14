@@ -3,6 +3,7 @@ package ru.vpt.constructorapp.api.product.common.mapper;
 import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.Named;
 import ru.vpt.constructorapp.api.motor.common.mapper.MotorMapper;
 import ru.vpt.constructorapp.api.product.common.dto.ProductDto;
 import ru.vpt.constructorapp.api.product.option.mapper.ProductOptionMapper;
@@ -16,11 +17,25 @@ import ru.vpt.constructorapp.store.entities.product.ProductOptionEntity;
 public interface ProductMapper {
 
 
+
     @Mapping(target = "productTypeId", source = "productType.idProductType")
     @Mapping(target = "reducerId", source = "reducer.idReducer")
     @Mapping(target = "motorId", source = "motor.idMotor")
     @Mapping(target = "optionsIds", source = "options")
+    @Mapping(target = "imageEmpty", source = "imageEmpty")
+    @Mapping(target = "reducer", ignore = true)
+    @Mapping(target = "motor", ignore = true)
     ProductDto toDTO(ProductEntity entity);
+
+
+    @Named(value = "toDTOWithRef")
+    @Mapping(target = "productTypeId", source = "productType.idProductType")
+    @Mapping(target = "reducerId", source = "reducer.idReducer")
+    @Mapping(target = "motorId", source = "motor.idMotor")
+    @Mapping(target = "optionsIds", source = "options")
+    @Mapping(target = "imageEmpty", source = "imageEmpty")
+    ProductDto toDTOWithRef(ProductEntity entity);
+
 
     @Mapping(target = "productType", ignore = true)
     @Mapping(target = "reducer", ignore = true)

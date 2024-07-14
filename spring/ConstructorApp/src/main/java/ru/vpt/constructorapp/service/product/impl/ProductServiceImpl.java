@@ -51,12 +51,16 @@ public class ProductServiceImpl implements ProductService {
         ProductEntity entity = productMapper.toEntity(dto);
         entity.setProductType(productTypeService.findById(dto.getProductTypeId())
                 .orElseThrow(() -> new RuntimeException("Невозможно сохранить продукт: не найден тип продукта с id: " + dto.getProductTypeId())));
-        if (dto.getReducerId() != null)
-            entity.setReducer(reducerService.findById(dto.getReducerId()).get());
+//        if (dto.getReducerId() != null)
+//            entity.setReducer(reducerService.findById(dto.getReducerId()).get());
+        if (dto.getReducer().getIdReducer() != null)
+            entity.setReducer(reducerService.findById(dto.getReducer().getIdReducer()).get());
         else entity.setReducer(null);
 
-        if (dto.getMotorId() != null)
-            entity.setMotor(motorService.findById(dto.getMotorId()).get());
+//        if (dto.getMotorId() != null)
+//            entity.setMotor(motorService.findById(dto.getMotorId()).get());
+        if (dto.getMotor().getIdMotor() != null)
+            entity.setMotor(motorService.findById(dto.getMotor().getIdMotor()).get());
         else entity.setMotor(null);
 
         entity.setOptions(dto.getOptionsIds().stream().map(item -> productOptionService.findById(item).get()).collect(Collectors.toSet()));

@@ -1,10 +1,7 @@
 package ru.vpt.constructorapp.store.entities.product;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import ru.vpt.constructorapp.store.entities.motor.MotorEntity;
 import ru.vpt.constructorapp.store.entities.reducer.ReducerEntity;
 
@@ -54,4 +51,17 @@ public class ProductEntity {
     @Lob
     private byte[] productImage;
 
+    @Transient
+    @Getter(AccessLevel.NONE)
+    @Setter(AccessLevel.NONE)
+    private Boolean isImageEmpty;
+
+    public Boolean getImageEmpty() {
+        if(productImage == null)
+            return false;
+        if(productImage.length > 0)
+            return true;
+        else
+            return false;
+    }
 }
