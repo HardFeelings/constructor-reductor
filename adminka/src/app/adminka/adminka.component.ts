@@ -8,10 +8,8 @@ import { MountingPoint, Reducer, ReducerAdapterType, ReducerInputType, ReducerIn
 
 @Component({
   selector: 'app-adminka',
-  standalone: true,
-  imports: [CommonModule, FormsModule],
   templateUrl: './adminka.component.html',
-  styleUrl: './adminka.component.scss'
+  styleUrls: ['./adminka.component.scss']
 })
 export class AdminkaComponent {
 

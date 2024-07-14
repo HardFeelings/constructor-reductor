@@ -1,0 +1,58 @@
+<h1 class="configurator_header">Конфигуратор двигателя</h1>
+      <div class="container_element_configurator">
+        <div class="element_configurator">
+          <span>Тип двигателя</span>
+          <select (change)="idMotorTypeSelected($event)">
+            <option value="" disabled selected>Select</option>
+            <option *ngFor="let type of motorType" [value]="type.motorTypeName">{{ type.motorTypeName }}</option>
+          </select>
+        </div>
+
+        <div *ngIf="motorTypeId && motorTypeId == 2" class="element_configurator">
+          <span>Тип Фланца</span>
+          <select (change)="idMotorAdapterTypeSelected($event)">
+            <option value="" disabled selected>Select</option>
+            <option *ngFor="let type of engineAdapterTypeByMotorTypeId" [value]="type.motorAdapterTypeValue">{{ type.motorAdapterTypeValue }}</option>
+          </select>
+        </div>
+        <div class="element_configurator">
+          <span>Мощность</span>
+          <input [(ngModel)]="this.power"  type="number" />
+        </div>
+      </div>
+
+      <br />
+      <div class="container_element_configurator">
+        <div class="element_configurator">
+          <span>Частота переменного тока Hz </span>
+          <select (change)="frequencySelected($event)">
+            <option value="" disabled selected>Select</option>
+            <option *ngFor="let value of frequencyArray" [value]="value">{{ value }}</option>
+          </select>
+        </div>
+        <div class="element_configurator">
+          <span>Число оборотов об/мин </span>
+          <select (change)="rpmSelected($event)">
+            <option value="" disabled selected>Select</option>
+            <option *ngFor="let value of rpmArray" [value]="value">{{ value }}</option>
+          </select>
+        </div>
+      </div>
+      <br />
+      <div *ngFor="let option of productOption">
+        <input type="checkbox" [id]="'checkbox_' + option.idProductOption" [value]="option.idProductOption" (change)="onCheckboxChange($event, option.idProductOption)">
+        <label [for]="'checkbox_' + option.idProductOption">{{ option.productOptionValue }}</label>
+      </div>
+      <br />
+      <hr />
+<button (click)="searchProduct(this.filter)">Найти</button>
+<br />
+<hr />
+<table *ngIf="foundProducts !== null || foundProducts !== []">
+  <tbody>
+    <tr *ngFor="let product of foundProducts">
+      <td>{{ product.idProduct }}</td>
+      <td>{{ product.name }}</td>
+    </tr>
+  </tbody>
+</table>

@@ -9,7 +9,7 @@ export class Motor {
     frequency: MotorFrequency
     rpm: MotorRPM
 
-    constructor();
+    // constructor();
     constructor(http?: HttpClient, id?: number) {
         this.id = 0
         this.type = new MotorType()
