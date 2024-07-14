@@ -49,4 +49,9 @@ public class ProductEntity {
             joinColumns = @JoinColumn(name = "id_product"),
             inverseJoinColumns = @JoinColumn(name = "id_product_option"))
     private Set<ProductOptionEntity> options;
+
+    @Column(name = "product_image")
+    @Lob
+    private byte[] productImage;
+
 }
