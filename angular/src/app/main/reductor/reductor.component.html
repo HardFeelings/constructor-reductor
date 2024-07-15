@@ -8,7 +8,7 @@
           </select>
         </div>
         <div class="element_configurator">
-          <span>Размре редуктора</span>
+          <span>Размер редуктора</span>
           <select [disabled]="!reducerTypeId" (change)="idReducerSizeBSelected($event)">
             <option value="" disabled selected>Select</option>
             <option *ngFor="let type of resucerSize" [value]="type.reducerSizeValue">{{ type.reducerSizeValue }}</option>
@@ -109,6 +109,18 @@
         <tr *ngFor="let product of foundProducts">
           <td>{{ product.idProduct }}</td>
           <td>{{ product.name }}</td>
+          <td>{{ product.reducer.ratio }}</td>
+          <td *ngIf="product.reducer.ratio == null">0</td>
+          <td>{{ product.reducer.diameterInputShaft }}</td>
+          <td *ngIf="product.reducer.diameterInputShaft == null">0</td>
+          <td>{{ product.reducer.diameterOutputShaft }}</td>
+          <td *ngIf="product.reducer.diameterOutputShaft == null">0</td>
+          <td>{{ product.reducer.torqueMoment }}</td>
+          <td *ngIf="product.reducer.torqueMoment == null">0</td>
+          <td>{{ product.weight }}</td>
+          <td *ngIf="product.weight== null">0</td>
+          <td *ngIf="product.imageEmpty == true"><button>Скачать</button></td>
+          <td *ngIf="product.imageEmpty == false"><div>Нет чертежа</div>
         </tr>
       </tbody>
     </table>

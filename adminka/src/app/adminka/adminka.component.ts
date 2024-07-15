@@ -29,6 +29,7 @@ export class AdminkaComponent {
   reducerInstallationType_list: ReducerInstallationType[]
   reducerInputType_list: ReducerInputType[]
   reducerAdapterType_list: ReducerAdapterType[]
+  productImage: string;
 
   constructor(private http: HttpClient) {
     this.motor_list = new Array<Motor>();
@@ -57,6 +58,25 @@ export class AdminkaComponent {
             span.classList.remove('selected');
         }
     });
+  }
+
+  onFileSelected(event: any) {
+    const selectedFile = event.target.files[0];
+    const reader = new FileReader();
+
+    reader.onload = (e: any) => {
+      const base64Image = e.target.result;
+      console.log('base64,', base64Image);
+    };
+
+    reader.readAsDataURL(selectedFile);
+  }
+
+  openFilePicker() {
+    const fileInput = document.getElementById('fileInput');
+    if (fileInput) {
+      fileInput.click();
+    }
   }
 
   getHttp() {
@@ -475,6 +495,7 @@ saveProductType(productType: ProductType) {
           product.reducerId = e["reducerId"]
           product.motorId = e["motorId"]
           product.optionsIds = e["optionsIds"]
+          product.imageEmpty = e["imageEmpty"]
           product.optionsString = product.optionsIds.join(',')
           this.product_list.push(product)
         })

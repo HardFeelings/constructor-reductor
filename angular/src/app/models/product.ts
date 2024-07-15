@@ -1,3 +1,6 @@
+import { Engine } from "./engine";
+import { Reducer } from "./reducer";
+
 export class Product {
   idProduct: number;
   productTypeId: number;
@@ -5,8 +8,11 @@ export class Product {
   weight: number;
   price: number;
   reducerId!: number;
+  reducer!: Reducer;
   motorId!: number;
+  motor!: Engine;
   optionsIds: number[];
+  imageEmpty!: boolean;
   // optionsString: string;
 
 }
