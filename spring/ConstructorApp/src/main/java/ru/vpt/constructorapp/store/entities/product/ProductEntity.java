@@ -48,7 +48,6 @@ public class ProductEntity {
     private Set<ProductOptionEntity> options;
 
     @Column(name = "product_image")
-    @Lob
     private byte[] productImage;
 
     @Transient
