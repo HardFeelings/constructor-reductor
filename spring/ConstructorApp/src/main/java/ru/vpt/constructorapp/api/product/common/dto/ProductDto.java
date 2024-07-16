@@ -30,4 +30,5 @@ public class ProductDto {
     private Set<Long> optionsIds;
     private Boolean imageEmpty;
     private String imageString;
+    private Boolean imageChanged;
 }

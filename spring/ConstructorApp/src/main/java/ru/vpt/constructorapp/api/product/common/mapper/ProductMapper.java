@@ -44,14 +44,9 @@ public interface ProductMapper {
     @Mapping(target = "reducer", ignore = true)
     @Mapping(target = "options", ignore = true)
     @Mapping(target = "motor", ignore = true)
-    @Mapping(target = "productImage", source = "imageString")
+    @Mapping(target = "productImage", ignore = true)
     ProductEntity toEntity(ProductDto dto);
 
-    default byte[] toByteArray(String image){
-        if ( image == null )
-            return null;
-        return Base64.getDecoder().decode(image);
-    }
     default Long toId(ProductOptionEntity entity){
         return entity.getIdProductOption();
     }
