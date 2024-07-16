@@ -61,8 +61,8 @@
       <td *ngIf="product.motor.frequency== null">0</td>
       <td>{{ product.weight }}</td>
       <td *ngIf="product.weight== null">0</td>
-      <td *ngIf="product.imageEmpty == true"><button>Скачать</button></td>
-      <td *ngIf="product.imageEmpty == false"><div>Нет чертежа</div>
+      <td *ngIf="product.imageEmpty == false"><button (click)="downloadImage(product.idProduct, product.name)">Скачать</button></td>
+      <td *ngIf="product.imageEmpty == true"><div>Нет чертежа</div>
     </tr>
   </tbody>
 </table>

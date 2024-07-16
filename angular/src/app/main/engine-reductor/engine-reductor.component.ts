@@ -257,4 +257,8 @@ export class EngineReductorComponent {
     );
   }
 
+  downloadImage(id:number,filename: string){
+    this.productService.downloadImageById(id,filename);
+  }
+
 }

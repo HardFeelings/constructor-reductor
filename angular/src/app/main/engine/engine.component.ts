@@ -161,4 +161,8 @@ export class EngineComponent {
     );
   }
 
+  downloadImage(id:number,filename: string){
+    this.productService.downloadImageById(id,filename);
+  }
+
 }

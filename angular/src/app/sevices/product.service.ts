@@ -15,6 +15,7 @@ export class ProductService extends ABaseServiceService{
   private productUrl = 'product';
   private productTypeOptionIdUrl = 'byProductTypeId';
   private filterUrl = 'filter';
+  private imageUrl = 'product/downloadImage'
 
   constructor(http: HttpClient) {
     super(http, 'api/v1');
@@ -57,4 +58,40 @@ export class ProductService extends ABaseServiceService{
     return this.postwp<ResponseInfo<Product[]>>(`${this.filterUrl}`, filter);
   }
 
+///////////// Image /////////////
+  // getImageById(id:number): Observable<Blob> {
+  //   return this.getwp<Blob>(`${this.imageUrl}/${id}`);
+  // }
+
+  // public getImageById(id: number): void {
+  //   this.http.get(`${this.endpoint}/${this.imageUrl}/${id}`).subscribe(
+  //     () => {
+  //       console.log('Request sent successfully');
+  //     },
+  //     (error) => {
+  //       console.error('Error sending the request:', error);
+  //     }
+  //   );
+  // }
+   downloadImageById(id: number, filename: string): void {
+    this.http.get(`${this.endpoint}/${this.imageUrl}/${id}`, { responseType: 'blob' }).subscribe(
+      (blob: Blob) => {
+        this.downloadBlob(blob, `${filename}.jpg`);
+      },
+      (error) => {
+        console.error('Error downloading the image:', error);
+      }
+    );
+  }
+
+  downloadBlob(blob: Blob, filename: string): void {
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    window.URL.revokeObjectURL(url);
+    document.body.removeChild(a);
+  }
 }

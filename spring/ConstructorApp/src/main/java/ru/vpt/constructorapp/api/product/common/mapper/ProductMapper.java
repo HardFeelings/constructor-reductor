@@ -48,6 +48,8 @@ public interface ProductMapper {
     ProductEntity toEntity(ProductDto dto);
 
     default byte[] toByteArray(String image){
+        if ( image == null )
+            return null;
         return Base64.getDecoder().decode(image);
     }
     default Long toId(ProductOptionEntity entity){

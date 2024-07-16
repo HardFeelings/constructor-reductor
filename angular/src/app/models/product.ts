@@ -13,7 +13,7 @@ export class Product {
   motor!: Engine;
   optionsIds: number[];
   imageEmpty!: boolean;
-  // optionsString: string;
+  // imageString:string | null;
 
 }
 export class ProductType{

@@ -290,4 +290,8 @@ export class ReductorComponent {
     );
   }
 
+  downloadImage(id:number,filename: string){
+    this.productService.downloadImageById(id,filename);
+  }
+
 }

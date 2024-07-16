@@ -13,6 +13,7 @@ export class Product {
     optionsIds: Array<number>
     optionsString: string
     imageEmpty!: boolean;
+    imageString: string | null;
 
     // constructor() {
     //     this.id = 0
@@ -35,11 +36,15 @@ export class Product {
             price: this.price,
             reducerId: this.reducerId,
             motorId: this.motorId,
+            imageEmpty: this.imageEmpty,
+            imageString: this.imageString,
             optionsIds: this.optionsString == "" ? new Array<number>() : this.optionsString.split(',').map(function (item) {
                 return parseInt(item, 10);
             })
         }
     }
+
+
 
     delete(http: HttpClient) : Observable<boolean>{
         console.log(this)

@@ -5,6 +5,7 @@ import { Motor, MotorAdapterType, MotorType } from '../classes/motor';
 import { FormsModule } from '@angular/forms';
 import { Product, ProductOption, ProductType } from '../classes/product';
 import { MountingPoint, Reducer, ReducerAdapterType, ReducerInputType, ReducerInstallationType, ReducerOutputShaftType, ReducerSize, ReducerType } from '../classes/reducer';
+import { ImageService } from './services/image.service';
 
 @Component({
   selector: 'app-adminka',
@@ -31,7 +32,7 @@ export class AdminkaComponent {
   reducerAdapterType_list: ReducerAdapterType[]
   productImage: string;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private imageService: ImageService) {
     this.motor_list = new Array<Motor>();
     this.motorType_list = new Array<MotorType>();
     this.motorAdapterType_list = new Array<MotorAdapterType>();
@@ -60,24 +61,42 @@ export class AdminkaComponent {
     });
   }
 
-  onFileSelected(event: any) {
+  onFileSelected(event: any, product: Product) {
     const selectedFile = event.target.files[0];
     const reader = new FileReader();
 
     reader.onload = (e: any) => {
       const base64Image = e.target.result;
-      console.log('base64,', base64Image);
+      const base64WithoutPrefix = base64Image.split(',')[1];
+      console.log('base64:', base64WithoutPrefix);
+
+      setTimeout(() => {
+        product.imageString = base64WithoutPrefix;
+        // product.imageEmpty = false;
+        this.saveProduct(product);
+      }, 0);
     };
 
     reader.readAsDataURL(selectedFile);
   }
 
-  openFilePicker() {
-    const fileInput = document.getElementById('fileInput');
+  openFilePicker(id: number) {
+    const fileInput = document.getElementById('fileInput-' + id);
     if (fileInput) {
       fileInput.click();
     }
   }
+
+  downloadImage(id: number, filename: string){
+    this.imageService.downloadImageById(id,filename);
+  }
+
+  deleteImage(product: Product){
+    product.imageString = null;
+    // product.imageEmpty = true;
+    this.saveProduct(product);
+  }
+
 
   getHttp() {
     return this.http
