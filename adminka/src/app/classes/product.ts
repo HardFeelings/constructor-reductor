@@ -11,9 +11,10 @@ export class Product {
     reducerId: number | null
     motorId: number | null
     optionsIds: Array<number>
-    optionsString: string
+    optionsString: string;
     imageEmpty!: boolean;
     imageString: string | null;
+    imageChanged!: boolean;
 
     // constructor() {
     //     this.id = 0
@@ -38,6 +39,7 @@ export class Product {
             motorId: this.motorId,
             imageEmpty: this.imageEmpty,
             imageString: this.imageString,
+            imageChanged: this.imageChanged,
             optionsIds: this.optionsString == "" ? new Array<number>() : this.optionsString.split(',').map(function (item) {
                 return parseInt(item, 10);
             })

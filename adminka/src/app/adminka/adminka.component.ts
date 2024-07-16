@@ -30,7 +30,10 @@ export class AdminkaComponent {
   reducerInstallationType_list: ReducerInstallationType[]
   reducerInputType_list: ReducerInputType[]
   reducerAdapterType_list: ReducerAdapterType[]
-  productImage: string;
+  // productImage: string | null = null;
+  // imageChanged: boolean = false;
+  // imageEmpty: boolean = true;
+  // productSave: Product;
 
   constructor(private http: HttpClient, private imageService: ImageService) {
     this.motor_list = new Array<Motor>();
@@ -72,16 +75,19 @@ export class AdminkaComponent {
 
       setTimeout(() => {
         product.imageString = base64WithoutPrefix;
-        // product.imageEmpty = false;
-        this.saveProduct(product);
+        // this.productImage = base64WithoutPrefix;
+        product.imageEmpty = false;
+        product.imageChanged = true;
+        // this.imageChanged = true;
+        // this.saveProduct(product);
       }, 0);
     };
 
     reader.readAsDataURL(selectedFile);
   }
 
-  openFilePicker(id: number) {
-    const fileInput = document.getElementById('fileInput-' + id);
+
+  openFilePicker(fileInput: HTMLInputElement) {
     if (fileInput) {
       fileInput.click();
     }
@@ -93,8 +99,10 @@ export class AdminkaComponent {
 
   deleteImage(product: Product){
     product.imageString = null;
-    // product.imageEmpty = true;
-    this.saveProduct(product);
+    product.imageEmpty = true;
+    product.imageChanged = true;
+    // this.imageChanged = true;
+    // this.saveProduct(product);
   }
 
 
@@ -189,10 +197,18 @@ export class AdminkaComponent {
 
   addProduct() {
     var product = new Product()
+    product.imageEmpty = true;
     this.product_list.push(product)
   }
 
   saveProduct(product: Product) {
+    if(product.imageChanged == null || !product.imageChanged){
+      product.imageChanged = false;
+    }
+    if(product.imageString == null || !product.imageString){
+      product.imageString = null;
+    }
+    // product.imageChanged = this.imageChanged;
     product.save(this.http).subscribe((data:any) => {
       const index = this.product_list.findIndex(item => item.id === data.data.idProduct);
       if (index !== -1) {
@@ -515,6 +531,8 @@ saveProductType(productType: ProductType) {
           product.motorId = e["motorId"]
           product.optionsIds = e["optionsIds"]
           product.imageEmpty = e["imageEmpty"]
+          product.imageString = e["imageString"]
+          product.imageChanged = e["imageChanged"]
           product.optionsString = product.optionsIds.join(',')
           this.product_list.push(product)
         })
@@ -551,5 +569,10 @@ saveProductType(productType: ProductType) {
       },
       error: error => { console.log(error); }
     });
+  }
+
+
+  addManager(){
+
   }
 }

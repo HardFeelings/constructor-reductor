@@ -25,6 +25,7 @@
             <span (click)="setid(11)">ReducerInstallationType</span>
             <span (click)="setid(12)">ReducerInputType</span>
             <span (click)="setid(13)">ReducerAdapterType</span>
+            <span (click)="setid(14)">Manager</span>
         </div>
         <div class="content">
             <div *ngIf="id==0">
@@ -144,8 +145,8 @@
                                 <td><input class="editable" [(ngModel)]="i.reducerId"></td>
                                 <td><input class="editable" [(ngModel)]="i.motorId"></td>
                                 <td><input class="editable" [(ngModel)]="i.optionsString"></td>
-                                <td *ngIf="i.imageEmpty == true"><input type="file" id="fileInput-{{i.id}}" style="display: none" (change)="onFileSelected($event, i)">
-                                  <button (click)="openFilePicker(i.id)">Загрузить</button></td>
+                                <td *ngIf="i.imageEmpty == true"><input type="file" #fileInput style="display: none" (change)="onFileSelected($event, i)">
+                                  <button (click)="openFilePicker(fileInput)">Загрузить</button></td>
                                 <td *ngIf="i.imageEmpty == false"><button (click)="downloadImage(i.id, i.name)">Скачать</button> <button (click)="deleteImage(i)">Удалить</button> </td>
                                 <td class="row-buttons">
                                     <button (click)="saveProduct(i)"> Сохранить </button>
@@ -448,6 +449,38 @@
                     </table>
                 </div>
             </div>
+            <div *ngIf="id==14">
+              <div class="buttons">
+                  <button (click)="addManager()"> Новый </button>
+              </div>
+              <div class="table-container">
+                  <table class="table">
+                      <thead>
+                          <tr>
+                              <th>idManager</th>
+                              <th>shortName</th>
+                              <th>fullName</th>
+                              <th>position</th>
+                              <th>email</th>
+                              <th>phoneNumber</th>
+                              <th></th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          <!-- <tr *ngFor="let i of productOption_list">
+                              <td>{{i.idProductOption}}</td>
+                              <td><input class="editable" [(ngModel)]="i.productOptionValue"></td>
+                              <td><input class="editable" [(ngModel)]="i.productTypeId"></td> -->
+                            <tr>
+                              <td class="row-buttons">
+                                  <button> Сохранить </button>
+                                  <button> Удалить </button>
+                              </td>
+                          </tr>
+                      </tbody>
+                  </table>
+              </div>
+          </div>
         </div>
     </div>
 

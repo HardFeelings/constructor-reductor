@@ -51,6 +51,7 @@
 <table *ngIf="foundProducts !== null || foundProducts !== []">
   <tbody>
     <tr *ngFor="let product of foundProducts">
+      <div *ngIf="product.motor !== null">
       <td>{{ product.idProduct }}</td>
       <td>{{ product.name }}</td>
       <td>{{ product.motor.power }}</td>
@@ -63,6 +64,7 @@
       <td *ngIf="product.weight== null">0</td>
       <td *ngIf="product.imageEmpty == false"><button (click)="downloadImage(product.idProduct, product.name)">Скачать</button></td>
       <td *ngIf="product.imageEmpty == true"><div>Нет чертежа</div>
+      </div>
     </tr>
   </tbody>
 </table>
