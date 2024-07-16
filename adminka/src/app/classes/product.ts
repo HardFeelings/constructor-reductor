@@ -12,6 +12,7 @@ export class Product {
     motorId: number | null
     optionsIds: Array<number>
     optionsString: string
+    imageEmpty!: boolean;
 
     // constructor() {
     //     this.id = 0

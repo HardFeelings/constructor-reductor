@@ -130,6 +130,7 @@
                                 <th>idReducer</th>
                                 <th>idMotor</th>
                                 <th>options</th>
+                                <th>image</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -143,6 +144,9 @@
                                 <td><input class="editable" [(ngModel)]="i.reducerId"></td>
                                 <td><input class="editable" [(ngModel)]="i.motorId"></td>
                                 <td><input class="editable" [(ngModel)]="i.optionsString"></td>
+                                <td *ngIf="i.imageEmpty == false"><input type="file" id="fileInput" style="display: none" (change)="onFileSelected($event)">
+                                  <button (click)="openFilePicker()">Загрузить</button></td>
+                                <td *ngIf="i.imageEmpty == true"><button>Скачать</button> <button>Удалить</button> </td>
                                 <td class="row-buttons">
                                     <button (click)="saveProduct(i)"> Сохранить </button>
                                     <button (click)="deleteProduct(i)"> Удалить </button>

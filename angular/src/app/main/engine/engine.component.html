@@ -53,6 +53,16 @@
     <tr *ngFor="let product of foundProducts">
       <td>{{ product.idProduct }}</td>
       <td>{{ product.name }}</td>
+      <td>{{ product.motor.power }}</td>
+      <td *ngIf="product.motor.power== null">0</td>
+      <td>{{ product.motor.rpm }}</td>
+      <td *ngIf="product.motor.rpm== null">0</td>
+      <td>{{ product.motor.frequency }}</td>
+      <td *ngIf="product.motor.frequency== null">0</td>
+      <td>{{ product.weight }}</td>
+      <td *ngIf="product.weight== null">0</td>
+      <td *ngIf="product.imageEmpty == true"><button>Скачать</button></td>
+      <td *ngIf="product.imageEmpty == false"><div>Нет чертежа</div>
     </tr>
   </tbody>
 </table>
