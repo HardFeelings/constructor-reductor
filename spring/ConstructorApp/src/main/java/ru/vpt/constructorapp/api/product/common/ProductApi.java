@@ -1,5 +1,6 @@
 package ru.vpt.constructorapp.api.product.common;
 
+import org.springframework.core.io.Resource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.vpt.constructorapp.api.product.common.dto.ProductDto;
@@ -20,5 +21,8 @@ public interface ProductApi {
 
     @DeleteMapping("/security/product/{id}")
     ResponseEntity<ResponseDto<Boolean>> delete(@PathVariable("id") Long id);
+
+    @GetMapping("/product/downloadImage/{id}")
+    ResponseEntity<Resource> getImage(@PathVariable("id") Long id);
 
 }

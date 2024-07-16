@@ -1,6 +1,9 @@
 package ru.vpt.constructorapp.controller.util;
 
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import ru.vpt.constructorapp.api.util.ResponseDto;
 

@@ -12,6 +12,8 @@ import ru.vpt.constructorapp.api.reducer.common.mapper.ReducerMapper;
 import ru.vpt.constructorapp.store.entities.product.ProductEntity;
 import ru.vpt.constructorapp.store.entities.product.ProductOptionEntity;
 
+import java.util.Base64;
+
 @Mapper(componentModel = "spring",uses = {ProductTypeMapper.class, ReducerMapper.class,
         MotorMapper.class, ProductOptionMapper.class}, injectionStrategy = InjectionStrategy.CONSTRUCTOR)
 public interface ProductMapper {
@@ -25,6 +27,7 @@ public interface ProductMapper {
     @Mapping(target = "imageEmpty", source = "imageEmpty")
     @Mapping(target = "reducer", ignore = true)
     @Mapping(target = "motor", ignore = true)
+    @Mapping(target = "imageString", ignore = true)
     ProductDto toDTO(ProductEntity entity);
 
 
@@ -33,7 +36,7 @@ public interface ProductMapper {
     @Mapping(target = "reducerId", source = "reducer.idReducer")
     @Mapping(target = "motorId", source = "motor.idMotor")
     @Mapping(target = "optionsIds", source = "options")
-    @Mapping(target = "imageEmpty", source = "imageEmpty")
+    @Mapping(target = "imageString", ignore = true)
     ProductDto toDTOWithRef(ProductEntity entity);
 
 
@@ -41,8 +44,12 @@ public interface ProductMapper {
     @Mapping(target = "reducer", ignore = true)
     @Mapping(target = "options", ignore = true)
     @Mapping(target = "motor", ignore = true)
+    @Mapping(target = "productImage", source = "imageString")
     ProductEntity toEntity(ProductDto dto);
 
+    default byte[] toByteArray(String image){
+        return Base64.getDecoder().decode(image);
+    }
     default Long toId(ProductOptionEntity entity){
         return entity.getIdProductOption();
     }

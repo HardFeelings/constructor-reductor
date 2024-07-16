@@ -53,13 +53,13 @@ public class ProductServiceImpl implements ProductService {
                 .orElseThrow(() -> new RuntimeException("Невозможно сохранить продукт: не найден тип продукта с id: " + dto.getProductTypeId())));
 //        if (dto.getReducerId() != null)
 //            entity.setReducer(reducerService.findById(dto.getReducerId()).get());
-        if (dto.getReducer().getIdReducer() != null)
+        if (dto.getReducer() != null)
             entity.setReducer(reducerService.findById(dto.getReducer().getIdReducer()).get());
         else entity.setReducer(null);
 
 //        if (dto.getMotorId() != null)
 //            entity.setMotor(motorService.findById(dto.getMotorId()).get());
-        if (dto.getMotor().getIdMotor() != null)
+        if (dto.getMotor() != null)
             entity.setMotor(motorService.findById(dto.getMotor().getIdMotor()).get());
         else entity.setMotor(null);
 
@@ -78,4 +78,11 @@ public class ProductServiceImpl implements ProductService {
         productRepo.existsById(id);
         return true;
     }
+
+    @Override
+    public ProductEntity getProductEntityById(Long id) {
+        return productRepo.findById(id).get();
+
+    }
+
 }

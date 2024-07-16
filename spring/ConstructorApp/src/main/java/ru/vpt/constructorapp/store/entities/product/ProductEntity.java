@@ -58,10 +58,10 @@ public class ProductEntity {
 
     public Boolean getImageEmpty() {
         if(productImage == null)
-            return false;
-        if(productImage.length > 0)
             return true;
-        else
+        if(productImage.length > 0)
             return false;
+        else
+            return true;
     }
 }

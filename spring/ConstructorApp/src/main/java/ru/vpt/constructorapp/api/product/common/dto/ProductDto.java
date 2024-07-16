@@ -29,4 +29,5 @@ public class ProductDto {
    // private Set<ProductOptionDto> options;
     private Set<Long> optionsIds;
     private Boolean imageEmpty;
+    private String imageString;
 }
