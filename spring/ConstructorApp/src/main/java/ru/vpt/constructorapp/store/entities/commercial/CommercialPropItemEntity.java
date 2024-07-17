@@ -16,11 +16,11 @@ import ru.vpt.constructorapp.store.entities.product.ProductEntity;
 public class CommercialPropItemEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id_comercial_prop_item")
+    @Column(name = "id_commercial_prop_item")
     private Long idCommercialPropItem;
 
     @ManyToOne
-    @JoinColumn(name = "id_comercial_prop")
+    @JoinColumn(name = "id_commercial_prop")
     private CommercialPropEntity commercialProp;
 
     @ManyToOne

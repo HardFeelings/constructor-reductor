@@ -19,7 +19,7 @@ import java.util.List;
 public class CommercialPropEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id_comercial_prop")
+    @Column(name = "id_commercial_prop")
     private Long idCommercialProp;
 
     @Column(name = "number")
@@ -40,7 +40,7 @@ public class CommercialPropEntity {
     private ManagerEntity manager;
 
     @OneToMany
-    @JoinColumn(name = "id_comercial_prop")
+    @JoinColumn(name = "id_commercial_prop")
     private List<CommercialPropItemEntity> commercialPropItems;
 
 }
