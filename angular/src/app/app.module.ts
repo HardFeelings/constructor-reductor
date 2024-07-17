@@ -12,6 +12,7 @@ import { EngineComponent } from "./main/engine/engine.component";
 import { EngineReductorComponent } from "./main/engine-reductor/engine-reductor.component";
 import { ReductorComponent } from "./main/reductor/reductor.component";
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import { NgOptimizedImage } from "@angular/common";
 
 
 @NgModule({
@@ -34,6 +35,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     BrowserAnimationsModule,
     HttpClientModule,
     MatCheckboxModule,
+    NgOptimizedImage,
 
   ],
   providers: [],

@@ -1,6 +1,7 @@
 import { HttpClient } from "@angular/common/http"
 import { Motor } from "./motor"
 import { Observable } from 'rxjs';
+import { ResponseInfo } from "./responesInfo";
 
 export class Product {
     id: number
@@ -53,10 +54,10 @@ export class Product {
         return http.delete<boolean>(`/api/v1/security/product/${this.id}`)
     }
 
-    save(http: HttpClient): Observable<Product> {
-        console.log(this.ser())
-       return http.post<Product>('/api/v1/security/product', this.ser())
-    }
+    save(http: HttpClient): Observable<Product>{
+      console.log(this.ser())
+     return http.post<Product>('/api/v1/security/product', this.ser())
+  }
 }
 
 

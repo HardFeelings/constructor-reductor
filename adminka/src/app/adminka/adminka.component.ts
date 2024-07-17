@@ -6,6 +6,9 @@ import { FormsModule } from '@angular/forms';
 import { Product, ProductOption, ProductType } from '../classes/product';
 import { MountingPoint, Reducer, ReducerAdapterType, ReducerInputType, ReducerInstallationType, ReducerOutputShaftType, ReducerSize, ReducerType } from '../classes/reducer';
 import { ImageService } from './services/image.service';
+import { Manager } from '../classes/manager';
+import { ResponseInfo } from '../classes/responesInfo';
+
 
 @Component({
   selector: 'app-adminka',
@@ -30,6 +33,7 @@ export class AdminkaComponent {
   reducerInstallationType_list: ReducerInstallationType[]
   reducerInputType_list: ReducerInputType[]
   reducerAdapterType_list: ReducerAdapterType[]
+  manager_list:Manager[];
   // productImage: string | null = null;
   // imageChanged: boolean = false;
   // imageEmpty: boolean = true;
@@ -50,6 +54,7 @@ export class AdminkaComponent {
     this.reducerInstallationType_list = new Array<ReducerInstallationType>();
     this.reducerInputType_list = new Array<ReducerInputType>();
     this.reducerAdapterType_list = new Array<ReducerAdapterType>();
+    this.manager_list = new Array<Manager>();
   }
 
   setid(id: number) {
@@ -125,6 +130,7 @@ export class AdminkaComponent {
     this.getReducerInstallationType()
     this.getReducerInputType()
     this.getReducerAdapterType()
+    this.getListManagers()
     this.setid(0);
   }
 
@@ -136,7 +142,7 @@ export class AdminkaComponent {
   saveMotor(motor: Motor) {
     motor.save(this.http).subscribe((data:any) => {
       const index = this.motor_list.findIndex(item => item.id === data.data.idMotor);
-      debugger
+      // debugger
       if(index === -1 && this.motor_list[this.motor_list.length -1].id === 0){
         this.motor_list[this.motor_list.length -1].id = data.data.idMotor;
       }
@@ -213,12 +219,14 @@ export class AdminkaComponent {
       const index = this.product_list.findIndex(item => item.id === data.data.idProduct);
       if (index !== -1) {
         this.product_list[index].optionsString = data.data.optionsIds.join(",");
-      } else if (this.product_list[this.product_list.length -1].id === 0){
+      } else if (this.product_list[this.product_list.length -1].id === 0 || !this.product_list[this.product_list.length -1].id || this.product_list[this.product_list.length -1].id == null){
         this.product_list[this.product_list.length -1].id = data.data.idProduct;
         this.product_list[this.product_list.length -1].optionsString = data.data.optionsIds.join(",");
       }
     });
   }
+
+
 
   deleteProduct(i : Product) {
     i.delete(this.http).subscribe((data:boolean) => {
@@ -573,6 +581,58 @@ saveProductType(productType: ProductType) {
 
 
   addManager(){
-
+    var newManager = new Manager()
+    this.manager_list.push(newManager)
   }
+
+  getListManagers() {
+    this.http.get('/api/v1/security/manager').subscribe({
+      next: (data: any) => {
+        data.data.forEach((e: { [x: string]: any; }) => {
+          var manager = new Manager()
+          manager.idManager =e["idManager"]
+          manager.shortName =e["shortName"]
+          manager.fullName =e["fullName"]
+          manager.position =e["position"]
+          manager.email =e["email"]
+          manager.phoneNumber =e["phoneNumber"]
+          this.manager_list.push(manager)
+        })
+      },
+      error: error => { console.log(error); }
+    });
+  }
+
+  deleteManager(i: Manager) {
+    i.delete(this.http).subscribe((data:boolean) => {
+      if(data) {
+        this.manager_list = this.manager_list.filter(item => item.idManager !== i.idManager)
+      }
+    })
+  }
+
+
+  saveManager(manager: Manager){
+    console.log(manager);
+    manager.save(this.http).subscribe((respones: ResponseInfo<Manager>) => {
+
+      console.log(respones.data);
+      const index = this.manager_list.findIndex(item => item.idManager === manager.idManager);
+      if (index !== -1) {
+          let  managerData = new Manager;
+          managerData = manager;
+          managerData.idManager = respones.data.idManager;
+
+          this.manager_list[index] = managerData;
+          console.log('manager_list', this.manager_list);
+      } else {
+          let  managerData2 = new Manager;
+          managerData2 = manager;
+          managerData2.idManager = respones.data.idManager;
+          this.manager_list.push(managerData2);
+          console.log('datadata',respones.data);
+      }
+    });
+  }
+
 }
