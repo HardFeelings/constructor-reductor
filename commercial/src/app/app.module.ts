@@ -7,10 +7,14 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from "@angular/core";
 import { FooterComponent } from "./footer/footer.component";
 import { HeaderComponent } from "./header/header.component";
-import { AdminkaComponent } from "./adminka/adminka.component";
 import {MatCheckboxModule} from '@angular/material/checkbox';
-import { LoginComponent } from "./login/login/login.component";
 import { NgOptimizedImage } from "@angular/common";
+import { SearchPageComponent } from "./search-page/search-page.component";
+import { CommercialPageComponent } from "./commercial-page/commercial-page.component";
+import { ReductorComponent } from "./search-page/reductor/reductor.component";
+import { EngineComponent } from "./search-page/engine/engine.component";
+import { EngineReductorComponent } from "./search-page/engine-reductor/engine-reductor.component";
+
 
 
 @NgModule({
@@ -18,8 +22,12 @@ import { NgOptimizedImage } from "@angular/common";
     AppComponent,
     HeaderComponent,
     FooterComponent,
-    AdminkaComponent,
-    LoginComponent,
+    SearchPageComponent,
+    CommercialPageComponent,
+    ReductorComponent,
+    EngineComponent,
+    EngineReductorComponent,
+
 
 
 
