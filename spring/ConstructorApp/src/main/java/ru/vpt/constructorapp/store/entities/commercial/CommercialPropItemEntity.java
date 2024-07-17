@@ -19,7 +19,7 @@ public class CommercialPropItemEntity {
     @Column(name = "id_commercial_prop_item")
     private Long idCommercialPropItem;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_commercial_prop")
     private CommercialPropEntity commercialProp;
 
