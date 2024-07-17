@@ -61,4 +61,6 @@ public class CommercialPropItemServiceImpl implements CommercialPropItemService 
         entity.setCommercialProp(commercialProp);
         return mapper.toDTO(repo.save(entity));
     }
+
+
 }

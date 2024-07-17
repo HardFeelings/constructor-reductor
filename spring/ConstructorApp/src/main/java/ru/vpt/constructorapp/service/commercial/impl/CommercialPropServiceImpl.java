@@ -64,6 +64,8 @@ public class CommercialPropServiceImpl implements CommercialPropService {
         if (!repo.existsById(id)) {
             throw new NotFoundException("Невозможно удалить объект: не найден объект с id: " + id, 404);
         }
+        List<CommercialPropItemDto> list = itemService.getAllByCommercialPropId(id);
+        list.forEach(item -> itemService.delete(item.getIdCommercialPropItem()));
         repo.deleteById(id);
         return true;
     }
