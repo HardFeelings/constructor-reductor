@@ -467,14 +467,16 @@
                           </tr>
                       </thead>
                       <tbody>
-                          <!-- <tr *ngFor="let i of productOption_list">
-                              <td>{{i.idProductOption}}</td>
-                              <td><input class="editable" [(ngModel)]="i.productOptionValue"></td>
-                              <td><input class="editable" [(ngModel)]="i.productTypeId"></td> -->
-                            <tr>
+                          <tr *ngFor="let i of manager_list">
+                              <td>{{i.idManager}}</td>
+                              <td><input class="editable" [(ngModel)]="i.shortName"></td>
+                              <td><input class="editable" [(ngModel)]="i.fullName"></td>
+                              <td><input class="editable" [(ngModel)]="i.position"></td>
+                              <td><input class="editable" [(ngModel)]="i.email"></td>
+                              <td><input class="editable" [(ngModel)]="i.phoneNumber"></td>
                               <td class="row-buttons">
-                                  <button> Сохранить </button>
-                                  <button> Удалить </button>
+                                  <button (click)="saveManager(i)"> Сохранить </button>
+                                  <button (click)="deleteManager(i)"> Удалить </button>
                               </td>
                           </tr>
                       </tbody>
