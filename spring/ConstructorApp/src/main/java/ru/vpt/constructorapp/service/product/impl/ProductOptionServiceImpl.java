@@ -2,6 +2,8 @@ package ru.vpt.constructorapp.service.product.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import ru.vpt.constructorapp.api.exception.BadRequestException;
+import ru.vpt.constructorapp.api.exception.NotFoundException;
 import ru.vpt.constructorapp.api.motor.adapter.dto.MotorAdapterTypeDto;
 import ru.vpt.constructorapp.api.product.option.dto.ProductOptionDto;
 import ru.vpt.constructorapp.api.product.option.mapper.ProductOptionMapper;
@@ -32,7 +34,7 @@ public class ProductOptionServiceImpl implements ProductOptionService {
 
   @Override
   public ProductOptionDto getProductOptionById(Long id) {
-    ProductOptionEntity entity = productOptionRepo.findById(id).get();
+    ProductOptionEntity entity = productOptionRepo.findById(id).orElseThrow(() -> new NotFoundException("productOption with id = " + id + " not found", 404));
     return productOptionMapper.toDTO(entity);
   }
 
@@ -47,10 +49,10 @@ public class ProductOptionServiceImpl implements ProductOptionService {
   @Override
   public ProductOptionDto saveProductOption(ProductOptionDto dto) {
     if (Objects.isNull(dto)) {
-      throw new RuntimeException("Невозможно сохранить опции продукта: dto равен null");
+      throw new BadRequestException("Невозможно сохранить опции продукта: dto равен null", 400);
     }
     ProductTypeEntity productTypeEntity = productTypeService.findById(dto.getProductTypeId())
-            .orElseThrow(() -> new RuntimeException("Невозможно сохранить опции продукта: не найден тип продукта с id: " + dto.getProductTypeId()));
+            .orElseThrow(() -> new NotFoundException("Невозможно сохранить опции продукта: не найден тип продукта с id: " + dto.getProductTypeId(), 404));
     ProductOptionEntity entity = productOptionMapper.toEntity(dto);
     entity.setProductType(productTypeEntity);
     return productOptionMapper.toDTO(productOptionRepo.save(entity));
@@ -59,10 +61,10 @@ public class ProductOptionServiceImpl implements ProductOptionService {
   @Override
   public Boolean deleteProductOption(Long id) {
     if (Objects.isNull(id)) {
-      throw new RuntimeException("Невозможно удалить опции продукта: id равен null");
+      throw new BadRequestException("Невозможно удалить опции продукта: id равен null", 400);
     }
     if (!productOptionRepo.existsById(id)) {
-      throw new RuntimeException("Невозможно удалить опции продукта: не найден объект с id: " + id);
+      throw new NotFoundException("Невозможно удалить опции продукта: не найден объект с id: " + id, 404);
     }
     productOptionRepo.deleteById(id);
     return true;
@@ -71,7 +73,7 @@ public class ProductOptionServiceImpl implements ProductOptionService {
   @Override
   public Optional<ProductOptionEntity> findById(Long id) {
     if (Objects.isNull(id)) {
-      throw new RuntimeException("Невозможно получить опции продукта: id равен null");
+      throw new BadRequestException("Невозможно получить опции продукта: id равен null", 400);
     }
     return productOptionRepo.findById(id);
   }

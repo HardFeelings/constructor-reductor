@@ -21,12 +21,14 @@ public class FilterService {
     public List<ProductDto> filter(FilterDto filterDto) {
         List<ProductEntity> entityList = repo.findByFilter(filterDto);
         List<ProductDto> dtos = new ArrayList<>();
-        entityList.forEach(item -> dtos.add(mapper.toDTO(item)));
+        entityList.forEach(item -> dtos.add(mapper.toDTOWithRef(item)));
 
         return dtos.stream().filter(item -> filterProductByOptions(item, filterDto.getProductOptions())).sorted(Comparator.comparingLong(ProductDto::getIdProduct)).collect(Collectors.toList());
     }
 
     private boolean filterProductByOptions(ProductDto dto, List<Long> ids){
+        if(ids == null || ids.isEmpty())
+            return true;
         for(Long id : ids){
             if(!dto.getOptionsIds().contains(id))
                 return false;

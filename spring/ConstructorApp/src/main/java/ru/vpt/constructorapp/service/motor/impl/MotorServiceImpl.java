@@ -2,6 +2,8 @@ package ru.vpt.constructorapp.service.motor.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import ru.vpt.constructorapp.api.exception.BadRequestException;
+import ru.vpt.constructorapp.api.exception.NotFoundException;
 import ru.vpt.constructorapp.api.motor.common.dto.MotorDto;
 import ru.vpt.constructorapp.api.motor.common.mapper.MotorMapper;
 import ru.vpt.constructorapp.service.motor.MotorService;
@@ -31,19 +33,19 @@ public class MotorServiceImpl implements MotorService {
 
     @Override
     public MotorDto getMotorById(Long id) {
-        MotorEntity entity = motorRepo.findById(id).get();
+        MotorEntity entity = motorRepo.findById(id).orElseThrow(() -> new NotFoundException("motor with id = " + id + " not found", 404));
         return motorMapper.toDTO(entity);
     }
 
     @Override
     public MotorDto saveMotor(MotorDto motorDto) {
         if (Objects.isNull(motorDto)) {
-            throw new RuntimeException("Невозможно сохранить мотор: dto равен null");
+            throw new BadRequestException("Невозможно сохранить мотор: dto равен null", 400);
         }
         MotorTypeEntity motorTypeEntity = motorTypeService.findById(motorDto.getMotorTypeId());
         MotorEntity entity = motorMapper.toEntity(motorDto);
         if (Objects.isNull(motorTypeEntity)) {
-            throw new RuntimeException("Невозможно сохранить мотор: не найден тип мотора");
+            throw new NotFoundException("Невозможно сохранить мотор: не найден тип мотора", 404);
         }
         entity.setMotorAdapterType(null);
         if(motorDto.getMotorAdapterTypeId() != null){
@@ -57,10 +59,10 @@ public class MotorServiceImpl implements MotorService {
     @Override
     public Boolean deleteMotor(Long id) {
         if (Objects.isNull(id)) {
-            throw new RuntimeException("Невозможно удалить объект: id равен null");
+            throw new BadRequestException("Невозможно удалить объект: id равен null", 400);
         }
         if (!motorRepo.existsById(id)) {
-            throw new RuntimeException("Невозможно удалить объект: не найден объект с id: " + id);
+            throw new NotFoundException("Невозможно удалить объект: не найден объект с id: " + id, 404);
         }
         motorRepo.deleteById(id);
         return true;
@@ -69,7 +71,7 @@ public class MotorServiceImpl implements MotorService {
     @Override
     public Optional<MotorEntity> findById(Long id) {
         if (Objects.isNull(id)) {
-            throw new RuntimeException("Невозможно получить мотор: id равен null");
+            throw new BadRequestException("Невозможно получить мотор: id равен null", 400);
         }
         return motorRepo.findById(id);
     }

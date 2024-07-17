@@ -2,6 +2,8 @@ package ru.vpt.constructorapp.service.product.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import ru.vpt.constructorapp.api.exception.BadRequestException;
+import ru.vpt.constructorapp.api.exception.NotFoundException;
 import ru.vpt.constructorapp.api.product.option.dto.ProductOptionDto;
 import ru.vpt.constructorapp.api.product.type.dto.ProductTypeDto;
 import ru.vpt.constructorapp.api.product.type.mapper.ProductTypeMapper;
@@ -28,14 +30,14 @@ public class ProductTypeServiceImpl implements ProductTypeService {
 
     @Override
     public ProductTypeDto getProductTypesById(Long id) {
-        ProductTypeEntity entity = productTypeRepo.findById(id).get();
+        ProductTypeEntity entity = productTypeRepo.findById(id).orElseThrow(() -> new NotFoundException("productType with id = " + id + " not found", 404));
         return productTypeMapper.toDTO(entity);
     }
 
   @Override
   public ProductTypeDto saveProductType(ProductTypeDto productTypeDto) {
     if (Objects.isNull(productTypeDto)) {
-      throw new RuntimeException("Невозможно сохранить тип продукта: dto равен null");
+      throw new BadRequestException("Невозможно сохранить тип продукта: dto равен null", 400);
     }
     ProductTypeEntity entity = productTypeMapper.toEntity(productTypeDto);
     return productTypeMapper.toDTO(productTypeRepo.save(entity));
@@ -44,10 +46,10 @@ public class ProductTypeServiceImpl implements ProductTypeService {
   @Override
   public Boolean deleteProductType(Long id) {
     if (Objects.isNull(id)) {
-      throw new RuntimeException("Невозможно удалить тип продукта: id равен null");
+      throw new BadRequestException("Невозможно удалить тип продукта: id равен null", 400);
     }
     if (!productTypeRepo.existsById(id)) {
-      throw new RuntimeException("Невозможно удалить тип продукта: не найден объект с id: " + id);
+      throw new NotFoundException("Невозможно удалить тип продукта: не найден объект с id: " + id, 404);
     }
     productTypeRepo.deleteById(id);
     return true;
@@ -56,7 +58,7 @@ public class ProductTypeServiceImpl implements ProductTypeService {
   @Override
   public Optional<ProductTypeEntity> findById(Long id) {
     if (Objects.isNull(id)) {
-      throw new RuntimeException("Невозможно получить тип продукта: id равен null");
+      throw new BadRequestException("Невозможно получить тип продукта: id равен null", 400);
     }
     return productTypeRepo.findById(id);
   }

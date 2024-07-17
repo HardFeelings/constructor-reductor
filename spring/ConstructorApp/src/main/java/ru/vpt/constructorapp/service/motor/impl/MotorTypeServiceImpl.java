@@ -2,6 +2,8 @@ package ru.vpt.constructorapp.service.motor.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import ru.vpt.constructorapp.api.exception.BadRequestException;
+import ru.vpt.constructorapp.api.exception.NotFoundException;
 import ru.vpt.constructorapp.api.motor.adapter.dto.MotorAdapterTypeDto;
 import ru.vpt.constructorapp.api.motor.type.dto.MotorTypeDto;
 import ru.vpt.constructorapp.api.motor.type.mapper.MotorTypeMapper;
@@ -33,14 +35,14 @@ public class MotorTypeServiceImpl implements MotorTypeService {
 
     @Override
     public MotorTypeDto getMotorTypeById(Long id) {
-        MotorTypeEntity entity = motorTypeRepo.findById(id).get();
+        MotorTypeEntity entity = motorTypeRepo.findById(id).orElseThrow(() -> new NotFoundException("motorType with id = " + id + " not found", 404));
         return motorTypeMapper.toDTO(entity);
     }
 
     @Override
     public MotorTypeDto saveMotorType(MotorTypeDto motorTypeDto) {
         if (Objects.isNull(motorTypeDto)) {
-            throw new RuntimeException("Невозможно сохранить объект: dto равен null");
+            throw new BadRequestException("Невозможно сохранить объект: dto равен null", 400);
         }
         MotorTypeEntity entity = motorTypeMapper.toEntity(motorTypeDto);
         return motorTypeMapper.toDTO(motorTypeRepo.save(entity));
@@ -49,10 +51,10 @@ public class MotorTypeServiceImpl implements MotorTypeService {
     @Override
     public Boolean deleteMotorType(Long id) {
         if (Objects.isNull(id)) {
-            throw new RuntimeException("Невозможно удалить объект: id равен null");
+            throw new BadRequestException("Невозможно удалить объект: id равен null", 400);
         }
         if (!motorTypeRepo.existsById(id)) {
-            throw new RuntimeException("Невозможно удалить объект: не найден объект с id: " + id);
+            throw new NotFoundException("Невозможно удалить объект: не найден объект с id: " + id, 404);
         }
         motorTypeRepo.deleteById(id);
         return true;
@@ -61,7 +63,7 @@ public class MotorTypeServiceImpl implements MotorTypeService {
     @Override
     public MotorTypeEntity findById(Long id) {
         if (Objects.isNull(id)) {
-            throw new RuntimeException("Невозможно получить тип мотора: id равен null");
+            throw new BadRequestException("Невозможно получить тип мотора: id равен null", 400);
         }
         return motorTypeRepo.findById(id).orElse(null);
     }

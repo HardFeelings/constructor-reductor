@@ -2,6 +2,8 @@ package ru.vpt.constructorapp.service.reducer.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import ru.vpt.constructorapp.api.exception.BadRequestException;
+import ru.vpt.constructorapp.api.exception.NotFoundException;
 import ru.vpt.constructorapp.api.reducer.adapter.dto.ReducerAdapterTypeDto;
 import ru.vpt.constructorapp.api.reducer.input.dto.ReducerInputTypeDto;
 import ru.vpt.constructorapp.api.reducer.input.mapper.ReducerInputTypeMapper;
@@ -31,7 +33,8 @@ public class ReducerInputTypeServiceImpl implements ReducerInputTypeService {
 
     @Override
     public ReducerInputTypeDto getReducerInputById(Long id) {
-        ReducerInputTypeEntity entity = reducerInputTypeRepo.findById(id).get();
+        ReducerInputTypeEntity entity = reducerInputTypeRepo.findById(id)
+                .orElseThrow(() -> new NotFoundException("reducerInputType with id = " + id + " not found", 404));
         return reducerInputTypeMapper.toDTO(entity);
     }
 
@@ -46,10 +49,10 @@ public class ReducerInputTypeServiceImpl implements ReducerInputTypeService {
     @Override
     public ReducerInputTypeDto saveReducerInputType(ReducerInputTypeDto dto) {
         if (Objects.isNull(dto)) {
-            throw new RuntimeException("Невозможно сохранить тип входа редуктора: dto равен null");
+            throw new BadRequestException("Невозможно сохранить тип входа редуктора: dto равен null", 400);
         }
         ReducerTypeEntity reducerTypeEntity = reducerTypeService.findById(dto.getReducerTypeId())
-                .orElseThrow(() -> new RuntimeException("Невозможно сохранить тип входа редуктора: не найден тип редуктора с id: " + dto.getReducerTypeId()));
+                .orElseThrow(() -> new NotFoundException("Невозможно сохранить тип входа редуктора: не найден тип редуктора с id: " + dto.getReducerTypeId(), 404));
         ReducerInputTypeEntity entity = reducerInputTypeMapper.toEntity(dto);
         entity.setReducerType(reducerTypeEntity);
         return reducerInputTypeMapper.toDTO(reducerInputTypeRepo.save(entity));
@@ -58,10 +61,10 @@ public class ReducerInputTypeServiceImpl implements ReducerInputTypeService {
     @Override
     public Boolean deleteReducerInputType(Long id) {
         if (Objects.isNull(id)) {
-            throw new RuntimeException("Невозможно удалить тип входа редуктора: id равен null");
+            throw new BadRequestException("Невозможно удалить тип входа редуктора: id равен null", 400);
         }
         if (!reducerInputTypeRepo.existsById(id)) {
-            throw new RuntimeException("Невозможно удалить тип входа редуктора: не найден объект с id: " + id);
+            throw new NotFoundException("Невозможно удалить тип входа редуктора: не найден объект с id: " + id, 404);
         }
         reducerInputTypeRepo.deleteById(id);
         return true;
@@ -70,7 +73,7 @@ public class ReducerInputTypeServiceImpl implements ReducerInputTypeService {
     @Override
     public Optional<ReducerInputTypeEntity> findById(Long id) {
         if (Objects.isNull(id)) {
-            throw new RuntimeException("Невозможно получить тип входа редуктора: id равен null");
+            throw new BadRequestException("Невозможно получить тип входа редуктора: id равен null", 400);
         }
         return reducerInputTypeRepo.findById(id);
     }

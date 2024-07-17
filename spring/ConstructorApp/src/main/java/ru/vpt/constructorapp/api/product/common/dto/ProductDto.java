@@ -23,9 +23,12 @@ public class ProductDto {
     private Double weight;
     private Double price;
     private Long reducerId;
-    //private ReducerDto reducer;
+    private ReducerDto reducer;
     private Long motorId;
-    //private MotorDto motor;
+    private MotorDto motor;
    // private Set<ProductOptionDto> options;
     private Set<Long> optionsIds;
+    private Boolean imageEmpty;
+    private String imageString;
+    private Boolean imageChanged;
 }

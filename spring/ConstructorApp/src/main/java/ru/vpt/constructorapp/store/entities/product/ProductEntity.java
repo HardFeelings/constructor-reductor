@@ -1,10 +1,7 @@
 package ru.vpt.constructorapp.store.entities.product;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import ru.vpt.constructorapp.store.entities.motor.MotorEntity;
 import ru.vpt.constructorapp.store.entities.reducer.ReducerEntity;
 
@@ -49,4 +46,21 @@ public class ProductEntity {
             joinColumns = @JoinColumn(name = "id_product"),
             inverseJoinColumns = @JoinColumn(name = "id_product_option"))
     private Set<ProductOptionEntity> options;
+
+    @Column(name = "product_image")
+    private byte[] productImage;
+
+    @Transient
+    @Getter(AccessLevel.NONE)
+    @Setter(AccessLevel.NONE)
+    private Boolean isImageEmpty;
+
+    public Boolean getImageEmpty() {
+        if(productImage == null)
+            return true;
+        if(productImage.length > 0)
+            return false;
+        else
+            return true;
+    }
 }
