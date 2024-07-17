@@ -9,5 +9,5 @@ import lombok.*;
 public class ResponseDto <T>{
     private T data;
 
-    private Exception error;
+    private String errorMsg;
 }

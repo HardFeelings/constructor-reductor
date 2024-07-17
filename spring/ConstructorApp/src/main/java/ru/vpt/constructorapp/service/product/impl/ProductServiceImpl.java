@@ -2,6 +2,8 @@ package ru.vpt.constructorapp.service.product.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import ru.vpt.constructorapp.api.exception.BadRequestException;
+import ru.vpt.constructorapp.api.exception.NotFoundException;
 import ru.vpt.constructorapp.api.product.common.dto.ProductDto;
 import ru.vpt.constructorapp.api.product.common.mapper.ProductMapper;
 import ru.vpt.constructorapp.api.product.option.dto.ProductOptionDto;
@@ -39,24 +41,26 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductDto getProductById(Long id) {
-        ProductEntity entity = productRepo.findById(id).get();
+        ProductEntity entity = productRepo.findById(id).orElseThrow(() -> new NotFoundException("product with id = " + id + " not found", 404));
         return productMapper.toDTO(entity);
     }
 
     @Override
     public ProductDto saveProduct(ProductDto dto) {
         if (Objects.isNull(dto)) {
-            throw new RuntimeException("Невозможно сохранить продукт: dto равен null");
+            throw new BadRequestException("Невозможно сохранить продукт: dto равен null", 400);
         }
         ProductEntity entity = productMapper.toEntity(dto);
         entity.setProductType(productTypeService.findById(dto.getProductTypeId())
-                .orElseThrow(() -> new RuntimeException("Невозможно сохранить продукт: не найден тип продукта с id: " + dto.getProductTypeId())));
+                .orElseThrow(() -> new NotFoundException("Невозможно сохранить продукт: не найден тип продукта с id: " + dto.getProductTypeId(), 404)));
         if (dto.getReducerId() != null)
-            entity.setReducer(reducerService.findById(dto.getReducerId()).get());
+            entity.setReducer(reducerService.findById(dto.getReducerId())
+                    .orElseThrow(() -> new NotFoundException("Cannot save: reducer with id = " + dto.getReducerId() + " not found", 404)));
         else entity.setReducer(null);
 
         if (dto.getMotorId() != null)
-            entity.setMotor(motorService.findById(dto.getMotorId()).get());
+            entity.setMotor(motorService.findById(dto.getMotorId())
+                    .orElseThrow(() -> new NotFoundException("Cannot save: motor with id = " + dto.getMotorId() + " not found", 404)));
         else entity.setMotor(null);
 
         if (dto.getImageChanged()) {
@@ -66,28 +70,33 @@ public class ProductServiceImpl implements ProductService {
                 entity.setProductImage(null);
         } else {
             if (entity.getIdProduct() != null) {
-                entity.setProductImage(productRepo.findById(entity.getIdProduct()).get().getProductImage());
-            } else entity.setProductImage(Base64.getDecoder().decode(dto.getImageString()));
+                entity.setProductImage(productRepo.findById(entity.getIdProduct())
+                        .orElseThrow(() -> new NotFoundException("Cannot save image: product with id = " + entity.getIdProduct() + " not found", 404))
+                        .getProductImage());
+            } else
+                entity.setProductImage(dto.getImageString() == null ? null : Base64.getDecoder().decode(dto.getImageString()));
         }
-        entity.setOptions(dto.getOptionsIds().stream().map(item -> productOptionService.findById(item).get()).collect(Collectors.toSet()));
+        entity.setOptions(dto.getOptionsIds().stream().map(item -> productOptionService.findById(item)
+                .orElseThrow(() -> new NotFoundException("Cannot save options: option with id = " + item + " not found", 404)))
+                .collect(Collectors.toSet()));
         return productMapper.toDTO(productRepo.save(entity));
     }
 
     @Override
     public Boolean deleteProduct(Long id) {
         if (Objects.isNull(id)) {
-            throw new RuntimeException("Невозможно удалить продукт: id равен null");
+            throw new BadRequestException("Невозможно удалить продукт: id равен null", 400);
         }
         if (!productRepo.existsById(id)) {
-            throw new RuntimeException("Невозможно удалить продукт: не найден объект с id: " + id);
+            throw new NotFoundException("Невозможно удалить продукт: не найден объект с id: " + id, 404);
         }
-        productRepo.existsById(id);
+        productRepo.deleteById(id);
         return true;
     }
 
     @Override
     public ProductEntity getProductEntityById(Long id) {
-        return productRepo.findById(id).get();
+        return productRepo.findById(id).orElseThrow(() -> new NotFoundException("product with id = " + id + " not found", 404));
 
     }
 

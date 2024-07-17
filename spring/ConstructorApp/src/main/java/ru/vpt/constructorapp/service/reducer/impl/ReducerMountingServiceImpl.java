@@ -2,6 +2,8 @@ package ru.vpt.constructorapp.service.reducer.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import ru.vpt.constructorapp.api.exception.BadRequestException;
+import ru.vpt.constructorapp.api.exception.NotFoundException;
 import ru.vpt.constructorapp.api.reducer.installation.dto.ReducerInstallationTypeDto;
 import ru.vpt.constructorapp.api.reducer.mounting.dto.ReducerMountingDto;
 import ru.vpt.constructorapp.api.reducer.mounting.mapper.ReducerMountingMapper;
@@ -29,14 +31,14 @@ public class ReducerMountingServiceImpl implements ReducerMountingService {
 
     @Override
     public ReducerMountingDto getReducerMountingById(Long id) {
-        ReducerMountingEntity entity = reducerMountingRepo.findById(id).get();
+        ReducerMountingEntity entity = reducerMountingRepo.findById(id).orElseThrow(() -> new NotFoundException("reducerMounting with id = " + id + " not found", 404));
         return reducerMountingMapper.toDTO(entity);
     }
 
     @Override
     public ReducerMountingDto saveReducerMounting(ReducerMountingDto dto) {
         if (Objects.isNull(dto)) {
-            throw new RuntimeException("Невозможно сохранить крепление редуктора: dto равен null");
+            throw new BadRequestException("Невозможно сохранить крепление редуктора: dto равен null", 400);
         }
         ReducerMountingEntity entity = reducerMountingMapper.toEntity(dto);
         return reducerMountingMapper.toDTO(reducerMountingRepo.save(entity));
@@ -45,10 +47,10 @@ public class ReducerMountingServiceImpl implements ReducerMountingService {
     @Override
     public Boolean deleteReducerMounting(Long id) {
         if (Objects.isNull(id)) {
-            throw new RuntimeException("Невозможно удалить крепление редуктора: id равен null");
+            throw new BadRequestException("Невозможно удалить крепление редуктора: id равен null", 400);
         }
         if (!reducerMountingRepo.existsById(id)) {
-            throw new RuntimeException("Невозможно удалить крепление редуктора: не найден объект с id: " + id);
+            throw new NotFoundException("Невозможно удалить крепление редуктора: не найден объект с id: " + id, 404);
         }
         reducerMountingRepo.deleteById(id);
         return true;
@@ -57,7 +59,7 @@ public class ReducerMountingServiceImpl implements ReducerMountingService {
     @Override
     public Optional<ReducerMountingEntity> findById(Long id) {
         if (Objects.isNull(id)) {
-            throw new RuntimeException("Невозможно получить крепление редуктора: id равен null");
+            throw new BadRequestException("Невозможно получить крепление редуктора: id равен null", 400);
         }
         return reducerMountingRepo.findById(id);
     }

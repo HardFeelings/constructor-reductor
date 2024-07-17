@@ -14,7 +14,7 @@ import lombok.Setter;
 @Table(name = "motor_adapter_type")
 public class MotorAdapterTypeEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.TABLE)
     @Column(name = "id_motor_adapter_type")
     private Long idMotorAdapterType;
     @Column(name = "motor_adapter_type_value")

@@ -2,7 +2,8 @@ package ru.vpt.constructorapp.service.reducer.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.vpt.constructorapp.api.reducer.mounting.dto.ReducerMountingDto;
+import ru.vpt.constructorapp.api.exception.BadRequestException;
+import ru.vpt.constructorapp.api.exception.NotFoundException;
 import ru.vpt.constructorapp.api.reducer.output.dto.ReducerOutputShaftTypeDto;
 import ru.vpt.constructorapp.api.reducer.output.mapper.ReducerOutputShaftTypeMapper;
 import ru.vpt.constructorapp.service.reducer.ReducerOutputShaftTypeService;
@@ -31,7 +32,8 @@ public class ReducerOutputShaftTypeServiceImpl implements ReducerOutputShaftType
 
     @Override
     public ReducerOutputShaftTypeDto getReducerOutputShaftById(Long id) {
-        ReducerOutputShaftTypeEntity entity = reducerOutputShaftTypeRepo.findById(id).get();
+        ReducerOutputShaftTypeEntity entity = reducerOutputShaftTypeRepo.findById(id)
+                .orElseThrow(() -> new NotFoundException("reducerOutputShaftType with id = " + id + " not found", 404));
         return reducerOutputShaftTypeMapper.toDTO(entity);
     }
 
@@ -46,10 +48,10 @@ public class ReducerOutputShaftTypeServiceImpl implements ReducerOutputShaftType
     @Override
     public ReducerOutputShaftTypeDto saveReducerOutputShaftTypes(ReducerOutputShaftTypeDto dto) {
         if (Objects.isNull(dto)) {
-            throw new RuntimeException("Невозможно сохранить тип выходного вала: dto равен null");
+            throw new BadRequestException("Невозможно сохранить тип выходного вала: dto равен null", 400);
         }
         ReducerTypeEntity reducerTypeEntity = reducerTypeService.findById(dto.getReducerTypeId())
-                .orElseThrow(() -> new RuntimeException("Невозможно сохранить тип выходного вала: не найден тип редуктора с id: " + dto.getReducerTypeId()));
+                .orElseThrow(() -> new NotFoundException("Невозможно сохранить тип выходного вала: не найден тип редуктора с id: " + dto.getReducerTypeId(), 404));
         ReducerOutputShaftTypeEntity entity = reducerOutputShaftTypeMapper.toEntity(dto);
         entity.setReducerType(reducerTypeEntity);
         return reducerOutputShaftTypeMapper.toDTO(reducerOutputShaftTypeRepo.save(entity));
@@ -58,10 +60,10 @@ public class ReducerOutputShaftTypeServiceImpl implements ReducerOutputShaftType
     @Override
     public Boolean deleteReducerOutputShaftTypes(Long id) {
         if (Objects.isNull(id)) {
-            throw new RuntimeException("Невозможно удалить тип выходного вала: id равен null");
+            throw new BadRequestException("Невозможно удалить тип выходного вала: id равен null", 400);
         }
         if (!reducerOutputShaftTypeRepo.existsById(id)) {
-            throw new RuntimeException("Невозможно удалить тип выходного вала: не найден объект с id: " + id);
+            throw new NotFoundException("Невозможно удалить тип выходного вала: не найден объект с id: " + id, 404);
         }
         reducerOutputShaftTypeRepo.deleteById(id);
         return true;
@@ -70,7 +72,7 @@ public class ReducerOutputShaftTypeServiceImpl implements ReducerOutputShaftType
     @Override
     public Optional<ReducerOutputShaftTypeEntity> findById(Long id) {
         if (Objects.isNull(id)) {
-            throw new RuntimeException("Невозможно получить тип выходного вала: id равен null");
+            throw new BadRequestException("Невозможно получить тип выходного вала: id равен null", 400);
         }
         return reducerOutputShaftTypeRepo.findById(id);
     }
