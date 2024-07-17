@@ -28,7 +28,7 @@ public class CommercialPropServiceImpl implements CommercialPropService {
     @Override
     public List<CommercialPropDto> getAll() {
         return repo.findAll().stream().
-                map(mapper::toDTO).sorted(Comparator.comparingLong(CommercialPropDto::getIdCommercialProp))
+                map(mapper::toDTOWithoutItems).sorted(Comparator.comparingLong(CommercialPropDto::getIdCommercialProp))
                 .collect(Collectors.toList());
     }
 
