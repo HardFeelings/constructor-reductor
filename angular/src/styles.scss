@@ -38,7 +38,6 @@ $constructor-reductor-theme: mat.define-light-theme((
 html, body {
     height: 100%;
     margin: 0;
-    font-family: 'Roboto', sans-serif;
 }
 
 .wrapper {
@@ -62,3 +61,5 @@ main {
     margin: 20px 0;
     width: 100%;
 }
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
