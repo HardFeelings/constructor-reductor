@@ -5,11 +5,10 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import ru.vpt.constructorapp.store.entities.product.ProductOptionEntity;
 
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.Set;
+import java.util.List;
 
 @Entity
 @Setter
@@ -17,14 +16,17 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "commercial_prop")
-public class CommercialProp {
+public class CommercialPropEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id_comercial_prop")
     private Long idCommercialProp;
 
     @Column(name = "number")
-    private Integer number;
+    private String number;
+
+    @Column(name = "partner")
+    private String partner;
 
     @Column(name = "cost")
     private BigDecimal cost;
@@ -37,10 +39,8 @@ public class CommercialProp {
     @JoinColumn(name = "id_manager")
     private ManagerEntity manager;
 
-    @ManyToMany
-    @JoinTable(
-            name = "commercial_prop_product",
-            joinColumns = @JoinColumn(name = "id_comercial_prop"),
-            inverseJoinColumns = @JoinColumn(name = "id_product"))
-    private Set<ProductOptionEntity> options;
+    @OneToMany
+    @JoinColumn(name = "id_comercial_prop")
+    private List<CommercialPropItemEntity> commercialPropItems;
+
 }
