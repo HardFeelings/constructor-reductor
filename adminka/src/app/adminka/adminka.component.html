@@ -167,17 +167,17 @@
                             <tr>
                                 <th>idProductType</th>
                                 <th>productTypeValue</th>
-                                <th></th>
+                                <!-- <th></th> -->
                             </tr>
                         </thead>
                         <tbody>
                             <tr *ngFor="let i of productType_list">
                                 <td>{{i.id}}</td>
                                 <td><input class="editable" [(ngModel)]="i.value"></td>
-                                <td class="row-buttons">
+                                <!-- <td class="row-buttons">
                                     <button (click)="saveProductType(i)"> Сохранить </button>
                                     <button (click)="deleteProductType(i)"> Удалить </button>
-                                </td>
+                                </td> -->
                             </tr>
                         </tbody>
                     </table>
