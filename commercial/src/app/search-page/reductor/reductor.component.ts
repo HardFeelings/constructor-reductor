@@ -47,15 +47,14 @@ export class ReductorComponent {
 
 
   getAllReducerType() {
-    this.reducerService.getAllReducerTypes().subscribe(
-      (respones: ResponseInfo<ReducerType[]>) => {
+    this.reducerService.getAllReducerTypes().subscribe((respones: ResponseInfo<ReducerType[]>) => {
+      if(respones.data !== null){
         console.log("Data getAllReducerType: ", respones.data);
         this.reducerType = respones.data;
-      },
-      (exepcion: any) => {
-        console.error("Error getAllReducerType:", exepcion.error);
+      } else {
+        alert(JSON.stringify(respones.errorMsg))
       }
-    );
+    });
   }
 
   idReducerTypeSelected(event: Event) {
@@ -80,15 +79,14 @@ export class ReductorComponent {
   }
 
   getReducerInputByReducerTypeId(id:number) {
-    this.reducerService.getReducerInputByReducerTypeId(id).subscribe(
-      (respones: ResponseInfo<ReducerInputType[]>)=>{
+    this.reducerService.getReducerInputByReducerTypeId(id).subscribe((respones: ResponseInfo<ReducerInputType[]>)=>{
+      if(respones.data !== null){
         console.log("Data getReducerInputByReducerTypeId", respones.data);
         this.reducerInputType = respones.data;
-      },
-      (error:any) =>{
-        console.error("Error getReducerInputByReducerTypeId:", error);
+      } else {
+        alert(JSON.stringify(respones.errorMsg))
       }
-    );
+    });
   }
 
   idReducerInputSelected(event: Event) {
@@ -107,15 +105,14 @@ export class ReductorComponent {
 
 
   getReducerAdapterByReducerTypeId(id:number) {
-    this.reducerService.getReducerAdapterByReducerTypeId(id).subscribe(
-      (respones: ResponseInfo<ReducerAdapterType[]>)=>{
+    this.reducerService.getReducerAdapterByReducerTypeId(id).subscribe((respones: ResponseInfo<ReducerAdapterType[]>)=>{
+      if(respones.data !== null){
         console.log("Data getReducerAdapterByReducerTypeId", respones.data);
         this.reducerAdapterType = respones.data;
-      },
-      (error:any) =>{
-        console.error("Error getReducerAdapterByReducerTypeId:", error);
+      } else {
+        alert(JSON.stringify(respones.errorMsg))
       }
-    );
+    });
   }
 
   idReducerAdapterSelected(event: Event) {
@@ -134,15 +131,14 @@ export class ReductorComponent {
 
 
   getReducerOutputShaftTypeByReducerTypeId(id:number) {
-    this.reducerService.getReducerOutputShaftTypeByReducerTypeId(id).subscribe(
-      (respones: ResponseInfo<ReducerOutputShaftType[]>)=>{
+    this.reducerService.getReducerOutputShaftTypeByReducerTypeId(id).subscribe((respones: ResponseInfo<ReducerOutputShaftType[]>)=>{
+      if(respones.data !== null){
         console.log("Data getReducerOutputShaftTypeByReducerTypeId", respones.data);
         this.reducerOutputShaftType = respones.data;
-      },
-      (error:any) =>{
-        console.error("Error getReducerOutputShaftTypeByReducerTypeId:", error);
+      } else {
+        alert(JSON.stringify(respones.errorMsg))
       }
-    );
+    });
   }
 
   idReducerOutputShaftTypeSelected(event: Event) {
@@ -161,15 +157,14 @@ export class ReductorComponent {
 
 
   getReducerInstallationByReducerTypeId(id:number) {
-    this.reducerService.getReducerInstallationByReducerTypeId(id).subscribe(
-      (respones: ResponseInfo<ReducerInstallationType[]>)=>{
+    this.reducerService.getReducerInstallationByReducerTypeId(id).subscribe((respones: ResponseInfo<ReducerInstallationType[]>)=>{
+      if(respones.data !== null){
         console.log("Data getReducerInstallationByReducerTypeId", respones.data);
         this.reducerInstallationType = respones.data;
-      },
-      (error:any) =>{
-        console.error("Error getReducerInstallationByReducerTypeId:", error);
+      } else {
+        alert(JSON.stringify(respones.errorMsg))
       }
-    );
+    });
   }
 
   idReducerInstallationSelected(event: Event) {
@@ -188,15 +183,14 @@ export class ReductorComponent {
 
 
   getAllReducerMounting(){
-    this.reducerService.getAllReducerMounting().subscribe(
-      (respones: ResponseInfo<ReducerMounting[]>) => {
+    this.reducerService.getAllReducerMounting().subscribe((respones: ResponseInfo<ReducerMounting[]>) => {
+      if(respones.data !== null){
         console.log("Data getAllReducerMounting: ", respones.data);
         this.reducerMounting = respones.data;
-      },
-      (exepcion: any) => {
-        console.error("Error getAllReducerMounting:", exepcion.error);
+      } else {
+        alert(JSON.stringify(respones.errorMsg))
       }
-    );
+    });
   }
 
   idReducerMountingSelected(event: Event) {
@@ -214,27 +208,25 @@ export class ReductorComponent {
   }
 
   getReducerSizeByReducerTypeId(id:number) {
-    this.reducerService.getReducerSizeByReducerTypeId(id).subscribe(
-      (respones: ResponseInfo<ReducerSize[]>)=>{
+    this.reducerService.getReducerSizeByReducerTypeId(id).subscribe((respones: ResponseInfo<ReducerSize[]>)=>{
+      if(respones.data !== null){
         console.log("Data getResucerSizeByMotorTypeId", respones.data);
         this.resucerSize = respones.data;
-      },
-      (error:any) =>{
-        console.error("Error getResucerSizeByMotorTypeId:", error);
+      } else {
+        alert(JSON.stringify(respones.errorMsg))
       }
-    );
+    });
   }
 
   getByProductTypeOptionId(id:number) {
-    this.productService.getByProductTypeOptionId(id).subscribe(
-      (respones: ResponseInfo<ProductOption[]>)=>{
+    this.productService.getByProductTypeOptionId(id).subscribe((respones: ResponseInfo<ProductOption[]>)=>{
+      if(respones.data !== null){
         console.log("Data getByProductTypeOptionId reducer", respones.data);
         this.productOption = respones.data;
-      },
-      (error:any) =>{
-        console.error("Error getByProductTypeOptionId reducer:", error);
+      } else {
+        alert(JSON.stringify(respones.errorMsg))
       }
-    );
+    });
   }
 
   idReducerSizeBSelected(event: Event) {
@@ -278,16 +270,15 @@ export class ReductorComponent {
     filter.ratio = this.ratio;
     filter.torqueMoment = this.torqueMoment;
     console.log('filter', filter);
-    this.productService.postFilter(filter).subscribe(
-      (respones: ResponseInfo<Product[]>)=>{
+    this.productService.postFilter(filter).subscribe((respones: ResponseInfo<Product[]>)=>{
+      if(respones.data !== null){
         console.log("Data searchProduct", respones.data);
         console.log("respones searchProduct", respones);
         this.foundProducts = respones.data;
-      },
-      (error:any) =>{
-        console.error("Error searchProduct:", error);
+      } else {
+        alert(JSON.stringify(respones.errorMsg))
       }
-    );
+    });
   }
 
   downloadImage(id:number,filename: string){

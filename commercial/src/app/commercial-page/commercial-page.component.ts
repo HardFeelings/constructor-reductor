@@ -2,6 +2,10 @@ import { Component } from '@angular/core';
 import { CommercialService } from '../sevices/commercial.service';
 import { CommercialProp } from '../models/commercialProp';
 import { ResponseInfo } from '../models/responesInfo';
+import { DataService } from '../sevices/data.service';
+import { Router } from '@angular/router';
+import { SearchPageComponent } from '../search-page/search-page.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-commercial-page',
@@ -11,12 +15,30 @@ import { ResponseInfo } from '../models/responesInfo';
 export class CommercialPageComponent {
   commercialProp_list: CommercialProp[];
 
-  constructor(private commercialService: CommercialService){
+  constructor(private commercialService: CommercialService, private dataService: DataService, private  router: Router, public dialog:MatDialog){
   }
 
 
   ngOnInit() {
     this.getAllcommercialProp();
+  }
+
+  goToSearchPage(id:number | null){
+    const dialogAddingNewStudent = this.dialog.open(SearchPageComponent, {
+      width: '1500px',
+      height: '800px',
+      data: id
+    });
+    dialogAddingNewStudent.afterClosed().subscribe((commercialProp: CommercialProp) => {
+      if(commercialProp  !== null && commercialProp  !== undefined) {
+        console.log('dialog commercialProp', commercialProp);
+        this.getAllcommercialProp();
+      } else{
+        console.log('Окно закрыто без изменений');
+        this.getAllcommercialProp();
+      }
+
+    });
   }
 
   getAllcommercialProp() {
@@ -41,10 +63,15 @@ export class CommercialPageComponent {
     });
   }
 
-  addNewCommercial() {
-    var newCommercial = new CommercialProp()
-    this.commercialProp_list.push(newCommercial)
-  }
+  // goToSearchPage(id:number | null){
+  //   this.dataService.setId(id);
+  //   this.router.navigate(['/items']);
+  // }
+
+  // addNewCommercial() {
+  //   var newCommercial = new CommercialProp()
+  //   this.commercialProp_list.push(newCommercial)
+  // }
 
   // saveCommercial(commercial: CommercialProp){
   //   this.commercialService.saveCommercialProp(commercial).subscribe(

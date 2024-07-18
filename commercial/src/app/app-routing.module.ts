@@ -8,7 +8,7 @@ import { SearchPageComponent } from './search-page/search-page.component';
 // add another rote with path "admin" and compontnt AdminkaComponent
  const routes: Routes = [
     { path: '', component: CommercialPageComponent },
-    { path: 'search', component: SearchPageComponent }
+    // { path: 'items', component: SearchPageComponent }
 ];
 
 @NgModule({

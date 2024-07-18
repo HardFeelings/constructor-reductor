@@ -25,8 +25,7 @@ export class MainComponent {
   }
 
   getAllProductTypes(){
-    this.productService.getAllProductTypes().subscribe(
-      (respones: ResponseInfo<ProductType[]>) => {
+    this.productService.getAllProductTypes().subscribe((respones: ResponseInfo<ProductType[]>) => {
         if(respones.data !== null){
           console.log("Data getAllProductTypes: ", respones.data);
           this.productTypes = respones.data;

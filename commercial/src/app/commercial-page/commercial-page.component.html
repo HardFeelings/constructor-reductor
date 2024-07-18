@@ -1,12 +1,11 @@
-<button (click)="addNewCommercial()">Новый</button>
+<button (click)="goToSearchPage(null)">Новый</button>
 <br />
 <hr />
 <table *ngIf="commercialProp_list !== null || commercialProp_list !== []">
   <thead>
-    <tr>
+    <tr *ngIf="commercialProp_list !== []">
         <th>idCommercialProp</th>
         <th>number</th>
-        <!-- <th>manager</th> -->
         <th>shortName</th>
         <th>partner</th>
         <th>cost</th>
@@ -17,20 +16,18 @@
   <tbody>
     <tr *ngFor="let commercial of commercialProp_list">
       <td>{{commercial.idCommercialProp}}</td>
-      <td><input class="editable" [(ngModel)]="commercial.number"></td>
-      <!-- <td><input class="editable" [(ngModel)]="commercial.manager"></td> -->
-      <td><input class="editable" [(ngModel)]="commercial.manager.shortName"></td>
-      <td><input class="editable" [(ngModel)]="commercial.partner"></td>
-      <td><input class="editable" [(ngModel)]="commercial.cost"></td>
-      <td><input class="editable" [(ngModel)]="commercial.timestamp"></td>
+      <td>{{commercial.number}}</td>
+      <td>{{commercial.manager.shortName}}</td>
+      <td>{{commercial.partner}}</td>
+      <td>{{commercial.cost}}</td>
+      <td>{{commercial.timestamp}}</td>
       <!-- <td>{{ commercial.manager.fullName}}</td>
       <td>{{ commercial.manager.position}}</td>
       <td>{{ commercial.manager.email}}</td>
       <td>{{ commercial.manager.phoneNumber}}</td> -->
       <td>
-        <button>Редактировать</button>
+        <button (click)="goToSearchPage(commercial.idCommercialProp)">Редактировать</button>
         <button (click)="deleteCommercial(commercial.idCommercialProp)">Удалить</button>
-        <!-- <button (click)="saveCommercial(commercial)">Сохранить</button> -->
       </td>
     </tr>
   </tbody>

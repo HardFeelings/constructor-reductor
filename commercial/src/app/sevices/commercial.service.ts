@@ -20,6 +20,10 @@ export class CommercialService extends ABaseServiceService{
     return this.getwp<ResponseInfo<CommercialProp[]>>(this.commercialUrl);
   }
 
+  getCommercialPropById(id:number): Observable<ResponseInfo<CommercialProp>> {
+    return this.getwp<ResponseInfo<CommercialProp>>(`${this.commercialUrl}/${id}`);
+  }
+
   deleteCommercialProp(id:number): Observable<ResponseInfo<Boolean>> {
     return this.delete<ResponseInfo<Boolean>>(`${this.commercialUrl}/${id}`);
   }
