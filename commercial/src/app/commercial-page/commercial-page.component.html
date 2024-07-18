@@ -1,4 +1,3 @@
-<p>commercial-page works!</p>
 <button (click)="addNewCommercial()">Новый</button>
 <br />
 <hr />
@@ -7,7 +6,7 @@
     <tr>
         <th>idCommercialProp</th>
         <th>number</th>
-        <th>manager</th>
+        <!-- <th>manager</th> -->
         <th>shortName</th>
         <th>partner</th>
         <th>cost</th>
@@ -19,7 +18,7 @@
     <tr *ngFor="let commercial of commercialProp_list">
       <td>{{commercial.idCommercialProp}}</td>
       <td><input class="editable" [(ngModel)]="commercial.number"></td>
-      <td><input class="editable" [(ngModel)]="commercial.manager"></td>
+      <!-- <td><input class="editable" [(ngModel)]="commercial.manager"></td> -->
       <td><input class="editable" [(ngModel)]="commercial.manager.shortName"></td>
       <td><input class="editable" [(ngModel)]="commercial.partner"></td>
       <td><input class="editable" [(ngModel)]="commercial.cost"></td>
@@ -29,6 +28,7 @@
       <td>{{ commercial.manager.email}}</td>
       <td>{{ commercial.manager.phoneNumber}}</td> -->
       <td>
+        <button>Редактировать</button>
         <button (click)="deleteCommercial(commercial.idCommercialProp)">Удалить</button>
         <!-- <button (click)="saveCommercial(commercial)">Сохранить</button> -->
       </td>

@@ -20,27 +20,25 @@ export class CommercialPageComponent {
   }
 
   getAllcommercialProp() {
-    this.commercialService.getAllCommercialProps().subscribe(
-      (respones: ResponseInfo<CommercialProp[]>) => {
+    this.commercialService.getAllCommercialProps().subscribe((respones: ResponseInfo<CommercialProp[]>) => {
+      if(respones.data !== null){
         console.log("Data getAllcommercialProp: ", respones.data);
         this.commercialProp_list = respones.data;
-      },
-      (exepcion: any) => {
-        console.error("Error getAllcommercialProp:", exepcion.error);
+      } else {
+        alert(JSON.stringify(respones.errorMsg))
       }
-    );
+    });
   }
 
   deleteCommercial(id: number){
-    this.commercialService.deleteCommercialProp(id).subscribe(
-      (respones: ResponseInfo<Boolean>) => {
+    this.commercialService.deleteCommercialProp(id).subscribe((respones: ResponseInfo<Boolean>) => {
+      if(respones.data !== null){
         console.log("Result deleteCommercial: ", respones.data);
         this.commercialProp_list = this.commercialProp_list.filter(item => item.idCommercialProp !== id);
-      },
-      (exepcion: any) => {
-        console.error("Error deleteCommercial:", exepcion.error);
+      } else {
+        alert(JSON.stringify(respones.errorMsg))
       }
-    );
+    });
   }
 
   addNewCommercial() {

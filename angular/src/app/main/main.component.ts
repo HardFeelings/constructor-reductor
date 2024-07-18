@@ -27,13 +27,17 @@ export class MainComponent {
   getAllProductTypes(){
     this.productService.getAllProductTypes().subscribe(
       (respones: ResponseInfo<ProductType[]>) => {
-        console.log("Data getAllProductTypes: ", respones.data);
-        this.productTypes = respones.data;
-        console.log(" this.productTypes ",  this.productTypes);
-      },
-      (exepcion: any) => {
-        console.error("Error getAllProductTypes:", exepcion.error);
+        if(respones.data !== null){
+          console.log("Data getAllProductTypes: ", respones.data);
+          this.productTypes = respones.data;
+          console.log(" this.productTypes ",  this.productTypes);
+        } else {
+          alert(JSON.stringify(respones.errorMsg))
+        }
       }
+      // (exepcion: any) => {
+      //   console.error("Error getAllProductTypes:", exepcion.error);
+      // }
     );
   }
 

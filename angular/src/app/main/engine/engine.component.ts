@@ -36,39 +36,36 @@ export class EngineComponent {
   }
 
   getAllMotorType() {
-    this.motorService.getAllMotorType().subscribe(
-      (respones: ResponseInfo<EngineType[]>) => {
+    this.motorService.getAllMotorType().subscribe((respones: ResponseInfo<EngineType[]>) => {
+      if(respones.data !== null){
         console.log("Data getAllMotorType: ", respones.data);
         this.motorType = respones.data;
-      },
-      (exepcion: any) => {
-        console.error("Error getAllMotorType:", exepcion.error);
+      } else {
+        alert(JSON.stringify(respones.errorMsg))
       }
-    );
+    });
   }
 
   getMotorAdapterByMotorTypeId(id:number) {
-    this.motorService.getMotorAdapterByMotorTypeId(id).subscribe(
-      (respones: ResponseInfo<EngineAdapterType[]>)=>{
+    this.motorService.getMotorAdapterByMotorTypeId(id).subscribe((respones: ResponseInfo<EngineAdapterType[]>)=>{
+      if(respones.data !== null){
         console.log("Data getMotorAdapterByMotorTypeId", respones.data);
         this.engineAdapterTypeByMotorTypeId = respones.data;
-      },
-      (error:any) =>{
-        console.error("Error getMotorAdapterByMotorTypeId:", error);
+      } else {
+        alert(JSON.stringify(respones.errorMsg))
       }
-    );
+    });
   }
 
   getByProductTypeOptionId(id:number) {
-    this.productService.getByProductTypeOptionId(id).subscribe(
-      (respones: ResponseInfo<ProductOption[]>)=>{
+    this.productService.getByProductTypeOptionId(id).subscribe((respones: ResponseInfo<ProductOption[]>)=>{
+      if(respones.data !== null){
         console.log("Data getByProductTypeOptionId", respones.data);
         this.productOption = respones.data;
-      },
-      (error:any) =>{
-        console.error("Error getByProductTypeOptionId:", error);
+      } else {
+        alert(JSON.stringify(respones.errorMsg))
       }
-    );
+    });
   }
 
   idMotorTypeSelected(event: Event) {
@@ -149,16 +146,15 @@ export class EngineComponent {
   searchProduct(filter: Filter){
     filter.power = this.power;
     console.log('filter', filter);
-    this.productService.postFilter(filter).subscribe(
-      (respones: ResponseInfo<Product[]>)=>{
+    this.productService.postFilter(filter).subscribe((respones: ResponseInfo<Product[]>)=>{
+      if(respones.data !== null){
         console.log("Data searchProduct", respones.data);
         console.log("respones searchProduct", respones);
         this.foundProducts = respones.data;
-      },
-      (error:any) =>{
-        console.error("Error searchProduct:", error);
+      } else {
+        alert(JSON.stringify(respones.errorMsg))
       }
-    );
+    });
   }
 
   downloadImage(id:number,filename: string){

@@ -1,4 +1,4 @@
 export class ResponseInfo<T> {
   data: T;
-  error: any;
+  errorMsg: any;
 }
