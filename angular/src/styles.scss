@@ -61,5 +61,16 @@ main {
     margin: 20px 0;
     width: 100%;
 }
+
+.footer {
+  position: fixed; /* Может быть fixed вместо absolute, чтобы футер был виден всегда внизу */
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  width: 100%;
+  text-align: center; /* Центрирование содержимого внутри футера */
+}
+
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
