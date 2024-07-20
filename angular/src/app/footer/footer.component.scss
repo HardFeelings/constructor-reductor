@@ -1,7 +1,20 @@
 .footer {
-    display: flex;
-    gap: 50px;
-    align-items: center;
-    justify-content: space-between;
-    padding-bottom: 20px;
+  background: none !important;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  &__button {
+    background-color: #fcb331;
+  }
+  &__logo {
+    width: 80px;
+    height: 50px;
+  }
+  &__text {
+    color: black;
+  }
+  a {
+    color: black;
+    text-decoration: none;
+  }
 }
