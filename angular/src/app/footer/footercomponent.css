@@ -80,7 +80,7 @@ hr {
     margin: 20px 0;
 }
 
-.footer {
+/* .footer {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -90,9 +90,9 @@ hr {
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     margin-top: 20px;
-}
+} */
 
-.footer div {
+/* .footer div {
     flex: 1;
     margin: 0 10px;
 }
@@ -115,4 +115,4 @@ hr {
     bottom:0px;
     height:30px;
     width:100%;
- }
+ } */

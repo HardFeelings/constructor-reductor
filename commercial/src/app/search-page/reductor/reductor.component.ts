@@ -1,5 +1,5 @@
 import { Filter } from 'src/app/models/filter';
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { ReducerAdapterType, ReducerInputType, ReducerInstallationType, ReducerMounting, ReducerOutputShaftType, ReducerSize, ReducerType } from 'src/app/models/reducer';
 import { ProductOption,Product } from 'src/app/models/product';
 import { ResponseInfo } from 'src/app/models/responesInfo';
@@ -33,6 +33,8 @@ export class ReductorComponent {
   diamOutputAllowance: number;
   ratio: number;
   torqueMoment: number;
+
+  @Output() selectedProduct = new EventEmitter<Product>();
 
   constructor(private reducerService: ReducerService, private productService: ProductService){
   }
@@ -283,6 +285,11 @@ export class ReductorComponent {
 
   downloadImage(id:number,filename: string){
     this.productService.downloadImageById(id,filename);
+  }
+
+  selectProduct(product: Product){
+    this.selectedProduct.emit(product);
+
   }
 
 }

@@ -15,6 +15,7 @@ export class MainComponent {
   product_enum = enProduct;
   productTypes: ProductType[];
   idProductType: number;
+  selectedButton: number | null = null;
 
   constructor(private productService: ProductService) {
   }
@@ -47,14 +48,17 @@ export class MainComponent {
       case enProduct.Motor.valueOf():
         this.product_selected = enProduct.Motor;
         this.idProductType = idType;
+        this.selectedButton = idType;
         break
       case enProduct.Reducer.valueOf():
         this.product_selected = enProduct.Reducer
         this.idProductType = idType;
+        this.selectedButton = idType;
         break
       case enProduct.MotorReducer.valueOf():
         this.product_selected = enProduct.MotorReducer
         this.idProductType = idType;
+        this.selectedButton = idType;
         break
     }
   }

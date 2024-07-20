@@ -1,4 +1,5 @@
 <button (click)="goToSearchPage(null)">Новый</button>
+<button>Печать в эксель</button>
 <br />
 <hr />
 <table *ngIf="commercialProp_list !== null || commercialProp_list !== []">
@@ -17,7 +18,7 @@
     <tr *ngFor="let commercial of commercialProp_list">
       <td>{{commercial.idCommercialProp}}</td>
       <td>{{commercial.number}}</td>
-      <td>{{commercial.manager.shortName}}</td>
+      <td>{{commercial.manager?.shortName}}</td>
       <td>{{commercial.partner}}</td>
       <td>{{commercial.cost}}</td>
       <td>{{commercial.timestamp}}</td>

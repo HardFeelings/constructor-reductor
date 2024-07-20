@@ -1,5 +1,5 @@
 import { ProductService } from 'src/app/sevices/product.service';
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { ReducerService } from 'src/app/sevices/reducer.service';
 import { MotorService } from 'src/app/sevices/motor.service';
 import { EngineType } from 'src/app/models/engine';
@@ -32,6 +32,8 @@ export class EngineReductorComponent {
   foundProducts: Product[];
   options: number[] = [];
   productOption: ProductOption[];
+
+  @Output() selectedProduct = new EventEmitter<Product>();
 
   constructor(private reducerService: ReducerService, private productService: ProductService, private motorService: MotorService){
   }
@@ -252,5 +254,11 @@ export class EngineReductorComponent {
   downloadImage(id:number,filename: string){
     this.productService.downloadImageById(id,filename);
   }
+
+  selectProduct(product: Product){
+    this.selectedProduct.emit(product);
+
+  }
+
 
 }

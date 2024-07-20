@@ -7,6 +7,6 @@ export class CommercialProp {
   partner: string;
   cost: bigint;
   timestamp: Date;
-  manager: Manager;
+  manager: Manager | null;
   commercialPropItems: CommercialPropItem[];
 }

@@ -64,15 +64,17 @@ select {
 .element_configurator {
   display: flex;
   flex-direction: column;
-  align-items: baseline;
+  align-items: flex-start;
   margin: 1% 0;
 }
 
 .element_configurator select,
 .element_configurator input {
-  width: 30vh;
+  width: 300px;
+  min-width: 150px;
   margin: 3% 0;
-  padding: 2% 0;
+  padding: 5px;
+  box-sizing: border-box;
 }
 
 select, input[type="number"] {
@@ -104,4 +106,99 @@ span {
   font-weight: bold;
   color: black;
   font-size: 14px;
+}
+button {
+  width: 100px;
+  height: 50px;
+  background-color: #083b57;
+  /* #FCB331; */
+  color: #ffffff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #1e587a;
+}
+
+.custombutton {
+  width: 50px;
+  height: 25px;
+  background-color: #083b57;
+  /* #FCB331; */
+  color: #ffffff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  /* Настройки текста */
+  font-size: 10px;
+  // font-weight: bold;
+}
+
+.custombutton:hover {
+  background-color: #1e587a;
+}
+
+
+
+
+
+.custom-checkbox {
+  display: flex;
+  align-items: center;
+  margin: 10px 0;
+}
+
+.custom-checkbox input[type="checkbox"] {
+  display: none;
+}
+
+.custom-checkbox label {
+  position: relative;
+  padding-left: 35px;
+  cursor: pointer;
+}
+
+.custom-checkbox label:before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 25px;
+  height: 25px;
+  background-color: white;
+  border: 1px solid black;
+  border-radius: 4px;
+}
+
+.custom-checkbox input[type="checkbox"]:checked + label:before {
+  content: '✔';
+  color: white;
+  text-align: center;
+  line-height: 25px;
+  background-color: #083b57;
+  border-color: #083b57;
+}
+
+.custom-checkbox label:hover:before {
+  background-color: #1e587a;
+  border-color: #1e587a;
+}
+
+.button-container {
+  display: flex;
+  justify-content: flex-end;
+  margin: 1% 0;
+  margin-right: 20px
 }

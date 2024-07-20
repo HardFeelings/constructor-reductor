@@ -1,6 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { ProductService } from '../sevices/product.service';
-import { ProductType, enProduct } from '../models/product';
+import { Product, ProductType, enProduct } from '../models/product';
 import { ResponseInfo } from '../models/responesInfo';
 import { DataService } from '../sevices/data.service';
 import { Router } from '@angular/router';
@@ -9,6 +9,7 @@ import { CommercialProp } from '../models/commercialProp';
 import { ManagerService } from '../sevices/manager.service';
 import { Manager } from '../models/manager';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { CommercialPropItem } from '../models/commercialPropItem';
 
 
 @Component({
@@ -37,6 +38,7 @@ export class SearchPageComponent {
       this.idCommercialProp = data;
       console.log('this.idCommercialProp',this.idCommercialProp);
       this.commercialProp = new CommercialProp;
+      this.commercialProp.commercialPropItems = [];
   }
 
 
@@ -50,6 +52,9 @@ export class SearchPageComponent {
     else{
       console.log('this.idCommercialProp == null',this.idCommercialProp);
     }
+    if (!this.commercialProp.manager) {
+      this.commercialProp.manager = null;
+  }
   }
 
   getCommercialPropById(id:number){
@@ -69,6 +74,18 @@ export class SearchPageComponent {
 
   goToBackCommercialPageOk(){
     // this.router.navigate(['']);
+    this.commercialService.saveCommercialProp(this.commercialProp).subscribe((respones: ResponseInfo<CommercialProp>)=>{
+      console.log('SaveData', this.commercialProp );
+      if(respones.data !== null){
+        console.log('ReturnSaveData', respones.data);
+        this.dialogRef.close(respones.data);
+      }
+      else{
+        alert(JSON.stringify(respones.errorMsg))
+      }
+
+    });
+
   }
 
   getAllManagers(){
@@ -106,6 +123,21 @@ export class SearchPageComponent {
         alert(JSON.stringify(respones.errorMsg))
       }
     });
+  }
+
+  childSelectedProduct(event: Product){
+    this.callSearch = false;
+    let newPropItem = new CommercialPropItem;
+    newPropItem.product = event;
+    newPropItem.amount = 1;
+    if(this.commercialProp.idCommercialProp !== null){
+      newPropItem.commercialPropId = this.commercialProp.idCommercialProp;
+    }
+    else {
+      newPropItem.commercialPropId = null;
+    }
+
+    this.commercialProp.commercialPropItems.push(newPropItem);
   }
 
   openSearch(){

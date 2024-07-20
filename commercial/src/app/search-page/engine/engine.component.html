@@ -64,6 +64,7 @@
       <td *ngIf="product.weight== null">0</td>
       <!-- <td *ngIf="product.imageEmpty == false"><button (click)="downloadImage(product.idProduct, product.name)">Скачать</button></td> -->
       <!-- <td *ngIf="product.imageEmpty == true"><div>Нет чертежа</div> -->
+      <td (click)="selectProduct(product)"><button >+</button></td>
       </div>
     </tr>
   </tbody>

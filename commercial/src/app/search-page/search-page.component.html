@@ -20,8 +20,8 @@
             <td><input type="text" [(ngModel)]="commercialProp.partner"></td>
             <td><input type="text" [(ngModel)]="commercialProp.cost"></td>
             <td>
-              <select (change)="idManagerSelected($event)" [ngModel]="commercialProp.partner ? commercialProp.partner : null">
-                <option value="" disabled selected>Select</option>
+              <select (change)="idManagerSelected($event)" [ngModel]="commercialProp.manager?.shortName">
+                <option value="" disabled >Select</option>
                 <option *ngFor="let manager of managers_list" [value]="manager.shortName">{{ manager.shortName }}</option>
               </select>
             </td>
@@ -38,6 +38,8 @@
               <td *ngIf="commercialItem.product.price == null">0</td>
               <td>{{ commercialItem.product.weight }}</td>
               <td *ngIf="commercialItem.product.weight == null">0</td>
+              <td><input type="number" [(ngModel)]="commercialItem.amount"></td>
+
               <!-- <div *ngIf="commercialItem.product.motorId == null && commercialItem.product.reducerId !== null ">
                 <td>{{ commercialItem.product.idProduct }}</td>
                 <td>{{ commercialItem.product.name }}</td>
@@ -99,7 +101,7 @@
   </div>
 
     <div class="configurator" *ngIf="product_selected == product_enum.Motor">
-      <app-engine [idProductType]="idProductType" ></app-engine>
+      <app-engine (selectedProduct)="childSelectedProduct($event)" [idProductType]="idProductType" ></app-engine>
 
     </div>
 
@@ -107,12 +109,12 @@
 
 
     <div class="configurator" *ngIf="product_selected == product_enum.Reducer">
-      <app-reductor [idProductType]="idProductType"></app-reductor>
+      <app-reductor (selectedProduct)="childSelectedProduct($event)" [idProductType]="idProductType"></app-reductor>
     </div>
 
 
     <div class="configurator" *ngIf="product_selected == product_enum.MotorReducer">
-      <app-engine-reductor [idProductType]="idProductType"></app-engine-reductor>
+      <app-engine-reductor (selectedProduct)="childSelectedProduct($event)" [idProductType]="idProductType"></app-engine-reductor>
     </div>
 
     <!-- <button *ngIf="product_selected != null" (click)="search()">Найти</button> -->

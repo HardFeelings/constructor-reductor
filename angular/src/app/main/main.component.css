@@ -41,6 +41,11 @@ body {
     width: 150px;
 }
 
+.active {
+  background-color: #083b57;
+}
+
+
 .product_choise:hover {
     background-color: #083b57;
 }
@@ -55,10 +60,21 @@ select:focus, input[type="number"]:focus {
     color: #ffffff;
 }
 
+.select {
+  background-color: #083b57;
+  color: #ffffff;
+  outline: none;
+}
+.noselect {
+  background-color: #fcb331;
+  color: #ffffff;
+}
+
 button {
     width: 100px;
     height: 50px;
     background-color: #083b57;
+    /* #FCB331; */
     color: #ffffff;
     border: none;
     padding: 10px 20px;
@@ -77,3 +93,5 @@ hr {
     background: #ccc;
     margin: 20px 0;
 }
+
+

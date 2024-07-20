@@ -95,7 +95,7 @@
         </div>
       </div>
       <br />
-      <div *ngFor="let option of productOption">
+      <div *ngFor="let option of productOption"  class="custom-checkbox">
         <input type="checkbox" [id]="'checkbox_' + option.idProductOption" [value]="option.idProductOption" (change)="onCheckboxChange($event, option.idProductOption)">
         <label [for]="'checkbox_' + option.idProductOption">{{ option.productOptionValue }}</label>
       </div>
@@ -120,7 +120,7 @@
           <td *ngIf="product.reducer.torqueMoment == null">0</td>
           <td>{{ product.weight }}</td>
           <td *ngIf="product.weight== null">0</td>
-          <td *ngIf="product.imageEmpty == false"><button (click)="downloadImage(product.idProduct,product.name)">Скачать</button></td>
+          <td *ngIf="product.imageEmpty == false"><button class="custombutton" (click)="downloadImage(product.idProduct,product.name)">Скачать</button></td>
           <td *ngIf="product.imageEmpty == true"><div>Нет чертежа</div>
           </div>
         </tr>

@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { EngineAdapterType, EngineType } from 'src/app/models/engine';
 import { Filter } from 'src/app/models/filter';
 import { Product, ProductOption } from 'src/app/models/product';
@@ -24,6 +24,8 @@ export class EngineComponent {
   options: number[] = [];
   filter: Filter = new Filter();
   foundProducts: Product[];
+
+  @Output() selectedProduct = new EventEmitter<Product>();
 
 
   constructor(private motorService: MotorService, private productService: ProductService){
@@ -159,6 +161,12 @@ export class EngineComponent {
 
   downloadImage(id:number,filename: string){
     this.productService.downloadImageById(id,filename);
+  }
+
+
+  selectProduct(product: Product){
+    this.selectedProduct.emit(product);
+
   }
 
 }

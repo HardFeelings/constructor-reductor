@@ -17,7 +17,7 @@
     <div class="product">
       <h1>Продукт</h1>
       <div class="product_block">
-        <button  class="product_choise" *ngFor="let productType of productTypes" (click)="pickProduct(productType.productTypeValue, productType.idProductType)">
+        <button  [ngClass]="{ 'product_choise': true, 'active': selectedButton == productType.idProductType}" *ngFor="let productType of productTypes" (click)="pickProduct(productType.productTypeValue, productType.idProductType)">
           {{ productType.productTypeValue }}
         </button>
     </div>

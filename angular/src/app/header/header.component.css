@@ -1,14 +1,14 @@
 body {
     font-family: Arial, sans-serif;
     background-color: #f0f0f0;
-    color: #000000; 
+    color: #000000;
     margin: 0;
     padding: 0;
 }
 
 .container {
     max-width: 1200px;
-    margin: 20px auto;
+    /* margin: 20px auto; */
     padding: 20px;
     background-color: #ffffff;
     border-radius: 8px;
@@ -16,16 +16,16 @@ body {
 }
 
 .header {
-    
+
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 0;
+    /* padding: 5px 0; */
     background-color: #ffffff;
 }
 
 .header__logo {
-    height: 50px; 
+    height: 50px;
 }
 
 .header__links {
@@ -58,12 +58,12 @@ body {
 }
 .header__links p {
     margin: 0;
-    color: #083b57; 
+    color: #083b57;
     font-weight: bold;
 }
 
 .divider {
     height: 2px;
-    background-color: #fcb331; 
+    background-color: #fcb331;
     margin: 10px 0;
 }
