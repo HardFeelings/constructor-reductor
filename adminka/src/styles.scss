@@ -37,7 +37,9 @@ $constructor-reductor-theme: mat.define-light-theme((
 
 html, body {
     height: 100%;
+    width: 100%;
     margin: 0;
+    background-color: #f0f0f0;
 }
 
 .wrapper {
@@ -47,7 +49,7 @@ html, body {
 }
 
 .container {
-    width: 1400px;
+  width: 100%;
     margin: 0 auto;
 }
 
