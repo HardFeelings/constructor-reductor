@@ -39,6 +39,7 @@
               <td>{{ commercialItem.product.weight }}</td>
               <td *ngIf="commercialItem.product.weight == null">0</td>
               <td><input type="number" [(ngModel)]="commercialItem.amount"></td>
+              <td><button (click)="deleteSelectProduct(commercialItem.idCommercialPropItem)">Del</button></td>
 
               <!-- <div *ngIf="commercialItem.product.motorId == null && commercialItem.product.reducerId !== null ">
                 <td>{{ commercialItem.product.idProduct }}</td>

@@ -42,6 +42,7 @@
                                 <th>power</th>
                                 <th>rpm</th>
                                 <th>type</th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -145,9 +146,9 @@
                                 <td><input class="editable" [(ngModel)]="i.reducerId"></td>
                                 <td><input class="editable" [(ngModel)]="i.motorId"></td>
                                 <td><input class="editable" [(ngModel)]="i.optionsString"></td>
-                                <td *ngIf="i.imageEmpty == true"><input type="file" #fileInput style="display: none" (change)="onFileSelected($event, i)">
+                                <td  class="row-buttonstt" *ngIf="i.imageEmpty == true"><input type="file" #fileInput style="display: none" (change)="onFileSelected($event, i)">
                                   <button (click)="openFilePicker(fileInput)">Загрузить</button></td>
-                                <td *ngIf="i.imageEmpty == false"><button (click)="downloadImage(i.id, i.name)">Скачать</button> <button (click)="deleteImage(i)">Удалить</button> </td>
+                                <td  class="row-buttonstt" *ngIf="i.imageEmpty == false"><button (click)="downloadImage(i.id, i.name)">Скачать</button> <button (click)="deleteImage(i)">Удалить</button> </td>
                                 <td class="row-buttons">
                                     <button (click)="saveProduct(i)"> Сохранить </button>
                                     <button (click)="deleteProduct(i)"> Удалить </button>
@@ -173,7 +174,8 @@
                         <tbody>
                             <tr *ngFor="let i of productType_list">
                                 <td>{{i.id}}</td>
-                                <td><input class="editable" [(ngModel)]="i.value"></td>
+                                <!-- <td><input class="editable" [(ngModel)]="i.value"></td> -->
+                                <td>{{i.value}}</td>
                                 <!-- <td class="row-buttons">
                                     <button (click)="saveProductType(i)"> Сохранить </button>
                                     <button (click)="deleteProductType(i)"> Удалить </button>

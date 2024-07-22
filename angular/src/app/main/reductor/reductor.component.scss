@@ -17,22 +17,6 @@ select {
 .product_block {
   display: flex;
 }
-button {
-  width: 100px;
-  height: 50px;
-  background-color: #083b57;
-  /* #FCB331; */
-  color: #ffffff;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-button:hover {
-  background-color: #1e587a;
-}
 
 .product_choise {
   width: auto;
@@ -77,25 +61,24 @@ button:hover {
   align-items: center;
 }
 
-// .element_configurator {
-//   display: flex;
-//   flex-direction: column;
-//   align-items: baseline;
-//   margin: 1% 0;
-// }
-
-// .element_configurator select,
-// .element_configurator input {
-//   width: 30vh;
-//   margin: 3% 0;
-//   padding: 2% 0;
-// }
-
 .element_configurator {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   margin: 1% 0;
+  align-items: center; /* Центрировать элементы по горизонтали */
+  // position: relative;
+}
+
+// span {
+//   position: absolute; /* Позволяет расположить элемент относительно родителя */
+//   top: -50px; /* Измените значение для настройки расстояния от селекта */
+//   left: 50%;
+//   transform: translateX(-50%); /* Центрирует span относительно селекта */
+// }
+
+span{
+  margin-left: -15px;
 }
 
 .element_configurator select,
@@ -106,7 +89,6 @@ button:hover {
   padding: 5px;
   box-sizing: border-box;
 }
-
 
 select, input[type="number"] {
   font-family: 'Roboto';
@@ -132,21 +114,99 @@ select, input[type="number"] {
 br {
   display: none; /* Remove the line breaks for better layout */
 }
-.example-section {
-  display: flex;
-  flex-wrap: wrap;
-  margin-bottom: 10px;
-}
+
 span {
   font-weight: bold;
   color: black;
   font-size: 14px;
 }
+button {
+  width: 100px;
+  height: 50px;
+  background-color: #083b57;
+  /* #FCB331; */
+  color: #ffffff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-size: 16px;
+}
+
+span{
+  font-size: 16px;
+}
+
+select {
+  font-size: 14px;
+  background-color: #ffffff; /* Фоновый цвет по умолчанию */
+  color: #000000;            /* Цвет текста по умолчанию */
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  transition: background-color 0.3s, color 0.3s; /* Плавный переход */
+}
+
+// select:hover {
+//   background-color: #1e587a; /* Цвет фона при наведении */
+//   color: #ffffff;             /* Цвет текста при наведении */
+// }
+
+/* Для изменения цвета опций в селекте */
+select option:hover {
+  background-color: #ffffff;  /* Цвет фона опции при наведении (не всегда работает) */
+  color: #ffffff;              /* Цвет текста опции при наведении (не всегда работает) */
+}
+
+input{
+  font-size: 14px;
+  background-color: #ffffff; /* Фоновый цвет по умолчанию */
+  color: #000000;            /* Цвет текста по умолчанию */
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+
+button:hover {
+  background-color: #1e587a;
+}
+
+.custombutton {
+  width: 150px;
+  height: 25px;
+  background-color: #fcb331;
+  /* #FCB331; */
+  color: #ffffff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 16px;
+  // font-weight: bold;
+}
+
+.custombutton:hover {
+  background-color: #1e587a;
+}
+
+
+
+
 
 .custom-checkbox {
   display: flex;
   align-items: center;
   margin: 10px 0;
+  font-size: 16px;
 }
 
 .custom-checkbox input[type="checkbox"] {
@@ -186,65 +246,47 @@ span {
   border-color: #1e587a;
 }
 
-
-.custom-select {
-  position: relative;
-  width: 200px;
-  cursor: pointer;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  padding: 10px;
-  background-color: #fff;
-}
-
-.custom-select.disabled {
-  pointer-events: none;
-  opacity: 0.5;
-}
-
-.selected-item {
+.button-container {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
+  margin: 1% 0;
+  margin-right: 20px
 }
 
-.dropdown-list {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  right: 0;
-  background-color: #fff;
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th, .table td {
   border: 1px solid #ccc;
-  border-radius: 5px;
-  max-height: 150px;
-  overflow-y: auto;
-  z-index: 1000;
-}
-
-.dropdown-list li {
   padding: 10px;
-  cursor: pointer;
-}
-.dropdown-list li:hover {
-  background-color: #fcb331;
+  text-align: center; /* Изменено на center */
+  vertical-align: top;
+  font-size: 16px;
+  border-radius: 2px;
 }
 
-.custombutton {
-  width: 50px;
-  height: 25px;
+// .table th, .table td {
+//   border: 1px solid #ccc;
+//   padding: 10px;
+//   text-align: center; /* Центрируем текст */
+//   vertical-align: middle; /* Центрируем по вертикали */
+//   font-size: 18px;
+//   border-radius: 2px;
+
+//   display: flex; /* Используем flexbox для выравнивания ячейки */
+//   align-items: center; /* Вертикальное выравнивание */
+//   justify-content: center; /* Горизонтальное выравнивание */
+// }
+.table th {
   background-color: #083b57;
-  /* #FCB331; */
   color: #ffffff;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
+}
 
+.button-containerrr {
   display: flex;
   align-items: center;
   justify-content: center;
-
-  /* Настройки текста */
-  font-size: 10px;
-  // font-weight: bold;
+  height: 100%; /* Занимает всю высоту ячейки */
 }

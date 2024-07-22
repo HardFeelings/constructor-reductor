@@ -84,30 +84,49 @@
       </div>
       <br />
     <hr />
-    <button (click)="searchProduct(this.filter)">Найти</button>
+    <div class="button-container"><button (click)="searchProduct(this.filter)">Найти</button></div>
     <br />
     <hr />
-    <table *ngIf="foundProducts !== null || foundProducts !== []">
-      <tbody>
-        <tr *ngFor="let product of foundProducts">
-          <td>{{ product.idProduct }}</td>
-          <td>{{ product.name }}</td>
-          <td>{{ product.motor.power }}</td>
-          <td *ngIf="product.motor.power == null">0</td>
-          <td>{{ product.motor.frequency }}</td>
-          <td *ngIf="product.motor.frequency == null">0</td>
-          <td>{{ product.motor.rpm }}</td>
-          <td *ngIf="product.motor.rpm == null">0</td>
-          <td>{{ product.reducer.ratio }}</td>
-          <td *ngIf="product.reducer.ratio  == null">0</td>
-          <td>{{ product.reducer.torqueMoment }}</td>
-          <td *ngIf="product.reducer.torqueMoment  == null">0</td>
-          <td>{{ product.reducer.diameterOutputShaft }}</td>
-          <td *ngIf="product.reducer.diameterOutputShaft  == null">0</td>
-          <td>{{ product.weight }}</td>
-          <td *ngIf="product.weight  == null">0</td>
-          <td *ngIf="product.imageEmpty == false"><button class="custombutton" (click)="downloadImage(product.idProduct,product.name)">Скачать</button></td>
-          <td *ngIf="product.imageEmpty == true"><div>Нет чертежа</div>
+    <table class="table" *ngIf="foundProducts !== null || foundProducts !== []">
+      <thead *ngIf="foundProducts && foundProducts.length > 0">
+        <tr>
+            <th>id</th>
+            <th>Наименование</th>
+            <th>Мощность</th>
+            <th>Частота</th>
+            <th>Об/мин</th>
+            <th>Передаточное отношение</th>
+            <th>Крутящий момент</th>
+            <th>Диаметр выходного вала</th>
+            <th>Вес</th>
+            <th>Чертёж</th>
         </tr>
-      </tbody>
+    </thead>
+    <tbody>
+        <tr *ngFor="let product of foundProducts">
+            <td>{{ product.idProduct }}</td>
+            <td>{{ product.name }}</td>
+
+            <td >{{ product.motor?.power || 0 }}</td>
+            <td>{{ product.motor?.frequency || 0 }}</td>
+            <td>{{ product.motor?.rpm || 0 }}</td>
+
+            <td>{{ product.reducer?.ratio || 0 }}</td>
+            <td>{{ product.reducer?.torqueMoment || 0 }}</td>
+            <td>{{ product.reducer?.diameterOutputShaft || 0 }}</td>
+
+            <td>{{ product.weight || 0 }}</td>
+
+            <td>
+              <div class="button-containerrr">
+                <ng-container *ngIf="!product.imageEmpty; else noImage">
+                  <button class="custombutton" (click)="downloadImage(product.idProduct, product.name)">Скачать</button>
+              </ng-container>
+              </div>
+                <ng-template #noImage>
+                    <div>Нет чертежа</div>
+                </ng-template>
+            </td>
+        </tr>
+    </tbody>
     </table>

@@ -1,5 +1,4 @@
 <button (click)="goToSearchPage(null)">Новый</button>
-<button>Печать в эксель</button>
 <br />
 <hr />
 <table *ngIf="commercialProp_list !== null || commercialProp_list !== []">
@@ -29,6 +28,7 @@
       <td>
         <button (click)="goToSearchPage(commercial.idCommercialProp)">Редактировать</button>
         <button (click)="deleteCommercial(commercial.idCommercialProp)">Удалить</button>
+        <button>Печать в эксель</button>
       </td>
     </tr>
   </tbody>

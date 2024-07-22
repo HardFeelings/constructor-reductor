@@ -101,28 +101,43 @@
       </div>
       <br />
     <hr />
-    <button (click)="searchProduct(this.filter)">Найти</button>
+    <div class="button-container" ><button (click)="searchProduct(this.filter)">Найти</button></div>
     <br />
     <hr />
-    <table *ngIf="foundProducts !== null || foundProducts !== []">
-      <tbody>
-        <tr *ngFor="let product of foundProducts">
-          <div *ngIf="product.reducer !== null">
-          <td>{{ product.idProduct }}</td>
-          <td>{{ product.name }}</td>
-          <td>{{ product.reducer.ratio }}</td>
-          <td *ngIf="product.reducer.ratio == null">0</td>
-          <td>{{ product.reducer.diameterInputShaft }}</td>
-          <td *ngIf="product.reducer.diameterInputShaft == null">0</td>
-          <td>{{ product.reducer.diameterOutputShaft }}</td>
-          <td *ngIf="product.reducer.diameterOutputShaft == null">0</td>
-          <td>{{ product.reducer.torqueMoment }}</td>
-          <td *ngIf="product.reducer.torqueMoment == null">0</td>
-          <td>{{ product.weight }}</td>
-          <td *ngIf="product.weight== null">0</td>
-          <td *ngIf="product.imageEmpty == false"><button class="custombutton" (click)="downloadImage(product.idProduct,product.name)">Скачать</button></td>
-          <td *ngIf="product.imageEmpty == true"><div>Нет чертежа</div>
-          </div>
+    <table class="table"  *ngIf="foundProducts !== null || foundProducts !== []">
+      <thead *ngIf="foundProducts && foundProducts.length > 0">
+        <tr>
+            <th>id</th>
+            <th>Наименование</th>
+            <th>Передаточное отношение</th>
+            <th>Диаметр входного вала</th>
+            <th>Диаметр выходного вала</th>
+            <th>Крутящий момент</th>
+            <!-- <th>reducerMountingId</th> -->
+            <th>Вес</th>
+            <th>Чертёж</th>
         </tr>
-      </tbody>
+    </thead>
+    <tbody>
+        <tr *ngFor="let product of foundProducts">
+            <td>{{ product.idProduct }}</td>
+            <td>{{ product.name }}</td>
+            <td>{{ product.reducer?.ratio || 0 }}</td>
+            <td>{{ product.reducer?.diameterInputShaft || 0 }}</td>
+            <td>{{ product.reducer?.diameterOutputShaft || 0 }}</td>
+            <td>{{ product.reducer?.torqueMoment || 0 }}</td>
+            <!-- <td>{{ product.reducer?.reducerMountingId || 0 }}</td> -->
+            <td>{{ product.weight || 0 }}</td>
+            <td>
+              <div class="button-containerrr">
+                <ng-container *ngIf="!product.imageEmpty; else noImage">
+                  <button class="custombutton" (click)="downloadImage(product.idProduct, product.name)">Скачать</button>
+                </ng-container>
+              </div>
+                <ng-template #noImage>
+                    <div>Нет чертежа</div>
+                </ng-template>
+            </td>
+        </tr>
+    </tbody>
     </table>

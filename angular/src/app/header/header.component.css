@@ -1,5 +1,5 @@
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Roboto';
     background-color: #f0f0f0;
     color: #000000;
     margin: 0;
@@ -9,33 +9,47 @@ body {
 .container {
     max-width: 1200px;
     /* margin: 20px auto; */
+    height: 20px;
     padding: 20px;
+    margin-top: 5px;
     background-color: #ffffff;
     border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background: none !important;
+    /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
 }
 
-.header {
+.outer-container {
+  width: 100%;
+ height: 70px;
+  background-color: white;
+  padding: 5px 0;
+}
+
+
+
+/* .header {
 
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: center; */
     /* padding: 5px 0; */
-    background-color: #ffffff;
-}
+    /* background-color: #ffffff; */
 
+/*
 .header__logo {
     height: 50px;
-}
+} */
 
-.header__links {
+
+
+/* .header__links {
 
     display: flex;
     list-style: none;
     padding: 0;
     margin: 0;
-}
-
+} */
+/*
 .header__links li {
     font-size: 22px;
     display: flex;
@@ -51,8 +65,8 @@ body {
     width: 24px;
     height: 24px;
     margin-right: 10px;
-}
-::selection{
+} */
+/* ::selection{
     background-color: #fcb331;
     color: #ffffff;
 }
@@ -66,4 +80,4 @@ body {
     height: 2px;
     background-color: #fcb331;
     margin: 10px 0;
-}
+} */

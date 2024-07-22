@@ -18,23 +18,6 @@ select {
   display: flex;
 }
 
-button {
-  width: 100px;
-  height: 50px;
-  background-color: #083b57;
-  /* #FCB331; */
-  color: #ffffff;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-button:hover {
-  background-color: #1e587a;
-}
-
 .product_choise {
   width: auto;
   margin: 10px;
@@ -78,25 +61,24 @@ button:hover {
   align-items: center;
 }
 
-// .element_configurator {
-//   display: flex;
-//   flex-direction: column;
-//   align-items: baseline;
-//   margin: 1% 0;
-// }
-
-// .element_configurator select,
-// .element_configurator input {
-//   width: 30vh;
-//   margin: 3% 0;
-//   padding: 2% 0;
-// }
-
 .element_configurator {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   margin: 1% 0;
+  align-items: center; /* Центрировать элементы по горизонтали */
+  // position: relative;
+}
+
+// span {
+//   position: absolute; /* Позволяет расположить элемент относительно родителя */
+//   top: -50px; /* Измените значение для настройки расстояния от селекта */
+//   left: 50%;
+//   transform: translateX(-50%); /* Центрирует span относительно селекта */
+// }
+
+span{
+  margin-left: -15px;
 }
 
 .element_configurator select,
@@ -138,11 +120,99 @@ span {
   color: black;
   font-size: 14px;
 }
+button {
+  width: 100px;
+  height: 50px;
+  background-color: #083b57;
+  /* #FCB331; */
+  color: #ffffff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-size: 16px;
+}
+
+span{
+  font-size: 16px;
+}
+
+select {
+  font-size: 14px;
+  background-color: #ffffff; /* Фоновый цвет по умолчанию */
+  color: #000000;            /* Цвет текста по умолчанию */
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  transition: background-color 0.3s, color 0.3s; /* Плавный переход */
+}
+
+// select:hover {
+//   background-color: #1e587a; /* Цвет фона при наведении */
+//   color: #ffffff;             /* Цвет текста при наведении */
+// }
+
+/* Для изменения цвета опций в селекте */
+select option:hover {
+  background-color: #ffffff;  /* Цвет фона опции при наведении (не всегда работает) */
+  color: #ffffff;              /* Цвет текста опции при наведении (не всегда работает) */
+}
+
+input{
+  font-size: 14px;
+  background-color: #ffffff; /* Фоновый цвет по умолчанию */
+  color: #000000;            /* Цвет текста по умолчанию */
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+
+button:hover {
+  background-color: #1e587a;
+}
+
+.custombutton {
+  width: 150px;
+  height: 25px;
+  background-color: #fcb331;
+  /* #FCB331; */
+  color: #ffffff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 16px;
+  // font-weight: bold;
+}
+
+.custombutton:hover {
+  background-color: #1e587a;
+}
+
+
+.button-containerrr {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%; /* Занимает всю высоту ячейки */
+}
+
+
 
 .custom-checkbox {
   display: flex;
   align-items: center;
   margin: 10px 0;
+  font-size: 16px;
 }
 
 .custom-checkbox input[type="checkbox"] {
@@ -182,23 +252,40 @@ span {
   border-color: #1e587a;
 }
 
-.custombutton {
-  width: 50px;
-  height: 25px;
-  background-color: #083b57;
-  /* #FCB331; */
-  color: #ffffff;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-
+.button-container {
   display: flex;
-  align-items: center;
-  justify-content: center;
+  justify-content: flex-end;
+  margin: 1% 0;
+  margin-right: 20px
+}
 
-  /* Настройки текста */
-  font-size: 10px;
-  // font-weight: bold;
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th, .table td {
+  border: 1px solid #ccc;
+  padding: 10px;
+  text-align: center; /* Изменено на center */
+  vertical-align: top;
+  font-size: 16px;
+  border-radius: 2px;
+}
+
+// .table th, .table td {
+//   border: 1px solid #ccc;
+//   padding: 10px;
+//   text-align: center; /* Центрируем текст */
+//   vertical-align: middle; /* Центрируем по вертикали */
+//   font-size: 18px;
+//   border-radius: 2px;
+
+//   display: flex; /* Используем flexbox для выравнивания ячейки */
+//   align-items: center; /* Вертикальное выравнивание */
+//   justify-content: center; /* Горизонтальное выравнивание */
+// }
+.table th {
+  background-color: #083b57;
+  color: #ffffff;
 }

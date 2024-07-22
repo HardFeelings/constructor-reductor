@@ -3,30 +3,65 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  background: none !important;
+
   &__logo {
     padding-left: 20px;
-    width: 80px;
-    height: 80px;
+    width: 90px;
+    height: 65px;
   }
-  &__links{
+
+  &__links {
     ul {
-      padding-right: 20px ;
+      padding-right: 20px;
       display: flex;
       gap: 20px;
       list-style: none;
+
       li {
+        position: relative; // Это для позиционирования подменю
+
         a {
-          font-size: 14px;
+          font-size: 16px;
           cursor: pointer;
           text-decoration: none;
           color: black;
+
+          &:hover {
+            color: #fcb331;
+            text-decoration: underline;
+          }
         }
-        a:hover {
-          color: #fcb331;
+
+
+        .dropdown {
+          display: none;
+          position: absolute;
+          top: 100%;
+          left: 0;
+          background-color: white;
+          // box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+          z-index: 1;
+
+          a {
+            display: block;
+            padding: 10px;
+            color: black;
+            margin: 5px;
+
+            &:hover {
+              background-color: #DCDCDC;
+              color: #fcb331;
+              text-decoration:none;
+              margin: 5px;
+            }
+          }
         }
-        display: flex;
-        gap: 10px;
-        align-items: center;
+
+        // Показать выпадающее меню при наведении
+        &:hover .dropdown {
+          display: block; // Показываем подменю при наведении
+        }
       }
     }
   }

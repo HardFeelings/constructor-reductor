@@ -130,3 +130,20 @@ button:hover {
 .row-buttons button:last-child {
     margin-bottom: 0;
 }
+
+.row-buttonstt {
+  // display: flex;
+  flex-direction: column;
+}
+
+
+.row-buttonstt button {
+  width: 100%;
+  height: auto;
+  padding: 5px;
+  margin-bottom: 5px;
+}
+
+.row-buttonstt button:last-child {
+  margin-bottom: 0;
+}

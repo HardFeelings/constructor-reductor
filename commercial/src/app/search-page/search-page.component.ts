@@ -140,6 +140,12 @@ export class SearchPageComponent {
     this.commercialProp.commercialPropItems.push(newPropItem);
   }
 
+  deleteSelectProduct(id: number){
+    const oldItem = this.commercialProp.commercialPropItems.filter(i=>i.idCommercialPropItem !== id);
+    this.commercialProp.commercialPropItems = oldItem;
+    console.log('this.commercialProp.commercialPropItems', this.commercialProp.commercialPropItems)
+  }
+
   openSearch(){
     this.getAllProductTypes();
     this.callSearch = true;

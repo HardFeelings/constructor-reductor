@@ -48,23 +48,39 @@
 <div class="button-container"><button (click)="searchProduct(this.filter)">Найти</button></div>
 <br />
 <hr />
-<table *ngIf="foundProducts !== null || foundProducts !== []">
-  <tbody>
-    <tr *ngFor="let product of foundProducts">
-      <div *ngIf="product.motor !== null">
-      <td>{{ product.idProduct }}</td>
-      <td>{{ product.name }}</td>
-      <td>{{ product.motor.power }}</td>
-      <td *ngIf="product.motor.power== null">0</td>
-      <td>{{ product.motor.rpm }}</td>
-      <td *ngIf="product.motor.rpm== null">0</td>
-      <td>{{ product.motor.frequency }}</td>
-      <td *ngIf="product.motor.frequency== null">0</td>
-      <td>{{ product.weight }}</td>
-      <td *ngIf="product.weight== null">0</td>
-      <td *ngIf="product.imageEmpty == false"><button class="custombutton" (click)="downloadImage(product.idProduct, product.name)">Скачать</button></td>
-      <td *ngIf="product.imageEmpty == true"><div>Нет чертежа</div>
-      </div>
+<table class="table" *ngIf="foundProducts !== null || foundProducts !== []">
+  <!-- *ngIf="foundProducts !== null && foundProducts.length > 0" -->
+  <thead *ngIf="foundProducts && foundProducts.length > 0">
+    <tr>
+        <th>id</th>
+        <th>Наименование</th>
+        <th>Мощность</th>
+        <th>Об/мин</th>
+        <th>Частота</th>
+        <th>Вес</th>
+        <th>Чертёж</th>
     </tr>
-  </tbody>
+</thead>
+<tbody>
+  <tr *ngFor="let product of foundProducts">
+    <td>{{ product.idProduct }}</td>
+    <td>{{ product.name }}</td>
+    <td>{{ product.motor?.power || 0 }}</td>
+    <td>{{ product.motor?.rpm || 0 }}</td>
+    <td>{{ product.motor?.frequency || 0 }}</td>
+    <td>{{ product.weight || 0 }}</td>
+    <td class="tablebt">
+      <ng-container *ngIf="product.imageEmpty; else downloadButton">
+        <div>Нет чертежа</div>
+      </ng-container>
+      <ng-template #downloadButton>
+        <div class="button-containerrr">
+          <button class="custombutton" (click)="downloadImage(product.idProduct, product.name)">
+            Скачать
+          </button>
+        </div>
+      </ng-template>
+    </td>
+  </tr>
+</tbody>
 </table>
