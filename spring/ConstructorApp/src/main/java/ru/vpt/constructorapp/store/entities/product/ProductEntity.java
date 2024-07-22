@@ -32,6 +32,12 @@ public class ProductEntity {
     @Column(name = "price")
     private Double price;
 
+    @Column(name = "rpm")
+    private Double rpm;
+
+    @Column(name = "torque_moment")
+    private Double torqueMoment;
+
     @ManyToOne
     @JoinColumn(name = "id_reducer")
     private ReducerEntity reducer;

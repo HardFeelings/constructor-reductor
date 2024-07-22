@@ -1,5 +1,6 @@
 package ru.vpt.constructorapp.api.motor.common.dto;
 
+import jakarta.persistence.Column;
 import lombok.*;
 
 
@@ -14,7 +15,10 @@ public class MotorDto {
     private Long idMotor;
     private Double power;
     private Double frequency;
-    private Double rpm;
+    private Double efficiency;
+    private Double ratedCurrent;
+    private Double posTerminalBox;
+    private Double momentOfInertia;
     private Long motorTypeId;
     private Long motorAdapterTypeId;
 }

@@ -20,7 +20,7 @@ public class FilterDto {
     private Long motorTypeId;
     private Long motorAdapterTypeId;
     private Double power;
-    private Double frequency;
+    private Double posTerminalBox;
     private Double rpm;
 
     // reducer param

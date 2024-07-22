@@ -22,6 +22,8 @@ public class ProductDto {
     private String name;
     private Double weight;
     private Double price;
+    private Double rpm;
+    private Double torqueMoment;
     private Long reducerId;
     private ReducerDto reducer;
     private Long motorId;

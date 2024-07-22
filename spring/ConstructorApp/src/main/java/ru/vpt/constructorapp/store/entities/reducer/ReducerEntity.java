@@ -55,6 +55,5 @@ public class ReducerEntity {
     @Column(name = "ratio")
     private Double ratio;
 
-    @Column(name = "torque_moment")
-    private Double torqueMoment;
+
 }
