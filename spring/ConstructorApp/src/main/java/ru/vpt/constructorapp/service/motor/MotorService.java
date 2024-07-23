@@ -10,7 +10,10 @@ public interface MotorService {
     List<MotorDto> getAllMotors();
     MotorDto getMotorById(Long id);
     MotorDto saveMotor(MotorDto motorDto);
-    Boolean deleteMotor(Long id);
 
+    MotorEntity saveMotorEntity(MotorDto motorDto);
+
+    Boolean deleteMotor(Long id);
+    List<MotorEntity> findByFilter(MotorDto motorDto);
     Optional<MotorEntity> findById(Long id);
 }

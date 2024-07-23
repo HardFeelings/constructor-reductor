@@ -39,6 +39,11 @@ public class ProductController extends AbstractController implements ProductApi 
     }
 
     @Override
+    public ResponseEntity<ResponseDto<ProductDto>> dynamicSave(ProductDto productDto) {
+        return response(productService.dynamicSave(productDto));
+    }
+
+    @Override
     public ResponseEntity<ResponseDto<Boolean>> delete(Long id) {
         return response(productService.deleteProduct(id));
     }

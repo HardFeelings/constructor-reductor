@@ -28,5 +28,4 @@ public class ReducerDto {
     private Integer diameterInputShaft;
     private Integer diameterOutputShaft;
     private Double ratio;
-    private Double torqueMoment;
 }

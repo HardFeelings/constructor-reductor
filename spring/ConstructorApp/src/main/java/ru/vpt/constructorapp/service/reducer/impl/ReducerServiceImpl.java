@@ -6,7 +6,6 @@ import ru.vpt.constructorapp.api.exception.BadRequestException;
 import ru.vpt.constructorapp.api.exception.NotFoundException;
 import ru.vpt.constructorapp.api.reducer.common.dto.ReducerDto;
 import ru.vpt.constructorapp.api.reducer.common.mapper.ReducerMapper;
-import ru.vpt.constructorapp.api.reducer.output.dto.ReducerOutputShaftTypeDto;
 import ru.vpt.constructorapp.service.reducer.ReducerService;
 import ru.vpt.constructorapp.store.entities.reducer.*;
 import ru.vpt.constructorapp.store.repo.reducer.ReducerRepo;
@@ -73,6 +72,36 @@ public class ReducerServiceImpl implements ReducerService {
     }
 
     @Override
+    public ReducerEntity saveReducerEntity(ReducerDto dto) {
+        if (Objects.isNull(dto)) {
+            throw new BadRequestException("Невозможно сохранить редуктор: dto равен null", 400);
+        }
+        ReducerTypeEntity reducerType = reducerTypeServiceImpl.findById(dto.getReducerTypeId())
+                .orElseThrow(() -> new NotFoundException("Невозможно сохранить редуктор: не найден тип редуктора с id: " + dto.getReducerTypeId(), 404));
+        ReducerSizeEntity reducerSize = reducerSizeServiceImpl.findById(dto.getReducerSizeId())
+                .orElseThrow(() -> new NotFoundException("Невозможно сохранить редуктор: не найден размер редуктора с id: " + dto.getReducerSizeId(), 404));
+        ReducerInputTypeEntity reducerInputType = reducerInputTypeServiceImpl.findById(dto.getReducerInputTypeId())
+                .orElseThrow(() -> new NotFoundException("Невозможно сохранить редуктор: не найден тип входа редуктора с id: " + dto.getReducerInputTypeId(), 404));
+        ReducerAdapterTypeEntity reducerAdapterType = reducerAdapterTypeServiceImpl.findById(dto.getReducerAdapterTypeId())
+                .orElseThrow(() -> new NotFoundException("Невозможно сохранить редуктор: не найдет тип адаптера редуктора с id: " + dto.getReducerAdapterTypeId(), 404));
+        ReducerOutputShaftTypeEntity reducerOutputShaftType = reducerOutputShaftTypeServiceImpl.findById(dto.getReducerOutputShaftTypeId())
+                .orElseThrow(() -> new NotFoundException("Невозможно сохранить редуктор: не найден тип выходного вала с id: " + dto.getReducerOutputShaftTypeId(), 404));
+        ReducerInstallationTypeEntity reducerInstallationType = reducerInstallationTypeServiceImpl.findById(dto.getReducerInstallationTypeId())
+                .orElseThrow(() -> new NotFoundException("Невозможно сохранить редуктор: не найден тип установки редуктора с id: " + dto.getReducerInstallationTypeId(), 404));
+        ReducerMountingEntity reducerMounting = reducerMountingServiceImpl.findById(dto.getReducerMountingId())
+                .orElseThrow(() -> new NotFoundException("Невозможно сохранить редуктор: не найдено крепление редуктора с id: " + dto.getReducerMountingId(), 404));
+        ReducerEntity entity = reducerMapper.toEntity(dto);
+        entity.setReducerType(reducerType);
+        entity.setReducerSize(reducerSize);
+        entity.setReducerInputType(reducerInputType);
+        entity.setReducerAdapterType(reducerAdapterType);
+        entity.setReducerOutputShaftType(reducerOutputShaftType);
+        entity.setReducerInstallationType(reducerInstallationType);
+        entity.setReducerMounting(reducerMounting);
+        return reducerRepo.save(entity);
+    }
+
+    @Override
     public Boolean deleteReducer(Long id) {
         if (Objects.isNull(id)) {
             throw new BadRequestException("Невозможно удалить редуктор: id равен null", 400);
@@ -82,6 +111,14 @@ public class ReducerServiceImpl implements ReducerService {
         }
         reducerRepo.deleteById(id);
         return true;
+    }
+
+    @Override
+    public List<ReducerEntity> findByFilter(ReducerDto reducerDto) {
+        return reducerRepo.findByAllParameters(reducerDto.getDiameterInputShaft(), reducerDto.getDiameterOutputShaft(),
+                reducerDto.getRatio(), reducerDto.getReducerAdapterTypeId(), reducerDto.getReducerInputTypeId(),
+                reducerDto.getReducerInstallationTypeId(), reducerDto.getReducerMountingId(), reducerDto.getReducerOutputShaftTypeId(),
+                reducerDto.getReducerSizeId(), reducerDto.getReducerTypeId());
     }
 
     @Override

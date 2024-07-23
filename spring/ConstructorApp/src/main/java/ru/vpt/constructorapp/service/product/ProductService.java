@@ -16,4 +16,6 @@ public interface ProductService {
     Boolean deleteProduct(Long id);
 
     ProductEntity getProductEntityById(Long id);
+
+    ProductDto dynamicSave(ProductDto productDto);
 }

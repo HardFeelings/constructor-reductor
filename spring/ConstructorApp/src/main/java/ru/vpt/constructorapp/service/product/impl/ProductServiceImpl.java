@@ -76,9 +76,11 @@ public class ProductServiceImpl implements ProductService {
             } else
                 entity.setProductImage(dto.getImageString() == null ? null : Base64.getDecoder().decode(dto.getImageString()));
         }
-        entity.setOptions(dto.getOptionsIds().stream().map(item -> productOptionService.findById(item)
-                .orElseThrow(() -> new NotFoundException("Cannot save options: option with id = " + item + " not found", 404)))
-                .collect(Collectors.toSet()));
+        if (dto.getOptionsIds() != null) {
+            entity.setOptions(dto.getOptionsIds().stream().map(item -> productOptionService.findById(item)
+                            .orElseThrow(() -> new NotFoundException("Cannot save options: option with id = " + item + " not found", 404)))
+                    .collect(Collectors.toSet()));
+        }
         return productMapper.toDTO(productRepo.save(entity));
     }
 
@@ -98,6 +100,39 @@ public class ProductServiceImpl implements ProductService {
     public ProductEntity getProductEntityById(Long id) {
         return productRepo.findById(id).orElseThrow(() -> new NotFoundException("product with id = " + id + " not found", 404));
 
+    }
+
+    @Override
+    public ProductDto dynamicSave(ProductDto productDto) {
+        if (Objects.isNull(productDto)) {
+            throw new BadRequestException("Невозможно сохранить продукт: dto равен null", 400);
+        }
+        ProductEntity productEntity = productMapper.toEntity(productDto);
+        if (productDto.getMotor() != null) {
+            List<MotorEntity> motorEntities = motorService.findByFilter(productDto.getMotor());
+            if (motorEntities.isEmpty()) {
+                MotorEntity motorEntity = motorService.saveMotorEntity(productDto.getMotor());
+                productEntity.setMotor(motorEntity);
+            } else {
+                productEntity.setMotor(motorEntities.get(0));
+            }
+        }
+        if (productDto.getReducer() != null) {
+            List<ReducerEntity> reducerEntities = reducerService.findByFilter(productDto.getReducer());
+            if (reducerEntities.isEmpty()) {
+                ReducerEntity reducerEntity = reducerService.saveReducerEntity(productDto.getReducer());
+                productEntity.setReducer(reducerEntity);
+            } else {
+                productEntity.setReducer(reducerEntities.get(0));
+            }
+        }
+        if (productDto.getOptionsIds() != null) {
+            productEntity.setOptions(productDto.getOptionsIds().stream().map(item -> productOptionService.findById(item)
+                            .orElseThrow(() -> new NotFoundException("Cannot save options: option with id = " + item + " not found", 404)))
+                    .collect(Collectors.toSet()));
+        }
+        productEntity.setProductImage(productDto.getImageString() == null ? null : Base64.getDecoder().decode(productDto.getImageString()));
+        return productMapper.toDTO(productRepo.save(productEntity));
     }
 
 }

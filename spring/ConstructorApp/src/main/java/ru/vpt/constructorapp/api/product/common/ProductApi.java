@@ -19,6 +19,9 @@ public interface ProductApi {
     @PostMapping("/security/product")
     ResponseEntity<ResponseDto<ProductDto>> save(@RequestBody ProductDto productDto);
 
+    @PostMapping("/security/product/dynamicSave")
+    ResponseEntity<ResponseDto<ProductDto>> dynamicSave(@RequestBody ProductDto productDto);
+
     @DeleteMapping("/security/product/{id}")
     ResponseEntity<ResponseDto<Boolean>> delete(@PathVariable("id") Long id);
 
