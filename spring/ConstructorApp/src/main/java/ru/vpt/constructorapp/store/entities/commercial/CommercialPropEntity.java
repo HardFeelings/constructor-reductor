@@ -45,7 +45,7 @@ public class CommercialPropEntity {
     @JoinColumn(name = "id_manager")
     private ManagerEntity manager;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.REMOVE, orphanRemoval = true)
     @JoinColumn(name = "id_commercial_prop")
     private List<CommercialPropItemEntity> commercialPropItems;
 
