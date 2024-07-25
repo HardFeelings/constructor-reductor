@@ -28,6 +28,8 @@ export class SearchPageComponent {
   callSearch: boolean = false;
   managers_list: Manager[];
 
+  selectedButton: number | null = null;
+
   constructor(private productService: ProductService,
     private dataService: DataService,
     private  router: Router,
@@ -158,14 +160,17 @@ export class SearchPageComponent {
       case enProduct.Motor.valueOf():
         this.product_selected = enProduct.Motor;
         this.idProductType = idType;
+        this.selectedButton = idType;
         break
       case enProduct.Reducer.valueOf():
         this.product_selected = enProduct.Reducer
         this.idProductType = idType;
+        this.selectedButton = idType;
         break
       case enProduct.MotorReducer.valueOf():
         this.product_selected = enProduct.MotorReducer
         this.idProductType = idType;
+        this.selectedButton = idType;
         break
     }
   }

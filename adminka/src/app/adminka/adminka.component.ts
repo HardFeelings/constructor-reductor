@@ -5,9 +5,11 @@ import { Motor, MotorAdapterType, MotorType } from '../classes/motor';
 import { FormsModule } from '@angular/forms';
 import { Product, ProductOption, ProductType } from '../classes/product';
 import { MountingPoint, Reducer, ReducerAdapterType, ReducerInputType, ReducerInstallationType, ReducerOutputShaftType, ReducerSize, ReducerType } from '../classes/reducer';
-import { ImageService } from './services/image.service';
+import { ImageService } from '../services/image.service';
 import { Manager } from '../classes/manager';
 import { ResponseInfo } from '../classes/responesInfo';
+import { AddProductComponent } from './add-product/add-product.component';
+import { MatDialog } from '@angular/material/dialog';
 
 
 @Component({
@@ -34,12 +36,9 @@ export class AdminkaComponent {
   reducerInputType_list: ReducerInputType[]
   reducerAdapterType_list: ReducerAdapterType[]
   manager_list:Manager[];
-  // productImage: string | null = null;
-  // imageChanged: boolean = false;
-  // imageEmpty: boolean = true;
-  // productSave: Product;
 
-  constructor(private http: HttpClient, private imageService: ImageService) {
+
+  constructor(private http: HttpClient, private imageService: ImageService, public dialog:MatDialog) {
     this.motor_list = new Array<Motor>();
     this.motorType_list = new Array<MotorType>();
     this.motorAdapterType_list = new Array<MotorAdapterType>();
@@ -80,11 +79,8 @@ export class AdminkaComponent {
 
       setTimeout(() => {
         product.imageString = base64WithoutPrefix;
-        // this.productImage = base64WithoutPrefix;
         product.imageEmpty = false;
         product.imageChanged = true;
-        // this.imageChanged = true;
-        // this.saveProduct(product);
       }, 0);
     };
 
@@ -148,6 +144,58 @@ export class AdminkaComponent {
       }
     });
   }
+
+
+  goToDynamicAdd(){
+    const dialogAddingNewStudent = this.dialog.open(AddProductComponent, {
+      width: '3000px',
+      height: '1300px',
+      // data:
+    });
+    dialogAddingNewStudent.afterClosed().subscribe((addproducts: Product[]) => {
+        console.log('dialog goToDynamicAdd', addproducts);
+        // this.product_list = [];
+        // this.getProductList()
+        if(addproducts && addproducts.length>0){
+            addproducts.forEach((e: { [x: string]: any; }) => {
+              var product = new Product()
+              product.id = e["idProduct"]
+              product.productTypeId = e["productTypeId"]
+              product.name = e["name"]
+              product.weight = e["weight"]
+              product.price = e["price"]
+              product.reducerId = e["reducerId"]
+              product.motorId = e["motorId"]
+              product.optionsIds = e["optionsIds"]
+              product.imageEmpty = e["imageEmpty"]
+              product.imageString = e["imageString"]
+              product.imageChanged = e["imageChanged"]
+              product.rpm = e["rpm"]
+              product.torqueMoment = e["torqueMoment"]
+              product.optionsString = product.optionsIds.join(',')
+              this.product_list.push(product)
+          })
+        }
+        this.setid(3);
+        this.getMotorList()
+        this.getMotorTypeList()
+        this.getMotorAdapterTypeList()
+        this.getProductType()
+        this.getProductOption()
+        this.getReducer()
+        this.getReducerSize()
+        this.getReducerType()
+        this.getReducerOutputShaft()
+        this.getReducerMounting()
+        this.getReducerInstallationType()
+        this.getReducerInputType()
+        this.getReducerAdapterType()
+        this.getListManagers()
+
+    });
+  }
+
+
 
   deleteMotor(i : Motor) {
     i.delete(this.http).subscribe((data:boolean) => {
@@ -516,7 +564,11 @@ saveProductType(productType: ProductType) {
           motor.frequency.value = e["frequency"]
           motor.adapterType.id = e["motorAdapterTypeId"]
           motor.power = e["power"]
-          motor.rpm.value = e["rpm"]
+          // motor.rpm.value = e["rpm"]
+          motor.efficiency =  e["efficiency"]
+          motor.ratedCurrent =  e["ratedCurrent"]
+          motor.posTerminalBox =  e["posTerminalBox"]
+          motor.momentOfInertia =  e["momentOfInertia"]
           motor.type.id = e["motorTypeId"]
           this.motor_list.push(motor)
         })
@@ -541,6 +593,8 @@ saveProductType(productType: ProductType) {
           product.imageEmpty = e["imageEmpty"]
           product.imageString = e["imageString"]
           product.imageChanged = e["imageChanged"]
+          product.rpm = e["rpm"]
+          product.torqueMoment = e["torqueMoment"]
           product.optionsString = product.optionsIds.join(',')
           this.product_list.push(product)
         })

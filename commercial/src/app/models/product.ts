@@ -8,11 +8,13 @@ export class Product {
   weight: number;
   price: number;
   reducerId!: number;
-  reducer!: Reducer;
+  reducer!: Reducer|null;
   motorId!: number;
-  motor!: Engine;
+  motor!: Engine | null;
   optionsIds: number[];
   imageEmpty!: boolean;
+  rpm!: number;
+  torqueMoment!:number;
   // imageString:string | null;
 
 }

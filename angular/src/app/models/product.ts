@@ -13,6 +13,8 @@ export class Product {
   motor!: Engine | null;
   optionsIds: number[];
   imageEmpty!: boolean;
+  rpm!: number;
+  torqueMoment!:number;
   // imageString:string | null;
 
 }

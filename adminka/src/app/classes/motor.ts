@@ -7,7 +7,11 @@ export class Motor {
     adapterType: MotorAdapterType
     power: Number | null
     frequency: MotorFrequency
-    rpm: MotorRPM
+    // rpm: MotorRPM
+    efficiency:number;
+    ratedCurrent:number;
+    posTerminalBox:number;
+    momentOfInertia:number;
 
     // constructor();
     constructor(http?: HttpClient, id?: number) {
@@ -16,7 +20,7 @@ export class Motor {
         this.adapterType = new MotorAdapterType()
         this.power = null
         this.frequency = new MotorFrequency()
-        this.rpm = new MotorRPM()
+        // this.rpm = new MotorRPM()
         if (http != undefined) {
             http.get(`/api/v1/motor/${id}`).subscribe({
                 next: (data: any) => {
@@ -25,7 +29,11 @@ export class Motor {
                         this.frequency.value = e["frequency"]
                         this.adapterType.id = e["motorAdapterTypeId"]
                         this.power = e["power"]
-                        this.rpm.value = e["rpm"]
+                        // this.rpm.value = e["rpm"]
+                        this.efficiency =  e["efficiency"]
+                        this.ratedCurrent =  e["ratedCurrent"]
+                        this.posTerminalBox =  e["posTerminalBox"]
+                        this.momentOfInertia =  e["momentOfInertia"]
                         this.type.id = e["motorTypeId"]
                     })
                 },
@@ -40,7 +48,11 @@ export class Motor {
             idMotor: this.id,
             power: this.power,
             frequency: this.frequency.value,
-            rpm: this.rpm.value,
+            // rpm: this.rpm.value,
+            efficiency:this.efficiency,
+            ratedCurrent:this.ratedCurrent,
+            posTerminalBox:this.posTerminalBox,
+            momentOfInertia:this.momentOfInertia,
             motorTypeId: this.type.id,
             motorAdapterTypeId: this.adapterType.id
         }

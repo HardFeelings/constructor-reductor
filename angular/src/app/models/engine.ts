@@ -3,7 +3,11 @@ export class Engine {
   id: number;
   power:number;
   frequency: number;
-  rpm: number;
+  // rpm: number;
+  efficiency:number;
+  ratedCurrent:number;
+  posTerminalBox:number;
+  momentOfInertia:number;
   motorTypeId: EngineType;
   motorAdapterTypeId: EngineAdapterType;
 }

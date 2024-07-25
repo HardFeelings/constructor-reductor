@@ -16,6 +16,8 @@ export class Product {
     imageEmpty!: boolean;
     imageString: string | null;
     imageChanged!: boolean;
+    rpm!: number;
+    torqueMoment!:number;
 
     // constructor() {
     //     this.id = 0
@@ -41,6 +43,8 @@ export class Product {
             imageEmpty: this.imageEmpty,
             imageString: this.imageString,
             imageChanged: this.imageChanged,
+            rpm: this.rpm,
+            torqueMoment: this.torqueMoment,
             optionsIds: this.optionsString == "" ? new Array<number>() : this.optionsString.split(',').map(function (item) {
                 return parseInt(item, 10);
             })

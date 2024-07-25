@@ -54,13 +54,23 @@ body {
     padding-left: 20px;
 }
 
+
+
 .buttons {
-    margin-bottom: 20px;
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 20px;
 }
 
 .buttons button {
-    margin-right: 10px;
+  margin-right: 10px;
+  align-self: center;
 }
+
+
+// .buttons button {
+//     margin-right: 10px;
+// }
 
 .table-container {
     border: 1px solid #ccc;
@@ -74,6 +84,8 @@ body {
     border-collapse: collapse;
 }
 
+
+
 .table th, .table td {
     border: 1px solid #ccc;
     padding: 10px;
@@ -84,10 +96,11 @@ body {
 .table th {
     background-color: #fcb331;
     color: #ffffff;
+    text-align: center;
 }
 
 .editable {
-    width: calc(100% - 12px);
+    width: calc(100% - 5px);
     border: none;
     outline: none;
     resize: none;

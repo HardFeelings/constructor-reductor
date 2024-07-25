@@ -40,7 +40,11 @@
                                 <th>adapterType</th>
                                 <th>frequency</th>
                                 <th>power</th>
-                                <th>rpm</th>
+                                <!-- <th>rpm</th> -->
+                                <th>efficiency</th>
+                                <th>ratedCurrent</th>
+                                <th>posTerminalBox</th>
+                                <th>momentOfInertia</th>
                                 <th>type</th>
                                 <th></th>
                             </tr>
@@ -51,7 +55,11 @@
                                 <td><textarea class="editable" [(ngModel)]="i.adapterType.id"></textarea></td>
                                 <td><textarea class="editable" [(ngModel)]="i.frequency.value"></textarea></td>
                                 <td><textarea class="editable" [(ngModel)]="i.power"></textarea></td>
-                                <td><textarea class="editable" [(ngModel)]="i.rpm.value"></textarea></td>
+                                <!-- <td><textarea class="editable" [(ngModel)]="i.rpm.value"></textarea></td> -->
+                                <td><textarea class="editable" [(ngModel)]="i.efficiency"></textarea></td>
+                                <td><textarea class="editable" [(ngModel)]="i.ratedCurrent"></textarea></td>
+                                <td><textarea class="editable" [(ngModel)]="i.posTerminalBox"></textarea></td>
+                                <td><textarea class="editable" [(ngModel)]="i.momentOfInertia"></textarea></td>
                                 <td><textarea class="editable" [(ngModel)]="i.type.id"></textarea></td>
                                 <td class="row-buttons">
                                     <button (click)="saveMotor(i)"> Сохранить </button>
@@ -119,6 +127,7 @@
             <div *ngIf="id==3">
                 <div class="buttons">
                     <button (click)="addProduct()"> Новый </button>
+                    <button (click)="goToDynamicAdd()"> Dynamic Save </button>
                 </div>
                 <div class="table-container">
                     <table class="table">
@@ -131,6 +140,8 @@
                                 <th>price</th>
                                 <th>idReducer</th>
                                 <th>idMotor</th>
+                                <th>rpm</th>
+                                <th>torqueMoment</th>
                                 <th>options</th>
                                 <th>image</th>
                                 <th></th>
@@ -145,6 +156,8 @@
                                 <td><input class="editable" [(ngModel)]="i.price"></td>
                                 <td><input class="editable" [(ngModel)]="i.reducerId"></td>
                                 <td><input class="editable" [(ngModel)]="i.motorId"></td>
+                                <td><input class="editable" [(ngModel)]="i.rpm"></td>
+                                <td><input class="editable" [(ngModel)]="i.torqueMoment"></td>
                                 <td><input class="editable" [(ngModel)]="i.optionsString"></td>
                                 <td  class="row-buttonstt" *ngIf="i.imageEmpty == true"><input type="file" #fileInput style="display: none" (change)="onFileSelected($event, i)">
                                   <button (click)="openFilePicker(fileInput)">Загрузить</button></td>
@@ -221,18 +234,18 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th>idReducer</th>
-                                <th>reducerTypeId</th>
-                                <th>reducerSizeId</th>
-                                <th>reducerInputTypeId</th>
-                                <th>reducerAdapterTypeId</th>
-                                <th>reducerOutputShaftTypeId</th>
-                                <th>reducerInstallationTypeId</th>
-                                <th>reducerMountingId</th>
-                                <th>diameterInputShaft</th>
-                                <th>diameterOutputShaft</th>
+                                <th>id</th>
+                                <th>TypeId</th>
+                                <th>SizeId</th>
+                                <th>Input TypeId</th>
+                                <th>Adapter TypeId</th>
+                                <th>OutputShaft TypeId</th>
+                                <th>Installation TypeId</th>
+                                <th>MountingId</th>
+                                <th>ØInputShaft</th>
+                                <th>ØOutputShaft</th>
                                 <th>ratio</th>
-                                <th>torqueMoment</th>
+                                <!-- <th>torqueMoment</th> -->
                                 <th></th>
                             </tr>
                         </thead>
@@ -249,7 +262,7 @@
                                 <td><input class="editable" [(ngModel)]="i.diameterInputShaft"></td>
                                 <td><input class="editable" [(ngModel)]="i.diameterOutputShaft"></td>
                                 <td><input class="editable" [(ngModel)]="i.ratio"></td>
-                                <td><input class="editable" [(ngModel)]="i.torqueMoment"></td>
+                                <!-- <td><input class="editable" [(ngModel)]="i.torqueMoment"></td> -->
                                 <td class="row-buttons">
                                     <button (click)="saveReducer(i)"> Сохранить </button>
                                     <button (click)="deleteReducer(i)"> Удалить </button>

@@ -7,7 +7,8 @@ export class Filter{
   motorTypeId: number;
   motorAdapterTypeId!: number;
   power!: number;
-  frequency!: number;
+  // frequency!: number;
+  posTerminalBox!:number;
   rpm!: number;
 
   // reducer param

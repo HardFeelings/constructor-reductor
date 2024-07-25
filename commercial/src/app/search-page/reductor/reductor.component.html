@@ -16,7 +16,7 @@
         </div>
         <div class="element_configurator">
           <span>Крутящий момент</span>
-          <input [(ngModel)]="this.torqueMoment"  type="number" />
+          <input min="0"  [(ngModel)]="this.torqueMoment"  type="number" />
         </div>
       </div>
       <br />
@@ -24,13 +24,13 @@
         <div class="rate_element_configurator">
           <div class="element_configurator">
             <span>Диаметр входного вала</span>
-            <input [(ngModel)]="this.diamInput" type="number" />
+            <input min="0"  [(ngModel)]="this.diamInput" type="number" />
           </div>
           <div class="element_configurator">
             <span class="rate_header">+-</span>
           </div>
           <div class="element_configurator">
-            <input [(ngModel)]="this.diamInputAllowance" type="number" />
+            <input min="0"  [(ngModel)]="this.diamInputAllowance" type="number" />
           </div>
         </div>
       </div>
@@ -39,13 +39,13 @@
         <div class="rate_element_configurator">
           <div class="element_configurator">
             <span>Диаметр выходного вала</span>
-            <input [(ngModel)]="this.diamOutput" type="number" />
+            <input min="0"  [(ngModel)]="this.diamOutput" type="number" />
           </div>
           <div class="element_configurator">
             <span class="rate_header">+-</span>
           </div>
           <div class="element_configurator">
-            <input [(ngModel)]="this.diamOutputAllowance" type="number" />
+            <input min="0" [(ngModel)]="this.diamOutputAllowance" type="number" />
           </div>
         </div>
       </div>
@@ -77,7 +77,7 @@
        <div class="container_element_configurator">
         <div class="element_configurator">
           <span>Передаточное отношение</span>
-          <input [(ngModel)]="this.ratio" type="number" />
+          <input min="0"  [(ngModel)]="this.ratio" type="number" />
         </div>
         <div class="element_configurator">
           <span>Тип крепления редуктора</span>
@@ -95,35 +95,51 @@
         </div>
       </div>
       <br />
-      <div *ngFor="let option of productOption">
+      <div *ngFor="let option of productOption"  class="custom-checkbox">
         <input type="checkbox" [id]="'checkbox_' + option.idProductOption" [value]="option.idProductOption" (change)="onCheckboxChange($event, option.idProductOption)">
         <label [for]="'checkbox_' + option.idProductOption">{{ option.productOptionValue }}</label>
       </div>
       <br />
     <hr />
-    <button (click)="searchProduct(this.filter)">Найти</button>
+    <div class="button-container" ><button (click)="searchProduct(this.filter)">Найти</button></div>
     <br />
     <hr />
-    <table *ngIf="foundProducts !== null || foundProducts !== []">
-      <tbody>
-        <tr *ngFor="let product of foundProducts">
-          <div *ngIf="product.reducer !== null">
-          <td>{{ product.idProduct }}</td>
-          <td>{{ product.name }}</td>
-          <td>{{ product.reducer.ratio }}</td>
-          <td *ngIf="product.reducer.ratio == null">0</td>
-          <td>{{ product.reducer.diameterInputShaft }}</td>
-          <td *ngIf="product.reducer.diameterInputShaft == null">0</td>
-          <td>{{ product.reducer.diameterOutputShaft }}</td>
-          <td *ngIf="product.reducer.diameterOutputShaft == null">0</td>
-          <td>{{ product.reducer.torqueMoment }}</td>
-          <td *ngIf="product.reducer.torqueMoment == null">0</td>
-          <td>{{ product.weight }}</td>
-          <td *ngIf="product.weight== null">0</td>
-          <!-- <td *ngIf="product.imageEmpty == false"><button (click)="downloadImage(product.idProduct,product.name)">Скачать</button></td>
-          <td *ngIf="product.imageEmpty == true"><div>Нет чертежа</div> -->
-          <td><button (click)="selectProduct(product)">+</button></td>
-          </div>
+    <table class="table"  *ngIf="foundProducts !== null || foundProducts !== []">
+      <thead *ngIf="foundProducts && foundProducts.length > 0">
+        <tr>
+            <th>id</th>
+            <th>Наименование</th>
+            <th>Передаточное отношение</th>
+            <th>Диаметр входного вала</th>
+            <th>Диаметр выходного вала</th>
+            <th>Крутящий момент</th>
+            <!-- <th>reducerMountingId</th> -->
+            <th>Вес</th>
+            <th>Чертёж</th>
+            <th></th>
         </tr>
-      </tbody>
+    </thead>
+    <tbody>
+        <tr *ngFor="let product of foundProducts">
+            <td>{{ product.idProduct }}</td>
+            <td>{{ product.name }}</td>
+            <td>{{ product.reducer?.ratio || 0 }}</td>
+            <td>{{ product.reducer?.diameterInputShaft || 0 }}</td>
+            <td>{{ product.reducer?.diameterOutputShaft || 0 }}</td>
+            <td>{{ product.torqueMoment || 0 }}</td>
+            <!-- <td>{{ product.reducer?.reducerMountingId || 0 }}</td> -->
+            <td>{{ product.weight || 0 }}</td>
+            <td>
+              <div class="button-containerrr">
+                <ng-container *ngIf="!product.imageEmpty; else noImage">
+                  <button class="custombutton" (click)="downloadImage(product.idProduct, product.name)">Скачать</button>
+                </ng-container>
+              </div>
+                <ng-template #noImage>
+                    <div>Нет чертежа</div>
+                </ng-template>
+            </td>
+            <td class="tablebt">   <div class="button-containerrr"><button class="plus-button"  (click)="selectProduct(product)">+</button>  </div></td>
+        </tr>
+    </tbody>
     </table>

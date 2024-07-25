@@ -2,20 +2,13 @@
 
 body {
     font-family: 'Roboto';
-    background-color: #f0f0f0;
+    /*background-color: #f0f0f0;*/
     color: #000000;
     margin: 0;
     padding: 0;
 }
 
-.container {
-    max-width: 1200px;
-    margin: 20px auto;
-    padding: 20px;
-    background-color: #ffffff;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
+
 
 
 .product {
@@ -38,7 +31,17 @@ body {
     cursor: pointer;
     transition: background-color 0.3s ease;
     width: 150px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
 }
+
+.active {
+  background-color: #083b57;
+}
+
 
 .product_choise:hover {
     background-color: #083b57;
@@ -54,16 +57,28 @@ select:focus, input[type="number"]:focus {
     color: #ffffff;
 }
 
+.select {
+  background-color: #083b57;
+  color: #ffffff;
+  outline: none;
+}
+.noselect {
+  background-color: #fcb331;
+  color: #ffffff;
+}
+
 button {
     width: 100px;
-    height: 50px;
+    height:50px;
     background-color: #083b57;
+    /* #FCB331; */
     color: #ffffff;
     border: none;
     padding: 10px 20px;
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    font-size: 16px;
 }
 
 button:hover {
@@ -75,4 +90,9 @@ hr {
     height: 1px;
     background: #ccc;
     margin: 20px 0;
+}
+
+
+.active {
+  background-color: #083b57;
 }

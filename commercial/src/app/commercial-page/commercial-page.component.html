@@ -1,10 +1,15 @@
-<button (click)="goToSearchPage(null)">Новый</button>
-<br />
-<hr />
-<table *ngIf="commercialProp_list !== null || commercialProp_list !== []">
+
+
+<!-- <br />
+<hr /> -->
+<div class="table-container">
+  <div class="buttons">
+    <button (click)="goToSearchPage(null)">Новый</button>
+  </div>
+<table class="table" *ngIf="commercialProp_list !== null || commercialProp_list !== []">
   <thead>
     <tr *ngIf="commercialProp_list !== []">
-        <th>idCommercialProp</th>
+        <th>id</th>
         <th>number</th>
         <th>shortName</th>
         <th>partner</th>
@@ -25,11 +30,13 @@
       <td>{{ commercial.manager.position}}</td>
       <td>{{ commercial.manager.email}}</td>
       <td>{{ commercial.manager.phoneNumber}}</td> -->
-      <td>
-        <button (click)="goToSearchPage(commercial.idCommercialProp)">Редактировать</button>
+      <td class="row-buttons">
+        <button (click)="goToSearchPage(commercial.idCommercialProp)">Изменить</button>
         <button (click)="deleteCommercial(commercial.idCommercialProp)">Удалить</button>
-        <button>Печать в эксель</button>
+        <button>Excel</button>
       </td>
     </tr>
   </tbody>
 </table>
+</div>
+

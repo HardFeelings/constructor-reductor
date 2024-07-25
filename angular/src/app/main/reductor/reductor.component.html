@@ -16,7 +16,7 @@
         </div>
         <div class="element_configurator">
           <span>Крутящий момент</span>
-          <input [(ngModel)]="this.torqueMoment"  type="number" />
+          <input min="0" [(ngModel)]="this.torqueMoment"  type="number" />
         </div>
       </div>
       <br />
@@ -24,13 +24,13 @@
         <div class="rate_element_configurator">
           <div class="element_configurator">
             <span>Диаметр входного вала</span>
-            <input [(ngModel)]="this.diamInput" type="number" />
+            <input min="0" [(ngModel)]="this.diamInput" type="number" />
           </div>
           <div class="element_configurator">
             <span class="rate_header">+-</span>
           </div>
           <div class="element_configurator">
-            <input [(ngModel)]="this.diamInputAllowance" type="number" />
+            <input min="0" [(ngModel)]="this.diamInputAllowance" type="number" />
           </div>
         </div>
       </div>
@@ -39,13 +39,13 @@
         <div class="rate_element_configurator">
           <div class="element_configurator">
             <span>Диаметр выходного вала</span>
-            <input [(ngModel)]="this.diamOutput" type="number" />
+            <input min="0" [(ngModel)]="this.diamOutput" type="number" />
           </div>
           <div class="element_configurator">
             <span class="rate_header">+-</span>
           </div>
           <div class="element_configurator">
-            <input [(ngModel)]="this.diamOutputAllowance" type="number" />
+            <input min="0" [(ngModel)]="this.diamOutputAllowance" type="number" />
           </div>
         </div>
       </div>
@@ -77,7 +77,7 @@
        <div class="container_element_configurator">
         <div class="element_configurator">
           <span>Передаточное отношение</span>
-          <input [(ngModel)]="this.ratio" type="number" />
+          <input min="0" [(ngModel)]="this.ratio" type="number" />
         </div>
         <div class="element_configurator">
           <span>Тип крепления редуктора</span>
@@ -125,7 +125,7 @@
             <td>{{ product.reducer?.ratio || 0 }}</td>
             <td>{{ product.reducer?.diameterInputShaft || 0 }}</td>
             <td>{{ product.reducer?.diameterOutputShaft || 0 }}</td>
-            <td>{{ product.reducer?.torqueMoment || 0 }}</td>
+            <td>{{ product.torqueMoment || 0 }}</td>
             <!-- <td>{{ product.reducer?.reducerMountingId || 0 }}</td> -->
             <td>{{ product.weight || 0 }}</td>
             <td>
