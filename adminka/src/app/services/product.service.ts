@@ -4,7 +4,6 @@ import { HttpClient } from '@angular/common/http';
 import { Product, ProductType, ProductOption } from '../models/product';
 import { ResponseInfo } from '../models/responesInfo';
 import { Observable } from 'rxjs';
-import { Filter } from '../models/filter';
 
 @Injectable({
   providedIn: 'root'
@@ -54,32 +53,12 @@ export class ProductService extends ABaseServiceService{
     return this.getwp<ResponseInfo<ProductOption[]>>(`${this.productTypeOptionIdUrl}/${id}`);
   }
 
-///////////// Product  Filter/////////////
-  postFilter(filter: Filter): Observable<ResponseInfo<Product[]>> {
-    return this.postwp<ResponseInfo<Product[]>>(`${this.filterUrl}`, filter);
-  }
-
-
   ///////////// Add  Product/////////////
   addDynamicProduct(product: Product): Observable<ResponseInfo<Product>> {
     return this.postwp<ResponseInfo<Product>>(`${this.addProsuctUrl}`, product);
   }
 
 ///////////// Image /////////////
-  // getImageById(id:number): Observable<Blob> {
-  //   return this.getwp<Blob>(`${this.imageUrl}/${id}`);
-  // }
-
-  // public getImageById(id: number): void {
-  //   this.http.get(`${this.endpoint}/${this.imageUrl}/${id}`).subscribe(
-  //     () => {
-  //       console.log('Request sent successfully');
-  //     },
-  //     (error) => {
-  //       console.error('Error sending the request:', error);
-  //     }
-  //   );
-  // }
    downloadImageById(id: number, filename: string): void {
     this.http.get(`${this.endpoint}/${this.imageUrl}/${id}`, { responseType: 'blob' }).subscribe(
       (blob: Blob) => {

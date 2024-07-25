@@ -67,7 +67,6 @@ select {
   align-items: flex-start;
   margin: 1% 0;
   align-items: center;
-  // position: relative;
 }
 
 
@@ -77,10 +76,30 @@ span{
 
 .element_configurator select,
 .element_configurator input {
-  width: 300px;
+  width: 220px;
   min-width: 150px;
   margin: 3% 0;
   padding: 5px;
+  box-sizing: border-box;
+}
+
+
+.element_configurator2 {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin: 1% 0;
+  align-items: center;
+}
+
+
+.element_configurator2 input {
+  width: 245px;
+  min-width: 150px;
+  margin: 3% 0;
+  padding: 5px;
+  margin-top: 5px;
+  margin-bottom: 10px;
   box-sizing: border-box;
 }
 
@@ -118,7 +137,6 @@ button {
   width: 100px;
   height: 50px;
   background-color: #083b57;
-  /* #FCB331; */
   color: #ffffff;
   border: none;
   padding: 10px 20px;
@@ -167,7 +185,6 @@ button:hover {
   width: 150px;
   height: 25px;
   background-color: #fcb331;
-  /* #FCB331; */
   color: #ffffff;
   border: none;
   padding: 10px 20px;
@@ -178,7 +195,6 @@ button:hover {
   align-items: center;
   justify-content: center;
   font-size: 16px;
-  // font-weight: bold;
 }
 
 .custombutton:hover {
@@ -186,20 +202,12 @@ button:hover {
 }
 
 
-.button-containerrr {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-}
-
-
-
 .custom-checkbox {
   display: flex;
   align-items: center;
   margin: 10px 0;
   font-size: 16px;
+  margin-left: 10px;
 }
 
 .custom-checkbox input[type="checkbox"] {
@@ -260,18 +268,17 @@ button:hover {
   border-radius: 2px;
 }
 
-// .table th, .table td {
-//   border: 1px solid #ccc;
-//   padding: 10px;
-//   text-align: center;
-//   vertical-align: middle;
-//   font-size: 18px;
-//   border-radius: 2px;
+.tablebt{
+  padding-left: 200px;
+}
 
-//   display: flex;
-//   align-items: center;
-//   justify-content: center;
-// }
+.button-containerrr {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
 .table th {
   background-color: #083b57;
   color: #ffffff;

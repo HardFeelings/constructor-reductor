@@ -45,6 +45,7 @@
                                 <th>ratedCurrent</th>
                                 <th>posTerminalBox</th>
                                 <th>momentOfInertia</th>
+                                <th>cableExitSide</th>
                                 <th>type</th>
                                 <th></th>
                             </tr>
@@ -60,6 +61,7 @@
                                 <td><textarea class="editable" [(ngModel)]="i.ratedCurrent"></textarea></td>
                                 <td><textarea class="editable" [(ngModel)]="i.posTerminalBox"></textarea></td>
                                 <td><textarea class="editable" [(ngModel)]="i.momentOfInertia"></textarea></td>
+                                <td><textarea class="editable" [(ngModel)]="i.cableExitSide"></textarea></td>
                                 <td><textarea class="editable" [(ngModel)]="i.type.id"></textarea></td>
                                 <td class="row-buttons">
                                     <button (click)="saveMotor(i)"> Сохранить </button>
@@ -142,6 +144,7 @@
                                 <th>idMotor</th>
                                 <th>rpm</th>
                                 <th>torqueMoment</th>
+                                <th>serviceFactor</th>
                                 <th>options</th>
                                 <th>image</th>
                                 <th></th>
@@ -158,6 +161,7 @@
                                 <td><input class="editable" [(ngModel)]="i.motorId"></td>
                                 <td><input class="editable" [(ngModel)]="i.rpm"></td>
                                 <td><input class="editable" [(ngModel)]="i.torqueMoment"></td>
+                                <td><input class="editable" [(ngModel)]="i.serviceFactor"></td>
                                 <td><input class="editable" [(ngModel)]="i.optionsString"></td>
                                 <td  class="row-buttonstt" *ngIf="i.imageEmpty == true"><input type="file" #fileInput style="display: none" (change)="onFileSelected($event, i)">
                                   <button (click)="openFilePicker(fileInput)">Загрузить</button></td>

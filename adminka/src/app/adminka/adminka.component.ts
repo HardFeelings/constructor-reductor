@@ -18,9 +18,7 @@ import { MatDialog } from '@angular/material/dialog';
   styleUrls: ['./adminka.component.scss']
 })
 export class AdminkaComponent {
-
   id = 0
-  // make  motor_list type of array of motors
   motor_list: Motor[]
   motorType_list: MotorType[]
   motorAdapterType_list: MotorAdapterType[]
@@ -36,7 +34,6 @@ export class AdminkaComponent {
   reducerInputType_list: ReducerInputType[]
   reducerAdapterType_list: ReducerAdapterType[]
   manager_list:Manager[];
-
 
   constructor(private http: HttpClient, private imageService: ImageService, public dialog:MatDialog) {
     this.motor_list = new Array<Motor>();
@@ -87,7 +84,6 @@ export class AdminkaComponent {
     reader.readAsDataURL(selectedFile);
   }
 
-
   openFilePicker(fileInput: HTMLInputElement) {
     if (fileInput) {
       fileInput.click();
@@ -102,10 +98,7 @@ export class AdminkaComponent {
     product.imageString = null;
     product.imageEmpty = true;
     product.imageChanged = true;
-    // this.imageChanged = true;
-    // this.saveProduct(product);
   }
-
 
   getHttp() {
     return this.http
@@ -138,13 +131,11 @@ export class AdminkaComponent {
   saveMotor(motor: Motor) {
     motor.save(this.http).subscribe((data:any) => {
       const index = this.motor_list.findIndex(item => item.id === data.data.idMotor);
-      // debugger
       if(index === -1 && this.motor_list[this.motor_list.length -1].id === 0){
         this.motor_list[this.motor_list.length -1].id = data.data.idMotor;
       }
     });
   }
-
 
   goToDynamicAdd(){
     const dialogAddingNewStudent = this.dialog.open(AddProductComponent, {
@@ -154,8 +145,6 @@ export class AdminkaComponent {
     });
     dialogAddingNewStudent.afterClosed().subscribe((addproducts: Product[]) => {
         console.log('dialog goToDynamicAdd', addproducts);
-        // this.product_list = [];
-        // this.getProductList()
         if(addproducts && addproducts.length>0){
             addproducts.forEach((e: { [x: string]: any; }) => {
               var product = new Product()
@@ -172,30 +161,19 @@ export class AdminkaComponent {
               product.imageChanged = e["imageChanged"]
               product.rpm = e["rpm"]
               product.torqueMoment = e["torqueMoment"]
-              product.optionsString = product.optionsIds.join(',')
+              product.serviceFactor = e["serviceFactor"]
+              product.optionsString = (product.optionsIds ?? []).join(',');
               this.product_list.push(product)
           })
         }
         this.setid(3);
+        this.reducer_list = [];
+        this.motor_list = [];
         this.getMotorList()
-        this.getMotorTypeList()
-        this.getMotorAdapterTypeList()
-        this.getProductType()
-        this.getProductOption()
         this.getReducer()
-        this.getReducerSize()
-        this.getReducerType()
-        this.getReducerOutputShaft()
-        this.getReducerMounting()
-        this.getReducerInstallationType()
-        this.getReducerInputType()
-        this.getReducerAdapterType()
-        this.getListManagers()
 
     });
   }
-
-
 
   deleteMotor(i : Motor) {
     i.delete(this.http).subscribe((data:boolean) => {
@@ -262,7 +240,6 @@ export class AdminkaComponent {
     if(product.imageString == null || !product.imageString){
       product.imageString = null;
     }
-    // product.imageChanged = this.imageChanged;
     product.save(this.http).subscribe((data:any) => {
       const index = this.product_list.findIndex(item => item.id === data.data.idProduct);
       if (index !== -1) {
@@ -273,8 +250,6 @@ export class AdminkaComponent {
       }
     });
   }
-
-
 
   deleteProduct(i : Product) {
     i.delete(this.http).subscribe((data:boolean) => {
@@ -288,14 +263,14 @@ export class AdminkaComponent {
     this.productType_list = ProductType.getAll(this.http)
   }
 
-saveProductType(productType: ProductType) {
-  productType.save(this.http).subscribe((data) => {
-    const index = this.productType_list.findIndex(item => item.id === data.data.idProductType);
-    if(index === -1 && this.productType_list[this.productType_list.length -1].id === 0){
-      this.productType_list[this.productType_list.length -1].id = data.data.idProductType;
-    }
-  });
-}
+  saveProductType(productType: ProductType) {
+    productType.save(this.http).subscribe((data) => {
+      const index = this.productType_list.findIndex(item => item.id === data.data.idProductType);
+      if(index === -1 && this.productType_list[this.productType_list.length -1].id === 0){
+        this.productType_list[this.productType_list.length -1].id = data.data.idProductType;
+      }
+    });
+  }
 
   addProductType() {
     var productType = new ProductType()
@@ -336,7 +311,6 @@ saveProductType(productType: ProductType) {
     })
   }
 
-
   getReducer() {
     this.reducer_list = Reducer.getAll(this.http)
   }
@@ -362,7 +336,6 @@ saveProductType(productType: ProductType) {
       }
     })
   }
-
 
   getReducerType() {
     this.reducerType_list = ReducerType.getAll(this.http)
@@ -390,7 +363,6 @@ saveProductType(productType: ProductType) {
     })
   }
 
-
   getReducerSize() {
     this.reducerSize_list = ReducerSize.getAll(this.http)
   }
@@ -416,7 +388,6 @@ saveProductType(productType: ProductType) {
       }
     })
   }
-
 
   getReducerOutputShaft() {
     this.reducerOutput_list = ReducerOutputShaftType.getAll(this.http)
@@ -444,7 +415,6 @@ saveProductType(productType: ProductType) {
     })
   }
 
-
   getReducerMounting() {
     this.reducerMounting_list = MountingPoint.getAll(this.http)
   }
@@ -470,8 +440,6 @@ saveProductType(productType: ProductType) {
       }
     })
   }
-
-
 
   getReducerInstallationType() {
     this.reducerInstallationType_list = ReducerInstallationType.getAll(this.http)
@@ -499,7 +467,6 @@ saveProductType(productType: ProductType) {
     })
   }
 
-
   getReducerInputType() {
     this.reducerInputType_list = ReducerInputType.getAll(this.http)
   }
@@ -525,7 +492,6 @@ saveProductType(productType: ProductType) {
       }
     })
   }
-
 
   getReducerAdapterType() {
     this.reducerAdapterType_list = ReducerAdapterType.getAll(this.http)
@@ -553,8 +519,6 @@ saveProductType(productType: ProductType) {
     })
   }
 
-
-
   getMotorList() {
     this.http.get('/api/v1/motor').subscribe({
       next: (data: any) => {
@@ -564,11 +528,11 @@ saveProductType(productType: ProductType) {
           motor.frequency.value = e["frequency"]
           motor.adapterType.id = e["motorAdapterTypeId"]
           motor.power = e["power"]
-          // motor.rpm.value = e["rpm"]
           motor.efficiency =  e["efficiency"]
           motor.ratedCurrent =  e["ratedCurrent"]
           motor.posTerminalBox =  e["posTerminalBox"]
           motor.momentOfInertia =  e["momentOfInertia"]
+          motor.cableExitSide =  e["cableExitSide"]
           motor.type.id = e["motorTypeId"]
           this.motor_list.push(motor)
         })
@@ -595,14 +559,14 @@ saveProductType(productType: ProductType) {
           product.imageChanged = e["imageChanged"]
           product.rpm = e["rpm"]
           product.torqueMoment = e["torqueMoment"]
-          product.optionsString = product.optionsIds.join(',')
+          product.serviceFactor = e["serviceFactor"]
+          product.optionsString = (product.optionsIds ?? []).join(',');
           this.product_list.push(product)
         })
       },
       error: error => { console.log(error); }
     });
   }
-
 
   getMotorTypeList() {
     this.http.get('/api/v1/motorType').subscribe({
@@ -632,7 +596,6 @@ saveProductType(productType: ProductType) {
       error: error => { console.log(error); }
     });
   }
-
 
   addManager(){
     var newManager = new Manager()
@@ -664,7 +627,6 @@ saveProductType(productType: ProductType) {
       }
     })
   }
-
 
   saveManager(manager: Manager){
     console.log(manager);

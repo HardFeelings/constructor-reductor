@@ -15,9 +15,18 @@
             <option *ngFor="let type of engineAdapterTypeByMotorTypeId" [value]="type.motorAdapterTypeValue">{{ type.motorAdapterTypeValue }}</option>
           </select>
         </div>
+      </div>
+      <div class="container_element_configurator">
         <div class="element_configurator">
           <span>Мощность</span>
           <input  min="0" [(ngModel)]="this.power"  type="number" />
+        </div>
+        <div class="element_configurator">
+          <span>Выход стороны кабеля</span>
+          <select (change)="cableExitSideSelected($event)">
+            <option value="" disabled selected>Select</option>
+            <option *ngFor="let value of cableExitSide" [value]="value">{{ value }}</option>
+          </select>
         </div>
         <div class="element_configurator">
           <span>КПД</span>
@@ -27,7 +36,7 @@
       <br />
       <div class="container_element_configurator">
         <div class="element_configurator">
-          <span>Текущий рейтинг</span>
+          <span>Номинальный ток</span>
           <input min="0" [(ngModel)]="this.ratedCurrent"  type="number" />
         </div>
         <div class="element_configurator">
@@ -35,28 +44,12 @@
           <input  min="0" [(ngModel)]="this.momentOfInertia"  type="number" />
         </div>
         <div class="element_configurator">
-          <!-- <span>Частота переменного тока Hz </span>
-          <select (change)="frequencySelected($event)">
-            <option value="" disabled selected>Select</option>
-            <option *ngFor="let value of frequencyArray" [value]="value">{{ value }}</option>
-          </select> -->
           <span>Положение клеммной коробки</span>
           <select (change)="posTerminalSelected($event)">
             <option value="" disabled selected>Select</option>
             <option *ngFor="let value of posTerminalBoxArray" [value]="value">{{ value }}</option>
           </select>
         </div>
-        <!-- <div class="element_configurator">
-          <span>Число оборотов об/мин </span>
-          <select (change)="rpmSelected($event)">
-            <option value="" disabled selected>Select</option>
-            <option *ngFor="let value of rpmArray" [value]="value">{{ value }}</option>
-          </select>
-        </div> -->
-        <!-- <div class="element_configurator">
-          <span>Частота</span>
-          <input [(ngModel)]="this.rpm"  type="number" />
-        </div> -->
         <div class="element_configurator">
           <span>Частота переменного тока Hz </span>
           <select (change)="frequencySelected($event)">
@@ -66,12 +59,6 @@
         </div>
       </div>
       <br />
-      <div *ngFor="let option of productOption" class="custom-checkbox">
-        <input type="checkbox" [id]="'checkbox_' + option.idProductOption" [value]="option.idProductOption" (change)="onCheckboxChange($event, option.idProductOption)">
-        <label [for]="'checkbox_' + option.idProductOption">{{ option.productOptionValue }}</label>
-      </div>
-
-      <br />
       <hr />
       <h1 class="configurator_header">Конфигурация продукта</h1>
     <div class="container_element_configurator">
@@ -79,10 +66,10 @@
         <span>Наименование</span>
         <input [(ngModel)]="this.name"  type="text" />
       </div>
-      <!-- <div class="element_configurator">
-        <span>Частота</span>
-        <input [(ngModel)]="this.rpm"  type="number" />
-      </div> -->
+      <div class="element_configurator">
+        <span>Коэффициент обслуживания</span>
+        <input min="0"  [(ngModel)]="this.serviceFactor"  type="number" />
+      </div>
       <div class="element_configurator">
         <span>Число оборотов об/мин </span>
         <select (change)="rpmSelected($event)">
@@ -104,6 +91,11 @@
         <span>Вес</span>
         <input  min="0" [(ngModel)]="this.weight"  type="number" />
       </div>
+    </div>
+    <br />
+    <div *ngFor="let option of productOption" class="custom-checkbox">
+      <input type="checkbox" [id]="'checkbox_' + option.idProductOption" [value]="option.idProductOption" (change)="onCheckboxChange($event, option.idProductOption)">
+      <label [for]="'checkbox_' + option.idProductOption">{{ option.productOptionValue }}</label>
     </div>
     <br />
     <hr />

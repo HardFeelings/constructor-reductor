@@ -3,7 +3,6 @@ export class Engine {
   id: number;
   power:number;
   frequency: number;
-  // rpm: number;
   efficiency:number;
   ratedCurrent:number;
   posTerminalBox:number;
@@ -12,20 +11,8 @@ export class Engine {
   // motorAdapterTypeId: EngineAdapterType;
   motorTypeId: number;
   motorAdapterTypeId: number;
+  cableExitSide:string;
 }
-
-// export class Engine2 {
-//   id: number;
-//   power:number;
-//   frequency: number;
-//   // rpm: number;
-//   efficiency:number;
-//   ratedCurrent:number;
-//   posTerminalBox:number;
-//   momentOfInertia:number;
-//   motorTypeId: number;
-//   motorAdapterTypeId: number;
-// }
 
 export class EngineType {
   idMotorType:number;

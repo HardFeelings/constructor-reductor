@@ -11,25 +11,14 @@ export class Product {
     price: number
     reducerId: number | null
     motorId: number | null
-    optionsIds: Array<number>
+    optionsIds: Array<number> | null;
     optionsString: string;
     imageEmpty!: boolean;
     imageString: string | null;
     imageChanged!: boolean;
     rpm!: number;
     torqueMoment!:number;
-
-    // constructor() {
-    //     this.id = 0
-    //     this.productTypeId = 0
-    //     this.name = ""
-    //     this.weight = 0
-    //     this.price = 0
-    //     this.reducerId = null
-    //     this.motorId = null
-    //     this.optionsIds = new Array<number>()
-    //     this.optionsString = ""
-    // }
+    serviceFactor!: number;
 
     ser(): any {
         return {
@@ -45,13 +34,10 @@ export class Product {
             imageChanged: this.imageChanged,
             rpm: this.rpm,
             torqueMoment: this.torqueMoment,
-            optionsIds: this.optionsString == "" ? new Array<number>() : this.optionsString.split(',').map(function (item) {
-                return parseInt(item, 10);
-            })
+            serviceFactor: this.serviceFactor,
+            optionsIds: this.optionsString?.split(',').map(item => parseInt(item, 10)) || []
         }
     }
-
-
 
     delete(http: HttpClient) : Observable<boolean>{
         console.log(this)
@@ -112,7 +98,6 @@ export class ProductType {
 }
 
 
-
 export class ProductOption {
     idProductOption: number
     productOptionValue: string
@@ -160,9 +145,6 @@ export class ProductOption {
     save(http: HttpClient): Observable<ProductOption> {
     return http.post<ProductOption>('/api/v1/security/productOption', this.ser())
     }
-
-
-
 
 }
 

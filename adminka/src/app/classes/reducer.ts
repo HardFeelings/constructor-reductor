@@ -19,17 +19,7 @@ export class Reducer {
     installationType: ReducerInstallationType
     reducerMountingId: Number
     mounting: MountingPoint
-
-    // torqueMoment: Number | null
     ratio: Number | null
-
-
-
-
-
-
-
-
 
     constructor() {
         this.type = new ReducerType()
@@ -49,7 +39,6 @@ export class Reducer {
         this.reducerAdapterTypeId = 0
         this.reducerInstallationTypeId = 0
         this.reducerMountingId = 0
-        // this.torqueMoment = null
         this.ratio = null
     }
 
@@ -66,7 +55,6 @@ export class Reducer {
             diameterInputShaft: this.diameterInputShaft,
             diameterOutputShaft: this.diameterOutputShaft,
             ratio: this.ratio,
-            // torqueMoment: this.torqueMoment
         }
     }
 
@@ -89,7 +77,6 @@ export class Reducer {
                         reducer.diameterInputShaft = e["diameterInputShaft"]
                         reducer.diameterOutputShaft = e["diameterOutputShaft"]
                         reducer.ratio = e["ratio"]
-                        // reducer.torqueMoment = e["torqueMoment"]
                         list.push(reducer)
                     })
                 },

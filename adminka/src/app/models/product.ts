@@ -17,6 +17,7 @@ export class Product {
   imageChanged!: boolean;
   rpm!: number;
   torqueMoment!:number;
+  serviceFactor!: number;
   // imageString:string | null;
 
 }

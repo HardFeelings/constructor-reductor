@@ -68,10 +68,6 @@ body {
 }
 
 
-// .buttons button {
-//     margin-right: 10px;
-// }
-
 .table-container {
     border: 1px solid #ccc;
     padding: 10px;
@@ -83,8 +79,6 @@ body {
     width: 100%;
     border-collapse: collapse;
 }
-
-
 
 .table th, .table td {
     border: 1px solid #ccc;
@@ -145,7 +139,6 @@ button:hover {
 }
 
 .row-buttonstt {
-  // display: flex;
   flex-direction: column;
 }
 

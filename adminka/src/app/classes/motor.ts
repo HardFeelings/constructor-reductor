@@ -12,15 +12,14 @@ export class Motor {
     ratedCurrent:number;
     posTerminalBox:number;
     momentOfInertia:number;
+    cableExitSide:string;
 
-    // constructor();
     constructor(http?: HttpClient, id?: number) {
         this.id = 0
         this.type = new MotorType()
         this.adapterType = new MotorAdapterType()
         this.power = null
         this.frequency = new MotorFrequency()
-        // this.rpm = new MotorRPM()
         if (http != undefined) {
             http.get(`/api/v1/motor/${id}`).subscribe({
                 next: (data: any) => {
@@ -34,6 +33,7 @@ export class Motor {
                         this.ratedCurrent =  e["ratedCurrent"]
                         this.posTerminalBox =  e["posTerminalBox"]
                         this.momentOfInertia =  e["momentOfInertia"]
+                        this.cableExitSide =  e["cableExitSide"]
                         this.type.id = e["motorTypeId"]
                     })
                 },
@@ -48,7 +48,6 @@ export class Motor {
             idMotor: this.id,
             power: this.power,
             frequency: this.frequency.value,
-            // rpm: this.rpm.value,
             efficiency:this.efficiency,
             ratedCurrent:this.ratedCurrent,
             posTerminalBox:this.posTerminalBox,

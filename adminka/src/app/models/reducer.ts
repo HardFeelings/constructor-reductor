@@ -10,16 +10,7 @@ export class Reducer {
     reducerOutputShaftTypeId: number;
     reducerInstallationTypeId: number;
     reducerMountingId: number;
-    // torqueMoment!: number;
     ratio!: number;
-
-    // mounting: MountingPoint;
-    // installationType: ReducerInstallationType;
-    // outputShaftType: ReducerOutputShaftType;
-    // adapterType: ReducerAdapterType;
-    // inputType: ReducerInputType;
-    // size: ReducerSize;
-    // type: ReducerType;
 }
 
 

@@ -1,5 +1,5 @@
-import { Filter } from 'src/app/models/filter';
-import { Component, Input } from '@angular/core';
+
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Reducer, ReducerAdapterType, ReducerInputType, ReducerInstallationType, ReducerMounting, ReducerOutputShaftType, ReducerSize, ReducerType } from 'src/app/models/reducer';
 import { ProductOption,Product } from 'src/app/models/product';
 import { ResponseInfo } from 'src/app/models/responesInfo';
@@ -15,9 +15,9 @@ import { ProductService } from 'src/app/services/product.service';
 })
 export class ReductorComponent {
   @Input() idProductType: number;
+  @Output() dynamicProduct = new EventEmitter<Product>();
   reducerType: ReducerType[];
   reducerTypeId: number;
-  filter: Filter = new Filter();
   productOption: ProductOption[];
   resucerSize: ReducerSize[];
   reducerMounting: ReducerMounting[];
@@ -26,23 +26,18 @@ export class ReductorComponent {
   reducerOutputShaftType: ReducerOutputShaftType[];
   reducerInstallationType: ReducerInstallationType[];
   options: number[] = [];
-  // foundProducts: Product[];
   rpmArray: number[]=[750, 1000, 1500, 3000];
-
   diamInput: number;
   diamInputAllowance:number;
   diamOutput: number;
   diamOutputAllowance: number;
   ratio: number;
-  // torqueMoment: number;
-
-
   name!: string;
   weight!: number;
   price!:number;
   rpm!:number;
   torqueMoment!:number;
-
+  serviceFactor!:number;
   newProduct!:Product;
   newReducer!:Reducer;
 
@@ -55,10 +50,7 @@ export class ReductorComponent {
     this.getAllReducerType();
     this.getAllReducerMounting();
     this.getByProductTypeOptionId(this.idProductType);
-    this.filter.productTypeId = this.idProductType;
   }
-
-
 
   getAllReducerType() {
     this.reducerService.getAllReducerTypes().subscribe((respones: ResponseInfo<ReducerType[]>) => {
@@ -79,10 +71,9 @@ export class ReductorComponent {
 
     if (selectedReducer) {
       this.reducerTypeId = selectedReducer.idReducerType;
-      // this.filter.idReducerType = selectedReducer.idReducerType;
+      this.newReducer.reducerTypeId = selectedReducer.idReducerType;
       console.log('ID выбранного типа редуктора:', this.reducerTypeId);
       this.getReducerSizeByReducerTypeId(this.reducerTypeId);
-
       this.getReducerInputByReducerTypeId(this.reducerTypeId);
       this.getReducerAdapterByReducerTypeId(this.reducerTypeId);
       this.getReducerOutputShaftTypeByReducerTypeId(this.reducerTypeId);
@@ -110,13 +101,12 @@ export class ReductorComponent {
     const selectedInput= this.reducerInputType.find(type => type.reducerInputTypeValue === selectedValue);
 
     if (selectedInput) {
-      this.filter.idReducerInputType = selectedInput.idReducerInputType;
+      this.newReducer.reducerInputTypeId = selectedInput.idReducerInputType;
       console.log('ID выбранного типа входа:', selectedInput.idReducerInputType);
     } else {
       console.error('Такого типа входа не найдено');
     }
   }
-
 
   getReducerAdapterByReducerTypeId(id:number) {
     this.reducerService.getReducerAdapterByReducerTypeId(id).subscribe((respones: ResponseInfo<ReducerAdapterType[]>)=>{
@@ -136,13 +126,12 @@ export class ReductorComponent {
     const selectedAdapter= this.reducerAdapterType.find(type => type.reducerAdapterTypeValue === selectedValue);
 
     if (selectedAdapter) {
-      this.filter.idReducerAdapterInputType = selectedAdapter.idReducerAdapterType;
+      this.newReducer.reducerAdapterTypeId = selectedAdapter.idReducerAdapterType;
       console.log('ID выбранного размера адаптера:', selectedAdapter.idReducerAdapterType);
     } else {
       console.error('Такого размера адаптера не найдено');
     }
   }
-
 
   getReducerOutputShaftTypeByReducerTypeId(id:number) {
     this.reducerService.getReducerOutputShaftTypeByReducerTypeId(id).subscribe((respones: ResponseInfo<ReducerOutputShaftType[]>)=>{
@@ -162,13 +151,12 @@ export class ReductorComponent {
     const selectedOutputShaft= this.reducerOutputShaftType.find(type => type.reducerOutputShaftTypeValue === selectedValue);
 
     if (selectedOutputShaft) {
-      this.filter.idReducerOutputShaftType = selectedOutputShaft.idReducerOutputShaftType;
+      this.newReducer.reducerOutputShaftTypeId = selectedOutputShaft.idReducerOutputShaftType;
       console.log('ID выбранноой формы выходного вала:', selectedOutputShaft.idReducerOutputShaftType);
     } else {
       console.error('Такой формы не найдено');
     }
   }
-
 
   getReducerInstallationByReducerTypeId(id:number) {
     this.reducerService.getReducerInstallationByReducerTypeId(id).subscribe((respones: ResponseInfo<ReducerInstallationType[]>)=>{
@@ -188,13 +176,12 @@ export class ReductorComponent {
     const selectedInstallation= this.reducerInstallationType.find(type => type.reducerInstallationTypeValue === selectedValue);
 
     if (selectedInstallation) {
-      this.filter.idReducerInstallationType = selectedInstallation.idReducerInstallationType;
+      this.newReducer.reducerInstallationTypeId = selectedInstallation.idReducerInstallationType;
       console.log('ID выбранного типа крепления:', selectedInstallation.idReducerInstallationType);
     } else {
       console.error('Такое крепление не найдено');
     }
   }
-
 
   getAllReducerMounting(){
     this.reducerService.getAllReducerMounting().subscribe((respones: ResponseInfo<ReducerMounting[]>) => {
@@ -214,7 +201,7 @@ export class ReductorComponent {
     const selectedMounting= this.reducerMounting.find(type => type.reducerMountingValue === selectedValue);
 
     if (selectedMounting) {
-      this.filter.idReducerMounting = selectedMounting.idReducerMounting;
+      this.newReducer.reducerMountingId = selectedMounting.idReducerMounting;
       console.log('ID выбранного монтажного положения:', selectedMounting.idReducerMounting);
     } else {
       console.error('Такое положение не найдено');
@@ -232,17 +219,6 @@ export class ReductorComponent {
     });
   }
 
-  getByProductTypeOptionId(id:number) {
-    this.productService.getByProductTypeOptionId(id).subscribe((respones: ResponseInfo<ProductOption[]>)=>{
-      if(respones.data !== null){
-        console.log("Data getByProductTypeOptionId reducer", respones.data);
-        this.productOption = respones.data;
-      } else {
-        alert(JSON.stringify(respones.errorMsg))
-      }
-    });
-  }
-
   idReducerSizeBSelected(event: Event) {
     const selectedElement = event.target as HTMLSelectElement;
     const selectedValue = selectedElement.value;
@@ -250,7 +226,7 @@ export class ReductorComponent {
     const selectedSize = this.resucerSize.find(type => type.reducerSizeValue === selectedValue);
 
     if (selectedSize) {
-      this.filter.idReducerSize = selectedSize.idReducerSize;
+      this.newReducer.reducerSizeId = selectedSize.idReducerSize;
       console.log('ID выбранного размера редуктора:', selectedSize.idReducerSize);
     } else {
       console.error('Такой размер не найден');
@@ -261,43 +237,62 @@ export class ReductorComponent {
     const target = event.target as HTMLInputElement;
     if (target.checked) {
       this.options.push(optionId);
-      this.filter.productOptions = this.options;
+      this.newProduct.optionsIds = this.options;
       console.log(`Checkbox with id ${optionId} is checked.`);
-      console.log(this.filter.productOptions);
+      console.log(this.newProduct.optionsIds);
     }
     else {
       const index = this.options.indexOf(optionId);
       if (index !== -1) {
         this.options.splice(index, 1);
-        this.filter.productOptions = this.options;
+        this.newProduct.optionsIds = this.options;
       }
       console.log(`Checkbox with id ${optionId} is unchecked.`);
-      console.log(this.filter.productOptions);
+      console.log(this.newProduct.optionsIds);
     }
   }
 
-  // searchProduct(filter: Filter){
-  //   filter.diamInput = this.diamInput;
-  //   filter.diamInputAllowance = this.diamInputAllowance;
-  //   filter.diamOutput = this.diamOutput;
-  //   filter.diamOutputAllowance = this.diamOutputAllowance;
-  //   filter.ratio = this.ratio;
-  //   filter.torqueMoment = this.torqueMoment;
-  //   console.log('filter', filter);
-  //   this.productService.postFilter(filter).subscribe((respones: ResponseInfo<Product[]>)=>{
-  //     if(respones.data !== null){
-  //       console.log("Data searchProduct", respones.data);
-  //       console.log("respones searchProduct", respones);
-  //       this.foundProducts = respones.data;
-  //     } else {
-  //       alert(JSON.stringify(respones.errorMsg))
-  //     }
-  //   });
-  // }
+  rpmSelected(event: Event) {
+    const selectedElement = event.target as HTMLSelectElement;
+    const selectedValue = selectedElement.value;
+    console.log('Выбранное значение rpm:', selectedValue);
+    const intselectedValue: number = parseInt(selectedValue, 10);
+    console.log('Выбранное значение int rpm:', selectedValue);
 
-  // downloadImage(id:number,filename: string){
-  //   this.productService.downloadImageById(id,filename);
-  // }
+    if (intselectedValue) {
+      this.newProduct.rpm = intselectedValue;
+    }
+  }
+
+  dynamicAddProduct(){
+    this.newReducer.ratio = this.ratio;
+    this.newReducer.diameterInputShaft = this.diamInput;
+    this.newReducer.diameterOutputShaft = this.diamOutput;
+
+    this.newProduct.productTypeId = this.idProductType;
+    this.newProduct.reducer = this.newReducer;
+
+    this.newProduct.name = this.name;
+    this.newProduct.weight = this.weight;
+    this.newProduct.torqueMoment = this.torqueMoment;
+    this.newProduct.price = this.price;
+    this.newProduct.serviceFactor = this.serviceFactor;
+
+    console.log('dynamicProduct', this.newProduct);
+
+    this.dynamicProduct.emit(this.newProduct);
+  }
+
+  getByProductTypeOptionId(id:number) {
+    this.productService.getByProductTypeOptionId(id).subscribe((respones: ResponseInfo<ProductOption[]>)=>{
+      if(respones.data !== null){
+        console.log("Data getByProductTypeOptionId reducer", respones.data);
+        this.productOption = respones.data;
+      } else {
+        alert(JSON.stringify(respones.errorMsg))
+      }
+    });
+  }
 
   onFileSelected(event: any) {
     const selectedFile = event.target.files[0];
@@ -320,18 +315,4 @@ export class ReductorComponent {
       reader.readAsDataURL(selectedFile);
     }
   }
-
-  rpmSelected(event: Event) {
-    const selectedElement = event.target as HTMLSelectElement;
-    const selectedValue = selectedElement.value;
-    console.log('Выбранное значение rpm:', selectedValue);
-    const intselectedValue: number = parseInt(selectedValue, 10);
-    console.log('Выбранное значение int rpm:', selectedValue);
-
-    if (intselectedValue) {
-      // this.filter.rpm = intselectedValue;
-      this.newProduct.rpm = intselectedValue;
-    }
-  }
-
 }
