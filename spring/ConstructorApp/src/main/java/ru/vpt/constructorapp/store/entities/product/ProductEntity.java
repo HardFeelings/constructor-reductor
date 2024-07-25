@@ -38,6 +38,9 @@ public class ProductEntity {
     @Column(name = "torque_moment")
     private Double torqueMoment;
 
+    @Column(name = "service_factor")
+    private Double serviceFactor;
+
     @ManyToOne
     @JoinColumn(name = "id_reducer")
     private ReducerEntity reducer;

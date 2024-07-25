@@ -25,6 +25,7 @@ public class ProductDto {
     private Double rpm;
     private Double torqueMoment;
     private Long reducerId;
+    private Double serviceFactor;
     private ReducerDto reducer;
     private Long motorId;
     private MotorDto motor;
