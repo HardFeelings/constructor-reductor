@@ -25,6 +25,7 @@ public interface MotorRepo extends CrudRepository<MotorEntity,Long>{
             "  and case when :moment_of_inertia is null then m.moment_of_inertia is null else m.moment_of_inertia = :moment_of_inertia end\n" +
             "  and case when :pos_terminal_box is null then m.pos_terminal_box is null else m.pos_terminal_box = :pos_terminal_box end\n" +
             "  and case when :power is null then m.power is null else m.power = :power end\n" +
+            "  and case when :cable_exit_side is null then m.cable_exit_side is null else m.cable_exit_side = :cable_exit_side end\n" +
             "    and case when :rated_current is null then m.rated_current is null else m.rated_current = :rated_current end;", nativeQuery = true)
     List<MotorEntity> findByAllParameters(
             @Param("id_motor_adapter_type") Long idMotorAdapterType,
@@ -33,6 +34,7 @@ public interface MotorRepo extends CrudRepository<MotorEntity,Long>{
             @Param("frequency") Double frequency,
             @Param("moment_of_inertia") Double momentOfInertia,
             @Param("pos_terminal_box") Double posTerminalBox,
+            @Param("cable_exit_side") String cableExitSide,
             @Param("power") Double power,
             @Param("rated_current") Double ratedCurrent);
 }

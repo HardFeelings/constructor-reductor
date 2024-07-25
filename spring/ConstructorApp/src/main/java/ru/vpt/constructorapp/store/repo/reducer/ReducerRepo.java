@@ -50,5 +50,5 @@ public interface ReducerRepo extends CrudRepository<ReducerEntity, Long> {
             @Param("id_reducer_mounting") Long idReducerMounting,
             @Param("id_reducer_output_shaft_type") Long idReducerOutputShaftType,
             @Param("id_reducer_size") Long idReducerSize,
-            @Param("id_reducer_type") Long idReducerRype);
+            @Param("id_reducer_type") Long idReducerType);
 }

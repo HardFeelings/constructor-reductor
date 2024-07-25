@@ -108,6 +108,8 @@ public class ProductServiceImpl implements ProductService {
             throw new BadRequestException("Невозможно сохранить продукт: dto равен null", 400);
         }
         ProductEntity productEntity = productMapper.toEntity(productDto);
+        productEntity.setProductType(productTypeService.findById(productDto.getProductTypeId())
+                .orElseThrow(() -> new NotFoundException("Невозможно сохранить продукт: не найден тип продукта с id: " + productDto.getProductTypeId(), 404)));
         if (productDto.getMotor() != null) {
             List<MotorEntity> motorEntities = motorService.findByFilter(productDto.getMotor());
             if (motorEntities.isEmpty()) {

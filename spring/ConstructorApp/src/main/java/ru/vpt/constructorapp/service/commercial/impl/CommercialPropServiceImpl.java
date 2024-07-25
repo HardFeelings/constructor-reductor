@@ -1,6 +1,7 @@
 package ru.vpt.constructorapp.service.commercial.impl;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Service;
 import ru.vpt.constructorapp.api.commercial.item.dto.CommercialPropItemDto;
 import ru.vpt.constructorapp.api.commercial.prop.dto.CommercialPropDto;
@@ -13,7 +14,10 @@ import ru.vpt.constructorapp.store.entities.commercial.CommercialPropEntity;
 import ru.vpt.constructorapp.store.entities.commercial.CommercialPropItemEntity;
 import ru.vpt.constructorapp.store.repo.commercial.CommercialPropRepo;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -49,6 +53,7 @@ public class CommercialPropServiceImpl implements CommercialPropService {
             throw new BadRequestException("Невозможно сохранить опции продукта: dto равен null", 400);
         }
         CommercialPropEntity entity = mapper.toEntity(dto);
+        entity.setTimestamp(dto.getTimestamp() == null ? LocalDateTime.now(): LocalDateTime.parse(dto.getTimestamp(), DateTimeFormatter.ofPattern("dd/MM/yyyy")));
         CommercialPropDto savedDto = mapper.toDTO(repo.save(entity));
         List<CommercialPropItemDto> commercialPropItemDtos = dto.getCommercialPropItems().stream()
                 .map(item -> itemService.save(item, savedDto.getIdCommercialProp())).toList();

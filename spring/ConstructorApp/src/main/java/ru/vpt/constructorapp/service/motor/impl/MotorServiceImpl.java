@@ -39,22 +39,10 @@ public class MotorServiceImpl implements MotorService {
 
     @Override
     public MotorDto saveMotor(MotorDto motorDto) {
-        if (Objects.isNull(motorDto)) {
-            throw new BadRequestException("Невозможно сохранить мотор: dto равен null", 400);
-        }
-        MotorTypeEntity motorTypeEntity = motorTypeService.findById(motorDto.getMotorTypeId());
-        MotorEntity entity = motorMapper.toEntity(motorDto);
-        if (Objects.isNull(motorTypeEntity)) {
-            throw new NotFoundException("Невозможно сохранить мотор: не найден тип мотора", 404);
-        }
-        entity.setMotorAdapterType(null);
-        if(motorDto.getMotorAdapterTypeId() != null){
-            MotorAdapterTypeEntity motorAdapterTypeEntity = motorAdapterTypeService.findById(motorDto.getMotorAdapterTypeId());
-            entity.setMotorAdapterType(motorAdapterTypeEntity);
-        }
-        entity.setMotorType(motorTypeEntity);
-        return motorMapper.toDTO(motorRepo.save(entity));
+        return motorMapper.toDTO(saveMotorEntity(motorDto));
     }
+
+
 
     @Override
     public MotorEntity saveMotorEntity(MotorDto motorDto) {
@@ -91,7 +79,7 @@ public class MotorServiceImpl implements MotorService {
     public List<MotorEntity> findByFilter(MotorDto motorDto) {
         return motorRepo.findByAllParameters(motorDto.getMotorAdapterTypeId(), motorDto.getMotorTypeId(),
                 motorDto.getEfficiency(), motorDto.getFrequency(),
-                motorDto.getMomentOfInertia(), motorDto.getPosTerminalBox(),
+                motorDto.getMomentOfInertia(), motorDto.getPosTerminalBox(), motorDto.getCableExitSide(),
                 motorDto.getPower(), motorDto.getRatedCurrent());
     }
 

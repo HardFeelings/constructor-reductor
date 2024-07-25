@@ -19,6 +19,7 @@ public class MotorDto {
     private Double ratedCurrent;
     private Double posTerminalBox;
     private Double momentOfInertia;
+    private String cableExitSide;
     private Long motorTypeId;
     private Long motorAdapterTypeId;
 }

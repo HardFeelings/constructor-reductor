@@ -1,14 +1,15 @@
 package ru.vpt.constructorapp.store.entities.commercial;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Setter
@@ -28,12 +29,17 @@ public class CommercialPropEntity {
     @Column(name = "partner")
     private String partner;
 
+    @Column(name = "margin_ratio")
+    private Double marginRatio;
+
     @Column(name = "cost")
     private BigDecimal cost;
 
     @Column(name = "timestamp")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date timestamp;
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    @Getter(AccessLevel.NONE)
+    private LocalDateTime timestamp;
 
     @ManyToOne
     @JoinColumn(name = "id_manager")
@@ -43,4 +49,10 @@ public class CommercialPropEntity {
     @JoinColumn(name = "id_commercial_prop")
     private List<CommercialPropItemEntity> commercialPropItems;
 
+    public String getTimestamp() {
+        if(Objects.isNull(timestamp)){
+            return null;
+        }
+        return timestamp.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+    }
 }
