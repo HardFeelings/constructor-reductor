@@ -46,8 +46,6 @@ export class ReductorComponent {
     this.filter.productTypeId = this.idProductType;
   }
 
-
-
   getAllReducerType() {
     this.reducerService.getAllReducerTypes().subscribe((respones: ResponseInfo<ReducerType[]>) => {
       if(respones.data !== null){

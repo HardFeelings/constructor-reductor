@@ -6,122 +6,88 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Product Configurator</title>
   <link rel="stylesheet" href="search-page.component.css">
-
 </head>
 
 <body>
 
-  <main class="">
+  <main class="containedata">
 
-      <table>
+    <div class="container">
+      <div class="container_element_configurator">
+        <div class="element_configurator">
+          <span>Number</span>
+          <input type="text" [(ngModel)]="commercialProp.number">
+        </div>
+        <div class="element_configurator">
+          <span>Partner</span>
+          <input type="text" [(ngModel)]="commercialProp.partner">
+        </div>
+        <div class="element_configurator">
+          <span>Margin Ratio</span>
+          <input min="1" type="number" [(ngModel)]="commercialProp.marginRatio">
+        </div>
+        <div class="element_configurator">
+          <span>Manager</span>
+          <select (change)="idManagerSelected($event)" [ngModel]="commercialProp.manager?.shortName">
+            <option value="" disabled>Select</option>
+            <option *ngFor="let manager of managers_list" [value]="manager.shortName">{{ manager.shortName }}</option>
+          </select>
+        </div>
+      </div>
+
+      <table *ngIf="commercialProp != null && commercialProp != undefined">
         <tbody>
-          <tr>
-            <td><input type="text" [(ngModel)]="commercialProp.number"></td>
-            <td><input type="text" [(ngModel)]="commercialProp.partner"></td>
-            <td><input type="text" [(ngModel)]="commercialProp.cost"></td>
-            <td>
-              <select (change)="idManagerSelected($event)" [ngModel]="commercialProp.manager?.shortName">
-                <option value="" disabled >Select</option>
-                <option *ngFor="let manager of managers_list" [value]="manager.shortName">{{ manager.shortName }}</option>
-              </select>
+          <tr *ngFor="let commercialItem of commercialProp.commercialPropItems">
+            <td>{{ commercialItem.product.idProduct }}</td>
+            <td>{{ commercialItem.product.name }}</td>
+            <td>{{ commercialItem.product.price || '0' }}</td>
+            <td>{{ commercialItem.product.weight || '0' }}</td>
+            <td><input type="number" min="1" [(ngModel)]="commercialItem.amount"></td>
+            <td><button *ngIf="commercialItem.idCommercialPropItem !== undefined" (click)="deleteSelectProduct(commercialItem.idCommercialPropItem)">Удалить</button>
+            <div *ngIf="commercialItem.idCommercialPropItem == undefined" >Нужно сохранение</div>
             </td>
           </tr>
         </tbody>
       </table>
 
-      <table *ngIf="commercialProp != null && commercialProp != undefined">
-        <tbody>
-            <tr *ngFor="let commercialItem of commercialProp.commercialPropItems">
-              <td>{{ commercialItem.product.idProduct }}</td>
-              <td>{{ commercialItem.product.name }}</td>
-              <td>{{ commercialItem.product.price }}</td>
-              <td *ngIf="commercialItem.product.price == null">0</td>
-              <td>{{ commercialItem.product.weight }}</td>
-              <td *ngIf="commercialItem.product.weight == null">0</td>
-              <td><input type="number" min="1"  [(ngModel)]="commercialItem.amount"></td>
-              <td><button (click)="deleteSelectProduct(commercialItem.idCommercialPropItem)">Del</button></td>
+      <button *ngIf="!this.callSearch" class="plusbt" (click)="openSearch()">+</button>
+      <button *ngIf="this.callSearch" class="plusbt" (click)="close()">-</button>
 
-              <!-- <div *ngIf="commercialItem.product.motorId == null && commercialItem.product.reducerId !== null ">
-                <td>{{ commercialItem.product.idProduct }}</td>
-                <td>{{ commercialItem.product.name }}</td>
-                <td>{{ commercialItem.product.reducer.ratio }}</td>
-                <td *ngIf="commercialItem.product.reducer.ratio == null">0</td>
-                <td>{{ commercialItem.product.reducer.diameterInputShaft }}</td>
-                <td *ngIf="commercialItem.product.reducer.diameterInputShaft == null">0</td>
-                <td>{{ commercialItem.product.reducer.diameterOutputShaft }}</td>
-                <td *ngIf="commercialItem.product.reducer.diameterOutputShaft == null">0</td>
-                <td>{{ commercialItem.product.reducer.torqueMoment }}</td>
-                <td *ngIf="commercialItem.product.reducer.torqueMoment == null">0</td>
-                <td>{{ commercialItem.product.weight }}</td>
-                <td *ngIf="commercialItem.product.weight== null">0</td>
-              </div>
-              <div *ngIf="commercialItem.product.motorId !== null && commercialItem.product.reducerId == null ">
-                <td>{{ commercialItem.product.idProduct }}</td>
-                <td>{{ commercialItem.product.name }}</td>
-                <td>{{ commercialItem.product.motor.power }}</td>
-                <td *ngIf="commercialItem.product.motor.power== null">0</td>
-                <td>{{ commercialItem.product.motor.rpm }}</td>
-                <td *ngIf="commercialItem.product.motor.rpm== null">0</td>
-                <td>{{ commercialItem.product.motor.frequency }}</td>
-                <td *ngIf="commercialItem.product.motor.frequency== null">0</td>
-                <td>{{ commercialItem.product.weight }}</td>
-                <td *ngIf="commercialItem.product.weight== null">0</td>
-              </div>
-              <div *ngIf="commercialItem.product.motorId !== null && commercialItem.product.reducerId !== null ">
-                <td>{{ commercialItem.product.idProduct }}</td>
-                <td>{{ commercialItem.product.name }}</td>
-                <td>{{ commercialItem.product.motor.power }}</td>
-                <td *ngIf="commercialItem.product.motor.power == null">0</td>
-                <td>{{ commercialItem.product.motor.frequency }}</td>
-                <td *ngIf="commercialItem.product.motor.frequency == null">0</td>
-                <td>{{ commercialItem.product.motor.rpm }}</td>
-                <td *ngIf="commercialItem.product.motor.rpm == null">0</td>
-                <td>{{ commercialItem.product.reducer.ratio }}</td>
-                <td *ngIf="commercialItem.product.reducer.ratio  == null">0</td>
-                <td>{{ commercialItem.product.reducer.torqueMoment }}</td>
-                <td *ngIf="commercialItem.product.reducer.torqueMoment  == null">0</td>
-                <td>{{ commercialItem.product.reducer.diameterOutputShaft }}</td>
-                <td *ngIf="commercialItem.product.reducer.diameterOutputShaft  == null">0</td>
-                <td>{{ commercialItem.product.weight }}</td>
-                <td *ngIf="commercialItem.product.weight  == null">0</td>
-              </div> -->
-            </tr>
-        </tbody>
-        <button *ngIf="!this.callSearch" (click)="openSearch()">+</button>
-      </table>
+      <div *ngIf="this.callSearch" class="containermain">
+        <div class="product">
+          <!-- <h1>Product</h1> -->
+          <!-- <div class="close-button" (click)="close()">&times;</div> -->
+          <div class="product_block">
+            <button [ngClass]="{ 'product_choise': true, 'active': selectedButton == productType.idProductType}"
+                    *ngFor="let productType of productTypes"
+                    (click)="pickProduct(productType.productTypeValue, productType.idProductType)">
+              {{ productType.productTypeValue }}
+            </button>
+          </div>
+        </div>
 
+        <div class="configurator" *ngIf="product_selected == product_enum.Motor">
+          <app-engine (selectedProduct)="childSelectedProduct($event)" [idProductType]="idProductType"></app-engine>
+        </div>
 
-  <div *ngIf="this.callSearch">
-    <div class="product">
-      <h1>Продукты</h1>
-      <div class="product_block">
-        <button  [ngClass]="{ 'product_choise': true, 'active': selectedButton == productType.idProductType}" *ngFor="let productType of productTypes" (click)="pickProduct(productType.productTypeValue, productType.idProductType)">
-          {{ productType.productTypeValue }}
-        </button>
-    </div>
-  </div>
+        <div class="configurator" *ngIf="product_selected == product_enum.Reducer">
+          <app-reductor (selectedProduct)="childSelectedProduct($event)" [idProductType]="idProductType"></app-reductor>
+        </div>
 
-    <div class="configurator" *ngIf="product_selected == product_enum.Motor">
-      <app-engine (selectedProduct)="childSelectedProduct($event)" [idProductType]="idProductType" ></app-engine>
+        <div class="configurator" *ngIf="product_selected == product_enum.MotorReducer">
+          <app-engine-reductor (selectedProduct)="childSelectedProduct($event)" [idProductType]="idProductType"></app-engine-reductor>
+        </div>
+      </div>
+
+      <div class="button-container">
+        <button (click)="goToBackCommercialPageCansel()">Отмена</button>
+        <button (click)="goToBackCommercialPageOk()">Сохранить</button>
+      </div>
 
     </div>
 
-
-
-
-    <div class="configurator" *ngIf="product_selected == product_enum.Reducer">
-      <app-reductor (selectedProduct)="childSelectedProduct($event)" [idProductType]="idProductType"></app-reductor>
-    </div>
-
-
-    <div class="configurator" *ngIf="product_selected == product_enum.MotorReducer">
-      <app-engine-reductor (selectedProduct)="childSelectedProduct($event)" [idProductType]="idProductType"></app-engine-reductor>
-    </div>
-
-    <!-- <button *ngIf="product_selected != null" (click)="search()">Найти</button> -->
-  </div>
-    <button (click)="goToBackCommercialPageCansel()">Отмена</button>
-    <button (click)="goToBackCommercialPageOk()">Сохранить</button>
   </main>
 
 </body>
+
+</html>

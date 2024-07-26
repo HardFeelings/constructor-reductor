@@ -1,111 +1,79 @@
-.container {
-  flex: 1;
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
 }
 
-.number {
-  margin-left: 20px;
-}
-
-select {
-  margin-left: 20px;
-}
-
-.product {
-  text-align: center;
-  padding: 10px;
-  border: 1px solid;
-  border-radius: 10px;
-
-}
-
-.product_block {
-  display: flex;
-}
-
-.product_choise {
-  width: auto;
-  margin: 10px;
-  height: 40pt;
-  background: none;
-
-  transition: border 0.1s ease, box-shadow 0.1s ease;
-  border: 1px solid;
-  border-radius: 10px;
-  cursor: pointer;
-}
-
-.product_choise:hover {
-  box-shadow: 3px 5px 5px #333;
-}
-
-.product_choise.selected_product {
-  transition: background-color 0.4s, box-shadow 0.5s;
-  background-color: #083b57;
-  box-shadow: 2px 3px 3px #202020;
-}
-
-.product_choise.selected_product:hover {
-  background-color: #0c547a;;
-  color: #ffffff;
-}
-
-.configurator {
+.containedata {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  padding: 20px;
+  box-sizing: border-box;
 }
-.configurator_header {
-  display: flex;
-  justify-content: center;
-}
+
 .container_element_configurator {
   display: flex;
-  justify-content: center;
-  gap: 8%;
-  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
 }
 
 .element_configurator {
   display: flex;
   flex-direction: column;
-  align-items: baseline;
-  margin: 1% 0;
+  align-items: center;
+  flex: 1;
+  margin: 0 10px;
+
+  span {
+    font-weight: bold;
+  }
+
+  input,
+  select {
+    width: 100%;
+    margin-top: 5px;
+  }
 }
 
-.element_configurator select,
-.element_configurator input {
-  width: 30vh;
-  margin: 3% 0;
-  padding: 2% 0;
+table {
+  width: 100%;
+  border-collapse: collapse;
+
+  th, td {
+    padding: 10px;
+    border: 1px solid #ccc;
+    text-align: center;
+  }
 }
 
-select, input[type="number"] {
-  font-family: 'Roboto';
-  font-weight: 500;
-  padding: 10px;
-  margin-top: 5px;
-  margin-bottom: 15px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  transition: border-color 0.3s ease;
+button {
+  margin-top: 10px;
+  cursor: pointer;
 }
 
-.rate_element_configurator {
- display: flex;
- align-items: flex-end;
- gap: 5%;
+#callSearch {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
 }
 
-.rate_header{
-  padding-bottom: 100%;
+.close-button {
+  align-self: flex-end;
+  font-size: 75px;
+  color: #083b57;
+  cursor: pointer;
+
+  &:hover {
+    color: #fcb331;
+  }
 }
 
-br {
-  display: none;
-}
+.button-container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
 
-span {
-  font-weight: bold;
-  color: black;
-  font-size: 14px;
+  button {
+    width: 48%;
+  }
 }

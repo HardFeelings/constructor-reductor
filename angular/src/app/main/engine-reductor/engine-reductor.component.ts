@@ -36,7 +36,6 @@ export class EngineReductorComponent {
   constructor(private reducerService: ReducerService, private productService: ProductService, private motorService: MotorService){
   }
 
-
   ngOnInit() {
     this.getAllMotorType();
     this.getAllReducerType();

@@ -25,9 +25,9 @@ export class CommercialPageComponent {
 
   goToSearchPage(id:number | null){
     const dialogAddingNewStudent = this.dialog.open(SearchPageComponent, {
-      width: '1500px',
-      height: '800px',
-      data: id
+      width: '2000px',
+      height: '1500px',
+      data: id,
     });
     dialogAddingNewStudent.afterClosed().subscribe((commercialProp: CommercialProp) => {
       if(commercialProp  !== null && commercialProp  !== undefined) {
@@ -61,6 +61,10 @@ export class CommercialPageComponent {
         alert(JSON.stringify(respones.errorMsg))
       }
     });
+  }
+
+  downloadExcel(id:number){
+    this.commercialService.downloadExcelById(id);
   }
 
   // goToSearchPage(id:number | null){

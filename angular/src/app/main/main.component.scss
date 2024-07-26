@@ -15,7 +15,6 @@ select {
   padding: 10px;
   border: 1px solid;
   border-radius: 10px;
-
 }
 
 .product_block {
@@ -27,7 +26,6 @@ select {
   margin: 10px;
   height: 40pt;
   background: none;
-
   transition: border 0.1s ease, box-shadow 0.1s ease;
   border: 1px solid;
   border-radius: 10px;
@@ -45,7 +43,7 @@ select {
 }
 
 .product_choise.selected_product:hover {
-  background-color: #0c547a;;
+  background-color: #0c547a;
   color: #ffffff;
 }
 
@@ -54,14 +52,16 @@ select {
   flex-direction: column;
   justify-content: center;
 }
+
 .configurator_header {
   display: flex;
   justify-content: center;
 }
+
 .container_element_configurator {
   display: flex;
   justify-content: center;
-  gap: 8%; /* Spacing between elements */
+  gap: 8%;
   align-items: center;
 }
 
@@ -79,7 +79,8 @@ select {
   padding: 2% 0;
 }
 
-select, input[type="number"] {
+select,
+input[type="number"] {
   font-family: 'Roboto';
   font-weight: 500;
   padding: 10px;
@@ -91,17 +92,17 @@ select, input[type="number"] {
 }
 
 .rate_element_configurator {
- display: flex;
- align-items: flex-end;
- gap: 5%;
+  display: flex;
+  align-items: flex-end;
+  gap: 5%;
 }
 
-.rate_header{
+.rate_header {
   padding-bottom: 100%;
 }
 
 br {
-  display: none; /* Remove the line breaks for better layout */
+  display: none;
 }
 
 span {

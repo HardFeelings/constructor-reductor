@@ -24,11 +24,6 @@
       <br />
       <div class="container_element_configurator">
         <div class="element_configurator">
-          <!-- <span>Частота переменного тока Hz </span>
-          <select (change)="frequencySelected($event)">
-            <option value="" disabled selected>Select</option>
-            <option *ngFor="let value of frequencyArray" [value]="value">{{ value }}</option>
-          </select> -->
           <span>Положение клеммной коробки</span>
           <select (change)="frequencySelected($event)">
             <option value="" disabled selected>Select</option>
@@ -54,7 +49,6 @@
 <br />
 <hr />
 <table class="table" *ngIf="foundProducts !== null || foundProducts !== []">
-  <!-- *ngIf="foundProducts !== null && foundProducts.length > 0" -->
   <thead *ngIf="foundProducts && foundProducts.length > 0">
     <tr>
         <th>id</th>

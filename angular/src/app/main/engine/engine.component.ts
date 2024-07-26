@@ -18,7 +18,6 @@ export class EngineComponent {
   // frequencyArray: number[]=[50,60];
   posTerminalBoxArray: number[]=[90,180,270,360];
   rpmArray: number[]=[750, 1000, 1500, 3000];
-
   @Input() idProductType: number;
   motorTypeId: number;
   power!: number;
@@ -100,19 +99,6 @@ export class EngineComponent {
       console.error('Такой фланц двигателя не найден');
     }
   }
-
-  // frequencySelected(event: Event) {
-  //   const selectedElement = event.target as HTMLSelectElement;
-  //   const selectedValue = selectedElement.value;
-  //   console.log('Выбранное значение frequency:', selectedValue);
-  //   const intselectedValue: number = parseInt(selectedValue, 10);
-  //   console.log('Выбранное значение int frequency:', selectedValue);
-
-  //   if (intselectedValue) {
-  //     this.filter.frequency = intselectedValue;
-  //   }
-  // }
-
 
   frequencySelected(event: Event) {
     const selectedElement = event.target as HTMLSelectElement;

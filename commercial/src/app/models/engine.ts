@@ -3,7 +3,6 @@ export class Engine {
   id: number;
   power:number;
   frequency: number;
-  // rpm: number;
   efficiency:number;
   ratedCurrent:number;
   posTerminalBox:number;

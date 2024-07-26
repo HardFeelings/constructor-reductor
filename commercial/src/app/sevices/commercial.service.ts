@@ -10,6 +10,8 @@ import { CommercialProp } from '../models/commercialProp';
 })
 export class CommercialService extends ABaseServiceService{
   private  commercialUrl = 'security/commercialProp';
+  private  excelUrl = 'security/commercialProp/report';
+
 
 
   constructor(http: HttpClient) {
@@ -31,5 +33,29 @@ export class CommercialService extends ABaseServiceService{
   saveCommercialProp(commercialProp: CommercialProp): Observable<ResponseInfo<CommercialProp>>  {
     return this.post<ResponseInfo<CommercialProp>> (`${this.commercialUrl}`, commercialProp);
   }
+
+
+  downloadBlob(blob: Blob, filename: string): void {
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    window.URL.revokeObjectURL(url);
+    document.body.removeChild(a);
+  }
+
+
+  downloadExcelById(id: number): void {
+    this.http.get(`${this.endpoint}/${this.excelUrl}/${id}`, { responseType: 'blob' }).subscribe(
+      (blob: Blob) => {
+        this.downloadBlob(blob, `${id}.xlsx`);
+      },
+      (error) => {
+        console.error('Error downloading the Excel file:', error);
+      }
+    );
+}
 
 }

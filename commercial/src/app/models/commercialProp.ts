@@ -6,7 +6,8 @@ export class CommercialProp {
   number: string;
   partner: string;
   cost: bigint;
-  timestamp: Date;
+  timestamp: string | null;
+  marginRatio:number;
   manager: Manager | null;
   commercialPropItems: CommercialPropItem[];
 }

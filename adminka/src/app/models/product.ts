@@ -18,8 +18,6 @@ export class Product {
   rpm!: number;
   torqueMoment!:number;
   serviceFactor!: number;
-  // imageString:string | null;
-
 }
 
 export class ProductType{

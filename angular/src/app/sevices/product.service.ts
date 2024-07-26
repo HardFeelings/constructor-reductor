@@ -59,20 +59,7 @@ export class ProductService extends ABaseServiceService{
   }
 
 ///////////// Image /////////////
-  // getImageById(id:number): Observable<Blob> {
-  //   return this.getwp<Blob>(`${this.imageUrl}/${id}`);
-  // }
 
-  // public getImageById(id: number): void {
-  //   this.http.get(`${this.endpoint}/${this.imageUrl}/${id}`).subscribe(
-  //     () => {
-  //       console.log('Request sent successfully');
-  //     },
-  //     (error) => {
-  //       console.error('Error sending the request:', error);
-  //     }
-  //   );
-  // }
    downloadImageById(id: number, filename: string): void {
     this.http.get(`${this.endpoint}/${this.imageUrl}/${id}`, { responseType: 'blob' }).subscribe(
       (blob: Blob) => {

@@ -2,15 +2,10 @@
 
 body {
     font-family: 'Roboto';
-    /*Костыль, нужно разобраьтся с позиционированием*/
-    /*background-color: #f0f0f0;*/
     color: #000000;
     margin: 0;
     padding: 0;
 }
-
-
-
 
 .product {
     margin-bottom: 20px;
@@ -33,22 +28,22 @@ body {
     transition: background-color 0.3s ease;
     width: 150px;
     height: 50px;
-    display: flex;             /* Используем flexbox */
-    align-items: center;      /* Центрируем по вертикали */
-    justify-content: center;   /* Центрируем по горизонтали */
+    display: flex;
+    align-items: center;
+    justify-content: center;
     text-align: center;
 }
 
 .active {
-  background-color: #083b57;
+    background-color: #083b57;
 }
-
 
 .product_choise:hover {
     background-color: #083b57;
 }
 
-select:focus, input[type="number"]:focus {
+select:focus,
+input[type="number"]:focus {
     border-color: #083b57;
     outline: none;
 }
@@ -59,20 +54,20 @@ select:focus, input[type="number"]:focus {
 }
 
 .select {
-  background-color: #083b57;
-  color: #ffffff;
-  outline: none;
+    background-color: #083b57;
+    color: #ffffff;
+    outline: none;
 }
+
 .noselect {
-  background-color: #fcb331;
-  color: #ffffff;
+    background-color: #fcb331;
+    color: #ffffff;
 }
 
 button {
     width: 100px;
-    height:50px;
+    height: 50px;
     background-color: #083b57;
-    /* #FCB331; */
     color: #ffffff;
     border: none;
     padding: 10px 20px;
@@ -92,6 +87,3 @@ hr {
     background: #ccc;
     margin: 20px 0;
 }
-
-
-

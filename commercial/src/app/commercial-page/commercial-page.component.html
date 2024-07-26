@@ -14,6 +14,7 @@
         <th>shortName</th>
         <th>partner</th>
         <th>cost</th>
+        <th>marginRatio</th>
         <th>timestamp</th>
         <th></th>
     </tr>
@@ -25,6 +26,7 @@
       <td>{{commercial.manager?.shortName}}</td>
       <td>{{commercial.partner}}</td>
       <td>{{commercial.cost}}</td>
+      <td>{{commercial.marginRatio}}</td>
       <td>{{commercial.timestamp}}</td>
       <!-- <td>{{ commercial.manager.fullName}}</td>
       <td>{{ commercial.manager.position}}</td>
@@ -33,7 +35,7 @@
       <td class="row-buttons">
         <button (click)="goToSearchPage(commercial.idCommercialProp)">Изменить</button>
         <button (click)="deleteCommercial(commercial.idCommercialProp)">Удалить</button>
-        <button>Excel</button>
+        <button (click)="downloadExcel(commercial.idCommercialProp)" >Excel</button>
       </td>
     </tr>
   </tbody>

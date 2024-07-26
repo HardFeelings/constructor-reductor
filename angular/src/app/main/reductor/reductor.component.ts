@@ -26,7 +26,6 @@ export class ReductorComponent {
   reducerInstallationType: ReducerInstallationType[];
   options: number[] = [];
   foundProducts: Product[];
-
   diamInput: number;
   diamInputAllowance:number;
   diamOutput: number;
@@ -43,8 +42,6 @@ export class ReductorComponent {
     this.getByProductTypeOptionId(this.idProductType);
     this.filter.productTypeId = this.idProductType;
   }
-
-
 
   getAllReducerType() {
     this.reducerService.getAllReducerTypes().subscribe((respones: ResponseInfo<ReducerType[]>) => {
@@ -103,7 +100,6 @@ export class ReductorComponent {
     }
   }
 
-
   getReducerAdapterByReducerTypeId(id:number) {
     this.reducerService.getReducerAdapterByReducerTypeId(id).subscribe((respones: ResponseInfo<ReducerAdapterType[]>)=>{
       if(respones.data !== null){
@@ -155,7 +151,6 @@ export class ReductorComponent {
     }
   }
 
-
   getReducerInstallationByReducerTypeId(id:number) {
     this.reducerService.getReducerInstallationByReducerTypeId(id).subscribe((respones: ResponseInfo<ReducerInstallationType[]>)=>{
       if(respones.data !== null){
@@ -180,7 +175,6 @@ export class ReductorComponent {
       console.error('Такое крепление не найдено');
     }
   }
-
 
   getAllReducerMounting(){
     this.reducerService.getAllReducerMounting().subscribe((respones: ResponseInfo<ReducerMounting[]>) => {

@@ -22,17 +22,13 @@ export class SearchPageComponent {
   product_enum = enProduct;
   productTypes: ProductType[];
   idProductType: number;
-
   idCommercialProp:number | null;
   commercialProp: CommercialProp;
   callSearch: boolean = false;
   managers_list: Manager[];
-
   selectedButton: number | null = null;
 
   constructor(private productService: ProductService,
-    private dataService: DataService,
-    private  router: Router,
     private commercialService: CommercialService,
     private managerService: ManagerService,
     public dialogRef: MatDialogRef<SearchPageComponent>,
@@ -43,10 +39,7 @@ export class SearchPageComponent {
       this.commercialProp.commercialPropItems = [];
   }
 
-
   ngOnInit() {
-    // this.idCommercialProp = this.dataService.getId();
-    // console.log('this.idCommercialProp',this.idCommercialProp);
     this.getAllManagers();
     if(this.idCommercialProp !== null){
       this.getCommercialPropById(this.idCommercialProp);
@@ -75,7 +68,7 @@ export class SearchPageComponent {
   }
 
   goToBackCommercialPageOk(){
-    // this.router.navigate(['']);
+    // this.commercialProp.timestamp = null;
     this.commercialService.saveCommercialProp(this.commercialProp).subscribe((respones: ResponseInfo<CommercialProp>)=>{
       console.log('SaveData', this.commercialProp );
       if(respones.data !== null){
@@ -85,9 +78,11 @@ export class SearchPageComponent {
       else{
         alert(JSON.stringify(respones.errorMsg))
       }
-
     });
+  }
 
+  close(): void {
+    this.callSearch = false;
   }
 
   getAllManagers(){
@@ -127,32 +122,32 @@ export class SearchPageComponent {
     });
   }
 
-  childSelectedProduct(event: Product){
-    this.callSearch = false;
-    let newPropItem = new CommercialPropItem;
-    newPropItem.product = event;
-    newPropItem.amount = 1;
-    if(this.commercialProp.idCommercialProp !== null){
-      newPropItem.commercialPropId = this.commercialProp.idCommercialProp;
-    }
-    else {
-      newPropItem.commercialPropId = null;
-    }
-
-    this.commercialProp.commercialPropItems.push(newPropItem);
+    childSelectedProduct(event: Product) {
+      this.callSearch = false;
+      const existingItem = this.commercialProp.commercialPropItems.find(i => i.product.idProduct === event.idProduct);
+      if (existingItem) {
+          existingItem.amount += 1;
+      } else {
+          let newPropItem = new CommercialPropItem();
+          newPropItem.product = event;
+          newPropItem.amount = 1;
+          newPropItem.commercialPropId = this.commercialProp.idCommercialProp !== null ? this.commercialProp.idCommercialProp : null;
+          this.commercialProp.commercialPropItems.push(newPropItem);
+      }
   }
 
   deleteSelectProduct(id: number){
-    const oldItem = this.commercialProp.commercialPropItems.filter(i=>i.idCommercialPropItem !== id);
+    const oldItem = this.commercialProp.commercialPropItems.filter(i => i.idCommercialPropItem !== id);
+    console.log('Удаляем продукт с id:', id);
+    console.log('Старые элементы:', this.commercialProp.commercialPropItems);
+    console.log('Новые элементы:', oldItem);
     this.commercialProp.commercialPropItems = oldItem;
-    console.log('this.commercialProp.commercialPropItems', this.commercialProp.commercialPropItems)
-  }
+}
 
   openSearch(){
     this.getAllProductTypes();
     this.callSearch = true;
   }
-
 
   pickProduct(m: string, idType:number) {
     console.log(m);
