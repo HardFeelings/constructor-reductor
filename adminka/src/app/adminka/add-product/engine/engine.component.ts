@@ -19,8 +19,8 @@ export class EngineComponent {
   rpmArray: number[]=[750, 1000, 1500, 3000];
   @Input() idProductType: number;
   @Output() dynamicProduct = new EventEmitter<Product>();
-  motorTypeId: number;
-  motorAdapterTypeId: number;
+  motorTypeId: number | undefined;
+  motorAdapterTypeId: number | undefined;
   power!: number;
   efficiency!:number;
   ratedCurrent!:number;
@@ -82,6 +82,8 @@ export class EngineComponent {
       }
     } else {
       console.error('Такой тип двигателя не найден');
+       this.motorTypeId = undefined;
+       console.log('undefined выбранного типа двигателя:', this.motorTypeId);
     }
   }
 
@@ -96,6 +98,8 @@ export class EngineComponent {
       console.log('ID выбранного фланца двигателя:', selectedAdapter.idMotorAdapterType);
     } else {
       console.error('Такой фланц двигателя не найден');
+      this.motorAdapterTypeId = undefined;
+       console.log('undefined выбранного фланца двигателя:', this.motorAdapterTypeId);
     }
   }
 
@@ -109,6 +113,10 @@ export class EngineComponent {
     if (intselectedValue) {
       this.newMotor.frequency = intselectedValue;
     }
+    if(selectedValue == "Select"){
+      this.newMotor.frequency = undefined;
+       console.log('undefined значение frequency:', this.newMotor.frequency);
+    }
   }
 
   cableExitSideSelected(event: Event) {
@@ -119,6 +127,10 @@ export class EngineComponent {
 
     if (selectedValue) {
       this.newMotor.cableExitSide = selectedValue;
+    }
+    if(selectedValue == "Select"){
+      this.newMotor.cableExitSide = undefined;
+      console.log('undefined значение cableExitSide:',  this.newMotor.cableExitSide);
     }
   }
 
@@ -132,19 +144,23 @@ export class EngineComponent {
     if (intselectedValue) {
       this.newMotor.posTerminalBox = intselectedValue;
     }
-  }
-
-  rpmSelected(event: Event) {
-    const selectedElement = event.target as HTMLSelectElement;
-    const selectedValue = selectedElement.value;
-    console.log('Выбранное значение rpm:', selectedValue);
-    const intselectedValue: number = parseInt(selectedValue, 10);
-    console.log('Выбранное значение int rpm:', selectedValue);
-
-    if (intselectedValue) {
-      this.newProduct.rpm = intselectedValue;
+    if(selectedValue == "Select"){
+      this.newMotor.posTerminalBox = undefined;
+      console.log('undefined значение posTerminalBox:',  this.newMotor.posTerminalBox);
     }
   }
+
+  // rpmSelected(event: Event) {
+  //   const selectedElement = event.target as HTMLSelectElement;
+  //   const selectedValue = selectedElement.value;
+  //   console.log('Выбранное значение rpm:', selectedValue);
+  //   const intselectedValue: number = parseInt(selectedValue, 10);
+  //   console.log('Выбранное значение int rpm:', selectedValue);
+
+  //   if (intselectedValue) {
+  //     this.newProduct.rpm = intselectedValue;
+  //   }
+  // }
 
   onCheckboxChange(event: Event, optionId: number) {
     const target = event.target as HTMLInputElement;
@@ -174,6 +190,7 @@ export class EngineComponent {
     this.newMotor.motorTypeId = this.motorTypeId;
     this.newMotor.motorAdapterTypeId = this.motorAdapterTypeId;
 
+    this.newProduct.rpm = this.rpm;
     this.newProduct.productTypeId = this.idProductType;
     this.newProduct.motor = this.newMotor;
     this.newProduct.name = this.name;

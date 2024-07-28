@@ -3,20 +3,23 @@
         <div class="element_configurator">
           <span>Тип редуктора</span>
           <select (change)="idReducerTypeSelected($event)">
-            <option value="" disabled selected>Select</option>
+            <option value="Select"  selected>Select</option>
             <option *ngFor="let type of reducerType" [value]="type.reducerTypeName">{{ type.reducerTypeName }}</option>
           </select>
         </div>
-        <div class="element_configurator">
+        <div *ngIf="reducerTypeId && reducerTypeId !== null"  class="element_configurator">
           <span>Размер редуктора</span>
           <select [disabled]="!reducerTypeId" (change)="idReducerSizeBSelected($event)">
-            <option value="" disabled selected>Select</option>
+            <option value="Select"  selected>Select</option>
             <option *ngFor="let type of resucerSize" [value]="type.reducerSizeValue">{{ type.reducerSizeValue }}</option>
           </select>
         </div>
         <div class="element_configurator">
-          <span>Крутящий момент</span>
-          <input min="0" [(ngModel)]="this.torqueMoment"  type="number" />
+          <span>Монтажное положение</span>
+          <select (change)="idReducerMountingSelected($event)">
+            <option value="Select"  selected>Select</option>
+            <option *ngFor="let type of reducerMounting" [value]="type.reducerMountingValue">{{ type.reducerMountingValue }}</option>
+          </select>
         </div>
       </div>
       <br />
@@ -51,24 +54,24 @@
       </div>
       <br />
       <div class="container_element_configurator">
-        <div class="element_configurator">
+        <div *ngIf="reducerTypeId && reducerTypeId !== null"  class="element_configurator">
           <span>Тип входа</span>
           <select [disabled]="!reducerTypeId" (change)="idReducerInputSelected($event)">
-            <option value="" disabled selected>Select</option>
+            <option value="Select"  selected>Select</option>
             <option *ngFor="let type of reducerInputType" [value]="type.reducerInputTypeValue">{{ type.reducerInputTypeValue }}</option>
           </select>
         </div>
-        <div class="element_configurator">
+        <div  *ngIf="reducerTypeId && reducerTypeId !== null"  class="element_configurator">
           <span>Размер адаптера IEC</span>
           <select [disabled]="!reducerTypeId" (change)="idReducerAdapterSelected($event)">
-            <option value="" disabled selected>Select</option>
+            <option value="Select"  selected>Select</option>
             <option *ngFor="let type of reducerAdapterType" [value]="type.reducerAdapterTypeValue">{{ type.reducerAdapterTypeValue }}</option>
           </select>
         </div>
-        <div class="element_configurator">
+        <div  *ngIf="reducerTypeId && reducerTypeId !== null"  class="element_configurator">
           <span>Форма выходного вала</span>
           <select [disabled]="!reducerTypeId" (change)="idReducerOutputShaftTypeSelected($event)">
-            <option value="" disabled selected>Select</option>
+            <option value="Select"  selected>Select</option>
             <option *ngFor="let type of reducerOutputShaftType" [value]="type.reducerOutputShaftTypeValue">{{ type.reducerOutputShaftTypeValue }}</option>
           </select>
         </div>
@@ -79,19 +82,16 @@
           <span>Передаточное отношение</span>
           <input min="0" [(ngModel)]="this.ratio" type="number" />
         </div>
-        <div class="element_configurator">
+        <div  *ngIf="reducerTypeId && reducerTypeId !== null"  class="element_configurator">
           <span>Тип крепления редуктора</span>
           <select [disabled]="!reducerTypeId" (change)="idReducerInstallationSelected($event)">
-            <option value="" disabled selected>Select</option>
+            <option value="Select"  selected>Select</option>
             <option *ngFor="let type of reducerInstallationType" [value]="type.reducerInstallationTypeValue">{{ type.reducerInstallationTypeValue }}</option>
           </select>
         </div>
         <div class="element_configurator">
-          <span>Монтажное положение</span>
-          <select (change)="idReducerMountingSelected($event)">
-            <option value="" disabled selected>Select</option>
-            <option *ngFor="let type of reducerMounting" [value]="type.reducerMountingValue">{{ type.reducerMountingValue }}</option>
-          </select>
+          <span>Крутящий момент</span>
+          <input min="0" [(ngModel)]="this.torqueMoment"  type="number" />
         </div>
       </div>
       <br />

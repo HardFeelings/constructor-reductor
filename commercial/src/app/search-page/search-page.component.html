@@ -42,8 +42,8 @@
             <td>{{ commercialItem.product.name }}</td>
             <td>{{ commercialItem.product.price || '0' }}</td>
             <td>{{ commercialItem.product.weight || '0' }}</td>
-            <td><input type="number" min="1" [(ngModel)]="commercialItem.amount"></td>
-            <td><button *ngIf="commercialItem.idCommercialPropItem !== undefined" (click)="deleteSelectProduct(commercialItem.idCommercialPropItem)">Удалить</button>
+            <td class="amauntInpt"><input class="amauntInpt" type="number" min="1" [(ngModel)]="commercialItem.amount"></td>
+            <td class="amauntInpt"><button *ngIf="commercialItem.idCommercialPropItem !== undefined" (click)="deleteSelectProduct(commercialItem.idCommercialPropItem)">Удалить</button>
             <div *ngIf="commercialItem.idCommercialPropItem == undefined" >Нужно сохранение</div>
             </td>
           </tr>

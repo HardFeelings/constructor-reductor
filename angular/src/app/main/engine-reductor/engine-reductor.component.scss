@@ -95,12 +95,15 @@ input[type="number"] {
 
 .rate_element_configurator {
   display: flex;
-  align-items: flex-end;
-  gap: 5%;
+  align-items: center;
+  justify-content: center;
+  gap: 6%;
 }
 
 .rate_header {
   padding-bottom: 100%;
+  margin-bottom: -20px;
+  margin-left: 5px;
 }
 
 br {

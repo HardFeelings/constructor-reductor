@@ -23,7 +23,7 @@ export class EngineReductorComponent {
   power!: number;
   motorType: EngineType[];
   reducerType: ReducerType[];
-  reducerTypeId: number;
+  reducerTypeId: number | undefined;
   resucerSize: ReducerSize[];
   reducerOutputShaftType: ReducerOutputShaftType[];
   reducerInstallationType: ReducerInstallationType[];
@@ -66,8 +66,11 @@ export class EngineReductorComponent {
       console.log('ID выбранного типа двигателя:', selectedMotor.idMotorType);
     } else {
       console.error('Такой тип двигателя не найден');
+      this.filter.motorTypeId = undefined;
+      console.log('undefined выбранного типа двигателя:', this.filter.motorTypeId);
     }
   }
+
 
   getAllReducerType() {
     this.reducerService.getAllReducerTypes().subscribe((respones: ResponseInfo<ReducerType[]>) => {
@@ -95,6 +98,9 @@ export class EngineReductorComponent {
       this.getReducerInstallationByReducerTypeId(this.reducerTypeId);
     } else {
       console.error('Такой тип редуктора не найден');
+      this.reducerTypeId = undefined;
+      this.filter.idReducerType = undefined;
+      console.log('undefined выбранного типа редуктора:', this.filter.idReducerType);
     }
   }
 
@@ -120,12 +126,14 @@ export class EngineReductorComponent {
       console.log('ID выбранного размера редуктора:', selectedSize.idReducerSize);
     } else {
       console.error('Такой размер не найден');
+       this.filter.idReducerSize = undefined;
+      console.log('undefined выбранного размера редуктора:', this.filter.idReducerSize);
     }
   }
 
   getReducerOutputShaftTypeByReducerTypeId(id:number) {
     this.reducerService.getReducerOutputShaftTypeByReducerTypeId(id).subscribe((respones: ResponseInfo<ReducerOutputShaftType[]>)=>{
-      if(respones.data !== null){
+      if(respones.data !== undefined){
         console.log("Data getReducerOutputShaftTypeByReducerTypeId", respones.data);
         this.reducerOutputShaftType = respones.data;
       } else {
@@ -145,6 +153,8 @@ export class EngineReductorComponent {
       console.log('ID выбранноой формы выходного вала:', selectedOutputShaft.idReducerOutputShaftType);
     } else {
       console.error('Такой формы не найдено');
+      this.filter.idReducerOutputShaftType = undefined;
+      console.log('undefined выбранноой формы выходного вала:', this.filter.idReducerOutputShaftType);
     }
   }
 
@@ -171,6 +181,8 @@ export class EngineReductorComponent {
       console.log('ID выбранного типа крепления:', selectedInstallation.idReducerInstallationType);
     } else {
       console.error('Такое крепление не найдено');
+      this.filter.idReducerInstallationType = undefined;
+      console.log('undefined выбранного типа крепления:',this.filter.idReducerInstallationType);
     }
   }
 
@@ -186,6 +198,7 @@ export class EngineReductorComponent {
     });
   }
 
+
   idReducerMountingSelected(event: Event) {
     const selectedElement = event.target as HTMLSelectElement;
     const selectedValue = selectedElement.value;
@@ -197,6 +210,8 @@ export class EngineReductorComponent {
       console.log('ID выбранного монтажного положения:', selectedMounting.idReducerMounting);
     } else {
       console.error('Такое положение не найдено');
+      this.filter.idReducerMounting = undefined;
+      console.log('undefined выбранного монтажного положения:',   this.filter.idReducerMounting);
     }
   }
 

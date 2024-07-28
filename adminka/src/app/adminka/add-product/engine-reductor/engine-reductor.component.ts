@@ -22,8 +22,8 @@ export class EngineReductorComponent {
   rpmArray: number[]=[750, 1000, 1500, 3000];
   @Input() idProductType: number;
   @Output() dynamicProduct = new EventEmitter<Product>();
-  motorTypeId: number;
-  motorAdapterTypeId: number;
+  motorTypeId: number | undefined;
+  motorAdapterTypeId: number | undefined;
   power!: number;
   efficiency!:number;
   ratedCurrent!:number;
@@ -40,7 +40,7 @@ export class EngineReductorComponent {
   newMotor!:Engine;
 
   reducerType: ReducerType[];
-  reducerTypeId: number;
+  reducerTypeId: number | undefined;
   resucerSize: ReducerSize[];
   reducerMounting: ReducerMounting[];
   reducerInputType: ReducerInputType[];
@@ -103,6 +103,8 @@ export class EngineReductorComponent {
       }
     } else {
       console.error('Такой тип двигателя не найден');
+       this.motorTypeId = undefined;
+       console.log('undefined выбранного типа двигателя:', this.motorTypeId);
     }
   }
 
@@ -117,6 +119,8 @@ export class EngineReductorComponent {
       console.log('ID выбранного фланца двигателя:', selectedAdapter.idMotorAdapterType);
     } else {
       console.error('Такой фланц двигателя не найден');
+      this.motorAdapterTypeId = undefined;
+       console.log('undefined выбранного фланца двигателя:', this.motorAdapterTypeId);
     }
   }
 
@@ -130,6 +134,10 @@ export class EngineReductorComponent {
     if (intselectedValue) {
       this.newMotor.frequency = intselectedValue;
     }
+    if(selectedValue == "Select"){
+      this.newMotor.frequency = undefined;
+       console.log('undefined значение frequency:', this.newMotor.frequency);
+    }
   }
 
   cableExitSideSelected(event: Event) {
@@ -140,6 +148,10 @@ export class EngineReductorComponent {
 
     if (selectedValue) {
       this.newMotor.cableExitSide = selectedValue;
+    }
+    if(selectedValue == "Select"){
+      this.newMotor.cableExitSide = undefined;
+      console.log('undefined значение cableExitSide:',  this.newMotor.cableExitSide);
     }
   }
 
@@ -152,6 +164,10 @@ export class EngineReductorComponent {
 
     if (intselectedValue) {
       this.newMotor.posTerminalBox = intselectedValue;
+    }
+    if(selectedValue == "Select"){
+      this.newMotor.posTerminalBox = undefined;
+      console.log('undefined значение posTerminalBox:',  this.newMotor.posTerminalBox);
     }
   }
 
@@ -183,6 +199,9 @@ export class EngineReductorComponent {
       this.getReducerInstallationByReducerTypeId(this.reducerTypeId);
     } else {
       console.error('Такой тип редуктора не найден');
+      this.reducerTypeId = undefined;
+      this.newReducer.reducerTypeId = undefined;
+      console.log('undefined id выбранного типа редуктора:', this.reducerTypeId);
     }
   }
 
@@ -208,6 +227,8 @@ export class EngineReductorComponent {
       console.log('ID выбранного типа входа:', selectedInput.idReducerInputType);
     } else {
       console.error('Такого типа входа не найдено');
+      this.newReducer.reducerInputTypeId = undefined;
+      console.log('undefined выбранного типа входа:', this.newReducer.reducerInputTypeId);
     }
   }
 
@@ -233,6 +254,8 @@ export class EngineReductorComponent {
       console.log('ID выбранного размера адаптера:', selectedAdapter.idReducerAdapterType);
     } else {
       console.error('Такого размера адаптера не найдено');
+      this.newReducer.reducerAdapterTypeId = undefined;
+      console.log('undefined выбранного размера адаптера:',  this.newReducer.reducerAdapterTypeId );
     }
   }
 
@@ -258,6 +281,8 @@ export class EngineReductorComponent {
       console.log('ID выбранноой формы выходного вала:', selectedOutputShaft.idReducerOutputShaftType);
     } else {
       console.error('Такой формы не найдено');
+      this.newReducer.reducerOutputShaftTypeId = undefined;
+      console.log('undefined выбранноой формы выходного вала:', this.newReducer.reducerOutputShaftTypeId);
     }
   }
 
@@ -283,6 +308,8 @@ export class EngineReductorComponent {
       console.log('ID выбранного типа крепления:', selectedInstallation.idReducerInstallationType);
     } else {
       console.error('Такое крепление не найдено');
+      this.newReducer.reducerInstallationTypeId = undefined;
+      console.log('undefined выбранного типа крепления:', this.newReducer.reducerInstallationTypeId);
     }
   }
 
@@ -308,6 +335,8 @@ export class EngineReductorComponent {
       console.log('ID выбранного монтажного положения:', selectedMounting.idReducerMounting);
     } else {
       console.error('Такое положение не найдено');
+      this.newReducer.reducerMountingId = undefined;
+      console.log('undefined выбранного монтажного положения:', this.newReducer.reducerMountingId);
     }
   }
 
@@ -333,20 +362,21 @@ export class EngineReductorComponent {
       console.log('ID выбранного размера редуктора:', selectedSize.idReducerSize);
     } else {
       console.error('Такой размер не найден');
+      this.newReducer.reducerSizeId = undefined;
+      console.log('undefined выбранного размера редуктора:', this.newReducer.reducerSizeId);
     }
   }
+  // rpmSelected(event: Event) {
+  //   const selectedElement = event.target as HTMLSelectElement;
+  //   const selectedValue = selectedElement.value;
+  //   console.log('Выбранное значение rpm:', selectedValue);
+  //   const intselectedValue: number = parseInt(selectedValue, 10);
+  //   console.log('Выбранное значение int rpm:', selectedValue);
 
-  rpmSelected(event: Event) {
-    const selectedElement = event.target as HTMLSelectElement;
-    const selectedValue = selectedElement.value;
-    console.log('Выбранное значение rpm:', selectedValue);
-    const intselectedValue: number = parseInt(selectedValue, 10);
-    console.log('Выбранное значение int rpm:', selectedValue);
-
-    if (intselectedValue) {
-      this.newProduct.rpm = intselectedValue;
-    }
-  }
+  //   if (intselectedValue) {
+  //     this.newProduct.rpm = intselectedValue;
+  //   }
+  // }
 
   onCheckboxChange(event: Event, optionId: number) {
     const target = event.target as HTMLInputElement;
@@ -414,7 +444,7 @@ export class EngineReductorComponent {
     this.newReducer.diameterOutputShaft = this.diamOutput;
     this.newProduct.reducer = this.newReducer;
 
-
+    this.newProduct.rpm = this.rpm;
     this.newProduct.name = this.name;
     this.newProduct.weight = this.weight;
     this.newProduct.torqueMoment = this.torqueMoment;

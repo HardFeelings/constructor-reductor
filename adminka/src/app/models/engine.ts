@@ -2,16 +2,16 @@
 export class Engine {
   id: number;
   power:number;
-  frequency: number;
+  frequency: number | undefined;
   efficiency:number;
   ratedCurrent:number;
-  posTerminalBox:number;
-  momentOfInertia:number;
+  posTerminalBox:number | undefined;
+  momentOfInertia:number | undefined;
   // motorTypeId: EngineType;
   // motorAdapterTypeId: EngineAdapterType;
-  motorTypeId: number;
-  motorAdapterTypeId: number;
-  cableExitSide:string;
+  motorTypeId: number | undefined;
+  motorAdapterTypeId: number | undefined;
+  cableExitSide:string | undefined;
 }
 
 export class EngineType {

@@ -47,16 +47,22 @@ export class AddProductComponent {
     );
   }
 
-  addProduct(event: Product){
-    this.productService.addDynamicProduct(event).subscribe((respones:ResponseInfo<Product>)=>{
-      if(respones.data !== null){
-        console.log("Data addProduct: ", respones.data);
-        this.newProductList.push(respones.data);
-      } else {
-        alert(JSON.stringify(respones.errorMsg))
-      }
-    });
-  }
+  addProduct(event: Product) {
+    this.productService.addDynamicProduct(event).subscribe(
+        (response: ResponseInfo<Product>) => {
+            console.log("Data addProduct: ", response);
+            if (response.data !== null) {
+                console.log("Data addProduct: ", response.data);
+                this.newProductList.push(response.data);
+            }
+        },
+        error => {
+          let errorMessage = error.error?.errorMsg || 'Неизвестная ошибка';
+          alert(errorMessage);
+        }
+    );
+}
+
 
   downloadImage(id:number,filename: string){
     this.productService.downloadImageById(id,filename);

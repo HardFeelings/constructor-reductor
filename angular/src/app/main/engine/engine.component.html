@@ -3,7 +3,7 @@
         <div class="element_configurator">
           <span>Тип двигателя</span>
           <select (change)="idMotorTypeSelected($event)">
-            <option value="" disabled selected>Select</option>
+            <option value="Select"  selected>Select</option>
             <option *ngFor="let type of motorType" [value]="type.motorTypeName">{{ type.motorTypeName }}</option>
           </select>
         </div>
@@ -11,7 +11,7 @@
         <div *ngIf="motorTypeId && motorTypeId == 2" class="element_configurator">
           <span>Тип Фланца</span>
           <select (change)="idMotorAdapterTypeSelected($event)">
-            <option value="" disabled selected>Select</option>
+            <option value="Select"  selected>Select</option>
             <option *ngFor="let type of engineAdapterTypeByMotorTypeId" [value]="type.motorAdapterTypeValue">{{ type.motorAdapterTypeValue }}</option>
           </select>
         </div>
@@ -26,16 +26,20 @@
         <div class="element_configurator">
           <span>Положение клеммной коробки</span>
           <select (change)="frequencySelected($event)">
-            <option value="" disabled selected>Select</option>
+            <option value="Select"  selected>Select</option>
             <option *ngFor="let value of posTerminalBoxArray" [value]="value">{{ value }}</option>
           </select>
         </div>
-        <div class="element_configurator">
+        <!-- <div class="element_configurator">
           <span>Число оборотов об/мин </span>
           <select (change)="rpmSelected($event)">
-            <option value="" disabled selected>Select</option>
+            <option value="Select"  selected>Select</option>
             <option *ngFor="let value of rpmArray" [value]="value">{{ value }}</option>
           </select>
+        </div> -->
+        <div class="element_configurator">
+          <span>Число оборотов об/мин </span>
+          <input min="0" [(ngModel)]="this.rpm"  type="number" />
         </div>
       </div>
       <br />

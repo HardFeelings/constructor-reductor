@@ -19,11 +19,12 @@ export class EngineComponent {
   posTerminalBoxArray: number[]=[90,180,270,360];
   rpmArray: number[]=[750, 1000, 1500, 3000];
   @Input() idProductType: number;
-  motorTypeId: number;
+  motorTypeId: number | undefined;
   power!: number;
   options: number[] = [];
   filter: Filter = new Filter();
   foundProducts: Product[];
+  rpm!:number;
 
   @Output() selectedProduct = new EventEmitter<Product>();
 
@@ -85,6 +86,9 @@ export class EngineComponent {
       }
     } else {
       console.error('Такой тип двигателя не найден');
+      this.motorTypeId = undefined;
+      this.filter.motorTypeId = undefined;
+      console.log('undefined выбранного типа двигателя:', this.filter.motorTypeId);
     }
   }
 
@@ -99,32 +103,38 @@ export class EngineComponent {
       console.log('ID выбранного фланца двигателя:', selectedAdapter.idMotorAdapterType);
     } else {
       console.error('Такой фланц двигателя не найден');
+      this.filter.motorAdapterTypeId = undefined;
+      console.log('undefined выбранного фланца двигателя:',  this.filter.motorAdapterTypeId);
     }
   }
 
-    frequencySelected(event: Event) {
+  frequencySelected(event: Event) {
     const selectedElement = event.target as HTMLSelectElement;
     const selectedValue = selectedElement.value;
-    console.log('Выбранное значение frequency:', selectedValue);
+    console.log('Выбранное значение posTerminal:', selectedValue);
     const intselectedValue: number = parseInt(selectedValue, 10);
-    console.log('Выбранное значение int frequency:', selectedValue);
+    console.log('Выбранное значение int posTerminal:', selectedValue);
 
     if (intselectedValue) {
       this.filter.posTerminalBox = intselectedValue;
     }
-  }
-
-  rpmSelected(event: Event) {
-    const selectedElement = event.target as HTMLSelectElement;
-    const selectedValue = selectedElement.value;
-    console.log('Выбранное значение rpm:', selectedValue);
-    const intselectedValue: number = parseInt(selectedValue, 10);
-    console.log('Выбранное значение int rpm:', selectedValue);
-
-    if (intselectedValue) {
-      this.filter.rpm = intselectedValue;
+    if(selectedValue == "Select"){
+      this.filter.posTerminalBox = undefined;
+       console.log('undefined значение posTerminal:', this.filter.posTerminalBox);
     }
   }
+
+  // rpmSelected(event: Event) {
+  //   const selectedElement = event.target as HTMLSelectElement;
+  //   const selectedValue = selectedElement.value;
+  //   console.log('Выбранное значение rpm:', selectedValue);
+  //   const intselectedValue: number = parseInt(selectedValue, 10);
+  //   console.log('Выбранное значение int rpm:', selectedValue);
+
+  //   if (intselectedValue) {
+  //     this.filter.rpm = intselectedValue;
+  //   }
+  // }
 
   onCheckboxChange(event: Event, optionId: number) {
     const target = event.target as HTMLInputElement;
@@ -147,6 +157,7 @@ export class EngineComponent {
 
   searchProduct(filter: Filter){
     filter.power = this.power;
+    filter.rpm = this.rpm;
     console.log('filter', filter);
     this.productService.postFilter(filter).subscribe((respones: ResponseInfo<Product[]>)=>{
       if(respones.data !== null){

@@ -15,7 +15,7 @@ import { ProductService } from 'src/app/sevices/product.service';
 export class ReductorComponent {
   @Input() idProductType: number;
   reducerType: ReducerType[];
-  reducerTypeId: number;
+  reducerTypeId: number | undefined;
   filter: Filter = new Filter();
   productOption: ProductOption[];
   resucerSize: ReducerSize[];
@@ -72,6 +72,9 @@ export class ReductorComponent {
       this.getReducerInstallationByReducerTypeId(this.reducerTypeId);
     } else {
       console.error('Такой тип редуктора не найден');
+      this.reducerTypeId = undefined;
+      this.filter.idReducerType = undefined;
+      console.log('undefined выбранного типа редуктора:', this.reducerTypeId);
     }
   }
 
@@ -97,6 +100,8 @@ export class ReductorComponent {
       console.log('ID выбранного типа входа:', selectedInput.idReducerInputType);
     } else {
       console.error('Такого типа входа не найдено');
+      this.filter.idReducerInputType = undefined;
+      console.log('undefined выбранного типа входа:', this.filter.idReducerInputType);
     }
   }
 
@@ -122,6 +127,8 @@ export class ReductorComponent {
       console.log('ID выбранного размера адаптера:', selectedAdapter.idReducerAdapterType);
     } else {
       console.error('Такого размера адаптера не найдено');
+      this.filter.idReducerAdapterInputType = undefined;
+      console.log('undefined выбранного размера адаптера:', this.filter.idReducerAdapterInputType);
     }
   }
 
@@ -148,6 +155,8 @@ export class ReductorComponent {
       console.log('ID выбранноой формы выходного вала:', selectedOutputShaft.idReducerOutputShaftType);
     } else {
       console.error('Такой формы не найдено');
+      this.filter.idReducerOutputShaftType = undefined;
+      console.log('undefined выбранноой формы выходного вала:', this.filter.idReducerOutputShaftType);
     }
   }
 
@@ -173,6 +182,8 @@ export class ReductorComponent {
       console.log('ID выбранного типа крепления:', selectedInstallation.idReducerInstallationType);
     } else {
       console.error('Такое крепление не найдено');
+      this.filter.idReducerInstallationType = undefined;
+      console.log('undefined выбранного типа крепления:', this.filter.idReducerInstallationType);
     }
   }
 
@@ -198,6 +209,8 @@ export class ReductorComponent {
       console.log('ID выбранного монтажного положения:', selectedMounting.idReducerMounting);
     } else {
       console.error('Такое положение не найдено');
+      this.filter.idReducerMounting = undefined;
+      console.log('undefined выбранного монтажного положения:',   this.filter.idReducerMounting);
     }
   }
 
@@ -234,6 +247,8 @@ export class ReductorComponent {
       console.log('ID выбранного размера редуктора:', selectedSize.idReducerSize);
     } else {
       console.error('Такой размер не найден');
+      this.filter.idReducerSize = undefined;
+      console.log('undefined выбранного размера редуктора:', this.filter.idReducerSize );
     }
   }
 
