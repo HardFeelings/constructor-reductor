@@ -17,9 +17,7 @@
         <span>Передаточное отношение</span>
         <input min="0" [(ngModel)]="this.ratio" type="number" />
       </div>
-    </div>
     <br />
-    <div class="container_element_configurator">
       <div class="rate_element_configurator">
         <div class="element_configurator">
           <span>Диаметр выходного вала</span>
@@ -32,10 +30,8 @@
           <input min="0" [(ngModel)]="this.diamOutputAllowance" type="number" />
         </div>
       </div>
-    </div>
     <br />
     <br />
-    <div class="container_element_configurator">
       <div  *ngIf="reducerTypeId && reducerTypeId !== null"  class="element_configurator">
         <span>Тип крепления редуктора</span>
         <select [disabled]="!reducerTypeId" (change)="idReducerInstallationSelected($event)">
@@ -57,9 +53,7 @@
           <option *ngFor="let type of reducerOutputShaftType" [value]="type.reducerOutputShaftTypeValue">{{ type.reducerOutputShaftTypeValue }}</option>
         </select>
       </div>
-    </div>
     <br />
-    <div class="container_element_configurator">
       <div class="element_configurator">
         <span>Тип двигателя</span>
         <select (change)="idMotorTypeSelected($event)">

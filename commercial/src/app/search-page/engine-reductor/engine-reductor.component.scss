@@ -56,8 +56,9 @@ select {
 }
 .container_element_configurator {
   display: flex;
-  justify-content: center;
-  gap: 8%;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  gap: 50px;
   align-items: center;
 }
 
