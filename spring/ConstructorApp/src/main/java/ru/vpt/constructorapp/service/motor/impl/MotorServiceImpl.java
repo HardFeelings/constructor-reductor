@@ -79,7 +79,7 @@ public class MotorServiceImpl implements MotorService {
     public List<MotorEntity> findByFilter(MotorDto motorDto) {
         return motorRepo.findByAllParameters(motorDto.getMotorAdapterTypeId(), motorDto.getMotorTypeId(),
                 motorDto.getEfficiency(), motorDto.getFrequency(),
-                motorDto.getMomentOfInertia(), motorDto.getPosTerminalBox(), motorDto.getCableExitSide(),
+                motorDto.getMomentOfInertia(),
                 motorDto.getPower(), motorDto.getRatedCurrent());
     }
 

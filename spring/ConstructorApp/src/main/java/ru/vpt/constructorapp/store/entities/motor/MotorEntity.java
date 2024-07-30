@@ -26,15 +26,8 @@ public class MotorEntity {
     private Double efficiency;
     @Column(name = "rated_current")
     private Double ratedCurrent;
-
     @Column(name = "moment_of_inertia")
     private Double momentOfInertia;
-
-    @Column(name = "cable_exit_side")
-    private String cableExitSide;
-
-    @Column(name = "pos_terminal_box")
-    private Double posTerminalBox;
     @ManyToOne
     @JoinColumn(name = "id_motor_type")
     private MotorTypeEntity motorType;

@@ -10,10 +10,12 @@ import ru.vpt.constructorapp.api.exception.BadRequestException;
 import ru.vpt.constructorapp.api.exception.NotFoundException;
 import ru.vpt.constructorapp.service.commercial.CommercialPropItemService;
 import ru.vpt.constructorapp.service.commercial.CommercialPropService;
+import ru.vpt.constructorapp.service.commercial.ReportService;
 import ru.vpt.constructorapp.store.entities.commercial.CommercialPropEntity;
 import ru.vpt.constructorapp.store.entities.commercial.CommercialPropItemEntity;
 import ru.vpt.constructorapp.store.repo.commercial.CommercialPropRepo;
 
+import java.io.BufferedInputStream;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Comparator;
@@ -28,6 +30,7 @@ public class CommercialPropServiceImpl implements CommercialPropService {
     private final CommercialPropRepo repo;
     private final CommercialPropMapper mapper;
     private final CommercialPropItemService itemService;
+    private final ReportService reportService;
 
     @Override
     public List<CommercialPropDto> getAll() {
@@ -74,5 +77,22 @@ public class CommercialPropServiceImpl implements CommercialPropService {
         list.forEach(item -> itemService.delete(item.getIdCommercialPropItem()));
         repo.deleteById(id);
         return true;
+    }
+
+    @Override
+    public BufferedInputStream report(Long id) {
+        if (Objects.isNull(id)) {
+            throw new BadRequestException("Невозможно сформировать файл: id равен null", 400);
+        }
+        if (!repo.existsById(id)) {
+            throw new NotFoundException("Невозможно сформировать файл: не найден объект с id: " + id, 404);
+        }
+        BufferedInputStream bufferedInputStream =  new BufferedInputStream(reportService.report(findById(id)));
+        return bufferedInputStream;
+    }
+
+    @Override
+    public List<CommercialPropDto> getByFilter(CommercialPropDto commercialPropDto) {
+        return repo.findByFilter(commercialPropDto).stream().map(mapper::toDTOWithoutItems).collect(Collectors.toList());
     }
 }

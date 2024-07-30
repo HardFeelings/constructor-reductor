@@ -15,6 +15,8 @@ public interface ProductApi {
 
     @GetMapping("/product/{id}")
     ResponseEntity<ResponseDto<ProductDto>> getById(@PathVariable("id") Long id);
+    @GetMapping("/product/getByName")
+    ResponseEntity<ResponseDto<List<ProductDto>>> getByName(@RequestParam("name") String name);
 
     @PostMapping("/security/product")
     ResponseEntity<ResponseDto<ProductDto>> save(@RequestBody ProductDto productDto);

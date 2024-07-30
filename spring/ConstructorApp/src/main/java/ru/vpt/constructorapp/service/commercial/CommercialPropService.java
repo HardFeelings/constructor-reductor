@@ -3,6 +3,7 @@ package ru.vpt.constructorapp.service.commercial;
 import ru.vpt.constructorapp.api.commercial.prop.dto.CommercialPropDto;
 import ru.vpt.constructorapp.store.entities.commercial.CommercialPropEntity;
 
+import java.io.BufferedInputStream;
 import java.util.List;
 
 public interface CommercialPropService {
@@ -11,4 +12,6 @@ public interface CommercialPropService {
     CommercialPropEntity findById(Long id);
     CommercialPropDto save(CommercialPropDto dto);
     Boolean delete(Long id);
+    BufferedInputStream report(Long id);
+    List<CommercialPropDto> getByFilter(CommercialPropDto commercialPropDto);
 }

@@ -1,6 +1,12 @@
 package ru.vpt.constructorapp.controller.commercial;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 import ru.vpt.constructorapp.api.commercial.prop.CommercialPropApi;
@@ -8,7 +14,10 @@ import ru.vpt.constructorapp.api.commercial.prop.dto.CommercialPropDto;
 import ru.vpt.constructorapp.api.util.ResponseDto;
 import ru.vpt.constructorapp.controller.util.AbstractController;
 import ru.vpt.constructorapp.service.commercial.CommercialPropService;
+import ru.vpt.constructorapp.store.entities.product.ProductEntity;
 
+import java.io.BufferedInputStream;
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -33,7 +42,22 @@ public class CommercialPropController extends AbstractController implements Comm
     }
 
     @Override
+    public ResponseEntity<ResponseDto<List<CommercialPropDto>>> getByFilter(CommercialPropDto commercialPropDto) {
+        return response(service.getByFilter(commercialPropDto));
+    }
+
+    @Override
     public ResponseEntity<ResponseDto<Boolean>> delete(Long id) {
         return response(service.delete(id));
+    }
+
+    @Override
+    public ResponseEntity<Resource> reportCommercialProp(Long id) {
+        BufferedInputStream inputStream = null;
+        inputStream = service.report(id);
+        HttpHeaders headers = new HttpHeaders();
+        headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=report.xlsx");
+        headers.add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_OCTET_STREAM_VALUE);
+        return new ResponseEntity<>(new InputStreamResource(inputStream), headers, HttpStatus.OK);
     }
 }

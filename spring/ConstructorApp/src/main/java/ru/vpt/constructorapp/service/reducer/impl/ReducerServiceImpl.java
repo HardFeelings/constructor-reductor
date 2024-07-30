@@ -22,7 +22,6 @@ public class ReducerServiceImpl implements ReducerService {
     private final ReducerTypeServiceImpl reducerTypeServiceImpl;
     private final ReducerSizeServiceImpl reducerSizeServiceImpl;
     private final ReducerInputTypeServiceImpl reducerInputTypeServiceImpl;
-    private final ReducerAdapterTypeServiceImpl reducerAdapterTypeServiceImpl;
     private final ReducerOutputShaftTypeServiceImpl reducerOutputShaftTypeServiceImpl;
     private final ReducerInstallationTypeServiceImpl reducerInstallationTypeServiceImpl;
     private final ReducerMountingServiceImpl reducerMountingServiceImpl;
@@ -57,9 +56,7 @@ public class ReducerServiceImpl implements ReducerService {
                 .orElseThrow(() -> new NotFoundException("Невозможно сохранить редуктор: не найден размер редуктора с id: " + dto.getReducerSizeId(), 404));
         ReducerInputTypeEntity reducerInputType = reducerInputTypeServiceImpl.findById(dto.getReducerInputTypeId())
                 .orElseThrow(() -> new NotFoundException("Невозможно сохранить редуктор: не найден тип входа редуктора с id: " + dto.getReducerInputTypeId(), 404));
-        ReducerAdapterTypeEntity reducerAdapterType = reducerAdapterTypeServiceImpl.findById(dto.getReducerAdapterTypeId())
-                .orElseThrow(() -> new NotFoundException("Невозможно сохранить редуктор: не найдет тип адаптера редуктора с id: " + dto.getReducerAdapterTypeId(), 404));
-        ReducerOutputShaftTypeEntity reducerOutputShaftType = reducerOutputShaftTypeServiceImpl.findById(dto.getReducerOutputShaftTypeId())
+           ReducerOutputShaftTypeEntity reducerOutputShaftType = reducerOutputShaftTypeServiceImpl.findById(dto.getReducerOutputShaftTypeId())
                 .orElseThrow(() -> new NotFoundException("Невозможно сохранить редуктор: не найден тип выходного вала с id: " + dto.getReducerOutputShaftTypeId(), 404));
         ReducerInstallationTypeEntity reducerInstallationType = reducerInstallationTypeServiceImpl.findById(dto.getReducerInstallationTypeId())
                 .orElseThrow(() -> new NotFoundException("Невозможно сохранить редуктор: не найден тип установки редуктора с id: " + dto.getReducerInstallationTypeId(), 404));
@@ -69,7 +66,6 @@ public class ReducerServiceImpl implements ReducerService {
         entity.setReducerType(reducerType);
         entity.setReducerSize(reducerSize);
         entity.setReducerInputType(reducerInputType);
-        entity.setReducerAdapterType(reducerAdapterType);
         entity.setReducerOutputShaftType(reducerOutputShaftType);
         entity.setReducerInstallationType(reducerInstallationType);
         entity.setReducerMounting(reducerMounting);
@@ -90,8 +86,8 @@ public class ReducerServiceImpl implements ReducerService {
 
     @Override
     public List<ReducerEntity> findByFilter(ReducerDto reducerDto) {
-        return reducerRepo.findByAllParameters(reducerDto.getDiameterInputShaft(), reducerDto.getDiameterOutputShaft(),
-                reducerDto.getRatio(), reducerDto.getReducerAdapterTypeId(), reducerDto.getReducerInputTypeId(),
+        return reducerRepo.findByAllParameters(reducerDto.getDiameterOutputShaft(),
+                reducerDto.getRatio(), reducerDto.getReducerInputTypeId(),
                 reducerDto.getReducerInstallationTypeId(), reducerDto.getReducerMountingId(), reducerDto.getReducerOutputShaftTypeId(),
                 reducerDto.getReducerSizeId(), reducerDto.getReducerTypeId());
     }

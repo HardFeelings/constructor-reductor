@@ -12,5 +12,6 @@ import java.util.Optional;
 public interface ProductRepo extends JpaRepository<ProductEntity, Long>, ProductCustomRepo,
         QuerydslPredicateExecutor<ProductEntity> {
     List<ProductEntity> findAll();
+    List<ProductEntity> findAllByNameLike(String name);
     Optional<ProductEntity> findById(Long id);
 }

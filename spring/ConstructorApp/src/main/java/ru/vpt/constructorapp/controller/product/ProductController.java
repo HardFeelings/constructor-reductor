@@ -34,6 +34,11 @@ public class ProductController extends AbstractController implements ProductApi 
     }
 
     @Override
+    public ResponseEntity<ResponseDto<List<ProductDto>>> getByName(String name) {
+        return response(productService.getByName(name));
+    }
+
+    @Override
     public ResponseEntity<ResponseDto<ProductDto>> save(ProductDto productDto) {
         return response(productService.saveProduct(productDto));
     }

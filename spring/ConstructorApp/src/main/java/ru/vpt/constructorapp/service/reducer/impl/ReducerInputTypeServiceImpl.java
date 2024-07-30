@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.vpt.constructorapp.api.exception.BadRequestException;
 import ru.vpt.constructorapp.api.exception.NotFoundException;
-import ru.vpt.constructorapp.api.reducer.adapter.dto.ReducerAdapterTypeDto;
 import ru.vpt.constructorapp.api.reducer.input.dto.ReducerInputTypeDto;
 import ru.vpt.constructorapp.api.reducer.input.mapper.ReducerInputTypeMapper;
 import ru.vpt.constructorapp.service.reducer.ReducerInputTypeService;

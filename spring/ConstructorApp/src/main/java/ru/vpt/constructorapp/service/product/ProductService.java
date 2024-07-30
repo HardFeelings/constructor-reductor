@@ -18,4 +18,6 @@ public interface ProductService {
     ProductEntity getProductEntityById(Long id);
 
     ProductDto dynamicSave(ProductDto productDto);
+
+    List<ProductDto> getByName(String name);
 }

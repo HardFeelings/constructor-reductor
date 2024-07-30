@@ -1,6 +1,8 @@
 package ru.vpt.constructorapp.service.product.impl;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import ru.vpt.constructorapp.api.exception.BadRequestException;
 import ru.vpt.constructorapp.api.exception.NotFoundException;
@@ -135,6 +137,15 @@ public class ProductServiceImpl implements ProductService {
         }
         productEntity.setProductImage(productDto.getImageString() == null ? null : Base64.getDecoder().decode(productDto.getImageString()));
         return productMapper.toDTO(productRepo.save(productEntity));
+    }
+
+    @Override
+    public List<ProductDto> getByName(String name) {
+        if(Objects.isNull(name))
+            name = "%";
+        name = "%" + name + "%";
+        return productRepo.findAllByNameLike(name).stream().map(productMapper::toDTO)
+                .sorted(Comparator.comparingLong(ProductDto::getIdProduct)).collect(Collectors.toList());
     }
 
 }
