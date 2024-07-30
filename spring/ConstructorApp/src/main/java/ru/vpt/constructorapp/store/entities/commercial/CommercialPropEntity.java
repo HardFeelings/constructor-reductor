@@ -37,15 +37,15 @@ public class CommercialPropEntity {
 
     @Column(name = "timestamp")
     @Temporal(TemporalType.TIMESTAMP)
-    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    @DateTimeFormat(pattern = "dd.MM.yyyy")
     @Getter(AccessLevel.NONE)
-    private LocalDateTime timestamp;
+    private String timestamp;
 
     @ManyToOne
     @JoinColumn(name = "id_manager")
     private ManagerEntity manager;
 
-    @OneToMany(cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "id_commercial_prop")
     private List<CommercialPropItemEntity> commercialPropItems;
 
@@ -53,6 +53,6 @@ public class CommercialPropEntity {
         if(Objects.isNull(timestamp)){
             return null;
         }
-        return timestamp.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        return timestamp;
     }
 }

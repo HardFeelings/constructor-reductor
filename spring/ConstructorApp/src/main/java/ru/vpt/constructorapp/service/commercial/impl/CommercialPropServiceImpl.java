@@ -53,7 +53,8 @@ public class CommercialPropServiceImpl implements CommercialPropService {
             throw new BadRequestException("Невозможно сохранить опции продукта: dto равен null", 400);
         }
         CommercialPropEntity entity = mapper.toEntity(dto);
-        entity.setTimestamp(dto.getTimestamp() == null ? LocalDateTime.now(): LocalDateTime.parse(dto.getTimestamp(), DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+        entity.setTimestamp(String.valueOf(dto.getTimestamp() == null ?
+                LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd.MM.yyyy")) : dto.getTimestamp()));
         CommercialPropDto savedDto = mapper.toDTO(repo.save(entity));
         List<CommercialPropItemDto> commercialPropItemDtos = dto.getCommercialPropItems().stream()
                 .map(item -> itemService.save(item, savedDto.getIdCommercialProp())).toList();
