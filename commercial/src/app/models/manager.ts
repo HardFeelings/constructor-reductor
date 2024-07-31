@@ -10,14 +10,14 @@ export class Manager {
   email: string;
   phoneNumber: string;
 
-  constructor(idManager: number, shortName: string, fullName:string,position:string,email: string, phoneNumber: string ) {
-    this.idManager = idManager;
-    this.shortName = shortName;
-    this.fullName = fullName;
-    this.position = position;
-    this.email = email;
-    this.phoneNumber = phoneNumber;
-  }
+  // constructor(idManager: number, shortName: string, fullName:string,position:string,email: string, phoneNumber: string ) {
+  //   this.idManager = idManager;
+  //   this.shortName = shortName;
+  //   this.fullName = fullName;
+  //   this.position = position;
+  //   this.email = email;
+  //   this.phoneNumber = phoneNumber;
+  // }
 }
 
 //   delete(http: HttpClient) : Observable<boolean> {

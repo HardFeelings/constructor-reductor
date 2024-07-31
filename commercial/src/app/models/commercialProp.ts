@@ -3,11 +3,11 @@ import { Manager } from "./manager";
 
 export class CommercialProp {
   idCommercialProp: number;
-  number: string;
-  partner: string;
+  number: string | null;
+  partner: string | null;
   cost: bigint;
   timestamp: string | null;
-  marginRatio:number;
+  marginRatio:number | null;
   manager: Manager | null;
   commercialPropItems: CommercialPropItem[];
 }

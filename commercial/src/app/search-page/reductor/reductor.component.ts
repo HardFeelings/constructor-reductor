@@ -32,7 +32,7 @@ export class ReductorComponent {
   diamOutput: number;
   diamOutputAllowance: number;
   ratio: number;
-  torqueMoment: number;
+  // torqueMoment: number;
 
   @Output() selectedProduct = new EventEmitter<Product>();
 
@@ -280,7 +280,7 @@ export class ReductorComponent {
     filter.diamOutput = this.diamOutput;
     filter.diamOutputAllowance = this.diamOutputAllowance;
     filter.ratio = this.ratio;
-    filter.torqueMoment = this.torqueMoment;
+    // filter.torqueMoment = this.torqueMoment;
     console.log('filter', filter);
     this.productService.postFilter(filter).subscribe((respones: ResponseInfo<Product[]>)=>{
       if(respones.data !== null){

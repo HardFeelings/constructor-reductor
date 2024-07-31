@@ -4,7 +4,14 @@
 <hr /> -->
 <div class="table-container">
   <div class="buttons">
-    <button (click)="goToSearchPage(null)">Новый</button>
+    <button (click)="goToSearchPage(null)" style="margin-right: 50px; height: 45px;">Новый</button>
+    <input [(ngModel)]="this.searchData.number"    (ngModelChange)="onNumberChange($event)"  type="string" placeholder="number"  style="margin-right: 5px; border-radius: 5px; font-size: 24px; height: 40px; width: 200px;" />
+    <input [(ngModel)]="this.shortName" (ngModelChange)="onShortNameChange($event)" type="string" placeholder="shortName" style="margin-right: 5px; border-radius: 5px; font-size: 24px; height: 40px; width: 200px;" />
+    <input [(ngModel)]="this.searchData.partner" (ngModelChange)="onPartnerChange($event)" type="string" placeholder="partner" style="margin-right: 5px; border-radius: 5px; font-size: 24px; height: 40px; width: 200px;" />
+    <input [(ngModel)]="this.searchData.marginRatio" (ngModelChange)="onMarginRatioChange($event)" type="number" placeholder="marginRatio" style="margin-right: 5px; border-radius: 5px; font-size: 24px; height: 40px; width: 200px;" />
+    <input [(ngModel)]="this.searchData.timestamp" (ngModelChange)="onTimestampChange($event)" type="string" placeholder="xx.xx.xxxx" style="margin-right: 5px; border-radius: 5px; font-size: 24px; height: 40px; width: 200px;" />
+      <button (click)="searchProp()" style=" height: 45px;"> Найти </button>
+      <button (click)="clearFilter()" style="margin-left: -5px; height: 45px; width: 150px; justify-content: center;"> Очистить </button>
   </div>
 <table class="table" *ngIf="commercialProp_list !== null || commercialProp_list !== []">
   <thead>
@@ -36,6 +43,7 @@
         <button (click)="goToSearchPage(commercial.idCommercialProp)">Изменить</button>
         <button (click)="deleteCommercial(commercial.idCommercialProp)">Удалить</button>
         <button (click)="downloadExcel(commercial.idCommercialProp)" >Excel</button>
+        <button (click)="downloadPdf(commercial.idCommercialProp)">PDF</button>
       </td>
     </tr>
   </tbody>

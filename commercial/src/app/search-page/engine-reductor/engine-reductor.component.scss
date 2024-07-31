@@ -56,9 +56,8 @@ select {
 }
 .container_element_configurator {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-  gap: 50px;
+  justify-content: center;
+  gap: 8%;
   align-items: center;
 }
 
@@ -116,16 +115,13 @@ select, input[type="number"] {
 }
 
 .rate_element_configurator {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6%;
+ display: flex;
+ align-items: flex-end;
+ gap: 5%;
 }
 
-.rate_header {
+.rate_header{
   padding-bottom: 100%;
-  margin-bottom: -20px;
-  margin-left: 5px;
 }
 
 br {
@@ -138,8 +134,8 @@ span {
   font-size: 14px;
 }
 button {
-  width: 100px;
-  height: 50px;
+  width: 120px;
+  height: 40px;
   background-color: #083b57;
   color: #ffffff;
   border: none;
@@ -147,7 +143,7 @@ button {
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease;
-  font-size: 16px;
+  // font-size: 16px;
 }
 
 span{

@@ -85,6 +85,9 @@ input,
 select {
   width: 100%;
   margin-top: 5px;
+  height: 40px;
+  font-size: 18px;
+  border-radius:  5px;
 }
 
 table {
@@ -101,7 +104,7 @@ th, td {
 button {
   margin-top: 10px;
   cursor: pointer;
-  height: 20px;
+  height: 40px;
   width: 120px;
   background-color: #fcb331 ;
     color: white;
@@ -135,12 +138,13 @@ button:hover {
   border: 1px solid black;
   height: 18px;
   color: black;
-  font-size: 18px;
+  font-size: 20px;
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
+  height: 20px;
 }
 
 .plusbt:hover{
@@ -167,7 +171,7 @@ button:hover {
 
   button {
     width: 15%;
-    height: 20px;
+    height: 40px;
     background-color: #083b57 ;
     color: white;
     border-radius: 5px;

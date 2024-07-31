@@ -11,7 +11,8 @@ import { CommercialProp } from '../models/commercialProp';
 export class CommercialService extends ABaseServiceService{
   private  commercialUrl = 'security/commercialProp';
   private  excelUrl = 'security/commercialProp/report';
-
+  private  pdfUrl = 'security/commercialProp/reportPdf';
+  private filterUrl = 'security/commercialProp/getByFilter';
 
 
   constructor(http: HttpClient) {
@@ -33,6 +34,11 @@ export class CommercialService extends ABaseServiceService{
   saveCommercialProp(commercialProp: CommercialProp): Observable<ResponseInfo<CommercialProp>>  {
     return this.post<ResponseInfo<CommercialProp>> (`${this.commercialUrl}`, commercialProp);
   }
+
+  filterProp(commercialProp: CommercialProp): Observable<ResponseInfo<CommercialProp[]>>  {
+    return this.post<ResponseInfo<CommercialProp[]>> (`${this.filterUrl}`, commercialProp);
+  }
+
 
 
   downloadBlob(blob: Blob, filename: string): void {
@@ -56,6 +62,16 @@ export class CommercialService extends ABaseServiceService{
         console.error('Error downloading the Excel file:', error);
       }
     );
-}
+  }
 
+  downloadPdfById(id: number): void {
+    this.http.get(`${this.endpoint}/${this.pdfUrl}/${id}`, { responseType: 'blob' }).subscribe(
+      (blob: Blob) => {
+        this.downloadBlob(blob, `${id}.pdf`);
+      },
+      (error) => {
+        console.error('Error downloading the Pdf file:', error);
+      }
+    );
+  }
 }
