@@ -119,36 +119,36 @@ export class EngineComponent {
     }
   }
 
-  cableExitSideSelected(event: Event) {
-    const selectedElement = event.target as HTMLSelectElement;
-    const selectedValue = selectedElement.value;
-    console.log('Выбранное значение  cableExitSide:', selectedValue);
-    console.log('Выбранное значение int  cableExitSide:', selectedValue);
+  // cableExitSideSelected(event: Event) {
+  //   const selectedElement = event.target as HTMLSelectElement;
+  //   const selectedValue = selectedElement.value;
+  //   console.log('Выбранное значение  cableExitSide:', selectedValue);
+  //   console.log('Выбранное значение int  cableExitSide:', selectedValue);
 
-    if (selectedValue) {
-      this.newMotor.cableExitSide = selectedValue;
-    }
-    if(selectedValue == "Select"){
-      this.newMotor.cableExitSide = undefined;
-      console.log('undefined значение cableExitSide:',  this.newMotor.cableExitSide);
-    }
-  }
+  //   if (selectedValue) {
+  //     this.newMotor.cableExitSide = selectedValue;
+  //   }
+  //   if(selectedValue == "Select"){
+  //     this.newMotor.cableExitSide = undefined;
+  //     console.log('undefined значение cableExitSide:',  this.newMotor.cableExitSide);
+  //   }
+  // }
 
-  posTerminalSelected(event: Event) {
-    const selectedElement = event.target as HTMLSelectElement;
-    const selectedValue = selectedElement.value;
-    console.log('Выбранное значение posTerminal:', selectedValue);
-    const intselectedValue: number = parseInt(selectedValue, 10);
-    console.log('Выбранное значение int posTerminal:', selectedValue);
+  // posTerminalSelected(event: Event) {
+  //   const selectedElement = event.target as HTMLSelectElement;
+  //   const selectedValue = selectedElement.value;
+  //   console.log('Выбранное значение posTerminal:', selectedValue);
+  //   const intselectedValue: number = parseInt(selectedValue, 10);
+  //   console.log('Выбранное значение int posTerminal:', selectedValue);
 
-    if (intselectedValue) {
-      this.newMotor.posTerminalBox = intselectedValue;
-    }
-    if(selectedValue == "Select"){
-      this.newMotor.posTerminalBox = undefined;
-      console.log('undefined значение posTerminalBox:',  this.newMotor.posTerminalBox);
-    }
-  }
+  //   if (intselectedValue) {
+  //     this.newMotor.posTerminalBox = intselectedValue;
+  //   }
+  //   if(selectedValue == "Select"){
+  //     this.newMotor.posTerminalBox = undefined;
+  //     console.log('undefined значение posTerminalBox:',  this.newMotor.posTerminalBox);
+  //   }
+  // }
 
   // rpmSelected(event: Event) {
   //   const selectedElement = event.target as HTMLSelectElement;

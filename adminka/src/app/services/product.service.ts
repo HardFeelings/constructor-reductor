@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ABaseServiceService } from './abase-service.service';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Product, ProductType, ProductOption } from '../models/product';
 import { ResponseInfo } from '../models/responesInfo';
 import { Observable } from 'rxjs';
@@ -15,7 +15,7 @@ export class ProductService extends ABaseServiceService{
   private productTypeOptionIdUrl = 'byProductTypeId';
   private filterUrl = 'filter';
   private addProsuctUrl = 'security/product/dynamicSave';
-  private imageUrl = 'product/downloadImage'
+  private imageUrl = 'product/downloadImage';
 
   constructor(http: HttpClient) {
     super(http, 'api/v1');
@@ -80,4 +80,6 @@ export class ProductService extends ABaseServiceService{
     window.URL.revokeObjectURL(url);
     document.body.removeChild(a);
   }
+
+
 }

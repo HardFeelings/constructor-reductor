@@ -26,8 +26,8 @@ export class ReductorComponent {
   reducerInstallationType: ReducerInstallationType[];
   options: number[] = [];
   foundProducts: Product[];
-  diamInput: number;
-  diamInputAllowance:number;
+  // diamInput: number;
+  // diamInputAllowance:number;
   diamOutput: number;
   diamOutputAllowance: number;
   ratio: number;
@@ -116,21 +116,21 @@ export class ReductorComponent {
     });
   }
 
-  idReducerAdapterSelected(event: Event) {
-    const selectedElement = event.target as HTMLSelectElement;
-    const selectedValue = selectedElement.value;
-    console.log('Выбранное значение ReducerAdapterType:', selectedValue);
-    const selectedAdapter= this.reducerAdapterType.find(type => type.reducerAdapterTypeValue === selectedValue);
+  // idReducerAdapterSelected(event: Event) {
+  //   const selectedElement = event.target as HTMLSelectElement;
+  //   const selectedValue = selectedElement.value;
+  //   console.log('Выбранное значение ReducerAdapterType:', selectedValue);
+  //   const selectedAdapter= this.reducerAdapterType.find(type => type.reducerAdapterTypeValue === selectedValue);
 
-    if (selectedAdapter) {
-      this.filter.idReducerAdapterInputType = selectedAdapter.idReducerAdapterType;
-      console.log('ID выбранного размера адаптера:', selectedAdapter.idReducerAdapterType);
-    } else {
-      console.error('Такого размера адаптера не найдено');
-      this.filter.idReducerAdapterInputType = undefined;
-      console.log('undefined выбранного размера адаптера:', this.filter.idReducerAdapterInputType);
-    }
-  }
+  //   if (selectedAdapter) {
+  //     this.filter.idReducerAdapterInputType = selectedAdapter.idReducerAdapterType;
+  //     console.log('ID выбранного размера адаптера:', selectedAdapter.idReducerAdapterType);
+  //   } else {
+  //     console.error('Такого размера адаптера не найдено');
+  //     this.filter.idReducerAdapterInputType = undefined;
+  //     console.log('undefined выбранного размера адаптера:', this.filter.idReducerAdapterInputType);
+  //   }
+  // }
 
 
   getReducerOutputShaftTypeByReducerTypeId(id:number) {
@@ -272,8 +272,8 @@ export class ReductorComponent {
   }
 
   searchProduct(filter: Filter){
-    filter.diamInput = this.diamInput;
-    filter.diamInputAllowance = this.diamInputAllowance;
+    // filter.diamInput = this.diamInput;
+    // filter.diamInputAllowance = this.diamInputAllowance;
     filter.diamOutput = this.diamOutput;
     filter.diamOutputAllowance = this.diamOutputAllowance;
     filter.ratio = this.ratio;

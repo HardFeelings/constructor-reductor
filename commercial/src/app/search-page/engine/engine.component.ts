@@ -16,7 +16,7 @@ export class EngineComponent {
   motorType: EngineType[];
   productOption: ProductOption[];
    // frequencyArray: number[]=[50,60];
-  posTerminalBoxArray: number[]=[90,180,270,360];
+  // posTerminalBoxArray: number[]=[90,180,270,360];
   rpmArray: number[]=[750, 1000, 1500, 3000];
   @Input() idProductType: number;
   motorTypeId: number | undefined;
@@ -108,21 +108,21 @@ export class EngineComponent {
     }
   }
 
-  frequencySelected(event: Event) {
-    const selectedElement = event.target as HTMLSelectElement;
-    const selectedValue = selectedElement.value;
-    console.log('Выбранное значение posTerminal:', selectedValue);
-    const intselectedValue: number = parseInt(selectedValue, 10);
-    console.log('Выбранное значение int posTerminal:', selectedValue);
+  // frequencySelected(event: Event) {
+  //   const selectedElement = event.target as HTMLSelectElement;
+  //   const selectedValue = selectedElement.value;
+  //   console.log('Выбранное значение posTerminal:', selectedValue);
+  //   const intselectedValue: number = parseInt(selectedValue, 10);
+  //   console.log('Выбранное значение int posTerminal:', selectedValue);
 
-    if (intselectedValue) {
-      this.filter.posTerminalBox = intselectedValue;
-    }
-    if(selectedValue == "Select"){
-      this.filter.posTerminalBox = undefined;
-       console.log('undefined значение posTerminal:', this.filter.posTerminalBox);
-    }
-  }
+  //   if (intselectedValue) {
+  //     this.filter.posTerminalBox = intselectedValue;
+  //   }
+  //   if(selectedValue == "Select"){
+  //     this.filter.posTerminalBox = undefined;
+  //      console.log('undefined значение posTerminal:', this.filter.posTerminalBox);
+  //   }
+  // }
 
   // rpmSelected(event: Event) {
   //   const selectedElement = event.target as HTMLSelectElement;

@@ -36,20 +36,20 @@
       </div>
       <br />
       <div class="container_element_configurator">
-        <div class="element_configurator">
+        <!-- <div class="element_configurator">
           <span>Выход стороны кабеля</span>
           <select (change)="cableExitSideSelected($event)">
             <option value="Select"  selected>Select</option>
             <option *ngFor="let value of cableExitSide" [value]="value">{{ value }}</option>
           </select>
-        </div>
-        <div class="element_configurator">
+        </div> -->
+        <!-- <div class="element_configurator">
           <span>  Положение клеммной коробки</span>
           <select (change)="posTerminalSelected($event)">
             <option value="Select"  selected>Select</option>
             <option *ngFor="let value of posTerminalBoxArray" [value]="value">{{ value }}</option>
           </select>
-        </div>
+        </div> -->
         <div class="element_configurator">
           <span>  Частота переменного тока Hz </span>
           <select (change)="frequencySelected($event)">
@@ -83,14 +83,14 @@
       </div>
     </div>
     <div class="container_element_configurator">
-      <div class="element_configurator">
+      <!-- <div class="element_configurator">
         <span>Коэффициент эксплуатации</span>
         <input min="0"  [(ngModel)]="this.serviceFactor"  type="number" />
       </div>
       <div class="element_configurator">
         <span>Крутящий момент</span>
         <input min="0" [(ngModel)]="this.torqueMoment"  type="number" />
-      </div>
+      </div> -->
       <div class="element_configurator">
         <span>Число оборотов об/мин </span>
         <input min="0"  [(ngModel)]="this.rpm"  type="number" />

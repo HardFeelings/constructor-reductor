@@ -1,13 +1,20 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { ABaseServiceService } from './abase-service.service';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { ResponseInfo } from '../models/responesInfo';
+import { Observable } from 'rxjs';
+import { Product } from '../classes/product';
+
 
 @Injectable({
   providedIn: 'root'
 })
-export class ImageService {
+export class ImageService extends ABaseServiceService {
   private imageUrl = 'api/v1/product/downloadImage';
+  private searchUrl = 'product/getByName';
 
-  constructor(protected http: HttpClient) {
+  constructor(http: HttpClient) {
+    super(http, 'api/v1');
   }
 
 
@@ -32,5 +39,11 @@ export class ImageService {
     a.click();
     window.URL.revokeObjectURL(url);
     document.body.removeChild(a);
+  }
+
+  ///////////// SearchProduct /////////////
+  searchProduct(name: string | null): Observable<ResponseInfo<Product[]>> {
+    let params = new HttpParams().set('name', name ?? '');
+    return this.get<ResponseInfo<Product[]>>(this.searchUrl, params);
   }
 }

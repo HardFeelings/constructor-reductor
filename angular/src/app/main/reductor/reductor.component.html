@@ -23,7 +23,7 @@
         </div>
       </div>
       <br />
-      <div class="container_element_configurator">
+      <!-- <div class="container_element_configurator">
         <div class="rate_element_configurator">
           <div class="element_configurator">
             <span>Диаметр входного вала</span>
@@ -37,7 +37,7 @@
           </div>
         </div>
       </div>
-      <br />
+      <br /> -->
       <div class="container_element_configurator">
         <div class="rate_element_configurator">
           <div class="element_configurator">
@@ -61,13 +61,13 @@
             <option *ngFor="let type of reducerInputType" [value]="type.reducerInputTypeValue">{{ type.reducerInputTypeValue }}</option>
           </select>
         </div>
-        <div  *ngIf="reducerTypeId && reducerTypeId !== null"  class="element_configurator">
+        <!-- <div  *ngIf="reducerTypeId && reducerTypeId !== null"  class="element_configurator">
           <span>Размер адаптера IEC</span>
           <select [disabled]="!reducerTypeId" (change)="idReducerAdapterSelected($event)">
             <option value="Select"  selected>Select</option>
             <option *ngFor="let type of reducerAdapterType" [value]="type.reducerAdapterTypeValue">{{ type.reducerAdapterTypeValue }}</option>
           </select>
-        </div>
+        </div> -->
         <div  *ngIf="reducerTypeId && reducerTypeId !== null"  class="element_configurator">
           <span>Форма выходного вала</span>
           <select [disabled]="!reducerTypeId" (change)="idReducerOutputShaftTypeSelected($event)">
@@ -107,10 +107,10 @@
     <table class="table"  *ngIf="foundProducts !== null || foundProducts !== []">
       <thead *ngIf="foundProducts && foundProducts.length > 0">
         <tr>
-            <th>id</th>
+            <!-- <th>id</th> -->
             <th>Наименование</th>
             <th>Передаточное отношение</th>
-            <th>Диаметр входного вала</th>
+            <!-- <th>Диаметр входного вала</th> -->
             <th>Диаметр выходного вала</th>
             <th>Крутящий момент</th>
             <th>Вес</th>
@@ -119,10 +119,10 @@
     </thead>
     <tbody>
         <tr *ngFor="let product of foundProducts">
-            <td>{{ product.idProduct }}</td>
+            <!-- <td>{{ product.idProduct }}</td> -->
             <td>{{ product.name }}</td>
             <td>{{ product.reducer?.ratio || 0 }}</td>
-            <td>{{ product.reducer?.diameterInputShaft || 0 }}</td>
+            <!-- <td>{{ product.reducer?.diameterInputShaft || 0 }}</td> -->
             <td>{{ product.reducer?.diameterOutputShaft || 0 }}</td>
             <td>{{ product.torqueMoment || 0 }}</td>
             <td>{{ product.weight || 0 }}</td>

@@ -28,10 +28,10 @@
           <span>Передаточное отношение</span>
           <input  min="0" [(ngModel)]="this.ratio" type="number" />
         </div>
-        <div class="element_configurator">
+        <!-- <div class="element_configurator">
           <span>Диаметр входного вала</span>
           <input min="0" [(ngModel)]="this.diamInput" type="number" />
-        </div>
+        </div> -->
         <div class="element_configurator">
           <span>Диаметр выходного вала</span>
           <input min="0" [(ngModel)]="this.diamOutput" type="number" />
@@ -46,13 +46,13 @@
             <option *ngFor="let type of reducerInputType" [value]="type.reducerInputTypeValue">{{ type.reducerInputTypeValue }}</option>
           </select>
         </div>
-        <div *ngIf="reducerTypeId && reducerTypeId !== null" class="element_configurator">
+        <!-- <div *ngIf="reducerTypeId && reducerTypeId !== null" class="element_configurator">
           <span>Размер адаптера IEC</span>
           <select [disabled]="!reducerTypeId" (change)="idReducerAdapterSelected($event)">
             <option value="Select"  selected>Select</option>
             <option *ngFor="let type of reducerAdapterType" [value]="type.reducerAdapterTypeValue">{{ type.reducerAdapterTypeValue }}</option>
           </select>
-        </div>
+        </div> -->
         <div *ngIf="reducerTypeId && reducerTypeId !== null" class="element_configurator">
           <span>Форма выходного вала</span>
           <select [disabled]="!reducerTypeId" (change)="idReducerOutputShaftTypeSelected($event)">
@@ -100,7 +100,7 @@
         <input  min="0" [(ngModel)]="this.weight"  type="number" />
       </div>
     </div>
-    <div class="container_element_configurator">
+    <!-- <div class="container_element_configurator">
       <div class="element_configurator">
         <span>Коэффициент эксплуатации</span>
         <input min="0"  [(ngModel)]="this.serviceFactor"  type="number" />
@@ -113,7 +113,7 @@
         <span>Число оборотов об/мин </span>
         <input min="0"  [(ngModel)]="this.rpm"  type="number" />
       </div>
-    </div>
+    </div> -->
     <br />
     <hr />
     <div class="element_configurator2">

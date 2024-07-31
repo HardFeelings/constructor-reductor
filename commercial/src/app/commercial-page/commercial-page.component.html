@@ -9,7 +9,7 @@
 <table class="table" *ngIf="commercialProp_list !== null || commercialProp_list !== []">
   <thead>
     <tr *ngIf="commercialProp_list !== []">
-        <th>id</th>
+        <!-- <th>id</th> -->
         <th>number</th>
         <th>shortName</th>
         <th>partner</th>
@@ -21,7 +21,7 @@
 </thead>
   <tbody>
     <tr *ngFor="let commercial of commercialProp_list">
-      <td>{{commercial.idCommercialProp}}</td>
+      <!-- <td>{{commercial.idCommercialProp}}</td> -->
       <td>{{commercial.number}}</td>
       <td>{{commercial.manager?.shortName}}</td>
       <td>{{commercial.partner}}</td>

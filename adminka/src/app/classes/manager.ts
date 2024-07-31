@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Observable } from 'rxjs';
-import { ResponseInfo } from "./responesInfo";
+import { ResponseInfo } from "../models/responesInfo";
 
 export class Manager {
   idManager: number;

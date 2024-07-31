@@ -124,21 +124,21 @@ export class ReductorComponent {
     });
   }
 
-  idReducerAdapterSelected(event: Event) {
-    const selectedElement = event.target as HTMLSelectElement;
-    const selectedValue = selectedElement.value;
-    console.log('Выбранное значение ReducerAdapterType:', selectedValue);
-    const selectedAdapter= this.reducerAdapterType.find(type => type.reducerAdapterTypeValue === selectedValue);
+  // idReducerAdapterSelected(event: Event) {
+  //   const selectedElement = event.target as HTMLSelectElement;
+  //   const selectedValue = selectedElement.value;
+  //   console.log('Выбранное значение ReducerAdapterType:', selectedValue);
+  //   const selectedAdapter= this.reducerAdapterType.find(type => type.reducerAdapterTypeValue === selectedValue);
 
-    if (selectedAdapter) {
-      this.newReducer.reducerAdapterTypeId = selectedAdapter.idReducerAdapterType;
-      console.log('ID выбранного размера адаптера:', selectedAdapter.idReducerAdapterType);
-    } else {
-      console.error('Такого размера адаптера не найдено');
-      this.newReducer.reducerAdapterTypeId = undefined;
-      console.log('undefined выбранного размера адаптера:',  this.newReducer.reducerAdapterTypeId );
-    }
-  }
+  //   if (selectedAdapter) {
+  //     this.newReducer.reducerAdapterTypeId = selectedAdapter.idReducerAdapterType;
+  //     console.log('ID выбранного размера адаптера:', selectedAdapter.idReducerAdapterType);
+  //   } else {
+  //     console.error('Такого размера адаптера не найдено');
+  //     this.newReducer.reducerAdapterTypeId = undefined;
+  //     console.log('undefined выбранного размера адаптера:',  this.newReducer.reducerAdapterTypeId );
+  //   }
+  // }
 
   getReducerOutputShaftTypeByReducerTypeId(id:number) {
     this.reducerService.getReducerOutputShaftTypeByReducerTypeId(id).subscribe((respones: ResponseInfo<ReducerOutputShaftType[]>)=>{
@@ -281,7 +281,7 @@ export class ReductorComponent {
 
   dynamicAddProduct(){
     this.newReducer.ratio = this.ratio;
-    this.newReducer.diameterInputShaft = this.diamInput;
+    // this.newReducer.diameterInputShaft = this.diamInput;
     this.newReducer.diameterOutputShaft = this.diamOutput;
 
     this.newProduct.productTypeId = this.idProductType;

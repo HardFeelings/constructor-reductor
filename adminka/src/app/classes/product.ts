@@ -1,7 +1,6 @@
 import { HttpClient } from "@angular/common/http"
 import { Motor } from "./motor"
 import { Observable } from 'rxjs';
-import { ResponseInfo } from "./responesInfo";
 
 export class Product {
     id: number
@@ -11,8 +10,8 @@ export class Product {
     price: number
     reducerId: number | null
     motorId: number | null
-    optionsIds: Array<number> | null;
-    optionsString: string;
+    optionsIds: number[]| null;
+    optionsString: string | null;
     imageEmpty!: boolean;
     imageString: string | null;
     imageChanged!: boolean;
@@ -35,7 +34,7 @@ export class Product {
             rpm: this.rpm,
             torqueMoment: this.torqueMoment,
             serviceFactor: this.serviceFactor,
-            optionsIds: this.optionsString?.split(',').map(item => parseInt(item, 10)) || []
+            optionsIds: this.optionsString ? this.optionsString.split(',').map(item => parseInt(item, 10)) : []
         }
     }
 

@@ -92,10 +92,10 @@
     <table class="table" *ngIf="foundProducts !== null || foundProducts !== []">
       <thead *ngIf="foundProducts && foundProducts.length > 0">
         <tr>
-            <th>id</th>
+            <!-- <th>id</th> -->
             <th>Наименование</th>
             <th>Мощность</th>
-            <th>Положение клеммной коробки</th>
+            <!-- <th>Положение клеммной коробки</th> -->
             <th>Об/мин</th>
             <th>Передаточное отношение</th>
             <th>Крутящий момент</th>
@@ -106,11 +106,11 @@
     </thead>
     <tbody>
         <tr *ngFor="let product of foundProducts">
-            <td>{{ product.idProduct }}</td>
+            <!-- <td>{{ product.idProduct }}</td> -->
             <td>{{ product.name }}</td>
 
             <td >{{ product.motor?.power || 0 }}</td>
-            <td>{{ product.motor?.posTerminalBox || 0 }}</td>
+            <!-- <td>{{ product.motor?.posTerminalBox || 0 }}</td> -->
             <td>{{ product.rpm || 0 }}</td>
 
             <td>{{ product.reducer?.ratio || 0 }}</td>

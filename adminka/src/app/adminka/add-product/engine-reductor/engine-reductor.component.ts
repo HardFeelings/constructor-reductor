@@ -140,36 +140,36 @@ export class EngineReductorComponent {
     }
   }
 
-  cableExitSideSelected(event: Event) {
-    const selectedElement = event.target as HTMLSelectElement;
-    const selectedValue = selectedElement.value;
-    console.log('Выбранное значение  cableExitSide:', selectedValue);
-    console.log('Выбранное значение int  cableExitSide:', selectedValue);
+  // cableExitSideSelected(event: Event) {
+  //   const selectedElement = event.target as HTMLSelectElement;
+  //   const selectedValue = selectedElement.value;
+  //   console.log('Выбранное значение  cableExitSide:', selectedValue);
+  //   console.log('Выбранное значение int  cableExitSide:', selectedValue);
 
-    if (selectedValue) {
-      this.newMotor.cableExitSide = selectedValue;
-    }
-    if(selectedValue == "Select"){
-      this.newMotor.cableExitSide = undefined;
-      console.log('undefined значение cableExitSide:',  this.newMotor.cableExitSide);
-    }
-  }
+  //   if (selectedValue) {
+  //     this.newMotor.cableExitSide = selectedValue;
+  //   }
+  //   if(selectedValue == "Select"){
+  //     this.newMotor.cableExitSide = undefined;
+  //     console.log('undefined значение cableExitSide:',  this.newMotor.cableExitSide);
+  //   }
+  // }
 
-  posTerminalSelected(event: Event) {
-    const selectedElement = event.target as HTMLSelectElement;
-    const selectedValue = selectedElement.value;
-    console.log('Выбранное значение posTerminal:', selectedValue);
-    const intselectedValue: number = parseInt(selectedValue, 10);
-    console.log('Выбранное значение int posTerminal:', selectedValue);
+  // posTerminalSelected(event: Event) {
+  //   const selectedElement = event.target as HTMLSelectElement;
+  //   const selectedValue = selectedElement.value;
+  //   console.log('Выбранное значение posTerminal:', selectedValue);
+  //   const intselectedValue: number = parseInt(selectedValue, 10);
+  //   console.log('Выбранное значение int posTerminal:', selectedValue);
 
-    if (intselectedValue) {
-      this.newMotor.posTerminalBox = intselectedValue;
-    }
-    if(selectedValue == "Select"){
-      this.newMotor.posTerminalBox = undefined;
-      console.log('undefined значение posTerminalBox:',  this.newMotor.posTerminalBox);
-    }
-  }
+  //   if (intselectedValue) {
+  //     this.newMotor.posTerminalBox = intselectedValue;
+  //   }
+  //   if(selectedValue == "Select"){
+  //     this.newMotor.posTerminalBox = undefined;
+  //     console.log('undefined значение posTerminalBox:',  this.newMotor.posTerminalBox);
+  //   }
+  // }
 
   getAllReducerType() {
     this.reducerService.getAllReducerTypes().subscribe((respones: ResponseInfo<ReducerType[]>) => {
@@ -243,21 +243,21 @@ export class EngineReductorComponent {
     });
   }
 
-  idReducerAdapterSelected(event: Event) {
-    const selectedElement = event.target as HTMLSelectElement;
-    const selectedValue = selectedElement.value;
-    console.log('Выбранное значение ReducerAdapterType:', selectedValue);
-    const selectedAdapter= this.reducerAdapterType.find(type => type.reducerAdapterTypeValue === selectedValue);
+  // idReducerAdapterSelected(event: Event) {
+  //   const selectedElement = event.target as HTMLSelectElement;
+  //   const selectedValue = selectedElement.value;
+  //   console.log('Выбранное значение ReducerAdapterType:', selectedValue);
+  //   const selectedAdapter= this.reducerAdapterType.find(type => type.reducerAdapterTypeValue === selectedValue);
 
-    if (selectedAdapter) {
-      this.newReducer.reducerAdapterTypeId = selectedAdapter.idReducerAdapterType;
-      console.log('ID выбранного размера адаптера:', selectedAdapter.idReducerAdapterType);
-    } else {
-      console.error('Такого размера адаптера не найдено');
-      this.newReducer.reducerAdapterTypeId = undefined;
-      console.log('undefined выбранного размера адаптера:',  this.newReducer.reducerAdapterTypeId );
-    }
-  }
+  //   if (selectedAdapter) {
+  //     this.newReducer.reducerAdapterTypeId = selectedAdapter.idReducerAdapterType;
+  //     console.log('ID выбранного размера адаптера:', selectedAdapter.idReducerAdapterType);
+  //   } else {
+  //     console.error('Такого размера адаптера не найдено');
+  //     this.newReducer.reducerAdapterTypeId = undefined;
+  //     console.log('undefined выбранного размера адаптера:',  this.newReducer.reducerAdapterTypeId );
+  //   }
+  // }
 
   getReducerOutputShaftTypeByReducerTypeId(id:number) {
     this.reducerService.getReducerOutputShaftTypeByReducerTypeId(id).subscribe((respones: ResponseInfo<ReducerOutputShaftType[]>)=>{
@@ -440,7 +440,7 @@ export class EngineReductorComponent {
     this.newProduct.motor = this.newMotor;
 
     this.newReducer.ratio = this.ratio;
-    this.newReducer.diameterInputShaft = this.diamInput;
+    // this.newReducer.diameterInputShaft = this.diamInput;
     this.newReducer.diameterOutputShaft = this.diamOutput;
     this.newProduct.reducer = this.newReducer;
 

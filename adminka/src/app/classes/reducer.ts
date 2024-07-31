@@ -7,11 +7,11 @@ export class Reducer {
     type: ReducerType
     reducerSizeId: Number
     size: ReducerSize
-    diameterInputShaft: Number | null
+    // diameterInputShaft: Number | null
     diameterOutputShaft: Number | null
     reducerInputTypeId: Number
     inputType: ReducerInputType
-    reducerAdapterTypeId: Number
+    // reducerAdapterTypeId: Number
     adapterType: ReducerAdapterType
     reducerOutputShaftTypeId: Number
     outputShaftType: ReducerOutputShaftType
@@ -24,7 +24,7 @@ export class Reducer {
     constructor() {
         this.type = new ReducerType()
         this.size = new ReducerSize()
-        this.diameterInputShaft = null
+        // this.diameterInputShaft = null
         this.diameterOutputShaft = null
         this.inputType = new ReducerInputType()
         this.adapterType = new ReducerAdapterType()
@@ -36,7 +36,7 @@ export class Reducer {
         this.reducerSizeId = 0
         this.reducerInputTypeId = 0
         this.reducerOutputShaftTypeId = 0
-        this.reducerAdapterTypeId = 0
+        // this.reducerAdapterTypeId = 0
         this.reducerInstallationTypeId = 0
         this.reducerMountingId = 0
         this.ratio = null
@@ -48,11 +48,11 @@ export class Reducer {
             reducerTypeId: this.reducerTypeId,
             reducerSizeId: this.reducerSizeId,
             reducerInputTypeId: this.reducerInputTypeId,
-            reducerAdapterTypeId: this.reducerAdapterTypeId,
+            // reducerAdapterTypeId: this.reducerAdapterTypeId,
             reducerOutputShaftTypeId: this.reducerOutputShaftTypeId,
             reducerInstallationTypeId: this.reducerInstallationTypeId,
             reducerMountingId: this.reducerMountingId,
-            diameterInputShaft: this.diameterInputShaft,
+            // diameterInputShaft: this.diameterInputShaft,
             diameterOutputShaft: this.diameterOutputShaft,
             ratio: this.ratio,
         }
@@ -70,11 +70,11 @@ export class Reducer {
                         reducer.reducerTypeId = e["reducerTypeId"]
                         reducer.reducerSizeId = e["reducerSizeId"]
                         reducer.reducerInputTypeId = e["reducerInputTypeId"]
-                        reducer.reducerAdapterTypeId = e["reducerAdapterTypeId"]
+                        // reducer.reducerAdapterTypeId = e["reducerAdapterTypeId"]
                         reducer.reducerOutputShaftTypeId = e["reducerOutputShaftTypeId"]
                         reducer.reducerInstallationTypeId = e["reducerInstallationTypeId"]
                         reducer.reducerMountingId = e["reducerMountingId"]
-                        reducer.diameterInputShaft = e["diameterInputShaft"]
+                        // reducer.diameterInputShaft = e["diameterInputShaft"]
                         reducer.diameterOutputShaft = e["diameterOutputShaft"]
                         reducer.ratio = e["ratio"]
                         list.push(reducer)

@@ -3,10 +3,10 @@ export class Reducer {
     idReducer: number;
     reducerTypeId: number;
     reducerSizeId: number;
-    diameterInputShaft!: number;
+    // diameterInputShaft!: number;
     diameterOutputShaft!: number;
     reducerInputTypeId: number;
-    reducerAdapterTypeId: number;
+    // reducerAdapterTypeId: number;
     reducerOutputShaftTypeId: number;
     reducerInstallationTypeId: number;
     reducerMountingId: number;

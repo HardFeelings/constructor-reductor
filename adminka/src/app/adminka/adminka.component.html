@@ -43,9 +43,9 @@
                                 <!-- <th>rpm</th> -->
                                 <th>efficiency</th>
                                 <th>ratedCurrent</th>
-                                <th>posTerminalBox</th>
-                                <th>momentOfInertia</th>
-                                <th>cableExitSide</th>
+                                <!-- <th>posTerminalBox</th> -->
+                                <!-- <th>momentOfInertia</th>
+                                <th>cableExitSide</th> -->
                                 <th>type</th>
                                 <th></th>
                             </tr>
@@ -59,9 +59,9 @@
                                 <!-- <td><textarea class="editable" [(ngModel)]="i.rpm.value"></textarea></td> -->
                                 <td><textarea class="editable" [(ngModel)]="i.efficiency"></textarea></td>
                                 <td><textarea class="editable" [(ngModel)]="i.ratedCurrent"></textarea></td>
-                                <td><textarea class="editable" [(ngModel)]="i.posTerminalBox"></textarea></td>
-                                <td><textarea class="editable" [(ngModel)]="i.momentOfInertia"></textarea></td>
-                                <td><textarea class="editable" [(ngModel)]="i.cableExitSide"></textarea></td>
+                                <!-- <td><textarea class="editable" [(ngModel)]="i.posTerminalBox"></textarea></td> -->
+                                <!-- <td><textarea class="editable" [(ngModel)]="i.momentOfInertia"></textarea></td>
+                                <td><textarea class="editable" [(ngModel)]="i.cableExitSide"></textarea></td> -->
                                 <td><textarea class="editable" [(ngModel)]="i.type.id"></textarea></td>
                                 <td class="row-buttons">
                                     <button (click)="saveMotor(i)"> Сохранить </button>
@@ -129,7 +129,9 @@
             <div *ngIf="id==3">
                 <div class="buttons">
                     <button (click)="addProduct()"> Новый </button>
-                    <button (click)="goToDynamicAdd()"> Dynamic Save </button>
+                    <button (click)="goToDynamicAdd()" style="margin-right: 50px;" > Dynamic Save </button>
+                    <input [(ngModel)]="this.searchData" type="string" style="margin-right: 10px; border-radius: 5px; font-size: 24px;" />
+                    <button (click)="searchProductByName()"> Найти </button>
                 </div>
                 <div class="table-container">
                     <table class="table">
@@ -242,11 +244,11 @@
                                 <th>TypeId</th>
                                 <th>SizeId</th>
                                 <th>Input TypeId</th>
-                                <th>Adapter TypeId</th>
+                                <!-- <th>Adapter TypeId</th> -->
                                 <th>OutputShaft TypeId</th>
                                 <th>Installation TypeId</th>
                                 <th>MountingId</th>
-                                <th>ØInputShaft</th>
+                                <!-- <th>ØInputShaft</th> -->
                                 <th>ØOutputShaft</th>
                                 <th>ratio</th>
                                 <th></th>
@@ -258,11 +260,11 @@
                                 <td><input class="editable" [(ngModel)]="i.reducerTypeId"></td>
                                 <td><input class="editable" [(ngModel)]="i.reducerSizeId"></td>
                                 <td><input class="editable" [(ngModel)]="i.reducerInputTypeId"></td>
-                                <td><input class="editable" [(ngModel)]="i.reducerAdapterTypeId"></td>
+                                <!-- <td><input class="editable" [(ngModel)]="i.reducerAdapterTypeId"></td> -->
                                 <td><input class="editable" [(ngModel)]="i.reducerOutputShaftTypeId"></td>
                                 <td><input class="editable" [(ngModel)]="i.reducerInstallationTypeId"></td>
                                 <td><input class="editable" [(ngModel)]="i.reducerMountingId"></td>
-                                <td><input class="editable" [(ngModel)]="i.diameterInputShaft"></td>
+                                <!-- <td><input class="editable" [(ngModel)]="i.diameterInputShaft"></td> -->
                                 <td><input class="editable" [(ngModel)]="i.diameterOutputShaft"></td>
                                 <td><input class="editable" [(ngModel)]="i.ratio"></td>
                                 <td class="row-buttons">
@@ -438,7 +440,7 @@
                     </table>
                 </div>
             </div>
-            <div *ngIf="id==13">
+            <!-- <div *ngIf="id==13">
                 <div class="buttons">
                     <button (click)="addReducerAdapterType()"> Новый </button>
                 </div>
@@ -465,7 +467,7 @@
                         </tbody>
                     </table>
                 </div>
-            </div>
+            </div> -->
             <div *ngIf="id==14">
               <div class="buttons">
                   <button (click)="addManager()"> Новый </button>

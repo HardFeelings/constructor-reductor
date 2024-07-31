@@ -1,3 +1,5 @@
+
+
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
@@ -7,9 +9,10 @@ import { Product, ProductOption, ProductType } from '../classes/product';
 import { MountingPoint, Reducer, ReducerAdapterType, ReducerInputType, ReducerInstallationType, ReducerOutputShaftType, ReducerSize, ReducerType } from '../classes/reducer';
 import { ImageService } from '../services/image.service';
 import { Manager } from '../classes/manager';
-import { ResponseInfo } from '../classes/responesInfo';
 import { AddProductComponent } from './add-product/add-product.component';
 import { MatDialog } from '@angular/material/dialog';
+import { ProductService } from '../services/product.service';
+import { ResponseInfo } from '../models/responesInfo';
 
 
 @Component({
@@ -32,8 +35,10 @@ export class AdminkaComponent {
   reducerMounting_list: MountingPoint[]
   reducerInstallationType_list: ReducerInstallationType[]
   reducerInputType_list: ReducerInputType[]
-  reducerAdapterType_list: ReducerAdapterType[]
+  // reducerAdapterType_list: ReducerAdapterType[]
   manager_list:Manager[];
+
+  searchData: string | null = null;
 
   constructor(private http: HttpClient, private imageService: ImageService, public dialog:MatDialog) {
     this.motor_list = new Array<Motor>();
@@ -49,7 +54,7 @@ export class AdminkaComponent {
     this.reducerMounting_list = new Array<MountingPoint>();
     this.reducerInstallationType_list = new Array<ReducerInstallationType>();
     this.reducerInputType_list = new Array<ReducerInputType>();
-    this.reducerAdapterType_list = new Array<ReducerAdapterType>();
+    // this.reducerAdapterType_list = new Array<ReducerAdapterType>();
     this.manager_list = new Array<Manager>();
   }
 
@@ -118,7 +123,7 @@ export class AdminkaComponent {
     this.getReducerMounting()
     this.getReducerInstallationType()
     this.getReducerInputType()
-    this.getReducerAdapterType()
+    // this.getReducerAdapterType()
     this.getListManagers()
     this.setid(0);
   }
@@ -183,6 +188,8 @@ export class AdminkaComponent {
     })
   }
 
+
+
   addMotorType() {
     var motorType = new MotorType()
     this.motorType_list.push(motorType)
@@ -233,7 +240,43 @@ export class AdminkaComponent {
     this.product_list.push(product)
   }
 
+
+  searchProductByName(){
+    this.imageService.searchProduct(this.searchData).subscribe((respones: ResponseInfo<Product[]>)=>{
+      if(respones.data !== null){
+        console.log("Data searchProductByName", respones.data);
+        this.product_list = [];
+        if(respones.data && respones.data.length>0){
+          respones.data.forEach((e: { [x: string]: any; }) => {
+            var product = new Product()
+            product.id = e["idProduct"]
+            product.productTypeId = e["productTypeId"]
+            product.name = e["name"]
+            product.weight = e["weight"]
+            product.price = e["price"]
+            product.reducerId = e["reducerId"]
+            product.motorId = e["motorId"]
+            product.optionsIds = e["optionsIds"]
+            product.imageEmpty = e["imageEmpty"]
+            product.imageString = e["imageString"]
+            product.imageChanged = e["imageChanged"]
+            product.rpm = e["rpm"]
+            product.torqueMoment = e["torqueMoment"]
+            product.serviceFactor = e["serviceFactor"]
+            product.optionsString = (product.optionsIds ?? []).join(',');
+            this.product_list.push(product)
+        })
+      }
+      } else {
+        alert(JSON.stringify(respones.errorMsg))
+      }
+    });
+  }
+
   saveProduct(product: Product) {
+    if(product.optionsString == null){
+      product.optionsIds = null;
+    }
     if(product.imageChanged == null || !product.imageChanged){
       product.imageChanged = false;
     }
@@ -493,31 +536,31 @@ export class AdminkaComponent {
     })
   }
 
-  getReducerAdapterType() {
-    this.reducerAdapterType_list = ReducerAdapterType.getAll(this.http)
-  }
+  // getReducerAdapterType() {
+  //   this.reducerAdapterType_list = ReducerAdapterType.getAll(this.http)
+  // }
 
-  saveReducerIAdapterType(i: ReducerAdapterType) {
-    i.save(this.http).subscribe((data:any) => {
-      const index = this.reducerAdapterType_list.findIndex(item => item.idReducerAdapterType === data.data.idReducerAdapterType);
-      if(index === -1 && this.reducerAdapterType_list[this.reducerAdapterType_list.length -1].idReducerAdapterType === 0){
-        this.reducerAdapterType_list[this.reducerAdapterType_list.length -1].idReducerAdapterType  = data.data.idReducerAdapterType ;
-      }
-    });
-  }
+  // saveReducerIAdapterType(i: ReducerAdapterType) {
+  //   i.save(this.http).subscribe((data:any) => {
+  //     const index = this.reducerAdapterType_list.findIndex(item => item.idReducerAdapterType === data.data.idReducerAdapterType);
+  //     if(index === -1 && this.reducerAdapterType_list[this.reducerAdapterType_list.length -1].idReducerAdapterType === 0){
+  //       this.reducerAdapterType_list[this.reducerAdapterType_list.length -1].idReducerAdapterType  = data.data.idReducerAdapterType ;
+  //     }
+  //   });
+  // }
 
-  addReducerAdapterType() {
-    var reducerAdapterType = new ReducerAdapterType()
-    this.reducerAdapterType_list.push(reducerAdapterType)
-  }
+  // addReducerAdapterType() {
+  //   var reducerAdapterType = new ReducerAdapterType()
+  //   this.reducerAdapterType_list.push(reducerAdapterType)
+  // }
 
-  deleteReducerAdapterType(i: ReducerAdapterType) {
-    i.delete(this.http).subscribe((data:boolean) => {
-      if(data) {
-        this.reducerAdapterType_list = this.reducerAdapterType_list.filter(item => item.idReducerAdapterType !== i.idReducerAdapterType)
-      }
-    })
-  }
+  // deleteReducerAdapterType(i: ReducerAdapterType) {
+  //   i.delete(this.http).subscribe((data:boolean) => {
+  //     if(data) {
+  //       this.reducerAdapterType_list = this.reducerAdapterType_list.filter(item => item.idReducerAdapterType !== i.idReducerAdapterType)
+  //     }
+  //   })
+  // }
 
   getMotorList() {
     this.http.get('/api/v1/motor').subscribe({
@@ -530,9 +573,9 @@ export class AdminkaComponent {
           motor.power = e["power"]
           motor.efficiency =  e["efficiency"]
           motor.ratedCurrent =  e["ratedCurrent"]
-          motor.posTerminalBox =  e["posTerminalBox"]
+          // motor.posTerminalBox =  e["posTerminalBox"]
           motor.momentOfInertia =  e["momentOfInertia"]
-          motor.cableExitSide =  e["cableExitSide"]
+          // motor.cableExitSide =  e["cableExitSide"]
           motor.type.id = e["motorTypeId"]
           this.motor_list.push(motor)
         })
