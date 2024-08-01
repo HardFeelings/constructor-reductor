@@ -23,7 +23,7 @@ public class CommercialPropItemEntity {
     @JoinColumn(name = "id_commercial_prop")
     private CommercialPropEntity commercialProp;
 
-    @ManyToOne
+    @ManyToOne()
     @JoinColumn(name = "id_product")
     private ProductEntity product;
 

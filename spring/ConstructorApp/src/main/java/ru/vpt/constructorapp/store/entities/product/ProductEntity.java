@@ -2,9 +2,11 @@ package ru.vpt.constructorapp.store.entities.product;
 
 import jakarta.persistence.*;
 import lombok.*;
+import ru.vpt.constructorapp.store.entities.commercial.CommercialPropItemEntity;
 import ru.vpt.constructorapp.store.entities.motor.MotorEntity;
 import ru.vpt.constructorapp.store.entities.reducer.ReducerEntity;
 
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -55,6 +57,10 @@ public class ProductEntity {
             joinColumns = @JoinColumn(name = "id_product"),
             inverseJoinColumns = @JoinColumn(name = "id_product_option"))
     private Set<ProductOptionEntity> options;
+
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    @JoinColumn(name = "id_product")
+    private List<CommercialPropItemEntity> commercialPropItems;
 
     @Column(name = "product_image")
     private byte[] productImage;

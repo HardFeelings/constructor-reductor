@@ -16,6 +16,7 @@ import ru.vpt.constructorapp.store.entities.commercial.CommercialPropItemEntity;
 import ru.vpt.constructorapp.store.repo.commercial.CommercialPropRepo;
 
 import java.io.BufferedInputStream;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Comparator;
@@ -56,11 +57,22 @@ public class CommercialPropServiceImpl implements CommercialPropService {
             throw new BadRequestException("Невозможно сохранить опции продукта: dto равен null", 400);
         }
         CommercialPropEntity entity = mapper.toEntity(dto);
+
+        double cost = 0;
+        for( CommercialPropItemDto item : dto.getCommercialPropItems()){
+            if(item.getProduct() != null && item.getProduct().getPrice() != null)
+                cost += item.getProduct().getPrice() * item.getAmount();
+        }
+        if(dto.getMarginRatio() != null)
+            cost *= dto.getMarginRatio();
+        entity.setCost(BigDecimal.valueOf(cost));
+
         entity.setTimestamp(String.valueOf(dto.getTimestamp() == null ?
                 LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd.MM.yyyy")) : dto.getTimestamp()));
         CommercialPropDto savedDto = mapper.toDTO(repo.save(entity));
         List<CommercialPropItemDto> commercialPropItemDtos = dto.getCommercialPropItems().stream()
                 .map(item -> itemService.save(item, savedDto.getIdCommercialProp())).toList();
+
         savedDto.setCommercialPropItems(commercialPropItemDtos);
         return savedDto;
     }
