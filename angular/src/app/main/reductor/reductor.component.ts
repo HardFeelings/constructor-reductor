@@ -294,4 +294,11 @@ export class ReductorComponent {
     this.productService.downloadImageById(id,filename);
   }
 
+  preventNegative(event: KeyboardEvent): void {
+    if (event.key === '-' || event.key === 'e') {
+      event.preventDefault();
+    }
+  }
+
+
 }

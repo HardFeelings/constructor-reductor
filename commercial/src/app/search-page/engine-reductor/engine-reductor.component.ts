@@ -277,5 +277,11 @@ export class EngineReductorComponent {
 
   }
 
+  preventNegative(event: KeyboardEvent): void {
+    if (event.key === '-' || event.key === 'e') {
+      event.preventDefault();
+    }
+  }
+
 
 }

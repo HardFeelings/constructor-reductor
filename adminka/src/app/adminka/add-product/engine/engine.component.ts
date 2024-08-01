@@ -181,6 +181,12 @@ export class EngineComponent {
     }
   }
 
+  preventNegative(event: KeyboardEvent): void {
+    if (event.key === '-' || event.key === 'e') {
+      event.preventDefault();
+    }
+  }
+
   dynamicAddProduct(){
     this.newMotor.power = this.power;
     this.newMotor.efficiency = this.efficiency;

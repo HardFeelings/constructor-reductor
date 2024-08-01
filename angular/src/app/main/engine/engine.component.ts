@@ -168,6 +168,13 @@ export class EngineComponent {
     });
   }
 
+  preventNegative(event: KeyboardEvent): void {
+    if (event.key === '-' || event.key === 'e') {
+      event.preventDefault();
+    }
+  }
+
+
   downloadImage(id:number,filename: string){
     this.productService.downloadImageById(id,filename);
   }

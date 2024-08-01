@@ -95,12 +95,18 @@ export class CommercialPageComponent {
   //   });
   // }
 
-  downloadExcel(id:number){
-    this.commercialService.downloadExcelById(id);
+  downloadExcel(comm:CommercialProp){
+    this.commercialService.downloadExcelById(comm);
   }
 
-  downloadPdf(id:number){
-    this.commercialService.downloadPdfById(id);
+  preventNegative(event: KeyboardEvent): void {
+    if (event.key === '-' || event.key === 'e') {
+      event.preventDefault();
+    }
+  }
+
+  downloadPdf(comm:CommercialProp){
+    this.commercialService.downloadPdfById(comm);
   }
 
   searchProp(){

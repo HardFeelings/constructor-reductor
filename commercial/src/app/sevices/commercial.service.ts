@@ -53,10 +53,10 @@ export class CommercialService extends ABaseServiceService{
   }
 
 
-  downloadExcelById(id: number): void {
-    this.http.get(`${this.endpoint}/${this.excelUrl}/${id}`, { responseType: 'blob' }).subscribe(
+  downloadExcelById(comm: CommercialProp): void {
+    this.http.get(`${this.endpoint}/${this.excelUrl}/${comm.idCommercialProp}`, { responseType: 'blob' }).subscribe(
       (blob: Blob) => {
-        this.downloadBlob(blob, `${id}.xlsx`);
+        this.downloadBlob(blob, `КП${comm.number}-${comm.manager?.shortName}-${comm.partner}.xlsx`);
       },
       (error) => {
         console.error('Error downloading the Excel file:', error);
@@ -64,10 +64,10 @@ export class CommercialService extends ABaseServiceService{
     );
   }
 
-  downloadPdfById(id: number): void {
-    this.http.get(`${this.endpoint}/${this.pdfUrl}/${id}`, { responseType: 'blob' }).subscribe(
+  downloadPdfById(comm: CommercialProp): void {
+    this.http.get(`${this.endpoint}/${this.pdfUrl}/${comm.idCommercialProp}`, { responseType: 'blob' }).subscribe(
       (blob: Blob) => {
-        this.downloadBlob(blob, `${id}.pdf`);
+        this.downloadBlob(blob, `КП${comm.number}-${comm.manager?.shortName}-${comm.partner}.pdf`);
       },
       (error) => {
         console.error('Error downloading the Pdf file:', error);

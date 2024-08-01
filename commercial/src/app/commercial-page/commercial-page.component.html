@@ -6,10 +6,10 @@
   <div class="buttons">
     <button (click)="goToSearchPage(null)" style="margin-right: 50px; height: 45px;">Новый</button>
     <div>
-      <input [(ngModel)]="this.searchData.number"    (ngModelChange)="onNumberChange($event)"  type="string" placeholder="number"  style="margin-right: 5px; border-radius: 5px; font-size: 24px; height: 40px; width: 200px;" />
-      <input [(ngModel)]="this.searchManager.shortName" (ngModelChange)="onShortNameChange($event)" type="string" placeholder="shortName" style="margin-right: 5px; border-radius: 5px; font-size: 24px; height: 40px; width: 200px;" />
-      <input [(ngModel)]="this.searchData.partner" (ngModelChange)="onPartnerChange($event)" type="string" placeholder="partner" style="margin-right: 5px; border-radius: 5px; font-size: 24px; height: 40px; width: 200px;" />
-      <input [(ngModel)]="this.searchData.marginRatio" (ngModelChange)="onMarginRatioChange($event)" type="number" placeholder="marginRatio" style="margin-right: 5px; border-radius: 5px; font-size: 24px; height: 40px; width: 200px;" />
+      <input [(ngModel)]="this.searchData.number"    (ngModelChange)="onNumberChange($event)"  type="string" placeholder="Номер"  style="margin-right: 5px; border-radius: 5px; font-size: 24px; height: 40px; width: 200px;" />
+      <input [(ngModel)]="this.searchManager.shortName" (ngModelChange)="onShortNameChange($event)" type="string" placeholder="Менеджер" style="margin-right: 5px; border-radius: 5px; font-size: 24px; height: 40px; width: 200px;" />
+      <input [(ngModel)]="this.searchData.partner" (ngModelChange)="onPartnerChange($event)" type="string" placeholder="Контрагент" style="margin-right: 5px; border-radius: 5px; font-size: 24px; height: 40px; width: 200px;" />
+      <input [(ngModel)]="this.searchData.marginRatio" (ngModelChange)="onMarginRatioChange($event)" type="number" min="0" placeholder="Маржа" style="margin-right: 5px; border-radius: 5px; font-size: 24px; height: 40px; width: 200px;"  (keypress)="preventNegative($event)" />
       <input [(ngModel)]="this.searchData.timestamp" (ngModelChange)="onTimestampChange($event)" type="string" placeholder="xx.xx.xxxx" style="margin-right: 5px; border-radius: 5px; font-size: 24px; height: 40px; width: 200px;" />
     </div>
       <button (click)="searchProp()" style=" height: 45px;"> Найти </button>
@@ -19,12 +19,12 @@
   <thead>
     <tr *ngIf="commercialProp_list !== []">
         <!-- <th>id</th> -->
-        <th>number</th>
-        <th>shortName</th>
-        <th>partner</th>
-        <th>cost</th>
-        <th>marginRatio</th>
-        <th>timestamp</th>
+        <th>Номер</th>
+        <th>Менеджер</th>
+        <th>Контрагент</th>
+        <th>Стоимость</th>
+        <th>Маржа</th>
+        <th>Дата создания</th>
         <th></th>
     </tr>
 </thead>
@@ -45,8 +45,8 @@
         <button (click)="goToSearchPage(commercial.idCommercialProp)">Изменить</button>
         <!-- <button (click)="deleteCommercial(commercial.idCommercialProp)">Удалить</button> -->
         <button (click)="oKDelete(commercial.idCommercialProp, commercial.number)">Удалить</button>
-        <button (click)="downloadExcel(commercial.idCommercialProp)" >Excel</button>
-        <button (click)="downloadPdf(commercial.idCommercialProp)">PDF</button>
+        <button (click)="downloadExcel(commercial)" >Excel</button>
+        <button (click)="downloadPdf(commercial)">PDF</button>
       </td>
     </tr>
   </tbody>

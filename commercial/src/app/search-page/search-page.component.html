@@ -15,19 +15,19 @@
     <div class="container">
       <div class="container_element_configurator">
         <div class="element_configurator">
-          <span>Number</span>
+          <span>Номер</span>
           <input type="text" [(ngModel)]="commercialProp.number">
         </div>
         <div class="element_configurator">
-          <span>Partner</span>
+          <span>Контрагент</span>
           <input type="text" [(ngModel)]="commercialProp.partner">
         </div>
         <div class="element_configurator">
-          <span>Margin Ratio</span>
+          <span>Маржа</span>
           <input min="1" type="number" [(ngModel)]="commercialProp.marginRatio">
         </div>
         <div class="element_configurator">
-          <span>Manager</span>
+          <span>Менеджер</span>
           <select (change)="idManagerSelected($event)" [ngModel]="commercialProp.manager?.shortName">
             <option value="" disabled>Select</option>
             <option *ngFor="let manager of managers_list" [value]="manager.shortName">{{ manager.shortName }}</option>
@@ -38,10 +38,10 @@
       <table *ngIf="commercialProp != null && commercialProp != undefined">
         <tbody>
           <tr *ngFor="let commercialItem of commercialProp.commercialPropItems">
-            <td>{{ commercialItem.product.idProduct }}</td>
-            <td>{{ commercialItem.product.name }}</td>
-            <td>{{ commercialItem.product.price || '0' }}</td>
-            <td>{{ commercialItem.product.weight || '0' }}</td>
+            <!-- <td>{{ commercialItem.product.idProduct }}</td> -->
+            <td style="font-size: 18px;">{{ commercialItem.product.name }}</td>
+            <td style="font-size: 18px;">{{ commercialItem.product.price || '0' }} ¥</td>
+            <td style="font-size: 18px;">{{ commercialItem.product.weight || '0' }} кг</td>
             <td class="amauntInpt"><input class="amauntInpt" type="number" min="1" [(ngModel)]="commercialItem.amount"></td>
             <td class="amauntInpt"><button *ngIf="commercialItem.idCommercialPropItem !== undefined" (click)="deleteSelectProduct(commercialItem.idCommercialPropItem)">Удалить</button>
             <div *ngIf="commercialItem.idCommercialPropItem == undefined" >Нужно сохранение</div>

@@ -17,7 +17,7 @@
         </div>
         <div class="element_configurator">
           <span>Мощность</span>
-          <input min="0" [(ngModel)]="this.power"  type="number" />
+          <input min="0" [(ngModel)]="this.power"  type="number" (keypress)="preventNegative($event)"  />
         </div>
       </div>
 
@@ -39,7 +39,7 @@
         </div> -->
         <div class="element_configurator">
           <span>Число оборотов об/мин </span>
-          <input min="0" [(ngModel)]="this.rpm"  type="number" />
+          <input min="0" [(ngModel)]="this.rpm"  type="number" (keypress)="preventNegative($event)" />
         </div>
       </div>
       <br />
