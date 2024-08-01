@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { SearchPageComponent } from '../search-page/search-page.component';
 import { MatDialog } from '@angular/material/dialog';
 import { Manager } from '../models/manager';
+import { DeleteComponent } from '../delete/delete.component';
 
 @Component({
   selector: 'app-commercial-page',
@@ -47,6 +48,31 @@ export class CommercialPageComponent {
     });
   }
 
+
+  oKDelete(id: number, number:string | null){
+    const dialogAddingNewStudent = this.dialog.open(DeleteComponent, {
+      width: '600px',
+      height: '300px',
+      data: number,
+    });
+    dialogAddingNewStudent.afterClosed().subscribe((okOrNot: boolean) => {
+      if(okOrNot){
+        this.commercialService.deleteCommercialProp(id).subscribe((respones: ResponseInfo<Boolean>) => {
+          if(respones.data !== null){
+            console.log("Result deleteCommercial: ", respones.data);
+            this.commercialProp_list = this.commercialProp_list.filter(item => item.idCommercialProp !== id);
+          } else {
+            alert(JSON.stringify(respones.errorMsg))
+          }
+        });
+      }
+      else{
+        console.log('Пользователь выбрал не удалять');
+      }
+
+    });
+  }
+
   getAllcommercialProp() {
     this.commercialService.getAllCommercialProps().subscribe((respones: ResponseInfo<CommercialProp[]>) => {
       if(respones.data !== null){
@@ -58,16 +84,16 @@ export class CommercialPageComponent {
     });
   }
 
-  deleteCommercial(id: number){
-    this.commercialService.deleteCommercialProp(id).subscribe((respones: ResponseInfo<Boolean>) => {
-      if(respones.data !== null){
-        console.log("Result deleteCommercial: ", respones.data);
-        this.commercialProp_list = this.commercialProp_list.filter(item => item.idCommercialProp !== id);
-      } else {
-        alert(JSON.stringify(respones.errorMsg))
-      }
-    });
-  }
+  // deleteCommercial(id: number){
+  //   this.commercialService.deleteCommercialProp(id).subscribe((respones: ResponseInfo<Boolean>) => {
+  //     if(respones.data !== null){
+  //       console.log("Result deleteCommercial: ", respones.data);
+  //       this.commercialProp_list = this.commercialProp_list.filter(item => item.idCommercialProp !== id);
+  //     } else {
+  //       alert(JSON.stringify(respones.errorMsg))
+  //     }
+  //   });
+  // }
 
   downloadExcel(id:number){
     this.commercialService.downloadExcelById(id);
@@ -98,7 +124,7 @@ export class CommercialPageComponent {
   clearFilter(){
     this.searchManager =  new Manager ;
     this.searchData = new CommercialProp;
-
+    this.getAllcommercialProp();
   }
 
   onShortNameChange(value: string) {

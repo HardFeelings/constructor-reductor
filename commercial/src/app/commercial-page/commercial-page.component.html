@@ -7,7 +7,7 @@
     <button (click)="goToSearchPage(null)" style="margin-right: 50px; height: 45px;">Новый</button>
     <div>
       <input [(ngModel)]="this.searchData.number"    (ngModelChange)="onNumberChange($event)"  type="string" placeholder="number"  style="margin-right: 5px; border-radius: 5px; font-size: 24px; height: 40px; width: 200px;" />
-      <input [(ngModel)]="this.shortName" (ngModelChange)="onShortNameChange($event)" type="string" placeholder="shortName" style="margin-right: 5px; border-radius: 5px; font-size: 24px; height: 40px; width: 200px;" />
+      <input [(ngModel)]="this.searchManager.shortName" (ngModelChange)="onShortNameChange($event)" type="string" placeholder="shortName" style="margin-right: 5px; border-radius: 5px; font-size: 24px; height: 40px; width: 200px;" />
       <input [(ngModel)]="this.searchData.partner" (ngModelChange)="onPartnerChange($event)" type="string" placeholder="partner" style="margin-right: 5px; border-radius: 5px; font-size: 24px; height: 40px; width: 200px;" />
       <input [(ngModel)]="this.searchData.marginRatio" (ngModelChange)="onMarginRatioChange($event)" type="number" placeholder="marginRatio" style="margin-right: 5px; border-radius: 5px; font-size: 24px; height: 40px; width: 200px;" />
       <input [(ngModel)]="this.searchData.timestamp" (ngModelChange)="onTimestampChange($event)" type="string" placeholder="xx.xx.xxxx" style="margin-right: 5px; border-radius: 5px; font-size: 24px; height: 40px; width: 200px;" />
@@ -43,7 +43,8 @@
       <td>{{ commercial.manager.phoneNumber}}</td> -->
       <td class="row-buttons">
         <button (click)="goToSearchPage(commercial.idCommercialProp)">Изменить</button>
-        <button (click)="deleteCommercial(commercial.idCommercialProp)">Удалить</button>
+        <!-- <button (click)="deleteCommercial(commercial.idCommercialProp)">Удалить</button> -->
+        <button (click)="oKDelete(commercial.idCommercialProp, commercial.number)">Удалить</button>
         <button (click)="downloadExcel(commercial.idCommercialProp)" >Excel</button>
         <button (click)="downloadPdf(commercial.idCommercialProp)">PDF</button>
       </td>

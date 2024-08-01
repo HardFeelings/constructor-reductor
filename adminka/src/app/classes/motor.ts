@@ -1,5 +1,6 @@
 import { HttpClient } from "@angular/common/http"
 import { Observable } from "rxjs"
+import { ResponseInfo } from "../models/responesInfo"
 
 export class Motor {
     id: number
@@ -57,9 +58,9 @@ export class Motor {
         }
     }
 
-    delete(http: HttpClient) : Observable<boolean> {
+    delete(http: HttpClient) : Observable<ResponseInfo<boolean>> {
         console.log(this)
-        return http.delete<boolean>(`/api/v1/security/motor/${this.id}`)
+        return http.delete<ResponseInfo<boolean>>(`/api/v1/security/motor/${this.id}`)
     }
 
     save(http: HttpClient): Observable<Motor>{
@@ -69,7 +70,7 @@ export class Motor {
 }
 
 export class MotorType {
-    id: Number
+    id: number
     value: string | null
     variants: string[]
 
@@ -98,8 +99,8 @@ export class MotorType {
 }
 
 export class MotorAdapterType {
-    id: Number
-    typeid: Number
+    id: number
+    typeid: number
     value: string | null
     variants: string[]
 

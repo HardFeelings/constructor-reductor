@@ -13,6 +13,7 @@ import { AddProductComponent } from "./adminka/add-product/add-product.component
 import { EngineComponent } from "./adminka/add-product/engine/engine.component";
 import { EngineReductorComponent } from "./adminka/add-product/engine-reductor/engine-reductor.component";
 import { ReductorComponent } from "./adminka/add-product/reductor/reductor.component";
+import { DeleteComponent } from "./delete/delete.component";
 
 
 @NgModule({
@@ -24,6 +25,7 @@ import { ReductorComponent } from "./adminka/add-product/reductor/reductor.compo
     EngineComponent,
     EngineReductorComponent,
     ReductorComponent,
+    DeleteComponent,
 
 
 

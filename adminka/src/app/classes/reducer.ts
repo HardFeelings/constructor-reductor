@@ -1,8 +1,9 @@
 import { HttpClient } from "@angular/common/http"
 import { Observable } from "rxjs"
+import { ResponseInfo } from "../models/responesInfo"
 
 export class Reducer {
-    idReducer: Number
+    idReducer: number
     reducerTypeId: Number
     type: ReducerType
     reducerSizeId: Number
@@ -87,8 +88,8 @@ export class Reducer {
         return list;
     }
 
-    delete(http: HttpClient) : Observable<boolean>{
-       return http.delete<boolean>(`/api/v1/security/reducer/${this.idReducer}`)
+    delete(http: HttpClient) : Observable<ResponseInfo<boolean>>{
+       return http.delete<ResponseInfo<boolean>>(`/api/v1/security/reducer/${this.idReducer}`)
     }
 
     save(http: HttpClient): Observable<Reducer> {

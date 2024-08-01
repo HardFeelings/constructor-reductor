@@ -12,6 +12,7 @@ import { CommercialPageComponent } from "./commercial-page/commercial-page.compo
 import { ReductorComponent } from "./search-page/reductor/reductor.component";
 import { EngineComponent } from "./search-page/engine/engine.component";
 import { EngineReductorComponent } from "./search-page/engine-reductor/engine-reductor.component";
+import { DeleteComponent } from "./delete/delete.component";
 
 
 
@@ -23,6 +24,7 @@ import { EngineReductorComponent } from "./search-page/engine-reductor/engine-re
     ReductorComponent,
     EngineComponent,
     EngineReductorComponent,
+    DeleteComponent,
 
 
 

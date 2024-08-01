@@ -32,6 +32,7 @@ export class EngineReductorComponent {
   foundProducts: Product[];
   options: number[] = [];
   productOption: ProductOption[];
+  rpm!: number;
 
   @Output() selectedProduct = new EventEmitter<Product>();
 
@@ -238,6 +239,7 @@ export class EngineReductorComponent {
   }
 
   searchProduct(filter: Filter){
+    filter.rpm = this.rpm;
     filter.power = this.power;
     filter.diamOutput = this.diamOutput;
     filter.diamOutputAllowance = this.diamOutputAllowance;

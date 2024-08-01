@@ -13,6 +13,7 @@ import { AddProductComponent } from './add-product/add-product.component';
 import { MatDialog } from '@angular/material/dialog';
 import { ProductService } from '../services/product.service';
 import { ResponseInfo } from '../models/responesInfo';
+import { DeleteComponent } from '../delete/delete.component';
 
 
 @Component({
@@ -93,6 +94,77 @@ export class AdminkaComponent {
     if (fileInput) {
       fileInput.click();
     }
+  }
+
+  oKDelete(id: number, i: any){
+    const dialogAddingNewStudent = this.dialog.open(DeleteComponent, {
+      width: '600px',
+      height: '300px',
+      data: id,
+    });
+    dialogAddingNewStudent.afterClosed().subscribe((okOrNot: boolean) => {
+      if(okOrNot){
+        if(this.id == 0){
+          this.deleteMotor(i);
+          console.log('deleteMotor', this.id, i);
+        }
+        else if(this.id == 1){
+          this.deleteMotorType(i);
+          console.log('deleteMotorType', this.id, i);
+        }
+        else if(this.id == 2){
+          this.deleteMotorAdapterType(i);
+          console.log('deleteMotorAdapterType', this.id, i);
+        }
+        else if(this.id == 3){
+          this.deleteProduct(i);
+          console.log('deleteProduct', this.id, i);
+        }
+        else if(this.id == 4){
+          this.deleteProductType(i);
+          console.log('deleteProductType', this.id, i);
+        }
+        else if(this.id == 5){
+          this.deleteProductOption(i);
+          console.log('deleteProductOption', this.id, i);
+        }
+        else if(this.id == 6){
+          this.deleteReducer(i);
+          console.log('deleteReducer', this.id, i);
+        }
+        else if(this.id == 7){
+          this.deleteReducerType(i);
+          console.log('deleteReducerType', this.id, i);
+        }
+        else if(this.id == 8){
+          this.deleteReducerSize(i);
+          console.log('deleteReducerSize', this.id, i);
+        }
+        else if(this.id == 9){
+          this.deleteReducerOutputShaft(i);
+          console.log('deleteReducerOutputShaft', this.id, i);
+        }
+        else if(this.id == 10){
+          this.deleteReducerMounting(i);
+          console.log('deleteReducerMounting', this.id, i);
+        }
+        else if(this.id == 11){
+          this.deleteReducerInstallationType(i);
+          console.log('deleteReducerInstallationType', this.id, i);
+        }
+        else if(this.id == 12){
+          this.deleteReducerInputType(i);
+          console.log('deleteReducerInputType', this.id, i);
+        }
+        else if(this.id == 14){
+          this.deleteManager(i);
+          console.log('deleteManager', this.id, i);
+        }
+      } else{
+        console.log('Пользователь выбрал не удалять');
+      }
+
+    });
   }
 
   downloadImage(id: number, filename: string){
@@ -181,12 +253,16 @@ export class AdminkaComponent {
   }
 
   deleteMotor(i : Motor) {
-    i.delete(this.http).subscribe((data:boolean) => {
-      if(data) {
+    i.delete(this.http).subscribe((respones: ResponseInfo<boolean>) => {
+      if(respones.data !== null) {
         this.motor_list = this.motor_list.filter(item => item.id !== i.id)
+      }
+      else{
+        alert(respones.errorMsg)
       }
     })
   }
+
 
 
 
@@ -372,10 +448,21 @@ export class AdminkaComponent {
     this.reducer_list.push(reducer)
   }
 
-  deleteReducer(i: Reducer) {
-    i.delete(this.http).subscribe((data:boolean) => {
-      if(data) {
+  // deleteReducer(i: Reducer) {
+  //   i.delete(this.http).subscribe((data:boolean) => {
+  //     if(data) {
+  //       this.reducer_list = this.reducer_list.filter(item => item.idReducer !== i.idReducer)
+  //     }
+  //   })
+  // }
+
+  deleteReducer(i : Reducer) {
+    i.delete(this.http).subscribe((respones: ResponseInfo<boolean>) => {
+      if(respones.data !== null) {
         this.reducer_list = this.reducer_list.filter(item => item.idReducer !== i.idReducer)
+      }
+      else{
+        alert(respones.errorMsg)
       }
     })
   }
@@ -431,6 +518,8 @@ export class AdminkaComponent {
       }
     })
   }
+
+
 
   getReducerOutputShaft() {
     this.reducerOutput_list = ReducerOutputShaftType.getAll(this.http)

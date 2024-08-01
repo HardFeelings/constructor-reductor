@@ -65,7 +65,8 @@
                                 <td><textarea class="editable" [(ngModel)]="i.type.id"></textarea></td>
                                 <td class="row-buttons">
                                     <button (click)="saveMotor(i)"> Сохранить </button>
-                                    <button (click)="deleteMotor(i)"> Удалить </button>
+                                    <!-- <button (click)="deleteMotor(i)"> Удалить </button> -->
+                                    <button (click)="oKDelete(i.id,i)"> Удалить </button>
                                 </td>
                             </tr>
                         </tbody>
@@ -91,7 +92,8 @@
                                 <td><textarea class="editable" [(ngModel)]="i.value"></textarea></td>
                                 <td class="row-buttons">
                                     <button (click)="saveMotorType(i)"> Сохранить </button>
-                                    <button (click)="deleteMotorType(i)"> Удалить </button>
+                                    <!-- <button (click)="deleteMotorType(i)"> Удалить </button> -->
+                                    <button (click)="oKDelete(i.id,i)"> Удалить </button>
                                 </td>
                             </tr>
                         </tbody>
@@ -119,7 +121,8 @@
                                 <td><textarea class="editable" [(ngModel)]="i.typeid"></textarea></td>
                                 <td class="row-buttons">
                                     <button (click)="saveMotorAdapterType(i)"> Сохранить </button>
-                                    <button (click)="deleteMotorAdapterType(i)"> Удалить </button>
+                                    <!-- <button (click)="deleteMotorAdapterType(i)"> Удалить </button> -->
+                                    <button (click)="oKDelete(i.id,i)"> Удалить </button>
                                 </td>
                             </tr>
                         </tbody>
@@ -170,7 +173,8 @@
                                 <td  class="row-buttonstt" *ngIf="i.imageEmpty == false"><button (click)="downloadImage(i.id, i.name)">Скачать</button> <button (click)="deleteImage(i)">Удалить</button> </td>
                                 <td class="row-buttons">
                                     <button (click)="saveProduct(i)"> Сохранить </button>
-                                    <button (click)="deleteProduct(i)"> Удалить </button>
+                                    <!-- <button (click)="deleteProduct(i)"> Удалить </button> -->
+                                    <button (click)="oKDelete(i.id,i)"> Удалить </button>
                                 </td>
                             </tr>
                         </tbody>
@@ -225,7 +229,8 @@
                                 <td><input class="editable" [(ngModel)]="i.productTypeId"></td>
                                 <td class="row-buttons">
                                     <button (click)="saveProductOptions(i)"> Сохранить </button>
-                                    <button (click)="deleteProductOption(i)"> Удалить </button>
+                                    <!-- <button (click)="deleteProductOption(i)"> Удалить </button> -->
+                                    <button (click)="oKDelete(i.idProductOption,i)"> Удалить </button>
                                 </td>
                             </tr>
                         </tbody>
@@ -269,7 +274,8 @@
                                 <td><input class="editable" [(ngModel)]="i.ratio"></td>
                                 <td class="row-buttons">
                                     <button (click)="saveReducer(i)"> Сохранить </button>
-                                    <button (click)="deleteReducer(i)"> Удалить </button>
+                                    <!-- <button (click)="deleteReducer(i)"> Удалить </button> -->
+                                    <button (click)="oKDelete(i.idReducer,i)"> Удалить </button>
                                 </td>
                             </tr>
                         </tbody>
@@ -295,7 +301,8 @@
                                 <td><input class="editable" [(ngModel)]="i.reducerTypeName"></td>
                                 <td class="row-buttons">
                                     <button (click)="saveReducerType(i)"> Сохранить </button>
-                                    <button (click)="deleteReducerType(i)"> Удалить </button>
+                                    <!-- <button (click)="deleteReducerType(i)"> Удалить </button> -->
+                                    <button (click)="oKDelete(i.idReducerType,i)"> Удалить </button>
                                 </td>
                             </tr>
                         </tbody>
@@ -323,7 +330,8 @@
                                 <td><input class="editable" [(ngModel)]="i.reducerTypeId"></td>
                                 <td class="row-buttons">
                                     <button (click)="saveReducerSize(i)"> Сохранить </button>
-                                    <button (click)="deleteReducerSize(i)"> Удалить </button>
+                                    <!-- <button (click)="deleteReducerSize(i)"> Удалить </button> -->
+                                    <button (click)="oKDelete(i.idReducerSize,i)"> Удалить </button>
                                 </td>
                             </tr>
                         </tbody>
@@ -351,7 +359,8 @@
                                 <td><input class="editable" [(ngModel)]="i.reducerTypeId"></td>
                                 <td class="row-buttons">
                                     <button (click)="saveReducerOutputShaft(i)"> Сохранить </button>
-                                    <button (click)="deleteReducerOutputShaft(i)"> Удалить </button>
+                                    <!-- <button (click)="deleteReducerOutputShaft(i)"> Удалить </button> -->
+                                    <button (click)="oKDelete(i.idReducerOutputShaftType,i)"> Удалить </button>
                                 </td>
                             </tr>
                         </tbody>
@@ -377,7 +386,8 @@
                                 <td><input class="editable" [(ngModel)]="i.value"></td>
                                 <td class="row-buttons">
                                     <button (click)="saveReducerMounting(i)"> Сохранить </button>
-                                    <button (click)="deleteReducerMounting(i)"> Удалить </button>
+                                    <!-- <button (click)="deleteReducerMounting(i)"> Удалить </button> -->
+                                    <button (click)="oKDelete(i.idReducerMounting,i)"> Удалить </button>
                                 </td>
                             </tr>
                         </tbody>
@@ -405,7 +415,8 @@
                                 <td><input class="editable" [(ngModel)]="i.reducerTypeId"></td>
                                 <td class="row-buttons">
                                     <button (click)="saveReducerInstallationType(i)"> Сохранить </button>
-                                    <button (click)="deleteReducerInstallationType(i)"> Удалить </button>
+                                    <!-- <button (click)="deleteReducerInstallationType(i)"> Удалить </button> -->
+                                    <button (click)="oKDelete(i.idReducerInstallationType,i)"> Удалить </button>
                                 </td>
                             </tr>
                         </tbody>
@@ -433,7 +444,8 @@
                                 <td><input class="editable" [(ngModel)]="i.reducerTypeId"></td>
                                 <td class="row-buttons">
                                     <button (click)="saveReducerInputType(i)"> Сохранить </button>
-                                    <button (click)="deleteReducerInputType(i)"> Удалить </button>
+                                    <!-- <button (click)="deleteReducerInputType(i)"> Удалить </button> -->
+                                    <button (click)="oKDelete(i.idReducerInputType,i)"> Удалить </button>
                                 </td>
                             </tr>
                         </tbody>
@@ -495,7 +507,8 @@
                               <td><input class="editable" [(ngModel)]="i.phoneNumber"></td>
                               <td class="row-buttons">
                                   <button (click)="saveManager(i)"> Сохранить </button>
-                                  <button (click)="deleteManager(i)"> Удалить </button>
+                                  <!-- <button (click)="deleteManager(i)"> Удалить </button> -->
+                                  <button (click)="oKDelete(i.idManager,i)"> Удалить </button>
                               </td>
                           </tr>
                       </tbody>

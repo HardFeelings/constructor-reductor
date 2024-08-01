@@ -33,6 +33,8 @@ export class EngineReductorComponent {
   options: number[] = [];
   productOption: ProductOption[];
 
+  rpm!:number;
+
   constructor(private reducerService: ReducerService, private productService: ProductService, private motorService: MotorService){
   }
 
@@ -235,6 +237,7 @@ export class EngineReductorComponent {
   }
 
   searchProduct(filter: Filter){
+    filter.rpm = this.rpm;
     filter.power = this.power;
     filter.diamOutput = this.diamOutput;
     filter.diamOutputAllowance = this.diamOutputAllowance;
