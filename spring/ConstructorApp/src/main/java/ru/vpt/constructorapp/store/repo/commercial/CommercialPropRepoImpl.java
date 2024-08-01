@@ -23,9 +23,11 @@ public class CommercialPropRepoImpl implements CommercialPropCustomRepo{
                 .from(commercialPropEntity)
                 .where(QPredicates.builder()
                         .add(filter.getNumber(), commercialPropEntity.number::eq)
-                        .add(filter.getManager() != null ? filter.getManager().getShortName() : null, commercialPropEntity.manager.shortName::eq)
-                        .add(filter.getPartner(), commercialPropEntity.partner::eq)
+                        .add(filter.getManager() != null ? "%" + filter.getManager().getShortName().toLowerCase() + "%" : null,
+                                commercialPropEntity.manager.shortName.lower()::like)
+                        .add(filter.getPartner() != null ? "%" + filter.getPartner().toLowerCase() + "%" : null, commercialPropEntity.partner.lower()::like)
                         .add(filter.getTimestamp(), commercialPropEntity.timestamp::eq)
+                        .add(filter.getMarginRatio(), commercialPropEntity.marginRatio::eq)
                         .buildAnd())
                 .fetch();
     }
