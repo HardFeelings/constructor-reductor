@@ -46,6 +46,16 @@
             <td class="amauntInpt"><button *ngIf="commercialItem.idCommercialPropItem !== undefined" (click)="deleteSelectProduct(commercialItem.idCommercialPropItem)">Удалить</button>
             <div *ngIf="commercialItem.idCommercialPropItem == undefined" >Нужно сохранение</div>
             </td>
+            <td style="font-size: 18px;">
+              <div class="button-containerrr">
+                <ng-container *ngIf="!commercialItem.product.imageEmpty; else noImage">
+                  <button class="custombutton" (click)="downloadImage(commercialItem.product.idProduct, commercialItem.product.name)">Скачать чертёж</button>
+                </ng-container>
+              </div>
+                <ng-template #noImage>
+                    <div>Нет чертежа</div>
+                </ng-template>
+            </td>
           </tr>
         </tbody>
       </table>

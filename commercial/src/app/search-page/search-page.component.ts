@@ -81,6 +81,10 @@ export class SearchPageComponent {
     });
   }
 
+  downloadImage(id:number,filename: string){
+    this.productService.downloadImageById(id,filename);
+  }
+
   close(): void {
     this.callSearch = false;
   }
@@ -122,18 +126,18 @@ export class SearchPageComponent {
     });
   }
 
-    childSelectedProduct(event: Product) {
-      this.callSearch = false;
-      const existingItem = this.commercialProp.commercialPropItems.find(i => i.product.idProduct === event.idProduct);
-      if (existingItem) {
-          existingItem.amount += 1;
-      } else {
-          let newPropItem = new CommercialPropItem();
-          newPropItem.product = event;
-          newPropItem.amount = 1;
-          newPropItem.commercialPropId = this.commercialProp.idCommercialProp !== null ? this.commercialProp.idCommercialProp : null;
-          this.commercialProp.commercialPropItems.push(newPropItem);
-      }
+  childSelectedProduct(event: Product) {
+    this.callSearch = false;
+    const existingItem = this.commercialProp.commercialPropItems.find(i => i.product.idProduct === event.idProduct);
+    if (existingItem) {
+        existingItem.amount += 1;
+    } else {
+        let newPropItem = new CommercialPropItem();
+        newPropItem.product = event;
+        newPropItem.amount = 1;
+        newPropItem.commercialPropId = this.commercialProp.idCommercialProp !== null ? this.commercialProp.idCommercialProp : null;
+        this.commercialProp.commercialPropItems.push(newPropItem);
+    }
   }
 
   deleteSelectProduct(id: number){

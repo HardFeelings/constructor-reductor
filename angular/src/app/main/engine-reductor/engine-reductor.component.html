@@ -107,7 +107,7 @@
             <th>Крутящий момент</th>
             <th>Диаметр выходного вала</th>
             <th>Вес</th>
-            <th>Чертёж</th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -127,13 +127,15 @@
 
             <td>
               <div class="button-containerrr">
-                <ng-container *ngIf="!product.imageEmpty; else noImage">
-                  <button class="custombutton" (click)="downloadImage(product.idProduct, product.name)">Скачать</button>
-              </ng-container>
+                <!-- <ng-container *ngIf="!product.imageEmpty; else noImage"> -->
+              <!-- <ng-container> -->
+                  <!-- <button class="custombutton" (click)="downloadImage(product.idProduct, product.name)">Скачать</button> -->
+                  <button class="custombutton" (click)="goSendEmail( product.name)">Подробнее</button>
+              <!-- </ng-container> -->
               </div>
-                <ng-template #noImage>
+                <!-- <ng-template #noImage>
                     <div>Нет чертежа</div>
-                </ng-template>
+                </ng-template> -->
             </td>
         </tr>
     </tbody>
