@@ -23,6 +23,9 @@ public class CommercialPropDto {
     private String timestamp;
     private Double marginRatio;
     private ManagerEntity manager;
+    private Integer deliveryTime;
+    private Integer guarantee;
+    private String deliveryTerms;
     private List<CommercialPropItemDto> commercialPropItems;
     private List<CommercialPropTermsDto> commercialPropTerms;
 }

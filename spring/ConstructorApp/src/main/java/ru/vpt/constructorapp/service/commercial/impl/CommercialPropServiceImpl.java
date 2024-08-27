@@ -77,7 +77,8 @@ public class CommercialPropServiceImpl implements CommercialPropService {
         List<CommercialPropTermsDto> commercialPropTermsDtos = dto.getCommercialPropTerms().stream()
                 .map(item -> termsService.save(item, savedDto.getIdCommercialProp())).toList();
 
-        savedDto.setCommercialPropTerms(commercialPropTermsDtos);
+        savedDto.setCommercialPropTerms(commercialPropTermsDtos.stream()
+                        .sorted(Comparator.comparingLong(CommercialPropTermsDto::getOrd)).collect(Collectors.toList()));
         savedDto.setCommercialPropItems(commercialPropItemDtos);
         return savedDto;
     }
