@@ -1,0 +1,75 @@
+
+<div *ngIf="this.sendData == null || this.sendData == false">
+  <h1 class="startlabel" style="font-size: 24px;">Заполните поля для связи с вами</h1>
+  <div class="container_element_configurator">
+    <div class="element_configurator">
+      <span>Имя</span>
+      <input
+        [(ngModel)]="this.selectName"
+        name="name"
+        #nameInput="ngModel"
+        type="text"
+        required
+      />
+      <div *ngIf="nameInput.invalid && (nameInput.dirty || nameInput.touched)">
+        <small class="error" *ngIf="nameInput.errors?.['required']">Имя обязательно для заполнения.</small>
+      </div>
+    </div>
+  </div>
+  <div class="container_element_configurator">
+    <div class="element_configurator">
+      <span>Email</span>
+      <input
+        [(ngModel)]="this.selectEmail"
+        name="email"
+        #emailInput="ngModel"
+        type="text"
+        required
+        email
+      />
+      <div *ngIf="emailInput.invalid && (emailInput.dirty || emailInput.touched)">
+        <small class="error" *ngIf="emailInput.errors?.['required']">Email обязателен.</small>
+        <small class="error" *ngIf="emailInput.errors?.['email']">Email должен содержать &commat; и быть корректным.</small>
+      </div>
+    </div>
+  </div>
+  <div class="container_element_configurator">
+    <div class="element_configurator">
+      <span>Номер телефона</span>
+      <input
+        placeholder="+7 XXX XXX XX XX"
+        [(ngModel)]="this.selecetNumber"
+        name="phone"
+        #phoneInput="ngModel"
+        type="text"
+        required
+        pattern="^\+7\s?\d{3}\s?\d{3}\s?\d{2}\s?\d{2}$"
+      />
+      <div *ngIf="phoneInput.invalid && (phoneInput.dirty || phoneInput.touched)">
+        <small class="error" *ngIf="phoneInput.errors?.['required']">Номер телефона обязателен.</small>
+        <small class="error" *ngIf="phoneInput.errors?.['pattern']">Номер телефона должен быть в формате +7 XXX XXX XX XX.</small>
+      </div>
+    </div>
+  </div>
+  <div class="container_element_configurator">
+      <div class="element_configurator">
+        <span>Название продукта</span>
+        <input [(ngModel)]="this.nameProduct"  type="text" readonly disabled />
+      </div>
+  </div>
+
+
+  <div class="button-container">
+    <button (click)="close()">Отмена</button>
+    <button [class.disabled]="phoneInput.invalid || emailInput.invalid || nameInput.invalid"
+      [disabled]="phoneInput.invalid || emailInput.invalid || nameInput.invalid"
+      (click)="send()"> Отправить</button> </div>
+  </div>
+
+
+<div *ngIf="this.sendData == true">
+  <h1 class="configurator_header" style="font-size: 24px;">Информация успешно отправлена!</h1>
+  <div class="button-container2">
+    <button (click)="close()">Закрыть</button>
+  </div>
+</div>

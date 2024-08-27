@@ -5,6 +5,7 @@ import { Product, ProductType, ProductOption } from '../models/product';
 import { ResponseInfo } from '../models/responesInfo';
 import { Observable } from 'rxjs';
 import { Filter } from '../models/filter';
+import { Email } from '../models/email';
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +17,7 @@ export class ProductService extends ABaseServiceService{
   private productTypeOptionIdUrl = 'byProductTypeId';
   private filterUrl = 'filter';
   private imageUrl = 'product/downloadImage'
+  private emailUrl = 'send-mail';
 
   constructor(http: HttpClient) {
     super(http, 'api/v1');
@@ -56,6 +58,11 @@ export class ProductService extends ABaseServiceService{
 ///////////// Product  Filter/////////////
   postFilter(filter: Filter): Observable<ResponseInfo<Product[]>> {
     return this.postwp<ResponseInfo<Product[]>>(`${this.filterUrl}`, filter);
+  }
+
+  ///////////// Email /////////////
+  sendEmail(emailData: Email): Observable<ResponseInfo<boolean>> {
+    return this.postwp<ResponseInfo<boolean>>(`${this.emailUrl}`, emailData);
   }
 
 ///////////// Image /////////////

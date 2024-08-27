@@ -61,7 +61,7 @@
         <th>Об/мин</th>
         <!-- <th>Положение клеммной коробки</th> -->
         <th>Вес</th>
-        <th>Чертёж</th>
+        <th></th>
     </tr>
 </thead>
 <tbody>
@@ -73,16 +73,20 @@
     <!-- <td>{{ product.motor?.posTerminalBox || 0 }}</td> -->
     <td>{{ product.weight || 0 }}</td>
     <td class="tablebt">
-      <ng-container *ngIf="product.imageEmpty; else downloadButton">
+      <!-- <ng-container *ngIf="product.imageEmpty; else downloadButton">
         <div>Нет чертежа</div>
-      </ng-container>
-      <ng-template #downloadButton>
+      </ng-container> -->
+      <!-- <ng-template #downloadButton> -->
+        <!-- <ng-template> -->
         <div class="button-containerrr">
-          <button class="custombutton" (click)="downloadImage(product.idProduct, product.name)">
+          <!-- <button class="custombutton" (click)="downloadImage(product.idProduct, product.name)">
             Скачать
+          </button> -->
+          <button class="custombutton" (click)="goSendEmail(product.name)">
+            Подробнее
           </button>
         </div>
-      </ng-template>
+      <!-- </ng-template> -->
     </td>
   </tr>
 </tbody>

@@ -5,7 +5,8 @@ import { ProductOption,Product } from 'src/app/models/product';
 import { ResponseInfo } from 'src/app/models/responesInfo';
 import { ReducerService } from 'src/app/sevices/reducer.service';
 import { ProductService } from 'src/app/sevices/product.service';
-
+import { MatDialog } from '@angular/material/dialog';
+import { EmailComponent } from '../email/email.component';
 
 @Component({
   selector: 'app-reductor',
@@ -33,7 +34,7 @@ export class ReductorComponent {
   ratio: number;
   // torqueMoment: number;
 
-  constructor(private reducerService: ReducerService, private productService: ProductService){
+  constructor(private reducerService: ReducerService, private productService: ProductService, public dialog: MatDialog){
   }
 
   ngOnInit(){
@@ -290,8 +291,27 @@ export class ReductorComponent {
     });
   }
 
-  downloadImage(id:number,filename: string){
-    this.productService.downloadImageById(id,filename);
+  // downloadImage(id:number,filename: string){
+  //   this.productService.downloadImageById(id,filename);
+  // }
+
+
+  goSendEmail(name:string){
+    const dialogAddingNewStudent = this.dialog.open(EmailComponent, {
+      width: '600px',
+      height: '550px',
+      data: name,
+    });
+    dialogAddingNewStudent.afterClosed().subscribe((result: boolean) => {
+      if(result  !== null && result  !== undefined || result == true){
+        console.log('dialog goSendEmail', result);
+        this.ngOnInit();
+      } else{
+        console.log('Окно закрыто без изменений');
+        this.ngOnInit();
+      }
+
+    });
   }
 
   preventNegative(event: KeyboardEvent): void {

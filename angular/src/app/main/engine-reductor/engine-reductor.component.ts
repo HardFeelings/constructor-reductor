@@ -7,7 +7,8 @@ import { ResponseInfo } from 'src/app/models/responesInfo';
 import { ReducerInstallationType, ReducerMounting, ReducerOutputShaftType, ReducerSize, ReducerType } from 'src/app/models/reducer';
 import { Filter } from 'src/app/models/filter';
 import { ProductOption,Product } from 'src/app/models/product';
-
+import { MatDialog } from '@angular/material/dialog';
+import { EmailComponent } from '../email/email.component';
 
 @Component({
   selector: 'app-engine-reductor',
@@ -35,7 +36,7 @@ export class EngineReductorComponent {
 
   rpm!:number;
 
-  constructor(private reducerService: ReducerService, private productService: ProductService, private motorService: MotorService){
+  constructor(private reducerService: ReducerService, private productService: ProductService, private motorService: MotorService, public dialog: MatDialog){
   }
 
   ngOnInit() {
@@ -266,8 +267,26 @@ export class EngineReductorComponent {
     });
   }
 
-  downloadImage(id:number,filename: string){
-    this.productService.downloadImageById(id,filename);
+  // downloadImage(id:number,filename: string){
+  //   this.productService.downloadImageById(id,filename);
+  // }
+
+  goSendEmail(name:string){
+    const dialogAddingNewStudent = this.dialog.open(EmailComponent, {
+      width: '600px',
+      height: '550px',
+      data: name,
+    });
+    dialogAddingNewStudent.afterClosed().subscribe((result: boolean) => {
+      if(result  !== null && result  !== undefined || result == true){
+        console.log('dialog goSendEmail', result);
+        this.ngOnInit();
+      } else{
+        console.log('Окно закрыто без изменений');
+        this.ngOnInit();
+      }
+
+    });
   }
 
   preventNegative(event: KeyboardEvent): void {

@@ -5,6 +5,8 @@ import { Product, ProductOption } from 'src/app/models/product';
 import { ResponseInfo } from 'src/app/models/responesInfo';
 import { MotorService } from 'src/app/sevices/motor.service';
 import { ProductService } from 'src/app/sevices/product.service';
+import { MatDialog } from '@angular/material/dialog';
+import { EmailComponent } from '../email/email.component';
 
 @Component({
   selector: 'app-engine',
@@ -27,7 +29,7 @@ export class EngineComponent {
   rpm!:number;
 
 
-  constructor(private motorService: MotorService, private productService: ProductService){
+  constructor(private motorService: MotorService, private productService: ProductService, public dialog: MatDialog){
   }
 
   ngOnInit() {
@@ -174,9 +176,26 @@ export class EngineComponent {
     }
   }
 
+  goSendEmail(name:string){
+    const dialogAddingNewStudent = this.dialog.open(EmailComponent, {
+      width: '600px',
+      height: '550px',
+      data: name,
+    });
+    dialogAddingNewStudent.afterClosed().subscribe((result: boolean) => {
+      if(result  !== null && result  !== undefined || result == true) {
+        console.log('dialog goSendEmail', result);
+        this.ngOnInit();
+      } else{
+        console.log('Окно закрыто без изменений');
+        this.ngOnInit();
+      }
 
-  downloadImage(id:number,filename: string){
-    this.productService.downloadImageById(id,filename);
+    });
   }
+
+  // downloadImage(id:number,filename: string){
+  //   this.productService.downloadImageById(id,filename);
+  // }
 
 }

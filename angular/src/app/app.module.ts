@@ -1,7 +1,7 @@
 import { BrowserModule } from "@angular/platform-browser";
 import { AppComponent } from "./app.component";
 import { AppRoutingModule } from "./app-routing.module";
-import { FormsModule } from "@angular/forms";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { HttpClientModule } from "@angular/common/http";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from "@angular/core";
@@ -13,6 +13,7 @@ import { EngineReductorComponent } from "./main/engine-reductor/engine-reductor.
 import { ReductorComponent } from "./main/reductor/reductor.component";
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { NgOptimizedImage } from "@angular/common";
+import { EmailComponent } from "./main/email/email.component";
 
 
 @NgModule({
@@ -24,6 +25,7 @@ import { NgOptimizedImage } from "@angular/common";
     EngineComponent,
     EngineReductorComponent,
     ReductorComponent,
+    EmailComponent
 
 
 
@@ -32,10 +34,13 @@ import { NgOptimizedImage } from "@angular/common";
     BrowserModule,
     AppRoutingModule,
     FormsModule,
+    ReactiveFormsModule,
     BrowserAnimationsModule,
     HttpClientModule,
     MatCheckboxModule,
     NgOptimizedImage,
+
+
 
   ],
   providers: [],
