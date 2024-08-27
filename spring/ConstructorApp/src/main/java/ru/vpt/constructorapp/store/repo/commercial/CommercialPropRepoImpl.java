@@ -27,7 +27,6 @@ public class CommercialPropRepoImpl implements CommercialPropCustomRepo{
                                 commercialPropEntity.manager.shortName.lower()::like)
                         .add(filter.getPartner() != null ? "%" + filter.getPartner().toLowerCase() + "%" : null, commercialPropEntity.partner.lower()::like)
                         .add(filter.getTimestamp(), commercialPropEntity.timestamp::eq)
-                        .add(filter.getMarginRatio(), commercialPropEntity.marginRatio::eq)
                         .buildAnd())
                 .fetch();
     }

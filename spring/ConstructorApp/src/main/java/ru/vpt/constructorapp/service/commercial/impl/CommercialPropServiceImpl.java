@@ -64,8 +64,6 @@ public class CommercialPropServiceImpl implements CommercialPropService {
             if(item.getProduct() != null && item.getProduct().getPrice() != null)
                 cost += item.getProduct().getPrice() * item.getAmount();
         }
-        if(dto.getMarginRatio() != null)
-            cost *= dto.getMarginRatio();
         entity.setCost(BigDecimal.valueOf(cost));
 
         entity.setTimestamp(String.valueOf(dto.getTimestamp() == null ?

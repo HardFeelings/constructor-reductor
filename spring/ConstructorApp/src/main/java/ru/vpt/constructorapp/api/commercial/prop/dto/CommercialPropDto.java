@@ -21,7 +21,6 @@ public class CommercialPropDto {
     private String partner;
     private BigDecimal cost;
     private String timestamp;
-    private Double marginRatio;
     private ManagerEntity manager;
     private Integer deliveryTime;
     private Integer guarantee;
