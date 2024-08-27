@@ -15,7 +15,9 @@ public interface CommercialPropMapper {
     CommercialPropDto toDTO(CommercialPropEntity entity);
     @Named(value = "withoutItems")
     @Mapping(target = "commercialPropItems", ignore = true)
+    @Mapping(target = "commercialPropTerms", ignore = true)
     CommercialPropDto toDTOWithoutItems(CommercialPropEntity entity);
     @Mapping(target = "commercialPropItems",ignore = true)
+    @Mapping(target = "commercialPropTerms", ignore = true)
     CommercialPropEntity toEntity(CommercialPropDto dto);
 }

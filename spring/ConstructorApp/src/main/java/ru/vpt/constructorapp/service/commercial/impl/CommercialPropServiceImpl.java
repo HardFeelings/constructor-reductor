@@ -1,18 +1,18 @@
 package ru.vpt.constructorapp.service.commercial.impl;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Service;
 import ru.vpt.constructorapp.api.commercial.item.dto.CommercialPropItemDto;
+import ru.vpt.constructorapp.api.commercial.payment.dto.CommercialPropTermsDto;
 import ru.vpt.constructorapp.api.commercial.prop.dto.CommercialPropDto;
 import ru.vpt.constructorapp.api.commercial.prop.mapper.CommercialPropMapper;
 import ru.vpt.constructorapp.api.exception.BadRequestException;
 import ru.vpt.constructorapp.api.exception.NotFoundException;
 import ru.vpt.constructorapp.service.commercial.CommercialPropItemService;
 import ru.vpt.constructorapp.service.commercial.CommercialPropService;
+import ru.vpt.constructorapp.service.commercial.CommercialPropTermsService;
 import ru.vpt.constructorapp.service.commercial.ReportService;
 import ru.vpt.constructorapp.store.entities.commercial.CommercialPropEntity;
-import ru.vpt.constructorapp.store.entities.commercial.CommercialPropItemEntity;
 import ru.vpt.constructorapp.store.repo.commercial.CommercialPropRepo;
 
 import java.io.BufferedInputStream;
@@ -20,7 +20,6 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Comparator;
-import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -31,6 +30,8 @@ public class CommercialPropServiceImpl implements CommercialPropService {
     private final CommercialPropRepo repo;
     private final CommercialPropMapper mapper;
     private final CommercialPropItemService itemService;
+    private final CommercialPropTermsService termsService;
+
     private final ReportService reportService;
 
     @Override
@@ -73,6 +74,10 @@ public class CommercialPropServiceImpl implements CommercialPropService {
         List<CommercialPropItemDto> commercialPropItemDtos = dto.getCommercialPropItems().stream()
                 .map(item -> itemService.save(item, savedDto.getIdCommercialProp())).toList();
 
+        List<CommercialPropTermsDto> commercialPropTermsDtos = dto.getCommercialPropTerms().stream()
+                .map(item -> termsService.save(item, savedDto.getIdCommercialProp())).toList();
+
+        savedDto.setCommercialPropTerms(commercialPropTermsDtos);
         savedDto.setCommercialPropItems(commercialPropItemDtos);
         return savedDto;
     }
