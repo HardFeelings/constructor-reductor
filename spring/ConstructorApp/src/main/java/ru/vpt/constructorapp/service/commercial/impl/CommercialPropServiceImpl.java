@@ -92,6 +92,10 @@ public class CommercialPropServiceImpl implements CommercialPropService {
         }
         List<CommercialPropItemDto> list = itemService.getAllByCommercialPropId(id);
         list.forEach(item -> itemService.delete(item.getIdCommercialPropItem()));
+
+        List<CommercialPropTermsDto> termsList = termsService.getAllByCommercialPropId(id);
+        termsList.forEach(item -> termsService.delete(item.getIdCommercialPropTerms()));
+
         repo.deleteById(id);
         return true;
     }
