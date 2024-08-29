@@ -1,6 +1,7 @@
 package ru.vpt.constructorapp.api.commercial.payment.dto;
 
 import lombok.*;
+import ru.vpt.constructorapp.api.commercial.terms.dto.PaymentTermsDto;
 
 @Builder
 @AllArgsConstructor(access = AccessLevel.PUBLIC)
@@ -15,5 +16,5 @@ public class CommercialPropTermsDto {
     private Double percent;
     private Integer days;
     private Long commercialPropId;
-    private Long paymentTermsId;
+    private PaymentTermsDto paymentTerms;
 }

@@ -59,7 +59,7 @@ public class CommercialPropTermsServiceImpl implements CommercialPropTermsServic
         CommercialPropEntity commercialProp = commercialPropRepo.findById(id)
                 .orElseThrow(() -> new NotFoundException("commercialProp with id = " + id + " not found", 404));
 
-        PaymentTermsEntity paymentTerms = paymentTermsService.findById(id);
+        PaymentTermsEntity paymentTerms = paymentTermsService.findById(commercialPropTermsDto.getPaymentTerms().getIdPaymentTerms());
         CommercialPropTermsEntity entity = mapper.toEntity(commercialPropTermsDto);
         entity.setCommercialProp(commercialProp);
         entity.setPaymentTerms(paymentTerms);
