@@ -9,12 +9,15 @@
 .button-container {
   display: flex;
   justify-content: space-between;
-  margin-top: 50px;
+  margin-top: 55px;
   margin-left: 20px;
   margin-right: 20px;
-  margin-bottom: 20px;
+  margin-bottom: 40px;
 }
 
+.hidden-text {
+  visibility: hidden;
+}
 
 .button-container2 {
   display: flex;

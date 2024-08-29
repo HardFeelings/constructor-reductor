@@ -10,6 +10,8 @@ import { ManagerService } from '../sevices/manager.service';
 import { Manager } from '../models/manager';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { CommercialPropItem } from '../models/commercialPropItem';
+import { PaymentTerms } from '../models/paymentTerm';
+import { CommercialPropTerm } from '../models/commercialPropTerm';
 
 
 @Component({
@@ -26,6 +28,8 @@ export class SearchPageComponent {
   commercialProp: CommercialProp;
   callSearch: boolean = false;
   managers_list: Manager[];
+  payment_list: PaymentTerms[];
+  ordNow: number = 1;
   selectedButton: number | null = null;
 
   constructor(private productService: ProductService,
@@ -41,6 +45,7 @@ export class SearchPageComponent {
 
   ngOnInit() {
     this.getAllManagers();
+    this.getAllPaymentTerms();
     if(this.idCommercialProp !== null){
       this.getCommercialPropById(this.idCommercialProp);
     }
@@ -52,6 +57,8 @@ export class SearchPageComponent {
   }
   }
 
+
+
   getCommercialPropById(id:number){
     this.commercialService.getCommercialPropById(id).subscribe((respones: ResponseInfo<CommercialProp>)=>{
       if(respones.data !== null){
@@ -62,6 +69,8 @@ export class SearchPageComponent {
       }
     });
   }
+
+
 
   goToBackCommercialPageCansel(): void {
     this.dialogRef.close();
@@ -100,6 +109,17 @@ export class SearchPageComponent {
     });
   }
 
+  getAllPaymentTerms(){
+    this.commercialService.getPaymentTerms().subscribe((respones: ResponseInfo<PaymentTerms[]>) => {
+      if(respones.data !== null){
+        console.log("Data getAllPaymentTerms: ", respones.data);
+        this.payment_list = respones.data;
+      } else {
+        alert(JSON.stringify(respones.errorMsg))
+      }
+    });
+  }
+
   idManagerSelected(event: Event) {
     const selectedElement = event.target as HTMLSelectElement;
     const selectedValue = selectedElement.value;
@@ -113,6 +133,20 @@ export class SearchPageComponent {
       console.error('Такой менеджер не найден');
     }
   }
+
+
+  selectedPayment(event: Event, commercialTerm: CommercialPropTerm) {
+    const selectedVisibleName = (event.target as HTMLSelectElement).value;
+    const selectedPayment = this.payment_list.find(payment => payment.visibleName === selectedVisibleName);
+
+    if (selectedPayment) {
+      console.log(selectedPayment);
+      commercialTerm.paymentTerms = selectedPayment;
+    } else {
+      console.log('Payment не найден');
+    }
+  }
+
 
   getAllProductTypes(){
     this.productService.getAllProductTypes().subscribe((respones: ResponseInfo<ProductType[]>) => {
@@ -138,6 +172,29 @@ export class SearchPageComponent {
         newPropItem.commercialPropId = this.commercialProp.idCommercialProp !== null ? this.commercialProp.idCommercialProp : null;
         this.commercialProp.commercialPropItems.push(newPropItem);
     }
+  }
+
+  addTerm() {
+    let newPropTerm = new CommercialPropTerm();
+    this.ordNow = this.commercialProp.commercialPropTerms.reduce((max, propTerm) => {
+      return propTerm.ord > max ? propTerm.ord : max;
+    }, 0);
+    newPropTerm.ord = this.ordNow + 1;
+    this.commercialProp.commercialPropTerms.push(newPropTerm);
+}
+
+  refreshOrd(ord: number) {
+    this.commercialProp.commercialPropTerms.forEach(propTerm => {
+      if (propTerm.ord >= ord) {
+        propTerm.ord -= 1;
+      }
+    });
+    this.ordNow -= 1;
+  }
+
+  deleteTerm(ord: number) {
+    this.commercialProp.commercialPropTerms = this.commercialProp.commercialPropTerms.filter(propTerm => propTerm.ord !== ord);
+    this.refreshOrd(ord);
   }
 
   deleteSelectProduct(id: number){

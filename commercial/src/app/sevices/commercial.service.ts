@@ -4,6 +4,7 @@ import { ABaseServiceService } from './abase-service.service';
 import { ResponseInfo } from '../models/responesInfo';
 import { Observable } from 'rxjs';
 import { CommercialProp } from '../models/commercialProp';
+import { PaymentTerms } from '../models/paymentTerm';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,7 @@ export class CommercialService extends ABaseServiceService{
   private  excelUrl = 'security/commercialProp/report';
   private  pdfUrl = 'security/commercialProp/reportPdf';
   private filterUrl = 'security/commercialProp/getByFilter';
-
+  private paymentUrl = 'security/paymentTerms';
 
   constructor(http: HttpClient) {
     super(http, 'api/v1');
@@ -39,6 +40,9 @@ export class CommercialService extends ABaseServiceService{
     return this.post<ResponseInfo<CommercialProp[]>> (`${this.filterUrl}`, commercialProp);
   }
 
+  getPaymentTerms(): Observable<ResponseInfo<PaymentTerms[]>> {
+    return this.getwp<ResponseInfo<PaymentTerms[]>>(this.paymentUrl);
+  }
 
 
   downloadBlob(blob: Blob, filename: string): void {

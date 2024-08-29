@@ -7,4 +7,5 @@ export class CommercialPropItem {
   commercialPropId: number | null;
   product: Product;
   amount: number;
+
 }

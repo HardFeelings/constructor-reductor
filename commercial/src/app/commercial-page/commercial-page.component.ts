@@ -139,9 +139,9 @@ export class CommercialPageComponent {
   onPartnerChange(value: string) {
     this.searchData.partner = value ? value : null;
   }
-  onMarginRatioChange(value: number) {
-    this.searchData.marginRatio = value ? value : null;
-  }
+  // onMarginRatioChange(value: number) {
+  //   this.searchData.marginRatio = value ? value : null;
+  // }
 
   onTimestampChange(value: string) {
     this.searchData.timestamp = value ? value : null;

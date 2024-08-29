@@ -14,6 +14,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ProductService } from '../services/product.service';
 import { ResponseInfo } from '../models/responesInfo';
 import { DeleteComponent } from '../delete/delete.component';
+import { PaymentTerms } from '../classes/paymentTerm';
 
 
 @Component({
@@ -23,6 +24,7 @@ import { DeleteComponent } from '../delete/delete.component';
 })
 export class AdminkaComponent {
   id = 0
+  paymentTerms_list: PaymentTerms[];
   motor_list: Motor[]
   motorType_list: MotorType[]
   motorAdapterType_list: MotorAdapterType[]
@@ -42,6 +44,7 @@ export class AdminkaComponent {
   searchData: string | null = null;
 
   constructor(private http: HttpClient, private imageService: ImageService, public dialog:MatDialog) {
+    this.paymentTerms_list = new Array<PaymentTerms>();
     this.motor_list = new Array<Motor>();
     this.motorType_list = new Array<MotorType>();
     this.motorAdapterType_list = new Array<MotorAdapterType>();
@@ -160,6 +163,10 @@ export class AdminkaComponent {
           this.deleteManager(i);
           console.log('deleteManager', this.id, i);
         }
+        else if(this.id == 15){
+          this.deletePaymentTerm(i);
+          console.log('deletePaymentTerm', this.id, i);
+        }
       } else{
         console.log('Пользователь выбрал не удалять');
       }
@@ -197,6 +204,7 @@ export class AdminkaComponent {
     this.getReducerInputType()
     // this.getReducerAdapterType()
     this.getListManagers()
+    this.getListPaymentTerms()
     this.setid(0);
   }
 
@@ -263,8 +271,59 @@ export class AdminkaComponent {
     })
   }
 
+  getListPaymentTerms() {
+    this.http.get('/api/v1/security/paymentTerms').subscribe({
+      next: (data: any) => {
+        data.data.forEach((e: { [x: string]: any; }) => {
+          var manager = new PaymentTerms()
+          manager.idPaymentTerms =e["idPaymentTerms"]
+          manager.visibleName =e["visibleName"]
+          manager.fullName =e["fullName"]
+          this.paymentTerms_list.push(manager)
+        })
+      },
+      error: error => { console.log(error); }
+    });
+  }
 
+  addPaymentTerm() {
+    var paymentTerm = new PaymentTerms()
+    this.paymentTerms_list.push(paymentTerm)
+  }
 
+  savePaymentTerm(paymentTerm: PaymentTerms){
+    console.log(paymentTerm);
+    paymentTerm.save(this.http).subscribe((respones: ResponseInfo<PaymentTerms>) => {
+
+      console.log(respones.data);
+      const index = this.paymentTerms_list.findIndex(item => item.idPaymentTerms === paymentTerm.idPaymentTerms);
+      if (index !== -1) {
+          let  managerData = new PaymentTerms;
+          managerData = paymentTerm;
+          managerData.idPaymentTerms = respones.data.idPaymentTerms;
+
+          this.paymentTerms_list[index] = managerData;
+          console.log('paymentTerms_list', this.manager_list);
+      } else {
+          let  managerData2 = new PaymentTerms;
+          managerData2 = paymentTerm;
+          managerData2.idPaymentTerms = respones.data.idPaymentTerms;
+          this.paymentTerms_list.push(managerData2);
+          console.log('datadata',respones.data);
+      }
+    });
+  }
+
+  deletePaymentTerm(i : PaymentTerms) {
+    i.delete(this.http).subscribe((respones: ResponseInfo<boolean>) => {
+      if(respones.data !== null) {
+        this.paymentTerms_list = this.paymentTerms_list.filter(item => item.idPaymentTerms !== i.idPaymentTerms)
+      }
+      else{
+        alert(respones.errorMsg)
+      }
+    })
+  }
 
   addMotorType() {
     var motorType = new MotorType()

@@ -14,6 +14,9 @@
       <div *ngIf="nameInput.invalid && (nameInput.dirty || nameInput.touched)">
         <small class="error" *ngIf="nameInput.errors?.['required']">Имя обязательно для заполнения.</small>
       </div>
+      <div *ngIf="nameInput.untouched || nameInput.valid">
+        <small class="hidden-text">Введите имя</small>
+      </div>
     </div>
   </div>
   <div class="container_element_configurator">
@@ -30,6 +33,10 @@
       <div *ngIf="emailInput.invalid && (emailInput.dirty || emailInput.touched)">
         <small class="error" *ngIf="emailInput.errors?.['required']">Email обязателен.</small>
         <small class="error" *ngIf="emailInput.errors?.['email']">Email должен содержать &commat; и быть корректным.</small>
+        <small class="success" *ngIf="!emailInput.errors?.['required']"></small>
+      </div>
+      <div *ngIf="emailInput.untouched || emailInput.valid">
+        <small class="hidden-text">Введите email</small>
       </div>
     </div>
   </div>
@@ -48,15 +55,19 @@
       <div *ngIf="phoneInput.invalid && (phoneInput.dirty || phoneInput.touched)">
         <small class="error" *ngIf="phoneInput.errors?.['required']">Номер телефона обязателен.</small>
         <small class="error" *ngIf="phoneInput.errors?.['pattern']">Номер телефона должен быть в формате +7 XXX XXX XX XX.</small>
+        <small class="success" *ngIf="!phoneInput.errors?.['required']"></small>
+      </div>
+      <div *ngIf="phoneInput.untouched || phoneInput.valid">
+        <small class="hidden-text">Введите номер телефона</small>
       </div>
     </div>
   </div>
-  <div class="container_element_configurator">
+  <!-- <div class="container_element_configurator">
       <div class="element_configurator">
         <span>Название продукта</span>
         <input [(ngModel)]="this.nameProduct"  type="text" readonly disabled />
       </div>
-  </div>
+  </div> -->
 
 
   <div class="button-container">

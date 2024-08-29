@@ -9,7 +9,7 @@
       <input [(ngModel)]="this.searchData.number"    (ngModelChange)="onNumberChange($event)"  type="string" placeholder="Номер"  style="margin-right: 5px; border-radius: 5px; font-size: 24px; height: 40px; width: 200px;" />
       <input [(ngModel)]="this.searchManager.shortName" (ngModelChange)="onShortNameChange($event)" type="string" placeholder="Менеджер" style="margin-right: 5px; border-radius: 5px; font-size: 24px; height: 40px; width: 200px;" />
       <input [(ngModel)]="this.searchData.partner" (ngModelChange)="onPartnerChange($event)" type="string" placeholder="Контрагент" style="margin-right: 5px; border-radius: 5px; font-size: 24px; height: 40px; width: 200px;" />
-      <input [(ngModel)]="this.searchData.marginRatio" (ngModelChange)="onMarginRatioChange($event)" type="number" min="0" placeholder="Маржа" style="margin-right: 5px; border-radius: 5px; font-size: 24px; height: 40px; width: 200px;"  (keypress)="preventNegative($event)" />
+      <!-- <input [(ngModel)]="this.searchData.marginRatio" (ngModelChange)="onMarginRatioChange($event)" type="number" min="0" placeholder="Маржа" style="margin-right: 5px; border-radius: 5px; font-size: 24px; height: 40px; width: 200px;"  (keypress)="preventNegative($event)" /> -->
       <input [(ngModel)]="this.searchData.timestamp" (ngModelChange)="onTimestampChange($event)" type="string" placeholder="xx.xx.xxxx" style="margin-right: 5px; border-radius: 5px; font-size: 24px; height: 40px; width: 200px;" />
     </div>
       <button (click)="searchProp()" style=" height: 45px;"> Найти </button>
@@ -23,7 +23,7 @@
         <th>Менеджер</th>
         <th>Контрагент</th>
         <th>Стоимость</th>
-        <th>Маржа</th>
+        <!-- <th>Маржа</th> -->
         <th>Дата создания</th>
         <th></th>
     </tr>
@@ -35,7 +35,7 @@
       <td>{{commercial.manager?.shortName}}</td>
       <td>{{commercial.partner}}</td>
       <td>{{commercial.cost}}</td>
-      <td>{{commercial.marginRatio}}</td>
+      <!-- <td>{{commercial.marginRatio}}</td> -->
       <td>{{commercial.timestamp}}</td>
       <!-- <td>{{ commercial.manager.fullName}}</td>
       <td>{{ commercial.manager.position}}</td>

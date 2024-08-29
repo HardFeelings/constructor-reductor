@@ -26,6 +26,7 @@
             <span (click)="setid(12)">ReducerInputType</span>
             <!-- <span (click)="setid(13)">ReducerAdapterType</span> -->
             <span (click)="setid(14)">Manager</span>
+            <span (click)="setid(15)">PaymentTerms</span>
         </div>
         <div class="content">
             <div *ngIf="id==0">
@@ -515,6 +516,36 @@
                   </table>
               </div>
           </div>
+
+          <div *ngIf="id==15">
+            <div class="buttons">
+                <button (click)="addPaymentTerm()"> Новый </button>
+            </div>
+            <div class="table-container">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>id</th>
+                            <th>visibleName</th>
+                            <th>fullName</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let i of paymentTerms_list">
+                            <td>{{i.idPaymentTerms}}</td>
+                            <td><input class="editable" [(ngModel)]="i.visibleName"></td>
+                            <td><input class="editable" [(ngModel)]="i.fullName"></td>
+                            <td class="row-buttons">
+                                <button (click)="savePaymentTerm(i)"> Сохранить </button>
+                                <!-- <button (click)="deleteManager(i)"> Удалить </button> -->
+                                <button (click)="oKDelete(i.idPaymentTerms,i)"> Удалить </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
         </div>
     </div>
 
