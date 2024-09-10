@@ -1,9 +1,13 @@
 package ru.vpt.constructorapp.service.reducer.impl;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import ru.vpt.constructorapp.api.exception.BadRequestException;
 import ru.vpt.constructorapp.api.exception.NotFoundException;
+import ru.vpt.constructorapp.api.reducer.input.dto.ReducerInputPaginationDto;
 import ru.vpt.constructorapp.api.reducer.input.dto.ReducerInputTypeDto;
 import ru.vpt.constructorapp.api.reducer.input.mapper.ReducerInputTypeMapper;
 import ru.vpt.constructorapp.service.reducer.ReducerInputTypeService;
@@ -23,11 +27,16 @@ public class ReducerInputTypeServiceImpl implements ReducerInputTypeService {
     private final ReducerTypeServiceImpl reducerTypeService;
 
     @Override
-    public List<ReducerInputTypeDto> getAllReducerInputTypes() {
-        List<ReducerInputTypeEntity> entities = reducerInputTypeRepo.findAll();
+    public ReducerInputPaginationDto getAllReducerInputTypes(int offset, int limit) {
+        Page<ReducerInputTypeEntity> page = reducerInputTypeRepo.findAll(PageRequest.of(offset, limit, Sort.by("idReducerInputType")));
         List<ReducerInputTypeDto> dtos = new ArrayList<>();
-        entities.forEach(item -> dtos.add(reducerInputTypeMapper.toDTO(item)));
-        return dtos.stream().sorted(Comparator.comparingLong(ReducerInputTypeDto::getIdReducerInputType)).collect(Collectors.toList());
+        page.getContent().forEach(item -> dtos.add(reducerInputTypeMapper.toDTO(item)));
+        ReducerInputPaginationDto paginationDto = new ReducerInputPaginationDto();
+        paginationDto.setTotalCount(page.getTotalElements());
+        paginationDto.setTotalPages(page.getTotalPages());
+        paginationDto.setContent(dtos);
+        paginationDto.setCurrentPage(offset);
+        return paginationDto;
     }
 
     @Override

@@ -1,10 +1,13 @@
 package ru.vpt.constructorapp.service.reducer.impl;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import ru.vpt.constructorapp.api.exception.BadRequestException;
 import ru.vpt.constructorapp.api.exception.NotFoundException;
-import ru.vpt.constructorapp.api.reducer.input.dto.ReducerInputTypeDto;
+import ru.vpt.constructorapp.api.reducer.installation.dto.ReducerInstallationPaginationDto;
 import ru.vpt.constructorapp.api.reducer.installation.dto.ReducerInstallationTypeDto;
 import ru.vpt.constructorapp.api.reducer.installation.mapper.ReducerInstallationTypeMapper;
 import ru.vpt.constructorapp.service.reducer.ReducerInstallationTypeService;
@@ -24,11 +27,17 @@ public class ReducerInstallationTypeServiceImpl implements ReducerInstallationTy
     private final ReducerTypeServiceImpl reducerTypeService;
 
     @Override
-    public List<ReducerInstallationTypeDto> getAllReducerInstallationTypes() {
-        List<ReducerInstallationTypeEntity> entities = reducerInstallationTypeRepo.findAll();
+    public ReducerInstallationPaginationDto getAllReducerInstallationTypes(int offset, int limit) {
+        Page<ReducerInstallationTypeEntity> page = reducerInstallationTypeRepo
+                .findAll(PageRequest.of(offset, limit, Sort.by("idReducerInstallationType")));
         List<ReducerInstallationTypeDto> dtos = new ArrayList<>();
-        entities.forEach(item -> dtos.add(reducerInstallationTypeMapper.toDTO(item)));
-        return dtos.stream().sorted(Comparator.comparingLong(ReducerInstallationTypeDto::getIdReducerInstallationType)).collect(Collectors.toList());
+        page.getContent().forEach(item -> dtos.add(reducerInstallationTypeMapper.toDTO(item)));
+        ReducerInstallationPaginationDto paginationDto = new ReducerInstallationPaginationDto();
+        paginationDto.setContent(dtos);
+        paginationDto.setTotalCount(page.getTotalElements());
+        paginationDto.setTotalPages(page.getTotalPages());
+        paginationDto.setCurrentPage(page.getNumber());
+        return paginationDto;
     }
 
     @Override

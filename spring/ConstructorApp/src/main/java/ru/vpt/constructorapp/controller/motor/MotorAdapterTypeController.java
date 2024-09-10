@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 import ru.vpt.constructorapp.api.motor.adapter.MotorAdapterTypeApi;
+import ru.vpt.constructorapp.api.motor.adapter.dto.MotorAdapterPaginationDto;
 import ru.vpt.constructorapp.api.motor.adapter.dto.MotorAdapterTypeDto;
 import ru.vpt.constructorapp.api.util.ResponseDto;
 import ru.vpt.constructorapp.controller.util.AbstractController;
@@ -18,8 +19,8 @@ public class MotorAdapterTypeController extends AbstractController implements Mo
     private final MotorAdapterTypeService motorAdapterTypeService;
 
     @Override
-    public ResponseEntity<ResponseDto<List<MotorAdapterTypeDto>>> getAllMotorAdapterTypes() {
-        return response(motorAdapterTypeService.getAllMotorAdapterTypes());
+    public ResponseEntity<ResponseDto<MotorAdapterPaginationDto>> getAllMotorAdapterTypes(Integer offset, Integer limit) {
+        return response(motorAdapterTypeService.getAllMotorAdapterTypes(offset, limit));
     }
 
     @Override

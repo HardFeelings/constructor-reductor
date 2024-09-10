@@ -1,10 +1,14 @@
 package ru.vpt.constructorapp.service.motor.impl;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import ru.vpt.constructorapp.api.exception.BadRequestException;
 import ru.vpt.constructorapp.api.exception.NotFoundException;
 import ru.vpt.constructorapp.api.motor.common.dto.MotorDto;
+import ru.vpt.constructorapp.api.motor.common.dto.MotorPaginationDto;
 import ru.vpt.constructorapp.api.motor.common.mapper.MotorMapper;
 import ru.vpt.constructorapp.service.motor.MotorService;
 import ru.vpt.constructorapp.store.entities.motor.MotorAdapterTypeEntity;
@@ -12,8 +16,10 @@ import ru.vpt.constructorapp.store.entities.motor.MotorEntity;
 import ru.vpt.constructorapp.store.entities.motor.MotorTypeEntity;
 import ru.vpt.constructorapp.store.repo.motor.MotorRepo;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -24,11 +30,16 @@ public class MotorServiceImpl implements MotorService {
     private final MotorAdapterTypeServiceImpl motorAdapterTypeService;
 
     @Override
-    public List<MotorDto> getAllMotors() {
-        List<MotorEntity> entities = motorRepo.findAll();
+    public MotorPaginationDto getAllMotors(int offset, int limit) {
+        Page<MotorEntity> page = motorRepo.findAll(PageRequest.of(offset, limit, Sort.by("idMotor")));
         List<MotorDto> dtos = new ArrayList<>();
-        entities.forEach(item -> dtos.add(motorMapper.toDTO(item)));
-        return dtos.stream().sorted(Comparator.comparingLong(MotorDto::getIdMotor)).collect(Collectors.toList());
+        page.getContent().forEach(item -> dtos.add(motorMapper.toDTO(item)));
+        MotorPaginationDto paginationDto = new MotorPaginationDto();
+        paginationDto.setMotorDtos(dtos);
+        paginationDto.setTotalCount(page.getTotalElements());
+        paginationDto.setCurrentPage(offset);
+        paginationDto.setTotalPages(page.getTotalPages());
+        return paginationDto;
     }
 
     @Override

@@ -1,17 +1,23 @@
 package ru.vpt.constructorapp.service.reducer.impl;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import ru.vpt.constructorapp.api.exception.BadRequestException;
 import ru.vpt.constructorapp.api.exception.NotFoundException;
 import ru.vpt.constructorapp.api.reducer.common.dto.ReducerDto;
+import ru.vpt.constructorapp.api.reducer.common.dto.ReducerPaginationDto;
 import ru.vpt.constructorapp.api.reducer.common.mapper.ReducerMapper;
 import ru.vpt.constructorapp.service.reducer.ReducerService;
 import ru.vpt.constructorapp.store.entities.reducer.*;
 import ru.vpt.constructorapp.store.repo.reducer.ReducerRepo;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -27,11 +33,16 @@ public class ReducerServiceImpl implements ReducerService {
     private final ReducerMountingServiceImpl reducerMountingServiceImpl;
 
     @Override
-    public List<ReducerDto> getAllReducer() {
-        List<ReducerEntity> entities = reducerRepo.findAll();
+    public ReducerPaginationDto getAllReducer(int offset, int limit) {
+        Page<ReducerEntity> page = reducerRepo.findAll(PageRequest.of(offset, limit, Sort.by("idReducer")));
         List<ReducerDto> dtos = new ArrayList<>();
-        entities.forEach(item -> dtos.add(reducerMapper.toDTO(item)));
-        return dtos.stream().sorted(Comparator.comparingLong(ReducerDto::getIdReducer)).collect(Collectors.toList());
+        page.getContent().forEach(item -> dtos.add(reducerMapper.toDTO(item)));
+        ReducerPaginationDto paginationDto = new ReducerPaginationDto();
+        paginationDto.setContent(dtos);
+        paginationDto.setCurrentPage(offset);
+        paginationDto.setTotalPages(page.getTotalPages());
+        paginationDto.setTotalCount(page.getTotalElements());
+        return paginationDto;
     }
 
     @Override

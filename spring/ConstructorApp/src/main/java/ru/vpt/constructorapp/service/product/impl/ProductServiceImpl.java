@@ -2,23 +2,21 @@ package ru.vpt.constructorapp.service.product.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import ru.vpt.constructorapp.api.exception.BadRequestException;
 import ru.vpt.constructorapp.api.exception.NotFoundException;
 import ru.vpt.constructorapp.api.product.common.dto.ProductDto;
+import ru.vpt.constructorapp.api.product.common.dto.ProductPaginationDto;
 import ru.vpt.constructorapp.api.product.common.mapper.ProductMapper;
-import ru.vpt.constructorapp.api.product.option.dto.ProductOptionDto;
 import ru.vpt.constructorapp.service.motor.impl.MotorServiceImpl;
 import ru.vpt.constructorapp.service.product.ProductService;
 import ru.vpt.constructorapp.service.reducer.impl.ReducerServiceImpl;
 import ru.vpt.constructorapp.store.entities.motor.MotorEntity;
 import ru.vpt.constructorapp.store.entities.product.ProductEntity;
-import ru.vpt.constructorapp.store.entities.product.ProductOptionEntity;
-import ru.vpt.constructorapp.store.entities.product.ProductTypeEntity;
 import ru.vpt.constructorapp.store.entities.reducer.ReducerEntity;
 import ru.vpt.constructorapp.store.repo.product.ProductRepo;
-
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -34,11 +32,16 @@ public class ProductServiceImpl implements ProductService {
     private final ProductOptionServiceImpl productOptionService;
 
     @Override
-    public List<ProductDto> getAllProducts() {
-        List<ProductEntity> entities = productRepo.findAll();
+    public ProductPaginationDto getAllProducts(int offset, int limit) {
+        Page<ProductEntity> page = productRepo.findAll(PageRequest.of(offset, limit, Sort.by("idProduct")));
         List<ProductDto> dtos = new ArrayList<>();
-        entities.forEach(item -> dtos.add(productMapper.toDTO(item)));
-        return dtos.stream().sorted(Comparator.comparingLong(ProductDto::getIdProduct)).collect(Collectors.toList());
+        page.getContent().forEach(item -> dtos.add(productMapper.toDTO(item)));
+        ProductPaginationDto paginationDto = new ProductPaginationDto();
+        paginationDto.setProductDtoList(dtos);
+        paginationDto.setTotalCount(page.getTotalElements());
+        paginationDto.setTotalPages(page.getTotalPages());
+        paginationDto.setCurrentPage(offset);
+        return paginationDto;
     }
 
     @Override

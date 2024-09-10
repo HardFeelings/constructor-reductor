@@ -1,5 +1,6 @@
 package ru.vpt.constructorapp.service.reducer;
 
+import ru.vpt.constructorapp.api.reducer.input.dto.ReducerInputPaginationDto;
 import ru.vpt.constructorapp.api.reducer.input.dto.ReducerInputTypeDto;
 import ru.vpt.constructorapp.store.entities.reducer.ReducerInputTypeEntity;
 
@@ -7,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ReducerInputTypeService {
-    List<ReducerInputTypeDto> getAllReducerInputTypes();
+    ReducerInputPaginationDto getAllReducerInputTypes(int offset, int limit);
 
     ReducerInputTypeDto getReducerInputById(Long id);
 

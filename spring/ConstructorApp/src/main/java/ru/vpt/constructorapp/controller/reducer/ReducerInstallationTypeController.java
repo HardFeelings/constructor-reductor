@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 import ru.vpt.constructorapp.api.reducer.installation.ReducerInstallationTypeApi;
+import ru.vpt.constructorapp.api.reducer.installation.dto.ReducerInstallationPaginationDto;
 import ru.vpt.constructorapp.api.reducer.installation.dto.ReducerInstallationTypeDto;
 import ru.vpt.constructorapp.api.util.ResponseDto;
 import ru.vpt.constructorapp.controller.util.AbstractController;
@@ -18,8 +19,8 @@ public class ReducerInstallationTypeController extends AbstractController implem
     private final ReducerInstallationTypeService reducerInstallationTypeService;
 
     @Override
-    public ResponseEntity<ResponseDto<List<ReducerInstallationTypeDto>>> getAllReducerInstallationTypes() {
-        return response(reducerInstallationTypeService.getAllReducerInstallationTypes());
+    public ResponseEntity<ResponseDto<ReducerInstallationPaginationDto>> getAllReducerInstallationTypes(Integer offset, Integer limit) {
+        return response(reducerInstallationTypeService.getAllReducerInstallationTypes(offset, limit));
     }
 
     @Override

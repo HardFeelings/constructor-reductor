@@ -1,13 +1,14 @@
 package ru.vpt.constructorapp.service.reducer;
 
 import ru.vpt.constructorapp.api.reducer.size.dto.ReducerSizeDto;
+import ru.vpt.constructorapp.api.reducer.size.dto.ReducerSizePaginationDto;
 import ru.vpt.constructorapp.store.entities.reducer.ReducerSizeEntity;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface ReducerSizeService {
-    List<ReducerSizeDto> getAllReducerSizes();
+    ReducerSizePaginationDto getAllReducerSizes(int offset, int limit);
 
     ReducerSizeDto getReducerSizeById(Long id);
 

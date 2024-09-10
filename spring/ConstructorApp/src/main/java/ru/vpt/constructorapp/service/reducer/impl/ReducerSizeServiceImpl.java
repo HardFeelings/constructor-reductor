@@ -1,11 +1,14 @@
 package ru.vpt.constructorapp.service.reducer.impl;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import ru.vpt.constructorapp.api.exception.BadRequestException;
 import ru.vpt.constructorapp.api.exception.NotFoundException;
-import ru.vpt.constructorapp.api.reducer.common.dto.ReducerDto;
 import ru.vpt.constructorapp.api.reducer.size.dto.ReducerSizeDto;
+import ru.vpt.constructorapp.api.reducer.size.dto.ReducerSizePaginationDto;
 import ru.vpt.constructorapp.api.reducer.size.mapper.ReducerSizeMapper;
 import ru.vpt.constructorapp.service.reducer.ReducerSizeService;
 import ru.vpt.constructorapp.store.entities.reducer.ReducerSizeEntity;
@@ -24,11 +27,16 @@ public class ReducerSizeServiceImpl implements ReducerSizeService {
     private final ReducerTypeServiceImpl reducerTypeService;
 
     @Override
-    public List<ReducerSizeDto> getAllReducerSizes() {
-        List<ReducerSizeEntity> entities = reducerSizeRepo.findAll();
+    public ReducerSizePaginationDto getAllReducerSizes(int offset, int limit) {
+        Page<ReducerSizeEntity> page = reducerSizeRepo.findAll(PageRequest.of(offset, limit, Sort.by("idReducerSize")));
         List<ReducerSizeDto> dtos = new ArrayList<>();
-        entities.forEach(item -> dtos.add(reducerSizeMapper.toDTO(item)));
-        return dtos.stream().sorted(Comparator.comparingLong(ReducerSizeDto::getIdReducerSize)).collect(Collectors.toList());
+        page.getContent().forEach(item -> dtos.add(reducerSizeMapper.toDTO(item)));
+        ReducerSizePaginationDto paginationDto = new ReducerSizePaginationDto();
+        paginationDto.setContent(dtos);
+        paginationDto.setTotalCount(page.getTotalElements());
+        paginationDto.setTotalPages(page.getTotalPages());
+        paginationDto.setCurrentPage(page.getNumber());
+        return paginationDto;
     }
 
     @Override

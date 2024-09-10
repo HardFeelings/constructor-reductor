@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 import ru.vpt.constructorapp.api.motor.common.MotorApi;
 import ru.vpt.constructorapp.api.motor.common.dto.MotorDto;
+import ru.vpt.constructorapp.api.motor.common.dto.MotorPaginationDto;
 import ru.vpt.constructorapp.api.util.ResponseDto;
 import ru.vpt.constructorapp.controller.util.AbstractController;
 import ru.vpt.constructorapp.service.motor.MotorService;
@@ -18,8 +19,8 @@ public class MotorController extends AbstractController implements MotorApi {
     private final MotorService motorService;
 
     @Override
-    public ResponseEntity<ResponseDto<List<MotorDto>>> getAllMotors() {
-        return response(motorService.getAllMotors());
+    public ResponseEntity<ResponseDto<MotorPaginationDto>> getAllMotors(Integer offset, Integer limit) {
+        return response(motorService.getAllMotors(offset, limit));
     }
 
     @Override

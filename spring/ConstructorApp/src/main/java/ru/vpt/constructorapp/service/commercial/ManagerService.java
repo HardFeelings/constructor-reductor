@@ -1,12 +1,11 @@
 package ru.vpt.constructorapp.service.commercial;
 
 import ru.vpt.constructorapp.api.commercial.manager.dto.ManagerDto;
+import ru.vpt.constructorapp.api.commercial.manager.dto.ManagerPaginationDto;
 import ru.vpt.constructorapp.store.entities.commercial.ManagerEntity;
 
-import java.util.List;
-
 public interface ManagerService {
-    List<ManagerDto> getAll();
+    ManagerPaginationDto getAll(int offset, int limit);
     ManagerDto getById(Long id);
     ManagerEntity findById(Long id);
     ManagerDto save(ManagerDto managerDto);

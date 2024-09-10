@@ -1,11 +1,14 @@
 package ru.vpt.constructorapp.service.product.impl;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import ru.vpt.constructorapp.api.exception.BadRequestException;
 import ru.vpt.constructorapp.api.exception.NotFoundException;
-import ru.vpt.constructorapp.api.motor.adapter.dto.MotorAdapterTypeDto;
 import ru.vpt.constructorapp.api.product.option.dto.ProductOptionDto;
+import ru.vpt.constructorapp.api.product.option.dto.ProductOptionPaginationDto;
 import ru.vpt.constructorapp.api.product.option.mapper.ProductOptionMapper;
 import ru.vpt.constructorapp.service.product.ProductOptionService;
 import ru.vpt.constructorapp.service.product.ProductTypeService;
@@ -25,11 +28,16 @@ public class ProductOptionServiceImpl implements ProductOptionService {
   private final ProductTypeService productTypeService;
 
   @Override
-  public List<ProductOptionDto> getAllProductOptions() {
-    List<ProductOptionEntity> entities = productOptionRepo.findAll();
+  public ProductOptionPaginationDto getAllProductOptions(int offset, int limit) {
+    Page<ProductOptionEntity> page = productOptionRepo.findAll(PageRequest.of(offset, limit, Sort.by("idProductOption")));
     List<ProductOptionDto> dtos = new ArrayList<>();
-    entities.forEach(item -> dtos.add(productOptionMapper.toDTO(item)));
-    return dtos.stream().sorted(Comparator.comparingLong(ProductOptionDto::getIdProductOption)).collect(Collectors.toList());
+    page.getContent().forEach(item -> dtos.add(productOptionMapper.toDTO(item)));
+    ProductOptionPaginationDto paginationDto = new ProductOptionPaginationDto();
+    paginationDto.setProductOptionDtos(dtos);
+    paginationDto.setTotalCount(page.getTotalElements());
+    paginationDto.setTotalPages(page.getTotalPages());
+    paginationDto.setCurrentPage(offset);
+    return paginationDto;
   }
 
   @Override

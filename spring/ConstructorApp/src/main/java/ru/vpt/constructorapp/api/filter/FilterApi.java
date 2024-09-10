@@ -4,14 +4,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import ru.vpt.constructorapp.api.filter.dto.FilterDto;
-import ru.vpt.constructorapp.api.product.common.dto.ProductDto;
+import ru.vpt.constructorapp.api.product.common.dto.ProductPaginationDto;
 import ru.vpt.constructorapp.api.util.ResponseDto;
-
-import java.util.List;
 
 @RequestMapping
 public interface FilterApi {
     @PostMapping("/filter")
-    ResponseEntity<ResponseDto<List<ProductDto>>> filter(@RequestBody FilterDto filterDto);
+    ResponseEntity<ResponseDto<ProductPaginationDto>> filter(@RequestBody FilterDto filterDto,
+                                                             @RequestParam(value = "offset", defaultValue = "0") Integer offset,
+                                                             @RequestParam(value = "limit", defaultValue = "20") Integer limit);
 }

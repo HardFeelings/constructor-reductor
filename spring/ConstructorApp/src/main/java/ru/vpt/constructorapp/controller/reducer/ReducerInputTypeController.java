@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 import ru.vpt.constructorapp.api.reducer.input.ReducerInputTypeApi;
+import ru.vpt.constructorapp.api.reducer.input.dto.ReducerInputPaginationDto;
 import ru.vpt.constructorapp.api.reducer.input.dto.ReducerInputTypeDto;
 import ru.vpt.constructorapp.api.util.ResponseDto;
 import ru.vpt.constructorapp.controller.util.AbstractController;
@@ -18,8 +19,8 @@ public class ReducerInputTypeController extends AbstractController implements Re
     private final ReducerInputTypeService reducerInputTypeService;
 
     @Override
-    public ResponseEntity<ResponseDto<List<ReducerInputTypeDto>>> getAllReducerInputTypes() {
-        return response(reducerInputTypeService.getAllReducerInputTypes());
+    public ResponseEntity<ResponseDto<ReducerInputPaginationDto>> getAllReducerInputTypes(Integer offset, Integer limit) {
+        return response(reducerInputTypeService.getAllReducerInputTypes(offset, limit));
     }
 
     @Override

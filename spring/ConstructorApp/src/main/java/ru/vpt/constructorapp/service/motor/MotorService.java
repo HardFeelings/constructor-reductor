@@ -1,13 +1,14 @@
 package ru.vpt.constructorapp.service.motor;
 
 import ru.vpt.constructorapp.api.motor.common.dto.MotorDto;
+import ru.vpt.constructorapp.api.motor.common.dto.MotorPaginationDto;
 import ru.vpt.constructorapp.store.entities.motor.MotorEntity;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface MotorService {
-    List<MotorDto> getAllMotors();
+    MotorPaginationDto getAllMotors(int offset, int limit);
     MotorDto getMotorById(Long id);
     MotorDto saveMotor(MotorDto motorDto);
 

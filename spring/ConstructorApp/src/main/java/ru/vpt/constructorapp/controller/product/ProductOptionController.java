@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 import ru.vpt.constructorapp.api.product.option.ProductOptionApi;
 import ru.vpt.constructorapp.api.product.option.dto.ProductOptionDto;
+import ru.vpt.constructorapp.api.product.option.dto.ProductOptionPaginationDto;
 import ru.vpt.constructorapp.api.util.ResponseDto;
 import ru.vpt.constructorapp.controller.util.AbstractController;
 import ru.vpt.constructorapp.service.product.ProductOptionService;
@@ -18,8 +19,8 @@ public class ProductOptionController extends AbstractController implements Produ
     private final ProductOptionService productOptionService;
 
     @Override
-    public ResponseEntity<ResponseDto<List<ProductOptionDto>>> getAllProductOptions() {
-        return response(productOptionService.getAllProductOptions());
+    public ResponseEntity<ResponseDto<ProductOptionPaginationDto>> getAllProductOptions(Integer offset, Integer limit) {
+        return response(productOptionService.getAllProductOptions(offset, limit));
     }
 
     @Override

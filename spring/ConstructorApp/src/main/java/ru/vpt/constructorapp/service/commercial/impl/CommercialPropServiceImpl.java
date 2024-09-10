@@ -1,10 +1,13 @@
 package ru.vpt.constructorapp.service.commercial.impl;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import ru.vpt.constructorapp.api.commercial.item.dto.CommercialPropItemDto;
 import ru.vpt.constructorapp.api.commercial.payment.dto.CommercialPropTermsDto;
 import ru.vpt.constructorapp.api.commercial.prop.dto.CommercialPropDto;
+import ru.vpt.constructorapp.api.commercial.prop.dto.CommercialPropPaginationDto;
 import ru.vpt.constructorapp.api.commercial.prop.mapper.CommercialPropMapper;
 import ru.vpt.constructorapp.api.exception.BadRequestException;
 import ru.vpt.constructorapp.api.exception.NotFoundException;
@@ -112,7 +115,13 @@ public class CommercialPropServiceImpl implements CommercialPropService {
     }
 
     @Override
-    public List<CommercialPropDto> getByFilter(CommercialPropDto commercialPropDto) {
-        return repo.findByFilter(commercialPropDto).stream().map(mapper::toDTOWithoutItems).collect(Collectors.toList());
+    public CommercialPropPaginationDto getByFilter(CommercialPropDto commercialPropDto, int offset, int limit) {
+        Page<CommercialPropEntity> page = repo.findByFilter(commercialPropDto, PageRequest.of(offset, limit));
+        CommercialPropPaginationDto paginationDto = new CommercialPropPaginationDto();
+        paginationDto.setContent(page.getContent().stream().map(mapper::toDTOWithoutItems).collect(Collectors.toList()));
+        paginationDto.setCurrentPage(offset);
+        paginationDto.setTotalPages(page.getTotalPages());
+        paginationDto.setTotalCount(page.getTotalElements());
+        return paginationDto;
     }
 }

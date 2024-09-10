@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 import ru.vpt.constructorapp.api.reducer.output.ReducerOutputShaftTypeApi;
+import ru.vpt.constructorapp.api.reducer.output.dto.ReducerOutputShaftPaginationDto;
 import ru.vpt.constructorapp.api.reducer.output.dto.ReducerOutputShaftTypeDto;
 import ru.vpt.constructorapp.api.util.ResponseDto;
 import ru.vpt.constructorapp.controller.util.AbstractController;
@@ -18,8 +19,8 @@ public class ReducerOutputShaftTypeController extends AbstractController impleme
     private final ReducerOutputShaftTypeService reducerOutputShaftTypeService;
 
     @Override
-    public ResponseEntity<ResponseDto<List<ReducerOutputShaftTypeDto>>> getAllReducerOutputShaftTypes() {
-        return response(reducerOutputShaftTypeService.getAllReducerOutputShaftTypes());
+    public ResponseEntity<ResponseDto<ReducerOutputShaftPaginationDto>> getAllReducerOutputShaftTypes(Integer offset, Integer limit) {
+        return response(reducerOutputShaftTypeService.getAllReducerOutputShaftTypes(offset, limit));
     }
 
     @Override

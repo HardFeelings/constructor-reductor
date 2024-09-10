@@ -1,22 +1,44 @@
 package ru.vpt.constructorapp.store.repo.product;
 
+import com.querydsl.core.types.Expression;
 import com.querydsl.jpa.impl.JPAQuery;
 import jakarta.persistence.EntityManager;
-import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
+import org.springframework.data.support.PageableExecutionUtils;
+import org.springframework.stereotype.Repository;
 import ru.vpt.constructorapp.api.filter.dto.FilterDto;
 import ru.vpt.constructorapp.api.util.QPredicates;
 import ru.vpt.constructorapp.store.entities.product.ProductEntity;
 
 import java.util.List;
 
+import static java.util.Optional.ofNullable;
 import static ru.vpt.constructorapp.store.entities.product.QProductEntity.productEntity;
-@RequiredArgsConstructor
-public class ProductRepoImpl implements ProductCustomRepo{
+
+@Repository
+public class ProductRepoImpl extends QuerydslRepositorySupport implements ProductCustomRepo {
+
     private final EntityManager entityManager;
+
+    public ProductRepoImpl(EntityManager em) {
+        super(ProductEntity.class);
+        this.entityManager = em;
+    }
+
     @Override
-    public List<ProductEntity> findByFilter(FilterDto filter) {
-        return new JPAQuery<ProductEntity>(entityManager)
-                .select(productEntity)
+    public Page<ProductEntity> findByFilter(FilterDto filter, Pageable pageable) {
+        Long totalCount = getJPAQuery(filter, productEntity.count()).fetchOne();
+        JPAQuery<ProductEntity> query = getJPAQuery(filter, productEntity);
+        ofNullable(getQuerydsl()).ifPresent(querydsl -> querydsl.applyPagination(pageable, query));
+        List<ProductEntity> pagedData = query.fetch();
+        return PageableExecutionUtils.getPage(pagedData, pageable, () -> totalCount);
+    }
+
+    private <T> JPAQuery<T> getJPAQuery(FilterDto filter, Expression<T> expression) {
+        return new JPAQuery<T>(entityManager)
+                .select(expression)
                 .from(productEntity)
                 .where(QPredicates.builder()
                         .add(filter.getProductTypeId(), productEntity.productType.idProductType::eq)
@@ -28,15 +50,15 @@ public class ProductRepoImpl implements ProductCustomRepo{
                         .add(filter.getPower(), productEntity.motor.power::eq)
                         .add(filter.getIdReducerType(), productEntity.reducer.reducerType.idReducerType::eq)
                         .add(filter.getIdReducerSize(), productEntity.reducer.reducerSize.idReducerSize::eq)
-                        .add(filter.getDiamOutput() == null ? null : filter.getDiamOutput() - filter.getDiamOutputAllowance(),productEntity.reducer.diameterOutputShaft::goe)
-                        .add(filter.getDiamOutput() == null ? null : filter.getDiamOutput() + filter.getDiamOutputAllowance(),productEntity.reducer.diameterOutputShaft::loe)
+                        .add(filter.getDiamOutput() == null ? null : filter.getDiamOutput() - filter.getDiamOutputAllowance(), productEntity.reducer.diameterOutputShaft::goe)
+                        .add(filter.getDiamOutput() == null ? null : filter.getDiamOutput() + filter.getDiamOutputAllowance(), productEntity.reducer.diameterOutputShaft::loe)
                         .add(filter.getIdReducerInputType(), productEntity.reducer.reducerInputType.idReducerInputType::eq)
                         .add(filter.getIdReducerOutputShaftType(), productEntity.reducer.reducerOutputShaftType.idReducerOutputShaftType::eq)
                         .add(filter.getRatio() != null ? filter.getRatio() - 5 : null, productEntity.reducer.ratio::goe)
                         .add(filter.getRatio() != null ? filter.getRatio() + 5 : null, productEntity.reducer.ratio::loe)
                         .add(filter.getIdReducerInstallationType(), productEntity.reducer.reducerInstallationType.idReducerInstallationType::eq)
                         .add(filter.getIdReducerMounting(), productEntity.reducer.reducerMounting.idReducerMounting::eq)
-                        .buildAnd())
-                .fetch();
+                        .buildAnd());
+
     }
 }

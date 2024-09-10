@@ -1,12 +1,15 @@
 package ru.vpt.constructorapp.service.motor.impl;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import ru.vpt.constructorapp.api.exception.BadRequestException;
 import ru.vpt.constructorapp.api.exception.NotFoundException;
+import ru.vpt.constructorapp.api.motor.adapter.dto.MotorAdapterPaginationDto;
 import ru.vpt.constructorapp.api.motor.adapter.dto.MotorAdapterTypeDto;
 import ru.vpt.constructorapp.api.motor.adapter.mapper.MotorAdapterTypeMapper;
-import ru.vpt.constructorapp.api.motor.common.dto.MotorDto;
 import ru.vpt.constructorapp.service.motor.MotorAdapterTypeService;
 import ru.vpt.constructorapp.store.entities.motor.MotorAdapterTypeEntity;
 import ru.vpt.constructorapp.store.entities.motor.MotorTypeEntity;
@@ -26,11 +29,16 @@ public class MotorAdapterTypeServiceImpl implements MotorAdapterTypeService {
     private final MotorTypeServiceImpl motorTypeService;
 
     @Override
-    public List<MotorAdapterTypeDto> getAllMotorAdapterTypes() {
-        List<MotorAdapterTypeEntity> entities = motorAdapterTypeRepo.findAll();
+    public MotorAdapterPaginationDto getAllMotorAdapterTypes(int offset, int limit) {
+        Page<MotorAdapterTypeEntity> page = motorAdapterTypeRepo.findAll(PageRequest.of(offset, limit, Sort.by("idMotorAdapterType")));
         List<MotorAdapterTypeDto> dtos = new ArrayList<>();
-        entities.forEach(item -> dtos.add(motorAdapterTypeMapper.toDTO(item)));
-        return dtos.stream().sorted(Comparator.comparingLong(MotorAdapterTypeDto::getIdMotorAdapterType)).collect(Collectors.toList());
+        page.getContent().forEach(item -> dtos.add(motorAdapterTypeMapper.toDTO(item)));
+        MotorAdapterPaginationDto dto = new MotorAdapterPaginationDto();
+        dto.setContent(dtos);
+        dto.setTotalCount(page.getTotalElements());
+        dto.setTotalPages(page.getTotalPages());
+        dto.setCurrentPage(offset);
+        return dto;
     }
 
     @Override

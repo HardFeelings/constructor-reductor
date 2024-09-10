@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 import ru.vpt.constructorapp.api.reducer.size.ReducerSizeApi;
 import ru.vpt.constructorapp.api.reducer.size.dto.ReducerSizeDto;
+import ru.vpt.constructorapp.api.reducer.size.dto.ReducerSizePaginationDto;
 import ru.vpt.constructorapp.api.util.ResponseDto;
 import ru.vpt.constructorapp.controller.util.AbstractController;
 import ru.vpt.constructorapp.service.reducer.ReducerSizeService;
@@ -18,8 +19,8 @@ public class ReducerSizeController extends AbstractController implements Reducer
     private final ReducerSizeService reducerSizeService;
 
     @Override
-    public ResponseEntity<ResponseDto<List<ReducerSizeDto>>> getAllReducerSizes() {
-        return response(reducerSizeService.getAllReducerSizes());
+    public ResponseEntity<ResponseDto<ReducerSizePaginationDto>> getAllReducerSizes(Integer offset, Integer limit) {
+        return response(reducerSizeService.getAllReducerSizes(offset, limit));
     }
 
     @Override

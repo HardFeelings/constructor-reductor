@@ -1,9 +1,13 @@
 package ru.vpt.constructorapp.service.reducer.impl;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import ru.vpt.constructorapp.api.exception.BadRequestException;
 import ru.vpt.constructorapp.api.exception.NotFoundException;
+import ru.vpt.constructorapp.api.reducer.output.dto.ReducerOutputShaftPaginationDto;
 import ru.vpt.constructorapp.api.reducer.output.dto.ReducerOutputShaftTypeDto;
 import ru.vpt.constructorapp.api.reducer.output.mapper.ReducerOutputShaftTypeMapper;
 import ru.vpt.constructorapp.service.reducer.ReducerOutputShaftTypeService;
@@ -23,11 +27,17 @@ public class ReducerOutputShaftTypeServiceImpl implements ReducerOutputShaftType
     private final ReducerTypeServiceImpl reducerTypeService;
 
     @Override
-    public List<ReducerOutputShaftTypeDto> getAllReducerOutputShaftTypes() {
-        List<ReducerOutputShaftTypeEntity> entities = reducerOutputShaftTypeRepo.findAll();
+    public ReducerOutputShaftPaginationDto getAllReducerOutputShaftTypes(int offset, int limit) {
+        Page<ReducerOutputShaftTypeEntity> page = reducerOutputShaftTypeRepo
+                .findAll(PageRequest.of(offset, limit, Sort.by("idReducerOutputShaftType")));
         List<ReducerOutputShaftTypeDto> dtos = new ArrayList<>();
-        entities.forEach(item -> dtos.add(reducerOutputShaftTypeMapper.toDTO(item)));
-        return dtos.stream().sorted(Comparator.comparingLong(ReducerOutputShaftTypeDto::getIdReducerOutputShaftType)).collect(Collectors.toList());
+        page.getContent().forEach(item -> dtos.add(reducerOutputShaftTypeMapper.toDTO(item)));
+        ReducerOutputShaftPaginationDto dto = new ReducerOutputShaftPaginationDto();
+        dto.setContent(dtos);
+        dto.setTotalCount(page.getTotalElements());
+        dto.setCurrentPage(offset);
+        dto.setTotalPages(page.getTotalPages());
+        return dto;
     }
 
     @Override

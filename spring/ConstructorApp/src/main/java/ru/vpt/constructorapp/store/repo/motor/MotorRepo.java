@@ -1,18 +1,16 @@
 package ru.vpt.constructorapp.store.repo.motor;
 
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.querydsl.QuerydslPredicateExecutor;
-import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import ru.vpt.constructorapp.store.entities.motor.MotorEntity;
-import ru.vpt.constructorapp.store.entities.product.ProductEntity;
 
 import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface MotorRepo extends CrudRepository<MotorEntity,Long>{
+public interface MotorRepo extends JpaRepository<MotorEntity,Long> {
     List<MotorEntity> findAll();
     Optional<MotorEntity> findById(Long id);
 
