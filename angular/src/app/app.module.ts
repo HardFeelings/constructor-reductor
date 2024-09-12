@@ -14,7 +14,7 @@ import { ReductorComponent } from "./main/reductor/reductor.component";
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { NgOptimizedImage } from "@angular/common";
 import { EmailComponent } from "./main/email/email.component";
-
+import { PaginatorModule } from 'primeng/paginator';
 
 @NgModule({
   declarations: [
@@ -39,6 +39,7 @@ import { EmailComponent } from "./main/email/email.component";
     HttpClientModule,
     MatCheckboxModule,
     NgOptimizedImage,
+    PaginatorModule,
 
 
 

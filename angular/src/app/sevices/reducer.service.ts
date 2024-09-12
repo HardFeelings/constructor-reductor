@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { ABaseServiceService } from './abase-service.service';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Reducer, ReducerAdapterType, ReducerInputType, ReducerInstallationType, ReducerMounting, ReducerType, ReducerSize, ReducerOutputShaftType } from '../models/reducer';
 import { ResponseInfo } from '../models/responesInfo';
 import { Observable } from 'rxjs';
+import { Page } from '../models/page';
 
 @Injectable({
   providedIn: 'root'
@@ -32,6 +33,13 @@ export class ReducerService extends ABaseServiceService{
     return this.getwp<ResponseInfo<Reducer[]>>(this.reductorUrl);
   }
 
+  getPageReducers(offset:number): Observable<ResponseInfo<Page<Reducer>>> {
+    let params = new HttpParams()
+    .set('offset', offset.toString())
+    // .set('limit', limit.toString())
+    return this.get<ResponseInfo<Page<Reducer>>>(this.reductorUrl, params);
+  }
+
   getReducerById(id:number): Observable<ResponseInfo<Reducer>> {
     return this.getwp<ResponseInfo<Reducer>>(`${this.reductorUrl}/${id}`);
   }
@@ -54,6 +62,13 @@ export class ReducerService extends ABaseServiceService{
     return this.getwp<ResponseInfo<ReducerInputType[]>>(this.reducerInputTypeUrl);
   }
 
+  getPageReducerInputType(offset:number): Observable<ResponseInfo<Page<ReducerInputType>>> {
+    let params = new HttpParams()
+    .set('offset', offset.toString())
+    // .set('limit', limit.toString())
+    return this.get<ResponseInfo<Page<ReducerInputType>>>(this.reducerInputTypeUrl, params);
+  }
+
   getReducerInputById(id:number): Observable<ResponseInfo<ReducerInputType>> {
     return this.getwp<ResponseInfo<ReducerInputType>>(`${this.reducerInputTypeUrl}/${id}`);
   }
@@ -65,6 +80,13 @@ export class ReducerService extends ABaseServiceService{
 ///////////// ReducerInstallationType /////////////
   getAllReducerInstallationType(): Observable<ResponseInfo<ReducerInstallationType[]>> {
     return this.getwp<ResponseInfo<ReducerInstallationType[]>>(this.reducerInstallationType);
+  }
+
+  getPageReducerInstallationType(offset:number): Observable<ResponseInfo<Page<ReducerInstallationType>>> {
+    let params = new HttpParams()
+    .set('offset', offset.toString())
+    // .set('limit', limit.toString())
+    return this.get<ResponseInfo<Page<ReducerInstallationType>>>(this.reducerInstallationType, params);
   }
 
   getReducerInstallationById(id:number): Observable<ResponseInfo<ReducerInstallationType>> {
@@ -98,6 +120,13 @@ export class ReducerService extends ABaseServiceService{
     return this.getwp<ResponseInfo<ReducerSize[]>>(this.reducerSize);
   }
 
+  getPageReducerSizes(offset:number): Observable<ResponseInfo<Page<ReducerSize>>> {
+    let params = new HttpParams()
+    .set('offset', offset.toString())
+    // .set('limit', limit.toString())
+    return this.get<ResponseInfo<Page<ReducerSize>>>(this.reducerSize, params);
+  }
+
   getReducerSizeById(id:number): Observable<ResponseInfo<ReducerSize>> {
     return this.getwp<ResponseInfo<ReducerSize>>(`${this.reducerSize}/${id}`);
   }
@@ -109,6 +138,13 @@ export class ReducerService extends ABaseServiceService{
 ///////////// ReducerOutputShaftType /////////////
   getAllReducerOutputShaftTypes(): Observable<ResponseInfo<ReducerOutputShaftType[]>> {
     return this.getwp<ResponseInfo<ReducerOutputShaftType[]>>(this.reducerOutputShaftType);
+  }
+
+  getPageReducerOutputShaftTypes(offset:number): Observable<ResponseInfo<Page<ReducerOutputShaftType>>> {
+    let params = new HttpParams()
+    .set('offset', offset.toString())
+    // .set('limit', limit.toString())
+    return this.get<ResponseInfo<Page<ReducerOutputShaftType>>>(this.reducerOutputShaftType, params);
   }
 
   getReducerOutputShaftTypeById(id:number): Observable<ResponseInfo<ReducerOutputShaftType>> {

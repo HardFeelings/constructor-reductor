@@ -7,6 +7,8 @@ import { ReducerService } from 'src/app/sevices/reducer.service';
 import { ProductService } from 'src/app/sevices/product.service';
 import { MatDialog } from '@angular/material/dialog';
 import { EmailComponent } from '../email/email.component';
+import { Page } from 'src/app/models/page';
+
 
 @Component({
   selector: 'app-reductor',
@@ -27,12 +29,11 @@ export class ReductorComponent {
   reducerInstallationType: ReducerInstallationType[];
   options: number[] = [];
   foundProducts: Product[];
-  // diamInput: number;
-  // diamInputAllowance:number;
   diamOutput: number;
   diamOutputAllowance: number;
   ratio: number;
-  // torqueMoment: number;
+  totalCount: number;
+  newFilter: Filter;
 
   constructor(private reducerService: ReducerService, private productService: ProductService, public dialog: MatDialog){
   }
@@ -116,23 +117,6 @@ export class ReductorComponent {
       }
     });
   }
-
-  // idReducerAdapterSelected(event: Event) {
-  //   const selectedElement = event.target as HTMLSelectElement;
-  //   const selectedValue = selectedElement.value;
-  //   console.log('Выбранное значение ReducerAdapterType:', selectedValue);
-  //   const selectedAdapter= this.reducerAdapterType.find(type => type.reducerAdapterTypeValue === selectedValue);
-
-  //   if (selectedAdapter) {
-  //     this.filter.idReducerAdapterInputType = selectedAdapter.idReducerAdapterType;
-  //     console.log('ID выбранного размера адаптера:', selectedAdapter.idReducerAdapterType);
-  //   } else {
-  //     console.error('Такого размера адаптера не найдено');
-  //     this.filter.idReducerAdapterInputType = undefined;
-  //     console.log('undefined выбранного размера адаптера:', this.filter.idReducerAdapterInputType);
-  //   }
-  // }
-
 
   getReducerOutputShaftTypeByReducerTypeId(id:number) {
     this.reducerService.getReducerOutputShaftTypeByReducerTypeId(id).subscribe((respones: ResponseInfo<ReducerOutputShaftType[]>)=>{
@@ -272,29 +256,30 @@ export class ReductorComponent {
     }
   }
 
-  searchProduct(filter: Filter){
-    // filter.diamInput = this.diamInput;
-    // filter.diamInputAllowance = this.diamInputAllowance;
+  onPageChange(event: any){
+    console.log("event.page", event.page);
+    this.searchProduct(this.newFilter,event.page);
+  }
+
+  searchProduct(filter: Filter, page: number){
     filter.diamOutput = this.diamOutput;
     filter.diamOutputAllowance = this.diamOutputAllowance;
     filter.ratio = this.ratio;
-    // filter.torqueMoment = this.torqueMoment;
     console.log('filter', filter);
-    this.productService.postFilter(filter).subscribe((respones: ResponseInfo<Product[]>)=>{
+    this.newFilter = filter;
+    // this.productService.postFilter(filter).subscribe((respones: ResponseInfo<Product[]>)=>{
+    this.productService.postPageFilter(filter, page).subscribe((respones: ResponseInfo<Page<Product>>)=>{
       if(respones.data !== null){
-        console.log("Data searchProduct", respones.data);
+        console.log("Data searchProduct", respones.data.content);
         console.log("respones searchProduct", respones);
-        this.foundProducts = respones.data;
+        this.totalCount = respones.data.totalCount;
+        this.foundProducts = respones.data.content;
+        console.log(" totalCount", respones.data.totalCount);
       } else {
         alert(JSON.stringify(respones.errorMsg))
       }
     });
   }
-
-  // downloadImage(id:number,filename: string){
-  //   this.productService.downloadImageById(id,filename);
-  // }
-
 
   goSendEmail(name:string){
     const dialogAddingNewStudent = this.dialog.open(EmailComponent, {

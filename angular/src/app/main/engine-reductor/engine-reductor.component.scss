@@ -17,6 +17,30 @@ select {
   display: flex;
 }
 
+::ng-deep .p-paginator {
+  margin-top: 10px;
+}
+
+::ng-deep .p-paginator button{
+  border-radius: 10px;
+  padding: 12px;
+  margin: 10px;
+  border: 1px solid #ccc
+}
+
+
+::ng-deep .p-paginator button:hover{
+  background-color: #fcb331;
+  color: white;
+}
+
+::ng-deep .p-paginator .p-paginator-page.p-highlight {
+  background-color:#0c547a;
+  color: white;
+  border: 1px solid black
+}
+
+
 .product_choise {
   width: auto;
   margin: 10px;

@@ -9,6 +9,7 @@ import { Filter } from 'src/app/models/filter';
 import { ProductOption,Product } from 'src/app/models/product';
 import { MatDialog } from '@angular/material/dialog';
 import { EmailComponent } from '../email/email.component';
+import { Page } from 'src/app/models/page';
 
 @Component({
   selector: 'app-engine-reductor',
@@ -33,8 +34,9 @@ export class EngineReductorComponent {
   foundProducts: Product[];
   options: number[] = [];
   productOption: ProductOption[];
-
   rpm!:number;
+  totalCount: number;
+  newFilter: Filter;
 
   constructor(private reducerService: ReducerService, private productService: ProductService, private motorService: MotorService, public dialog: MatDialog){
   }
@@ -237,7 +239,12 @@ export class EngineReductorComponent {
     }
   }
 
-  searchProduct(filter: Filter){
+  onPageChange(event: any){
+    console.log("event.page", event.page);
+    this.searchProduct(this.newFilter,event.page);
+  }
+
+  searchProduct(filter: Filter, page: number){
     filter.rpm = this.rpm;
     filter.power = this.power;
     filter.diamOutput = this.diamOutput;
@@ -245,11 +252,14 @@ export class EngineReductorComponent {
     filter.ratio = this.ratio;
     filter.torqueMoment = this.torqueMoment;
     console.log('filter', filter);
-    this.productService.postFilter(filter).subscribe((respones: ResponseInfo<Product[]>)=>{
+    this.newFilter = filter;
+    this.productService.postPageFilter(filter, page).subscribe((respones: ResponseInfo<Page<Product>>)=>{
       if(respones.data !== null){
-        console.log("Data searchProduct", respones.data);
+        console.log("Data searchProduct", respones.data.content);
         console.log("respones searchProduct", respones);
-        this.foundProducts = respones.data;
+        this.totalCount = respones.data.totalCount;
+        this.foundProducts = respones.data.content;
+        console.log(" totalCount", respones.data.totalCount);
       } else {
         alert(JSON.stringify(respones.errorMsg))
       }
@@ -266,10 +276,6 @@ export class EngineReductorComponent {
       }
     });
   }
-
-  // downloadImage(id:number,filename: string){
-  //   this.productService.downloadImageById(id,filename);
-  // }
 
   goSendEmail(name:string){
     const dialogAddingNewStudent = this.dialog.open(EmailComponent, {

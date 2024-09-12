@@ -116,11 +116,12 @@
       </div>
       <br />
     <hr />
-    <div class="button-container" ><button (click)="searchProduct(this.filter)">Найти</button></div>
+    <div class="button-container" ><button (click)="searchProduct(this.filter,0)">Найти</button></div>
     <br />
     <hr />
+    <div *ngIf="foundProducts && foundProducts.length">
     <table class="table"  *ngIf="foundProducts !== null || foundProducts !== []">
-      <thead *ngIf="foundProducts && foundProducts.length > 0">
+      <thead *ngIf="foundProducts && foundProducts.length">
         <tr>
             <!-- <th>id</th> -->
             <th>Наименование</th>
@@ -156,3 +157,11 @@
         </tr>
     </tbody>
     </table>
+    <br />
+      <p-paginator
+          (onPageChange)="onPageChange($event)"
+          [first]="0"
+          [rows]="20"
+          [totalRecords]="totalCount">
+      </p-paginator>
+    </div>

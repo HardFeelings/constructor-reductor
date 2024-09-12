@@ -4,6 +4,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Engine, EngineAdapterType, EngineType } from '../models/engine';
 import { ResponseInfo } from '../models/responesInfo';
+import { Page } from '../models/page';
 
 @Injectable({
   providedIn: 'root'
@@ -23,6 +24,13 @@ export class MotorService extends ABaseServiceService{
     return this.getwp<ResponseInfo<Engine[]>>(this.motorUrl);
   }
 
+  getPageMotor(offset:number): Observable<ResponseInfo<Page<Engine>>> {
+    let params = new HttpParams()
+    .set('offset', offset.toString())
+    // .set('limit', limit.toString())
+    return this.get<ResponseInfo<Page<Engine>>>(this.motorUrl, params);
+  }
+
   getMotorById(id:number): Observable<ResponseInfo<Engine>> {
     return this.getwp<ResponseInfo<Engine>>(`${this.motorUrl}/${id}`);
   }
@@ -39,6 +47,13 @@ export class MotorService extends ABaseServiceService{
 ///////////// EngineAdapterType /////////////
   getAllMotorAdapterType(): Observable<ResponseInfo<EngineAdapterType[]>> {
     return this.getwp<ResponseInfo<EngineAdapterType[]>>(this.motorAdapterTypeUrl);
+  }
+
+  getPageMotorAdapterType(offset:number): Observable<ResponseInfo<Page<EngineAdapterType>>> {
+    let params = new HttpParams()
+    .set('offset', offset.toString())
+    // .set('limit', limit.toString())
+    return this.get<ResponseInfo<Page<EngineAdapterType>>>(this.motorAdapterTypeUrl, params);
   }
 
   getMotorAdapterById(id:number): Observable<ResponseInfo<EngineAdapterType>> {

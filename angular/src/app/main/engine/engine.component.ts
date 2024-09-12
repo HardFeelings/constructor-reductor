@@ -7,6 +7,7 @@ import { MotorService } from 'src/app/sevices/motor.service';
 import { ProductService } from 'src/app/sevices/product.service';
 import { MatDialog } from '@angular/material/dialog';
 import { EmailComponent } from '../email/email.component';
+import { Page } from 'src/app/models/page';
 
 @Component({
   selector: 'app-engine',
@@ -17,8 +18,6 @@ export class EngineComponent {
   engineAdapterTypeByMotorTypeId: EngineAdapterType[];
   motorType: EngineType[];
   productOption: ProductOption[];
-  // frequencyArray: number[]=[50,60];
-  // posTerminalBoxArray: number[]=[90,180,270,360];
   rpmArray: number[]=[750, 1000, 1500, 3000];
   @Input() idProductType: number;
   motorTypeId: number | undefined;
@@ -27,7 +26,8 @@ export class EngineComponent {
   filter: Filter = new Filter();
   foundProducts: Product[];
   rpm!:number;
-
+  totalCount: number;
+  newFilter: Filter;
 
   constructor(private motorService: MotorService, private productService: ProductService, public dialog: MatDialog){
   }
@@ -108,34 +108,6 @@ export class EngineComponent {
     }
   }
 
-  // frequencySelected(event: Event) {
-  //   const selectedElement = event.target as HTMLSelectElement;
-  //   const selectedValue = selectedElement.value;
-  //   console.log('Выбранное значение posTerminal:', selectedValue);
-  //   const intselectedValue: number = parseInt(selectedValue, 10);
-  //   console.log('Выбранное значение int posTerminal:', selectedValue);
-
-  //   if (intselectedValue) {
-  //     this.filter.posTerminalBox = intselectedValue;
-  //   }
-  //   if(selectedValue == "Select"){
-  //     this.filter.posTerminalBox = undefined;
-  //      console.log('Другое значение posTerminal:', this.filter.posTerminalBox);
-  //   }
-  // }
-
-  // rpmSelected(event: Event) {
-  //   const selectedElement = event.target as HTMLSelectElement;
-  //   const selectedValue = selectedElement.value;
-  //   console.log('Выбранное значение rpm:', selectedValue);
-  //   const intselectedValue: number = parseInt(selectedValue, 10);
-  //   console.log('Выбранное значение int rpm:', selectedValue);
-
-  //   if (intselectedValue) {
-  //     this.filter.rpm = intselectedValue;
-  //   }
-  // }
-
   onCheckboxChange(event: Event, optionId: number) {
     const target = event.target as HTMLInputElement;
     if (target.checked) {
@@ -155,15 +127,24 @@ export class EngineComponent {
     }
   }
 
-  searchProduct(filter: Filter){
+  onPageChange(event: any){
+    console.log("event.page", event.page);
+    this.searchProduct(this.newFilter,event.page);
+  }
+
+  searchProduct(filter: Filter, page: number){
     filter.power = this.power;
     filter.rpm = this.rpm
     console.log('filter', filter);
-    this.productService.postFilter(filter).subscribe((respones: ResponseInfo<Product[]>)=>{
+    this.newFilter = filter;
+    this.productService.postPageFilter(filter, page).subscribe((respones: ResponseInfo<Page<Product>>)=>{
       if(respones.data !== null){
-        console.log("Data searchProduct", respones.data);
+        console.log("Data searchProduct", respones.data.content);
         console.log("respones searchProduct", respones);
-        this.foundProducts = respones.data;
+        // this.foundProducts = respones.data;
+        this.totalCount = respones.data.totalCount;
+        this.foundProducts = respones.data.content;
+        console.log(" totalCount", respones.data.totalCount);
       } else {
         alert(JSON.stringify(respones.errorMsg))
       }
@@ -193,9 +174,5 @@ export class EngineComponent {
 
     });
   }
-
-  // downloadImage(id:number,filename: string){
-  //   this.productService.downloadImageById(id,filename);
-  // }
 
 }
