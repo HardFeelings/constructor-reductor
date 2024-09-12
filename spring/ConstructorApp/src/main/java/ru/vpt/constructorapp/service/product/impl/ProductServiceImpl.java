@@ -37,7 +37,7 @@ public class ProductServiceImpl implements ProductService {
         List<ProductDto> dtos = new ArrayList<>();
         page.getContent().forEach(item -> dtos.add(productMapper.toDTO(item)));
         ProductPaginationDto paginationDto = new ProductPaginationDto();
-        paginationDto.setProductDtoList(dtos);
+        paginationDto.setContent(dtos);
         paginationDto.setTotalCount(page.getTotalElements());
         paginationDto.setTotalPages(page.getTotalPages());
         paginationDto.setCurrentPage(offset);

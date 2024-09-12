@@ -35,7 +35,7 @@ public class MotorServiceImpl implements MotorService {
         List<MotorDto> dtos = new ArrayList<>();
         page.getContent().forEach(item -> dtos.add(motorMapper.toDTO(item)));
         MotorPaginationDto paginationDto = new MotorPaginationDto();
-        paginationDto.setMotorDtos(dtos);
+        paginationDto.setContent(dtos);
         paginationDto.setTotalCount(page.getTotalElements());
         paginationDto.setCurrentPage(offset);
         paginationDto.setTotalPages(page.getTotalPages());

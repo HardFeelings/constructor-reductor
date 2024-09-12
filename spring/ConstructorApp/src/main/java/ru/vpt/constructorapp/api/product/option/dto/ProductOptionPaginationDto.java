@@ -11,7 +11,7 @@ import java.util.List;
 @EqualsAndHashCode
 @Builder
 public class ProductOptionPaginationDto {
-    List<ProductOptionDto> productOptionDtos;
+    private List<ProductOptionDto> content;
     long totalCount;
     int currentPage;
     int totalPages;

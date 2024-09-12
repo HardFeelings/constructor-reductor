@@ -12,7 +12,7 @@ import java.util.List;
 @EqualsAndHashCode
 @Builder
 public class MotorPaginationDto {
-    private List<MotorDto> motorDtos;
+    private List<MotorDto> content;
     long totalCount;
     int currentPage;
     int totalPages;

@@ -33,7 +33,7 @@ public class ProductOptionServiceImpl implements ProductOptionService {
     List<ProductOptionDto> dtos = new ArrayList<>();
     page.getContent().forEach(item -> dtos.add(productOptionMapper.toDTO(item)));
     ProductOptionPaginationDto paginationDto = new ProductOptionPaginationDto();
-    paginationDto.setProductOptionDtos(dtos);
+    paginationDto.setContent(dtos);
     paginationDto.setTotalCount(page.getTotalElements());
     paginationDto.setTotalPages(page.getTotalPages());
     paginationDto.setCurrentPage(offset);

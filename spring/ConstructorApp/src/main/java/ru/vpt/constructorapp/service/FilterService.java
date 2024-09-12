@@ -26,7 +26,7 @@ public class FilterService {
         List<ProductEntity> productEntities = page.getContent();
         productEntities.forEach(item -> dtos.add(mapper.toDTOWithRef(item)));
         ProductPaginationDto finalDto = new ProductPaginationDto();
-        finalDto.setProductDtoList(dtos.stream().filter(item -> filterProductByOptions(item, filterDto.getProductOptions())).collect(Collectors.toList()));
+        finalDto.setContent(dtos.stream().filter(item -> filterProductByOptions(item, filterDto.getProductOptions())).collect(Collectors.toList()));
         finalDto.setTotalCount(page.getTotalElements());
         finalDto.setCurrentPage(offset);
         finalDto.setTotalPages(page.getTotalPages());

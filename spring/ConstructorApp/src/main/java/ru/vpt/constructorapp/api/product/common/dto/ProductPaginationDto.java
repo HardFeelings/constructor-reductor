@@ -12,7 +12,7 @@ import java.util.List;
 @EqualsAndHashCode
 @Builder
 public class ProductPaginationDto {
-    List<ProductDto> productDtoList;
+    private List<ProductDto> content;
     long totalCount;
     int currentPage;
     int totalPages;
