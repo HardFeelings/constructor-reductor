@@ -1,0 +1,26 @@
+.configurator_header {
+  display: flex;
+  justify-content: center;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  margin-top: 90px;
+}
+
+.button-container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 90px;
+  margin-left: 20px;
+  margin-right: 20px;
+
+
+  button {
+    width: 15%;
+    height: 40px;
+    background-color: #083b57 ;
+    color: white;
+    border-radius: 5px;
+  }
+  button:hover {
+    background-color: #1e587a ;
+  }
+}

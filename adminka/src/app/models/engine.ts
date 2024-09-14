@@ -5,13 +5,9 @@ export class Engine {
   frequency: number | undefined;
   efficiency:number;
   ratedCurrent:number;
-  // posTerminalBox:number | undefined;
   momentOfInertia:number | undefined;
-  // motorTypeId: EngineType;
-  // motorAdapterTypeId: EngineAdapterType;
   motorTypeId: number | undefined;
   motorAdapterTypeId: number | undefined;
-  // cableExitSide:string | undefined;
 }
 
 export class EngineType {

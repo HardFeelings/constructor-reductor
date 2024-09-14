@@ -72,6 +72,12 @@
                             </tr>
                         </tbody>
                     </table>
+                    <p-paginator
+                      (onPageChange)="onPageChange($event)"
+                      [first]="0"
+                      [rows]="20"
+                      [totalRecords]="totalCount">
+                  </p-paginator>
                 </div>
             </div>
             <div *ngIf="id==1">
@@ -128,6 +134,12 @@
                             </tr>
                         </tbody>
                     </table>
+                    <p-paginator
+                      (onPageChange)="onPageChange($event)"
+                      [first]="0"
+                      [rows]="20"
+                      [totalRecords]="totalCount">
+                    </p-paginator>
                 </div>
             </div>
             <div *ngIf="id==3">

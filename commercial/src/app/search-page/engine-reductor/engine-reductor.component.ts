@@ -7,6 +7,7 @@ import { ResponseInfo } from 'src/app/models/responesInfo';
 import { ReducerInstallationType, ReducerMounting, ReducerOutputShaftType, ReducerSize, ReducerType } from 'src/app/models/reducer';
 import { Filter } from 'src/app/models/filter';
 import { ProductOption,Product } from 'src/app/models/product';
+import { Page } from 'src/app/models/page';
 
 
 @Component({
@@ -33,6 +34,8 @@ export class EngineReductorComponent {
   options: number[] = [];
   productOption: ProductOption[];
   rpm!: number;
+  totalCount: number;
+  newFilter: Filter;
 
   @Output() selectedProduct = new EventEmitter<Product>();
 
@@ -238,7 +241,32 @@ export class EngineReductorComponent {
     }
   }
 
-  searchProduct(filter: Filter){
+  // searchProduct(filter: Filter){
+  //   filter.rpm = this.rpm;
+  //   filter.power = this.power;
+  //   filter.diamOutput = this.diamOutput;
+  //   filter.diamOutputAllowance = this.diamOutputAllowance;
+  //   filter.ratio = this.ratio;
+  //   filter.torqueMoment = this.torqueMoment;
+  //   console.log('filter', filter);
+  //   this.productService.postFilter(filter).subscribe((respones: ResponseInfo<Product[]>)=>{
+  //     if(respones.data !== null){
+  //       console.log("Data searchProduct", respones.data);
+  //       console.log("respones searchProduct", respones);
+  //       this.foundProducts = respones.data;
+  //     } else {
+  //       alert(JSON.stringify(respones.errorMsg))
+  //     }
+  //   });
+  // }
+
+
+  onPageChange(event: any){
+    console.log("event.page", event.page);
+    this.searchProduct(this.newFilter,event.page);
+  }
+
+  searchProduct(filter: Filter, page: number){
     filter.rpm = this.rpm;
     filter.power = this.power;
     filter.diamOutput = this.diamOutput;
@@ -246,11 +274,14 @@ export class EngineReductorComponent {
     filter.ratio = this.ratio;
     filter.torqueMoment = this.torqueMoment;
     console.log('filter', filter);
-    this.productService.postFilter(filter).subscribe((respones: ResponseInfo<Product[]>)=>{
+    this.newFilter = filter;
+    this.productService.postPageFilter(filter, page).subscribe((respones: ResponseInfo<Page<Product>>)=>{
       if(respones.data !== null){
-        console.log("Data searchProduct", respones.data);
+        console.log("Data searchProduct", respones.data.content);
         console.log("respones searchProduct", respones);
-        this.foundProducts = respones.data;
+        this.totalCount = respones.data.totalCount;
+        this.foundProducts = respones.data.content;
+        console.log(" totalCount", respones.data.totalCount);
       } else {
         alert(JSON.stringify(respones.errorMsg))
       }

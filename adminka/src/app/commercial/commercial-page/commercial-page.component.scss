@@ -1,0 +1,201 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+body {
+    font-family: 'Roboto';
+    background-color: #f0f0f0;
+    color: #000000;
+    margin: 0;
+    padding: 0;
+}
+
+
+::ng-deep .p-paginator {
+  margin-top: 10px;
+}
+
+::ng-deep .p-paginator button{
+  border-radius: 10px;
+  padding: 12px;
+  margin: 10px;
+  border: 1px solid #ccc
+}
+
+
+::ng-deep .p-paginator button:hover{
+  background-color: #fcb331;
+  color: white;
+}
+
+::ng-deep .p-paginator .p-paginator-page.p-highlight {
+  background-color:#0c547a;
+  color: white;
+  border: 1px solid black
+}
+
+.container {
+    width: 95%;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+}
+
+.sidebar {
+    width: 20%;
+    border-right: 1px solid #ccc;
+    padding-right: 10px;
+}
+
+.sidebar span, .sidebar button {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+    color: black;
+    font-size: 14px;
+    cursor: pointer;
+    background-color: #fcb331;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center;
+    transition: background-color 0.3s ease;
+}
+
+.sidebar span:hover, .sidebar button:hover {
+    background-color: #083b57;
+    color: #ffffff;
+}
+
+.sidebar span.selected {
+  background-color: #083b57;
+  color: #ffffff;
+}
+
+.content {
+    width: 80%;
+    padding-left: 20px;
+}
+
+.buttons {
+    margin-bottom: 20px;
+    display: flex;
+    align-items: flex-end;
+
+    input {
+      width: 38px;
+    }
+}
+
+
+.buttons button {
+    margin-right: 10px;
+}
+
+.table-container {
+    padding: 10px;
+    border-radius: 8px;
+    overflow-x: auto;
+    margin-top: -140px;
+    width: 1600px;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 50px;
+    border-radius: 15px;
+
+}
+
+.table th, .table td {
+    border: 2px solid #ccc;
+    border-radius: 15px;
+    padding: 10px;
+    text-align: center;
+    vertical-align: top;
+    font-size: 20px;
+    border-radius: 2px;
+}
+
+.table th {
+    background-color: #083b57;
+    color: #ffffff;
+    font-size: 22px;
+}
+
+.editable {
+    width: calc(100% - 12px);
+    border: none;
+    outline: none;
+    resize: none;
+    padding: 5px;
+    box-sizing: border-box;
+}
+
+.editable:focus {
+    border: 1px dashed #fcb331;
+}
+
+button {
+    width: 100px;
+    height: 50px;
+    background-color: #fcb331;
+    // color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 18px;
+    color: #ffffff;
+}
+
+button:hover {
+    background-color: #1e587a;
+    color: #ffffff;
+}
+
+.row-buttons {
+    display: flex;
+    flex-direction: column;
+}
+
+.row-buttons button {
+    width: 100%;
+    height: auto;
+    padding: 5px;
+    margin-bottom: 5px;
+    font-size: 18px;
+    color: #ffffff;
+}
+
+
+.row-buttons button:last-child {
+    margin-bottom: 0;
+}
+
+.row-buttonstt {
+  // display: flex;
+  flex-direction: column;
+}
+
+
+.row-buttonstt button {
+  width: 100%;
+  height: auto;
+  padding: 5px;
+  margin-bottom: 5px;
+}
+
+.row-buttonstt button:last-child {
+  margin-bottom: 0;
+}
+
+input {
+  padding-left: 10px;
+  margin-top: 10px;
+}

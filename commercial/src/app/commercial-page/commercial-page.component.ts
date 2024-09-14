@@ -8,6 +8,7 @@ import { SearchPageComponent } from '../search-page/search-page.component';
 import { MatDialog } from '@angular/material/dialog';
 import { Manager } from '../models/manager';
 import { DeleteComponent } from '../delete/delete.component';
+import { Page } from '../models/page';
 
 @Component({
   selector: 'app-commercial-page',
@@ -19,6 +20,7 @@ export class CommercialPageComponent {
   searchData: CommercialProp;
   shortName: string | null = null;
   searchManager: Manager;
+  totalCount: number;
 
   constructor(private commercialService: CommercialService, private dataService: DataService, private  router: Router, public dialog:MatDialog){
     this.searchData = new CommercialProp;
@@ -73,27 +75,30 @@ export class CommercialPageComponent {
     });
   }
 
-  getAllcommercialProp() {
-    this.commercialService.getAllCommercialProps().subscribe((respones: ResponseInfo<CommercialProp[]>) => {
-      if(respones.data !== null){
-        console.log("Data getAllcommercialProp: ", respones.data);
-        this.commercialProp_list = respones.data;
-      } else {
-        alert(JSON.stringify(respones.errorMsg))
-      }
-    });
-  }
-
-  // deleteCommercial(id: number){
-  //   this.commercialService.deleteCommercialProp(id).subscribe((respones: ResponseInfo<Boolean>) => {
+  // getAllcommercialProp() {
+  //   this.commercialService.getAllCommercialProps().subscribe((respones: ResponseInfo<CommercialProp[]>) => {
   //     if(respones.data !== null){
-  //       console.log("Result deleteCommercial: ", respones.data);
-  //       this.commercialProp_list = this.commercialProp_list.filter(item => item.idCommercialProp !== id);
+  //       console.log("Data getAllcommercialProp: ", respones.data);
+  //       this.commercialProp_list = respones.data;
   //     } else {
   //       alert(JSON.stringify(respones.errorMsg))
   //     }
   //   });
   // }
+
+
+  getAllcommercialProp() {
+    const defaultObj = new CommercialProp ();
+    this.commercialService.filterPageProp(defaultObj,0).subscribe((respones: ResponseInfo<Page<CommercialProp>>) => {
+      if(respones.data !== null){
+        console.log("Data getAllcommercialProp: ", respones.data);
+        this.commercialProp_list = respones.data.content;
+        this.totalCount = respones.data.totalCount;
+      } else {
+        alert(JSON.stringify(respones.errorMsg))
+      }
+    });
+  }
 
   downloadExcel(comm:CommercialProp){
     this.commercialService.downloadExcelById(comm);
@@ -109,7 +114,12 @@ export class CommercialPageComponent {
     this.commercialService.downloadPdfById(comm);
   }
 
-  searchProp(){
+  onPageChange(event: any){
+    console.log("event.page", event.page);
+    this.searchProp(event.page);
+  }
+
+  searchProp(offset: number){
     // this.searchManager.shortName = this.shortName;
     if(this.searchManager.shortName == null){
       this.searchData.manager = null;
@@ -117,10 +127,12 @@ export class CommercialPageComponent {
       this.searchData.manager = this.searchManager;
     }
     console.log('searchData', this.searchData)
-    this.commercialService.filterProp(this.searchData).subscribe((respones: ResponseInfo<CommercialProp[]>) => {
+    // this.commercialService.filterProp(this.searchData).subscribe((respones: ResponseInfo<CommercialProp[]>) => {
+    this.commercialService.filterPageProp(this.searchData,offset).subscribe((respones: ResponseInfo<Page<CommercialProp>>) => {
       if(respones.data !== null){
         console.log("Result searchProp: ", respones.data);
-        this.commercialProp_list = respones.data;
+        this.commercialProp_list = respones.data.content;
+        this.totalCount = respones.data.totalCount;
       } else {
         alert(JSON.stringify(respones.errorMsg))
       }

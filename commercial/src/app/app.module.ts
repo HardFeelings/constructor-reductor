@@ -13,7 +13,7 @@ import { ReductorComponent } from "./search-page/reductor/reductor.component";
 import { EngineComponent } from "./search-page/engine/engine.component";
 import { EngineReductorComponent } from "./search-page/engine-reductor/engine-reductor.component";
 import { DeleteComponent } from "./delete/delete.component";
-
+import { PaginatorModule } from 'primeng/paginator';
 
 
 @NgModule({
@@ -38,6 +38,7 @@ import { DeleteComponent } from "./delete/delete.component";
     HttpClientModule,
     MatCheckboxModule,
     NgOptimizedImage,
+    PaginatorModule,
 
   ],
   providers: [],

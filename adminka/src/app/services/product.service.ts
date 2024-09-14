@@ -4,6 +4,8 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Product, ProductType, ProductOption } from '../models/product';
 import { ResponseInfo } from '../models/responesInfo';
 import { Observable } from 'rxjs';
+import { Filter } from '../models/filter';
+import { Page } from '../models/page';
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +22,13 @@ export class ProductService extends ABaseServiceService{
   constructor(http: HttpClient) {
     super(http, 'api/v1');
   }
+
+  postPageFilter(filter: Filter, offset: number): Observable<ResponseInfo<Page<Product>>> {
+    let params = new HttpParams()
+        .set('offset', offset.toString())
+        // .set('limit', limit.toString());
+    return this.post<ResponseInfo<Page<Product>>>(this.filterUrl, filter,  params);
+}
 
 ///////////// Product /////////////
   getAllProducts(): Observable<ResponseInfo<Product[]>> {

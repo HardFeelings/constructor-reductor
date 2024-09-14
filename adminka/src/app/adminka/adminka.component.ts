@@ -15,6 +15,8 @@ import { ProductService } from '../services/product.service';
 import { ResponseInfo } from '../models/responesInfo';
 import { DeleteComponent } from '../delete/delete.component';
 import { PaymentTerms } from '../classes/paymentTerm';
+import { MotorService } from '../services/motor.service';
+import { Page } from '../models/page';
 
 
 @Component({
@@ -42,8 +44,9 @@ export class AdminkaComponent {
   manager_list:Manager[];
 
   searchData: string | null = null;
+  totalCount: number;
 
-  constructor(private http: HttpClient, private imageService: ImageService, public dialog:MatDialog) {
+  constructor(private http: HttpClient, private imageService: ImageService, public dialog:MatDialog, private motorService: MotorService) {
     this.paymentTerms_list = new Array<PaymentTerms>();
     this.motor_list = new Array<Motor>();
     this.motorType_list = new Array<MotorType>();
@@ -97,6 +100,11 @@ export class AdminkaComponent {
     if (fileInput) {
       fileInput.click();
     }
+  }
+
+  onPageChange(event: any){
+    console.log("event.page", event.page);
+    this.getMotorList(event.page);
   }
 
   oKDelete(id: number, i: any){
@@ -189,9 +197,9 @@ export class AdminkaComponent {
   }
 
   ngOnInit() {
-    this.getMotorList()
+    this.getMotorList(0)
     this.getMotorTypeList()
-    this.getMotorAdapterTypeList()
+    this.getMotorAdapterTypeList(0)
     this.getProductList()
     this.getProductType()
     this.getProductOption()
@@ -254,7 +262,7 @@ export class AdminkaComponent {
         this.setid(3);
         this.reducer_list = [];
         this.motor_list = [];
-        this.getMotorList()
+        this.getMotorList(0)
         this.getReducer()
 
     });
@@ -710,27 +718,70 @@ export class AdminkaComponent {
   //   })
   // }
 
-  getMotorList() {
-    this.http.get('/api/v1/motor').subscribe({
-      next: (data: any) => {
-        data.data.forEach((e: { [x: string]: any; }) => {
-          var motor = new Motor()
-          motor.id = e["idMotor"]
-          motor.frequency.value = e["frequency"]
-          motor.adapterType.id = e["motorAdapterTypeId"]
-          motor.power = e["power"]
-          motor.efficiency =  e["efficiency"]
-          motor.ratedCurrent =  e["ratedCurrent"]
-          // motor.posTerminalBox =  e["posTerminalBox"]
-          motor.momentOfInertia =  e["momentOfInertia"]
-          // motor.cableExitSide =  e["cableExitSide"]
-          motor.type.id = e["motorTypeId"]
-          this.motor_list.push(motor)
-        })
-      },
-      error: error => { console.log(error); }
+  // getMotorList() {
+  //   this.http.get('/api/v1/motor').subscribe({
+  //     next: (data: any) => {
+  //       data.data.forEach((e: { [x: string]: any; }) => {
+  //         var motor = new Motor()
+  //         motor.id = e["idMotor"]
+  //         motor.frequency.value = e["frequency"]
+  //         motor.adapterType.id = e["motorAdapterTypeId"]
+  //         motor.power = e["power"]
+  //         motor.efficiency =  e["efficiency"]
+  //         motor.ratedCurrent =  e["ratedCurrent"]
+  //         // motor.posTerminalBox =  e["posTerminalBox"]
+  //         motor.momentOfInertia =  e["momentOfInertia"]
+  //         // motor.cableExitSide =  e["cableExitSide"]
+  //         motor.type.id = e["motorTypeId"]
+  //         this.motor_list.push(motor)
+  //       })
+  //     },
+  //     error: error => { console.log(error); }
+  //   });
+  // }
+
+  getMotorList(offset: number) {
+    // this.http.get(`/api/v1/motor?offset=${offset}`).subscribe({
+    //   next: (data: any) => {
+    //     data.data.forEach((e: { [x: string]: any; }) => {
+    //       var motor = new Motor();
+    //       motor.id = e["idMotor"];
+    //       motor.frequency.value = e["frequency"];
+    //       motor.adapterType.id = e["motorAdapterTypeId"];
+    //       motor.power = e["power"];
+    //       motor.efficiency = e["efficiency"];
+    //       motor.ratedCurrent = e["ratedCurrent"];
+    //       // motor.posTerminalBox = e["posTerminalBox"];
+    //       motor.momentOfInertia = e["momentOfInertia"];
+    //       // motor.cableExitSide = e["cableExitSide"];
+    //       motor.type.id = e["motorTypeId"];
+    //       this.motor_list.push(motor);
+    //     });
+    //   },
+    //   error: error => { console.log(error); }
+    // });
+
+    this.motorService.getPageMotor(offset).subscribe((respones: ResponseInfo<Page<Motor>>)=>{
+      if(respones.data !== null){
+        this.totalCount = respones.data.totalCount;
+        this.motor_list = respones.data.content.map((e: any) => {
+          const motor = new Motor();
+          motor.id = e.idMotor;
+          motor.frequency.value = e.frequency;
+          motor.adapterType.id = e.motorAdapterTypeId;
+          motor.power = e.power;
+          motor.efficiency = e.efficiency;
+          motor.ratedCurrent = e.ratedCurrent;
+          motor.momentOfInertia = e.momentOfInertia;
+          motor.type.id = e.motorTypeId;
+          return motor;
+        });
+      } else {
+        alert(JSON.stringify(respones.errorMsg))
+      }
     });
-  }
+
+}
 
   getProductList() {
     this.http.get('/api/v1/product').subscribe({
@@ -773,18 +824,33 @@ export class AdminkaComponent {
     });
   }
 
-  getMotorAdapterTypeList() {
-    this.http.get('/api/v1/motorAdapterType').subscribe({
-      next: (data: any) => {
-        data.data.forEach((e: { [x: string]: any; }) => {
-          var motorAdapterType = new MotorAdapterType()
-          motorAdapterType.id = e["idMotorAdapterType"]
-          motorAdapterType.value = e["motorAdapterTypeValue"]
-          motorAdapterType.typeid = e["motorTypeId"]
-          this.motorAdapterType_list.push(motorAdapterType)
-        })
-      },
-      error: error => { console.log(error); }
+  getMotorAdapterTypeList(offset: number) {
+    // this.http.get('/api/v1/motorAdapterType').subscribe({
+    //   next: (data: any) => {
+    //     data.data.forEach((e: { [x: string]: any; }) => {
+    //       var motorAdapterType = new MotorAdapterType()
+    //       motorAdapterType.id = e["idMotorAdapterType"]
+    //       motorAdapterType.value = e["motorAdapterTypeValue"]
+    //       motorAdapterType.typeid = e["motorTypeId"]
+    //       this.motorAdapterType_list.push(motorAdapterType)
+    //     })
+    //   },
+    //   error: error => { console.log(error); }
+    // });
+
+    this.motorService.getPageMotorAdapterType(offset).subscribe((respones: ResponseInfo<Page<MotorAdapterType>>)=>{
+      if(respones.data !== null){
+        this.totalCount = respones.data.totalCount;
+        this.motorAdapterType_list = respones.data.content.map((e: any) => {
+          const motorAdapter = new MotorAdapterType();
+          motorAdapter.id = e.idMotorAdapterType;
+          motorAdapter.value = e.motorAdapterTypeValue;
+          motorAdapter.typeid = e.motorTypeId;
+          return motorAdapter;
+        });
+      } else {
+        alert(JSON.stringify(respones.errorMsg))
+      }
     });
   }
 

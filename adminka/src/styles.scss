@@ -36,33 +36,35 @@ $constructor-reductor-theme: mat.define-light-theme((
 @include mat.all-component-themes($constructor-reductor-theme);
 
 html, body {
-    height: 100%;
-    width: 100%;
-    margin: 0;
-    background-color: #f0f0f0;
+  height: 100%;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .wrapper {
-    min-height: 100%;
-    display: flex;
-    flex-direction: column;
-}
-
-.container {
-  width: 100%;
-    margin: 0 auto;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 main {
-    flex: 1 1 auto;
+  flex: 1 1 auto;
 }
 
 .divider {
-    height: 1px;
-    background-color: #05177e;
-    margin: 20px 0;
-    width: 100%;
+  height: 1px;
+  background-color: #05177e;
+  margin: 20px 0;
+  width: 100%;
 }
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body {
+
+margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif;
+background-repeat: repeat;
+height: 80vh;
+width: 100vw;
+background-color: #f0f0f0;
+}
 

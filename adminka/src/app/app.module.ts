@@ -14,7 +14,13 @@ import { EngineComponent } from "./adminka/add-product/engine/engine.component";
 import { EngineReductorComponent } from "./adminka/add-product/engine-reductor/engine-reductor.component";
 import { ReductorComponent } from "./adminka/add-product/reductor/reductor.component";
 import { DeleteComponent } from "./delete/delete.component";
-
+import { PaginatorModule } from 'primeng/paginator';
+import { DeletecommComponent } from "./commercial/deletecomm/deletecomm.component";
+import { CommercialPageComponent } from "./commercial/commercial-page/commercial-page.component";
+import { SearchPageComponent } from "./commercial/search-page/search-page.component";
+import { EngineCommComponent } from "./commercial/search-page/enginecomm/enginecomm.component";
+import { ReductorCommComponent } from "./commercial/search-page/reductorcomm/reductorcomm.component";
+import { EngineReductorCommComponent } from "./commercial/search-page/engine-reductorcomm/engine-reductorcomm.component";
 
 @NgModule({
   declarations: [
@@ -26,6 +32,13 @@ import { DeleteComponent } from "./delete/delete.component";
     EngineReductorComponent,
     ReductorComponent,
     DeleteComponent,
+    DeletecommComponent,
+    CommercialPageComponent,
+    SearchPageComponent,
+    EngineCommComponent,
+    ReductorCommComponent,
+    EngineReductorCommComponent,
+
 
 
 
@@ -38,6 +51,7 @@ import { DeleteComponent } from "./delete/delete.component";
     HttpClientModule,
     MatCheckboxModule,
     NgOptimizedImage,
+    PaginatorModule,
 
   ],
   providers: [],
