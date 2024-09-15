@@ -8,12 +8,9 @@ export class Motor {
     adapterType: MotorAdapterType
     power: Number | null
     frequency: MotorFrequency
-    // rpm: MotorRPM
     efficiency:number;
     ratedCurrent:number;
-    // posTerminalBox:number;
     momentOfInertia:number;
-    // cableExitSide:string;
 
     constructor(http?: HttpClient, id?: number) {
         this.id = 0
@@ -29,12 +26,9 @@ export class Motor {
                         this.frequency.value = e["frequency"]
                         this.adapterType.id = e["motorAdapterTypeId"]
                         this.power = e["power"]
-                        // this.rpm.value = e["rpm"]
                         this.efficiency =  e["efficiency"]
                         this.ratedCurrent =  e["ratedCurrent"]
-                        // this.posTerminalBox =  e["posTerminalBox"]
                         this.momentOfInertia =  e["momentOfInertia"]
-                        // this.cableExitSide =  e["cableExitSide"]
                         this.type.id = e["motorTypeId"]
                     })
                 },
@@ -51,7 +45,6 @@ export class Motor {
             frequency: this.frequency.value,
             efficiency:this.efficiency,
             ratedCurrent:this.ratedCurrent,
-            // posTerminalBox:this.posTerminalBox,
             momentOfInertia:this.momentOfInertia,
             motorTypeId: this.type.id,
             motorAdapterTypeId: this.adapterType.id
@@ -59,12 +52,12 @@ export class Motor {
     }
 
     delete(http: HttpClient) : Observable<ResponseInfo<boolean>> {
-        console.log(this)
+        // console.log(this)
         return http.delete<ResponseInfo<boolean>>(`/api/v1/security/motor/${this.id}`)
     }
 
     save(http: HttpClient): Observable<Motor>{
-        console.log(this)
+        // console.log(this)
         return http.post<Motor>('/api/v1/security/motor', this.ser())
     }
 }
@@ -88,12 +81,12 @@ export class MotorType {
     }
 
     save(http: HttpClient) :Observable<MotorType>{
-        console.log(this)
+        // console.log(this)
        return http.post<MotorType>('/api/v1/security/motorType', this.ser())
     }
 
     delete(http: HttpClient): Observable<boolean> {
-        console.log(this)
+        // console.log(this)
        return http.delete<boolean>(`/api/v1/security/motorType/${this.id}`)
     }
 }
@@ -120,12 +113,12 @@ export class MotorAdapterType {
     }
 
     save(http: HttpClient) : Observable<MotorAdapterType> {
-        console.log(this)
+        // console.log(this)
         return http.post<MotorAdapterType>('/api/v1/security/motorAdapterType', this.ser())
     }
 
     delete(http: HttpClient): Observable<boolean> {
-        console.log(this)
+        // console.log(this)
         return http.delete<boolean>(`/api/v1/security/motorAdapterType/${this.id}`)
     }
 }

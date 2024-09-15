@@ -1,8 +1,8 @@
-
 import { Component } from '@angular/core';
 import { ProductService } from '../sevices/product.service';
 import { ProductType, enProduct } from '../models/product';
 import { ResponseInfo } from '../models/responesInfo';
+import { NGXLogger } from "ngx-logger";
 
 @Component({
   selector: 'app-main',
@@ -17,7 +17,7 @@ export class MainComponent {
   idProductType: number;
   selectedButton: number | null = null;
 
-  constructor(private productService: ProductService) {
+  constructor(private productService: ProductService, private logger: NGXLogger) {
   }
 
 
@@ -28,9 +28,9 @@ export class MainComponent {
   getAllProductTypes(){
     this.productService.getAllProductTypes().subscribe((respones: ResponseInfo<ProductType[]>) => {
         if(respones.data !== null){
-          console.log("Data getAllProductTypes: ", respones.data);
+          this.logger.log("Data getAllProductTypes: ", respones.data);
           this.productTypes = respones.data;
-          console.log(" this.productTypes ",  this.productTypes);
+          this.logger.log(" this.productTypes ",  this.productTypes);
         } else {
           alert(JSON.stringify(respones.errorMsg))
         }
@@ -43,7 +43,7 @@ export class MainComponent {
 
 
   pickProduct(m: string, idType:number) {
-    console.log(m);
+    this.logger.log(m);
     switch (m) {
       case enProduct.Motor.valueOf():
         this.product_selected = enProduct.Motor;

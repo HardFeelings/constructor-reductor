@@ -11,7 +11,7 @@ export class DeletecommComponent {
   constructor(public dialogRef: MatDialogRef<DeletecommComponent>,
     @Inject(MAT_DIALOG_DATA) public data:string){
       this.deleteNumber = this.data;
-      console.log('this.deleteNumber',this.deleteNumber)
+      // console.log('this.deleteNumber',this.deleteNumber)
   }
 
   close(){

@@ -12,11 +12,14 @@ body, html {
   position: fixed; /* или absolute */
   top: 50%;
   left: 50%;
-  width: 50%;
+  width: 70%;
+  height: 95%;
   margin: 10px;
+  margin-top: -10px;
   border-radius: 10px;
   transform: translate(-50%, -50%);
   background-color: #f0f0f0;
+  border: 1px solid black;
 }
 
 .container {

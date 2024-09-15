@@ -8,7 +8,6 @@ export class CommercialProp {
   partner: string | null;
   cost: bigint;
   timestamp: string | null;
-  // marginRatio:number | null;
   manager: Manager | null;
   deliveryTime: number;
   guarantee: number;

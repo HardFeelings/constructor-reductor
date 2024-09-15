@@ -15,6 +15,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import { NgOptimizedImage } from "@angular/common";
 import { EmailComponent } from "./main/email/email.component";
 import { PaginatorModule } from 'primeng/paginator';
+import { LoggerModule, NgxLoggerLevel } from 'ngx-logger';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,11 @@ import { PaginatorModule } from 'primeng/paginator';
     MatCheckboxModule,
     NgOptimizedImage,
     PaginatorModule,
+    LoggerModule.forRoot({
+      level: NgxLoggerLevel.OFF,
+      disableConsoleLogging: false,
+      serverLogLevel: NgxLoggerLevel.OFF,
+    }),
 
 
 

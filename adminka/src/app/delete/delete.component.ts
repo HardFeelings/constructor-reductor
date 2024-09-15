@@ -12,7 +12,7 @@ export class DeleteComponent {
   constructor(public dialogRef: MatDialogRef<DeleteComponent>,
     @Inject(MAT_DIALOG_DATA) public data:number){
       this.deleteItem = this.data;
-      console.log('this.deleteItem',this.deleteItem)
+      // console.log('this.deleteItem',this.deleteItem)
   }
 
   close(){

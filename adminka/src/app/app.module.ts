@@ -21,6 +21,7 @@ import { SearchPageComponent } from "./commercial/search-page/search-page.compon
 import { EngineCommComponent } from "./commercial/search-page/enginecomm/enginecomm.component";
 import { ReductorCommComponent } from "./commercial/search-page/reductorcomm/reductorcomm.component";
 import { EngineReductorCommComponent } from "./commercial/search-page/engine-reductorcomm/engine-reductorcomm.component";
+import { LoggerModule, NgxLoggerLevel } from 'ngx-logger';
 
 @NgModule({
   declarations: [
@@ -52,6 +53,11 @@ import { EngineReductorCommComponent } from "./commercial/search-page/engine-red
     MatCheckboxModule,
     NgOptimizedImage,
     PaginatorModule,
+    LoggerModule.forRoot({
+      level: NgxLoggerLevel.OFF,
+      disableConsoleLogging: false,
+      serverLogLevel: NgxLoggerLevel.OFF,
+    }),
 
   ],
   providers: [],

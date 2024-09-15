@@ -4,7 +4,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Email } from 'src/app/models/email';
 import { ResponseInfo } from 'src/app/models/responesInfo';
 import { ProductService } from 'src/app/sevices/product.service';
-
+import { NGXLogger } from "ngx-logger";
 
 @Component({
   selector: 'app-email',
@@ -22,7 +22,7 @@ export class EmailComponent {
  selecetNumber: string;
  selectName: string;
 
-  constructor( public dialogRef: MatDialogRef<EmailComponent>, @Inject(MAT_DIALOG_DATA) public data:string, private productService: ProductService,){
+  constructor( private logger: NGXLogger, public dialogRef: MatDialogRef<EmailComponent>, @Inject(MAT_DIALOG_DATA) public data:string, private productService: ProductService,){
       this.nameProduct = data;
       this.email = new Email;
   }
@@ -54,9 +54,9 @@ export class EmailComponent {
     this.email.phoneNumber = this.selecetNumber;
     this.email.productName = this.nameProduct;
     this.productService.sendEmail(this.email).subscribe((respones: ResponseInfo<boolean>)=>{
-      console.log('EmailData', this.email );
+      this.logger.log('EmailData', this.email );
       if(respones.data !== null){
-        console.log('result SendEmail', respones.data);
+        this.logger.log('result SendEmail', respones.data);
         // this.dialogRef.close(respones.data);
         this.sendData = true;
       }
@@ -77,7 +77,7 @@ export class EmailComponent {
   // }
 
   // onSubmit() {
-  //   console.log('valid', this.form.valid);
+  //   this.logger.log('valid', this.form.valid);
   // }
 
 

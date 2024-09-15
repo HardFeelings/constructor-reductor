@@ -15,6 +15,9 @@
     </div>
       <button (click)="searchProp(0)" style=" height: 45px;"> Найти </button>
       <button (click)="clearFilter()" style="margin-left: -5px; height: 45px; width: 150px; justify-content: center;"> Очистить </button>
+      <button (click)="navigateToUrl()" class="redirectButton">
+        Admin
+      </button>
   </div>
 <table class="table" *ngIf="commercialProp_list !== null || commercialProp_list !== []">
   <thead>

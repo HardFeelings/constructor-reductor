@@ -4,6 +4,7 @@ import { Product, ProductOption } from 'src/app/models/product';
 import { ResponseInfo } from 'src/app/models/responesInfo';
 import { MotorService } from 'src/app/services/motor.service';
 import { ProductService } from 'src/app/services/product.service';
+import { NGXLogger } from "ngx-logger";
 
 @Component({
   selector: 'app-engine',
@@ -36,7 +37,7 @@ export class EngineComponent {
   newProduct!:Product;
   newMotor!:Engine;
 
-  constructor(private motorService: MotorService, private productService: ProductService){
+  constructor(private logger: NGXLogger,private motorService: MotorService, private productService: ProductService){
     this.newProduct = new Product;
     this.newMotor = new Engine;
   }
@@ -49,7 +50,7 @@ export class EngineComponent {
   getAllMotorType() {
     this.motorService.getAllMotorType().subscribe((respones: ResponseInfo<EngineType[]>) => {
       if(respones.data !== null){
-        console.log("Data getAllMotorType: ", respones.data);
+        this.logger.log("Data getAllMotorType: ", respones.data);
         this.motorType = respones.data;
       } else {
         alert(JSON.stringify(respones.errorMsg))
@@ -60,7 +61,7 @@ export class EngineComponent {
   getMotorAdapterByMotorTypeId(id:number) {
     this.motorService.getMotorAdapterByMotorTypeId(id).subscribe((respones: ResponseInfo<EngineAdapterType[]>)=>{
       if(respones.data !== null){
-        console.log("Data getMotorAdapterByMotorTypeId", respones.data);
+        this.logger.log("Data getMotorAdapterByMotorTypeId", respones.data);
         this.engineAdapterTypeByMotorTypeId = respones.data;
       } else {
         alert(JSON.stringify(respones.errorMsg))
@@ -71,91 +72,91 @@ export class EngineComponent {
   idMotorTypeSelected(event: Event) {
     const selectedElement = event.target as HTMLSelectElement;
     const selectedValue = selectedElement.value;
-    console.log('Выбранное значение MotorType:', selectedValue);
+    this.logger.log('Выбранное значение MotorType:', selectedValue);
     const selectedMotor = this.motorType.find(type => type.motorTypeName === selectedValue);
 
     if (selectedMotor) {
       this.motorTypeId = selectedMotor.idMotorType;
-      console.log('ID выбранного типа двигателя:', this.motorTypeId);
+      this.logger.log('ID выбранного типа двигателя:', this.motorTypeId);
       if(selectedMotor.idMotorType && selectedMotor.idMotorType !== 1){
         this.getMotorAdapterByMotorTypeId(this.motorTypeId);
       }
     } else {
       console.error('Такой тип двигателя не найден');
        this.motorTypeId = undefined;
-       console.log('undefined выбранного типа двигателя:', this.motorTypeId);
+       this.logger.log('undefined выбранного типа двигателя:', this.motorTypeId);
     }
   }
 
   idMotorAdapterTypeSelected(event: Event) {
     const selectedElement = event.target as HTMLSelectElement;
     const selectedValue = selectedElement.value;
-    console.log('Выбранное значение AdapterType:', selectedValue);
+    this.logger.log('Выбранное значение AdapterType:', selectedValue);
     const selectedAdapter = this.engineAdapterTypeByMotorTypeId.find(type => type.motorAdapterTypeValue === selectedValue);
 
     if (selectedAdapter) {
       this.motorAdapterTypeId = selectedAdapter.idMotorAdapterType;
-      console.log('ID выбранного фланца двигателя:', selectedAdapter.idMotorAdapterType);
+      this.logger.log('ID выбранного фланца двигателя:', selectedAdapter.idMotorAdapterType);
     } else {
       console.error('Такой фланц двигателя не найден');
       this.motorAdapterTypeId = undefined;
-       console.log('undefined выбранного фланца двигателя:', this.motorAdapterTypeId);
+       this.logger.log('undefined выбранного фланца двигателя:', this.motorAdapterTypeId);
     }
   }
 
   frequencySelected(event: Event) {
     const selectedElement = event.target as HTMLSelectElement;
     const selectedValue = selectedElement.value;
-    console.log('Выбранное значение frequency:', selectedValue);
+    this.logger.log('Выбранное значение frequency:', selectedValue);
     const intselectedValue: number = parseInt(selectedValue, 10);
-    console.log('Выбранное значение int frequency:', selectedValue);
+    this.logger.log('Выбранное значение int frequency:', selectedValue);
 
     if (intselectedValue) {
       this.newMotor.frequency = intselectedValue;
     }
     if(selectedValue == "Select"){
       this.newMotor.frequency = undefined;
-       console.log('undefined значение frequency:', this.newMotor.frequency);
+       this.logger.log('undefined значение frequency:', this.newMotor.frequency);
     }
   }
 
   // cableExitSideSelected(event: Event) {
   //   const selectedElement = event.target as HTMLSelectElement;
   //   const selectedValue = selectedElement.value;
-  //   console.log('Выбранное значение  cableExitSide:', selectedValue);
-  //   console.log('Выбранное значение int  cableExitSide:', selectedValue);
+  //   this.logger.log('Выбранное значение  cableExitSide:', selectedValue);
+  //   this.logger.log('Выбранное значение int  cableExitSide:', selectedValue);
 
   //   if (selectedValue) {
   //     this.newMotor.cableExitSide = selectedValue;
   //   }
   //   if(selectedValue == "Select"){
   //     this.newMotor.cableExitSide = undefined;
-  //     console.log('undefined значение cableExitSide:',  this.newMotor.cableExitSide);
+  //     this.logger.log('undefined значение cableExitSide:',  this.newMotor.cableExitSide);
   //   }
   // }
 
   // posTerminalSelected(event: Event) {
   //   const selectedElement = event.target as HTMLSelectElement;
   //   const selectedValue = selectedElement.value;
-  //   console.log('Выбранное значение posTerminal:', selectedValue);
+  //   this.logger.log('Выбранное значение posTerminal:', selectedValue);
   //   const intselectedValue: number = parseInt(selectedValue, 10);
-  //   console.log('Выбранное значение int posTerminal:', selectedValue);
+  //   this.logger.log('Выбранное значение int posTerminal:', selectedValue);
 
   //   if (intselectedValue) {
   //     this.newMotor.posTerminalBox = intselectedValue;
   //   }
   //   if(selectedValue == "Select"){
   //     this.newMotor.posTerminalBox = undefined;
-  //     console.log('undefined значение posTerminalBox:',  this.newMotor.posTerminalBox);
+  //     this.logger.log('undefined значение posTerminalBox:',  this.newMotor.posTerminalBox);
   //   }
   // }
 
   // rpmSelected(event: Event) {
   //   const selectedElement = event.target as HTMLSelectElement;
   //   const selectedValue = selectedElement.value;
-  //   console.log('Выбранное значение rpm:', selectedValue);
+  //   this.logger.log('Выбранное значение rpm:', selectedValue);
   //   const intselectedValue: number = parseInt(selectedValue, 10);
-  //   console.log('Выбранное значение int rpm:', selectedValue);
+  //   this.logger.log('Выбранное значение int rpm:', selectedValue);
 
   //   if (intselectedValue) {
   //     this.newProduct.rpm = intselectedValue;
@@ -167,8 +168,8 @@ export class EngineComponent {
     if (target.checked) {
       this.options.push(optionId);
       this.newProduct.optionsIds = this.options;
-      console.log(`Checkbox with id ${optionId} is checked.`);
-      console.log(this.newProduct.optionsIds);
+      this.logger.log(`Checkbox with id ${optionId} is checked.`);
+      this.logger.log(this.newProduct.optionsIds);
     }
     else {
       const index = this.options.indexOf(optionId);
@@ -176,8 +177,8 @@ export class EngineComponent {
         this.options.splice(index, 1);
         this.newProduct.optionsIds = this.options;
       }
-      console.log(`Checkbox with id ${optionId} is unchecked.`);
-      console.log(this.newProduct.optionsIds);
+      this.logger.log(`Checkbox with id ${optionId} is unchecked.`);
+      this.logger.log(this.newProduct.optionsIds);
     }
   }
 
@@ -205,7 +206,7 @@ export class EngineComponent {
     this.newProduct.price = this.price;
     this.newProduct.serviceFactor = this.serviceFactor;
 
-    console.log('dynamicProduct', this.newProduct);
+    this.logger.log('dynamicProduct', this.newProduct);
 
     this.dynamicProduct.emit(this.newProduct);
 
@@ -214,7 +215,7 @@ export class EngineComponent {
   getByProductTypeOptionId(id:number) {
     this.productService.getByProductTypeOptionId(id).subscribe((respones: ResponseInfo<ProductOption[]>)=>{
       if(respones.data !== null){
-        console.log("Data getByProductTypeOptionId", respones.data);
+        this.logger.log("Data getByProductTypeOptionId", respones.data);
         this.productOption = respones.data;
       } else {
         alert(JSON.stringify(respones.errorMsg))
@@ -229,7 +230,7 @@ export class EngineComponent {
       reader.onload = (e: any) => {
         const base64Image = e.target.result;
         const base64WithoutPrefix = base64Image.split(',')[1];
-        console.log('base64:', base64WithoutPrefix);
+        this.logger.log('base64:', base64WithoutPrefix);
         setTimeout(() => {
           this.newProduct.imageString = base64WithoutPrefix;
           this.newProduct.imageEmpty = false;

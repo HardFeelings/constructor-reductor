@@ -8,6 +8,7 @@ import { ProductService } from 'src/app/sevices/product.service';
 import { MatDialog } from '@angular/material/dialog';
 import { EmailComponent } from '../email/email.component';
 import { Page } from 'src/app/models/page';
+import { NGXLogger } from "ngx-logger";
 
 @Component({
   selector: 'app-engine',
@@ -29,7 +30,7 @@ export class EngineComponent {
   totalCount: number;
   newFilter: Filter;
 
-  constructor(private motorService: MotorService, private productService: ProductService, public dialog: MatDialog){
+  constructor(private logger: NGXLogger,private motorService: MotorService, private productService: ProductService, public dialog: MatDialog){
   }
 
   ngOnInit() {
@@ -41,7 +42,7 @@ export class EngineComponent {
   getAllMotorType() {
     this.motorService.getAllMotorType().subscribe((respones: ResponseInfo<EngineType[]>) => {
       if(respones.data !== null){
-        console.log("Data getAllMotorType: ", respones.data);
+        this.logger.log("Data getAllMotorType: ", respones.data);
         this.motorType = respones.data;
       } else {
         alert(JSON.stringify(respones.errorMsg))
@@ -52,7 +53,7 @@ export class EngineComponent {
   getMotorAdapterByMotorTypeId(id:number) {
     this.motorService.getMotorAdapterByMotorTypeId(id).subscribe((respones: ResponseInfo<EngineAdapterType[]>)=>{
       if(respones.data !== null){
-        console.log("Data getMotorAdapterByMotorTypeId", respones.data);
+        this.logger.log("Data getMotorAdapterByMotorTypeId", respones.data);
         this.engineAdapterTypeByMotorTypeId = respones.data;
       } else {
         alert(JSON.stringify(respones.errorMsg))
@@ -63,7 +64,7 @@ export class EngineComponent {
   getByProductTypeOptionId(id:number) {
     this.productService.getByProductTypeOptionId(id).subscribe((respones: ResponseInfo<ProductOption[]>)=>{
       if(respones.data !== null){
-        console.log("Data getByProductTypeOptionId", respones.data);
+        this.logger.log("Data getByProductTypeOptionId", respones.data);
         this.productOption = respones.data;
       } else {
         alert(JSON.stringify(respones.errorMsg))
@@ -74,13 +75,13 @@ export class EngineComponent {
   idMotorTypeSelected(event: Event) {
     const selectedElement = event.target as HTMLSelectElement;
     const selectedValue = selectedElement.value;
-    console.log('Выбранное значение MotorType:', selectedValue);
+    this.logger.log('Выбранное значение MotorType:', selectedValue);
     const selectedMotor = this.motorType.find(type => type.motorTypeName === selectedValue);
 
     if (selectedMotor) {
       this.motorTypeId = selectedMotor.idMotorType;
       this.filter.motorTypeId = selectedMotor.idMotorType;
-      console.log('ID выбранного типа двигателя:', this.motorTypeId);
+      this.logger.log('ID выбранного типа двигателя:', this.motorTypeId);
       if(selectedMotor.idMotorType && selectedMotor.idMotorType !== 1){
         this.getMotorAdapterByMotorTypeId(this.motorTypeId);
       }
@@ -88,23 +89,23 @@ export class EngineComponent {
       console.error('Такой тип двигателя не найден');
       this.motorTypeId = undefined;
       this.filter.motorTypeId = undefined;
-      console.log('undefined выбранного типа двигателя:', this.filter.motorTypeId);
+      this.logger.log('undefined выбранного типа двигателя:', this.filter.motorTypeId);
     }
   }
 
   idMotorAdapterTypeSelected(event: Event) {
     const selectedElement = event.target as HTMLSelectElement;
     const selectedValue = selectedElement.value;
-    console.log('Выбранное значение AdapterType:', selectedValue);
+    this.logger.log('Выбранное значение AdapterType:', selectedValue);
     const selectedAdapter = this.engineAdapterTypeByMotorTypeId.find(type => type.motorAdapterTypeValue === selectedValue);
 
     if (selectedAdapter) {
       this.filter.motorAdapterTypeId = selectedAdapter.idMotorAdapterType;
-      console.log('ID выбранного фланца двигателя:', selectedAdapter.idMotorAdapterType);
+      this.logger.log('ID выбранного фланца двигателя:', selectedAdapter.idMotorAdapterType);
     } else {
       console.error('Такой фланц двигателя не найден');
       this.filter.motorAdapterTypeId = undefined;
-      console.log('undefined выбранного фланца двигателя:',  this.filter.motorAdapterTypeId);
+      this.logger.log('undefined выбранного фланца двигателя:',  this.filter.motorAdapterTypeId);
     }
   }
 
@@ -113,8 +114,8 @@ export class EngineComponent {
     if (target.checked) {
       this.options.push(optionId);
       this.filter.productOptions = this.options;
-      console.log(`Checkbox with id ${optionId} is checked.`);
-      console.log(this.filter.productOptions);
+      this.logger.log(`Checkbox with id ${optionId} is checked.`);
+      this.logger.log(this.filter.productOptions);
     }
     else {
       const index = this.options.indexOf(optionId);
@@ -122,29 +123,29 @@ export class EngineComponent {
         this.options.splice(index, 1);
         this.filter.productOptions = this.options;
       }
-      console.log(`Checkbox with id ${optionId} is unchecked.`);
-      console.log(this.filter.productOptions);
+      this.logger.log(`Checkbox with id ${optionId} is unchecked.`);
+      this.logger.log(this.filter.productOptions);
     }
   }
 
   onPageChange(event: any){
-    console.log("event.page", event.page);
+    this.logger.log("event.page", event.page);
     this.searchProduct(this.newFilter,event.page);
   }
 
   searchProduct(filter: Filter, page: number){
     filter.power = this.power;
     filter.rpm = this.rpm
-    console.log('filter', filter);
+    this.logger.log('filter', filter);
     this.newFilter = filter;
     this.productService.postPageFilter(filter, page).subscribe((respones: ResponseInfo<Page<Product>>)=>{
       if(respones.data !== null){
-        console.log("Data searchProduct", respones.data.content);
-        console.log("respones searchProduct", respones);
+        this.logger.log("Data searchProduct", respones.data.content);
+        this.logger.log("respones searchProduct", respones);
         // this.foundProducts = respones.data;
         this.totalCount = respones.data.totalCount;
         this.foundProducts = respones.data.content;
-        console.log(" totalCount", respones.data.totalCount);
+        this.logger.log(" totalCount", respones.data.totalCount);
       } else {
         alert(JSON.stringify(respones.errorMsg))
       }
@@ -165,10 +166,10 @@ export class EngineComponent {
     });
     dialogAddingNewStudent.afterClosed().subscribe((result: boolean) => {
       if(result  !== null && result  !== undefined || result == true) {
-        console.log('dialog goSendEmail', result);
+        this.logger.log('dialog goSendEmail', result);
         this.ngOnInit();
       } else{
-        console.log('Окно закрыто без изменений');
+        this.logger.log('Окно закрыто без изменений');
         this.ngOnInit();
       }
 

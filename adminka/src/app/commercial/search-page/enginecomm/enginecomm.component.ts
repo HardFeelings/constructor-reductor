@@ -6,7 +6,7 @@ import { Product, ProductOption } from 'src/app/models/product';
 import { ResponseInfo } from 'src/app/models/responesInfo';
 import { MotorService } from 'src/app/services/motor.service';
 import { ProductService } from 'src/app/services/product.service';
-
+import { NGXLogger } from "ngx-logger";
 
 @Component({
   selector: 'app-enginecomm',
@@ -32,7 +32,7 @@ export class EngineCommComponent {
   @Output() selectedProduct = new EventEmitter<Product>();
 
 
-  constructor(private motorService: MotorService, private productService: ProductService){
+  constructor(private motorService: MotorService, private logger: NGXLogger, private productService: ProductService){
   }
 
   ngOnInit() {
@@ -44,7 +44,7 @@ export class EngineCommComponent {
   getAllMotorType() {
     this.motorService.getAllMotorType().subscribe((respones: ResponseInfo<EngineType[]>) => {
       if(respones.data !== null){
-        console.log("Data getAllMotorType: ", respones.data);
+        this.logger.log("Data getAllMotorType: ", respones.data);
         this.motorType = respones.data;
       } else {
         alert(JSON.stringify(respones.errorMsg))
@@ -55,7 +55,7 @@ export class EngineCommComponent {
   getMotorAdapterByMotorTypeId(id:number) {
     this.motorService.getMotorAdapterByMotorTypeId(id).subscribe((respones: ResponseInfo<EngineAdapterType[]>)=>{
       if(respones.data !== null){
-        console.log("Data getMotorAdapterByMotorTypeId", respones.data);
+        this.logger.log("Data getMotorAdapterByMotorTypeId", respones.data);
         this.engineAdapterTypeByMotorTypeId = respones.data;
       } else {
         alert(JSON.stringify(respones.errorMsg))
@@ -66,7 +66,7 @@ export class EngineCommComponent {
   getByProductTypeOptionId(id:number) {
     this.productService.getByProductTypeOptionId(id).subscribe((respones: ResponseInfo<ProductOption[]>)=>{
       if(respones.data !== null){
-        console.log("Data getByProductTypeOptionId", respones.data);
+        this.logger.log("Data getByProductTypeOptionId", respones.data);
         this.productOption = respones.data;
       } else {
         alert(JSON.stringify(respones.errorMsg))
@@ -77,13 +77,13 @@ export class EngineCommComponent {
   idMotorTypeSelected(event: Event) {
     const selectedElement = event.target as HTMLSelectElement;
     const selectedValue = selectedElement.value;
-    console.log('Выбранное значение MotorType:', selectedValue);
+    this.logger.log('Выбранное значение MotorType:', selectedValue);
     const selectedMotor = this.motorType.find(type => type.motorTypeName === selectedValue);
 
     if (selectedMotor) {
       this.motorTypeId = selectedMotor.idMotorType;
       this.filter.motorTypeId = selectedMotor.idMotorType;
-      console.log('ID выбранного типа двигателя:', this.motorTypeId);
+      this.logger.log('ID выбранного типа двигателя:', this.motorTypeId);
       if(selectedMotor.idMotorType && selectedMotor.idMotorType !== 1){
         this.getMotorAdapterByMotorTypeId(this.motorTypeId);
       }
@@ -91,23 +91,23 @@ export class EngineCommComponent {
       console.error('Такой тип двигателя не найден');
       this.motorTypeId = undefined;
       this.filter.motorTypeId = undefined;
-      console.log('undefined выбранного типа двигателя:', this.filter.motorTypeId);
+      this.logger.log('undefined выбранного типа двигателя:', this.filter.motorTypeId);
     }
   }
 
   idMotorAdapterTypeSelected(event: Event) {
     const selectedElement = event.target as HTMLSelectElement;
     const selectedValue = selectedElement.value;
-    console.log('Выбранное значение AdapterType:', selectedValue);
+    this.logger.log('Выбранное значение AdapterType:', selectedValue);
     const selectedAdapter = this.engineAdapterTypeByMotorTypeId.find(type => type.motorAdapterTypeValue === selectedValue);
 
     if (selectedAdapter) {
       this.filter.motorAdapterTypeId = selectedAdapter.idMotorAdapterType;
-      console.log('ID выбранного фланца двигателя:', selectedAdapter.idMotorAdapterType);
+      this.logger.log('ID выбранного фланца двигателя:', selectedAdapter.idMotorAdapterType);
     } else {
       console.error('Такой фланц двигателя не найден');
       this.filter.motorAdapterTypeId = undefined;
-      console.log('undefined выбранного фланца двигателя:',  this.filter.motorAdapterTypeId);
+      this.logger.log('undefined выбранного фланца двигателя:',  this.filter.motorAdapterTypeId);
     }
   }
 
@@ -116,8 +116,8 @@ export class EngineCommComponent {
     if (target.checked) {
       this.options.push(optionId);
       this.filter.productOptions = this.options;
-      console.log(`Checkbox with id ${optionId} is checked.`);
-      console.log(this.filter.productOptions);
+      this.logger.log(`Checkbox with id ${optionId} is checked.`);
+      this.logger.log(this.filter.productOptions);
     }
     else {
       const index = this.options.indexOf(optionId);
@@ -125,8 +125,8 @@ export class EngineCommComponent {
         this.options.splice(index, 1);
         this.filter.productOptions = this.options;
       }
-      console.log(`Checkbox with id ${optionId} is unchecked.`);
-      console.log(this.filter.productOptions);
+      this.logger.log(`Checkbox with id ${optionId} is unchecked.`);
+      this.logger.log(this.filter.productOptions);
     }
   }
 
@@ -140,11 +140,11 @@ export class EngineCommComponent {
   // searchProduct(filter: Filter){
   //   filter.power = this.power;
   //   filter.rpm = this.rpm;
-  //   console.log('filter', filter);
+  //   this.logger.log('filter', filter);
   //   this.productService.postFilter(filter).subscribe((respones: ResponseInfo<Product[]>)=>{
   //     if(respones.data !== null){
-  //       console.log("Data searchProduct", respones.data);
-  //       console.log("respones searchProduct", respones);
+  //       this.logger.log("Data searchProduct", respones.data);
+  //       this.logger.log("respones searchProduct", respones);
   //       this.foundProducts = respones.data;
   //     } else {
   //       alert(JSON.stringify(respones.errorMsg))
@@ -153,23 +153,23 @@ export class EngineCommComponent {
   // }
 
   onPageChange(event: any){
-    console.log("event.page", event.page);
+    this.logger.log("event.page", event.page);
     this.searchProduct(this.newFilter,event.page);
   }
 
   searchProduct(filter: Filter, page: number){
     filter.power = this.power;
     filter.rpm = this.rpm
-    console.log('filter', filter);
+    this.logger.log('filter', filter);
     this.newFilter = filter;
     this.productService.postPageFilter(filter, page).subscribe((respones: ResponseInfo<Page<Product>>)=>{
       if(respones.data !== null){
-        console.log("Data searchProduct", respones.data.content);
-        console.log("respones searchProduct", respones);
+        this.logger.log("Data searchProduct", respones.data.content);
+        this.logger.log("respones searchProduct", respones);
         // this.foundProducts = respones.data;
         this.totalCount = respones.data.totalCount;
         this.foundProducts = respones.data.content;
-        console.log(" totalCount", respones.data.totalCount);
+        this.logger.log(" totalCount", respones.data.totalCount);
       } else {
         alert(JSON.stringify(respones.errorMsg))
       }

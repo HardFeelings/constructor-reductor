@@ -6,7 +6,7 @@ import { ResponseInfo } from 'src/app/models/responesInfo';
 import { Page } from 'src/app/models/page';
 import { ReducerService } from 'src/app/services/reducer.service';
 import { ProductService } from 'src/app/services/product.service';
-
+import { NGXLogger } from "ngx-logger";
 
 @Component({
   selector: 'app-reductorcomm',
@@ -35,7 +35,7 @@ export class ReductorCommComponent {
 
   @Output() selectedProduct = new EventEmitter<Product>();
 
-  constructor(private reducerService: ReducerService, private productService: ProductService){
+  constructor(private reducerService: ReducerService,private logger: NGXLogger, private productService: ProductService){
   }
 
   ngOnInit(){
@@ -48,7 +48,7 @@ export class ReductorCommComponent {
   getAllReducerType() {
     this.reducerService.getAllReducerTypes().subscribe((respones: ResponseInfo<ReducerType[]>) => {
       if(respones.data !== null){
-        console.log("Data getAllReducerType: ", respones.data);
+        this.logger.log("Data getAllReducerType: ", respones.data);
         this.reducerType = respones.data;
       } else {
         alert(JSON.stringify(respones.errorMsg))
@@ -66,13 +66,13 @@ export class ReductorCommComponent {
   idReducerTypeSelected(event: Event) {
     const selectedElement = event.target as HTMLSelectElement;
     const selectedValue = selectedElement.value;
-    console.log('Выбранное значение reducerType:', selectedValue);
+    this.logger.log('Выбранное значение reducerType:', selectedValue);
     const selectedReducer = this.reducerType.find(type => type.reducerTypeName === selectedValue);
 
     if (selectedReducer) {
       this.reducerTypeId = selectedReducer.idReducerType;
       this.filter.idReducerType = selectedReducer.idReducerType;
-      console.log('ID выбранного типа редуктора:', this.reducerTypeId);
+      this.logger.log('ID выбранного типа редуктора:', this.reducerTypeId);
       this.getReducerSizeByReducerTypeId(this.reducerTypeId);
 
       this.getReducerInputByReducerTypeId(this.reducerTypeId);
@@ -83,14 +83,14 @@ export class ReductorCommComponent {
       console.error('Такой тип редуктора не найден');
       this.reducerTypeId = undefined;
       this.filter.idReducerType = undefined;
-      console.log('undefined выбранного типа редуктора:', this.reducerTypeId);
+      this.logger.log('undefined выбранного типа редуктора:', this.reducerTypeId);
     }
   }
 
   getReducerInputByReducerTypeId(id:number) {
     this.reducerService.getReducerInputByReducerTypeId(id).subscribe((respones: ResponseInfo<ReducerInputType[]>)=>{
       if(respones.data !== null){
-        console.log("Data getReducerInputByReducerTypeId", respones.data);
+        this.logger.log("Data getReducerInputByReducerTypeId", respones.data);
         this.reducerInputType = respones.data;
       } else {
         alert(JSON.stringify(respones.errorMsg))
@@ -101,23 +101,23 @@ export class ReductorCommComponent {
   idReducerInputSelected(event: Event) {
     const selectedElement = event.target as HTMLSelectElement;
     const selectedValue = selectedElement.value;
-    console.log('Выбранное значение ReducerInputType:', selectedValue);
+    this.logger.log('Выбранное значение ReducerInputType:', selectedValue);
     const selectedInput= this.reducerInputType.find(type => type.reducerInputTypeValue === selectedValue);
 
     if (selectedInput) {
       this.filter.idReducerInputType = selectedInput.idReducerInputType;
-      console.log('ID выбранного типа входа:', selectedInput.idReducerInputType);
+      this.logger.log('ID выбранного типа входа:', selectedInput.idReducerInputType);
     } else {
       console.error('Такого типа входа не найдено');
       this.filter.idReducerInputType = undefined;
-      console.log('undefined выбранного типа входа:', this.filter.idReducerInputType);
+      this.logger.log('undefined выбранного типа входа:', this.filter.idReducerInputType);
     }
   }
 
   getReducerAdapterByReducerTypeId(id:number) {
     this.reducerService.getReducerAdapterByReducerTypeId(id).subscribe((respones: ResponseInfo<ReducerAdapterType[]>)=>{
       if(respones.data !== null){
-        console.log("Data getReducerAdapterByReducerTypeId", respones.data);
+        this.logger.log("Data getReducerAdapterByReducerTypeId", respones.data);
         this.reducerAdapterType = respones.data;
       } else {
         alert(JSON.stringify(respones.errorMsg))
@@ -128,7 +128,7 @@ export class ReductorCommComponent {
   getReducerOutputShaftTypeByReducerTypeId(id:number) {
     this.reducerService.getReducerOutputShaftTypeByReducerTypeId(id).subscribe((respones: ResponseInfo<ReducerOutputShaftType[]>)=>{
       if(respones.data !== null){
-        console.log("Data getReducerOutputShaftTypeByReducerTypeId", respones.data);
+        this.logger.log("Data getReducerOutputShaftTypeByReducerTypeId", respones.data);
         this.reducerOutputShaftType = respones.data;
       } else {
         alert(JSON.stringify(respones.errorMsg))
@@ -139,23 +139,23 @@ export class ReductorCommComponent {
   idReducerOutputShaftTypeSelected(event: Event) {
     const selectedElement = event.target as HTMLSelectElement;
     const selectedValue = selectedElement.value;
-    console.log('Выбранное значение ReducerOutputShaftType:', selectedValue);
+    this.logger.log('Выбранное значение ReducerOutputShaftType:', selectedValue);
     const selectedOutputShaft= this.reducerOutputShaftType.find(type => type.reducerOutputShaftTypeValue === selectedValue);
 
     if (selectedOutputShaft) {
       this.filter.idReducerOutputShaftType = selectedOutputShaft.idReducerOutputShaftType;
-      console.log('ID выбранноой формы выходного вала:', selectedOutputShaft.idReducerOutputShaftType);
+      this.logger.log('ID выбранноой формы выходного вала:', selectedOutputShaft.idReducerOutputShaftType);
     } else {
       console.error('Такой формы не найдено');
       this.filter.idReducerOutputShaftType = undefined;
-      console.log('undefined выбранноой формы выходного вала:', this.filter.idReducerOutputShaftType);
+      this.logger.log('undefined выбранноой формы выходного вала:', this.filter.idReducerOutputShaftType);
     }
   }
 
   getReducerInstallationByReducerTypeId(id:number) {
     this.reducerService.getReducerInstallationByReducerTypeId(id).subscribe((respones: ResponseInfo<ReducerInstallationType[]>)=>{
       if(respones.data !== null){
-        console.log("Data getReducerInstallationByReducerTypeId", respones.data);
+        this.logger.log("Data getReducerInstallationByReducerTypeId", respones.data);
         this.reducerInstallationType = respones.data;
       } else {
         alert(JSON.stringify(respones.errorMsg))
@@ -166,23 +166,23 @@ export class ReductorCommComponent {
   idReducerInstallationSelected(event: Event) {
     const selectedElement = event.target as HTMLSelectElement;
     const selectedValue = selectedElement.value;
-    console.log('Выбранное значение ReducerInstallationType:', selectedValue);
+    this.logger.log('Выбранное значение ReducerInstallationType:', selectedValue);
     const selectedInstallation= this.reducerInstallationType.find(type => type.reducerInstallationTypeValue === selectedValue);
 
     if (selectedInstallation) {
       this.filter.idReducerInstallationType = selectedInstallation.idReducerInstallationType;
-      console.log('ID выбранного типа крепления:', selectedInstallation.idReducerInstallationType);
+      this.logger.log('ID выбранного типа крепления:', selectedInstallation.idReducerInstallationType);
     } else {
       console.error('Такое крепление не найдено');
       this.filter.idReducerInstallationType = undefined;
-      console.log('undefined выбранного типа крепления:', this.filter.idReducerInstallationType);
+      this.logger.log('undefined выбранного типа крепления:', this.filter.idReducerInstallationType);
     }
   }
 
   getAllReducerMounting(){
     this.reducerService.getAllReducerMounting().subscribe((respones: ResponseInfo<ReducerMounting[]>) => {
       if(respones.data !== null){
-        console.log("Data getAllReducerMounting: ", respones.data);
+        this.logger.log("Data getAllReducerMounting: ", respones.data);
         this.reducerMounting = respones.data;
       } else {
         alert(JSON.stringify(respones.errorMsg))
@@ -193,23 +193,23 @@ export class ReductorCommComponent {
   idReducerMountingSelected(event: Event) {
     const selectedElement = event.target as HTMLSelectElement;
     const selectedValue = selectedElement.value;
-    console.log('Выбранное значение ReducerMounting:', selectedValue);
+    this.logger.log('Выбранное значение ReducerMounting:', selectedValue);
     const selectedMounting= this.reducerMounting.find(type => type.reducerMountingValue === selectedValue);
 
     if (selectedMounting) {
       this.filter.idReducerMounting = selectedMounting.idReducerMounting;
-      console.log('ID выбранного монтажного положения:', selectedMounting.idReducerMounting);
+      this.logger.log('ID выбранного монтажного положения:', selectedMounting.idReducerMounting);
     } else {
       console.error('Такое положение не найдено');
       this.filter.idReducerMounting = undefined;
-      console.log('undefined выбранного монтажного положения:',   this.filter.idReducerMounting);
+      this.logger.log('undefined выбранного монтажного положения:',   this.filter.idReducerMounting);
     }
   }
 
   getReducerSizeByReducerTypeId(id:number) {
     this.reducerService.getReducerSizeByReducerTypeId(id).subscribe((respones: ResponseInfo<ReducerSize[]>)=>{
       if(respones.data !== null){
-        console.log("Data getResucerSizeByMotorTypeId", respones.data);
+        this.logger.log("Data getResucerSizeByMotorTypeId", respones.data);
         this.resucerSize = respones.data;
       } else {
         alert(JSON.stringify(respones.errorMsg))
@@ -220,7 +220,7 @@ export class ReductorCommComponent {
   getByProductTypeOptionId(id:number) {
     this.productService.getByProductTypeOptionId(id).subscribe((respones: ResponseInfo<ProductOption[]>)=>{
       if(respones.data !== null){
-        console.log("Data getByProductTypeOptionId reducer", respones.data);
+        this.logger.log("Data getByProductTypeOptionId reducer", respones.data);
         this.productOption = respones.data;
       } else {
         alert(JSON.stringify(respones.errorMsg))
@@ -231,16 +231,16 @@ export class ReductorCommComponent {
   idReducerSizeBSelected(event: Event) {
     const selectedElement = event.target as HTMLSelectElement;
     const selectedValue = selectedElement.value;
-    console.log('Выбранное значение ReducerSize:', selectedValue);
+    this.logger.log('Выбранное значение ReducerSize:', selectedValue);
     const selectedSize = this.resucerSize.find(type => type.reducerSizeValue === selectedValue);
 
     if (selectedSize) {
       this.filter.idReducerSize = selectedSize.idReducerSize;
-      console.log('ID выбранного размера редуктора:', selectedSize.idReducerSize);
+      this.logger.log('ID выбранного размера редуктора:', selectedSize.idReducerSize);
     } else {
       console.error('Такой размер не найден');
       this.filter.idReducerSize = undefined;
-      console.log('undefined выбранного размера редуктора:', this.filter.idReducerSize );
+      this.logger.log('undefined выбранного размера редуктора:', this.filter.idReducerSize );
     }
   }
 
@@ -249,8 +249,8 @@ export class ReductorCommComponent {
     if (target.checked) {
       this.options.push(optionId);
       this.filter.productOptions = this.options;
-      console.log(`Checkbox with id ${optionId} is checked.`);
-      console.log(this.filter.productOptions);
+      this.logger.log(`Checkbox with id ${optionId} is checked.`);
+      this.logger.log(this.filter.productOptions);
     }
     else {
       const index = this.options.indexOf(optionId);
@@ -258,8 +258,8 @@ export class ReductorCommComponent {
         this.options.splice(index, 1);
         this.filter.productOptions = this.options;
       }
-      console.log(`Checkbox with id ${optionId} is unchecked.`);
-      console.log(this.filter.productOptions);
+      this.logger.log(`Checkbox with id ${optionId} is unchecked.`);
+      this.logger.log(this.filter.productOptions);
     }
   }
 
@@ -270,11 +270,11 @@ export class ReductorCommComponent {
   //   filter.diamOutputAllowance = this.diamOutputAllowance;
   //   filter.ratio = this.ratio;
   //   // filter.torqueMoment = this.torqueMoment;
-  //   console.log('filter', filter);
+  //   this.logger.log('filter', filter);
   //   this.productService.postFilter(filter).subscribe((respones: ResponseInfo<Product[]>)=>{
   //     if(respones.data !== null){
-  //       console.log("Data searchProduct", respones.data);
-  //       console.log("respones searchProduct", respones);
+  //       this.logger.log("Data searchProduct", respones.data);
+  //       this.logger.log("respones searchProduct", respones);
   //       this.foundProducts = respones.data;
   //     } else {
   //       alert(JSON.stringify(respones.errorMsg))
@@ -283,7 +283,7 @@ export class ReductorCommComponent {
   // }
 
   onPageChange(event: any){
-    console.log("event.page", event.page);
+    this.logger.log("event.page", event.page);
     this.searchProduct(this.newFilter,event.page);
   }
 
@@ -291,16 +291,16 @@ export class ReductorCommComponent {
     filter.diamOutput = this.diamOutput;
     filter.diamOutputAllowance = this.diamOutputAllowance;
     filter.ratio = this.ratio;
-    console.log('filter', filter);
+    this.logger.log('filter', filter);
     this.newFilter = filter;
     // this.productService.postFilter(filter).subscribe((respones: ResponseInfo<Product[]>)=>{
     this.productService.postPageFilter(filter, page).subscribe((respones: ResponseInfo<Page<Product>>)=>{
       if(respones.data !== null){
-        console.log("Data searchProduct", respones.data.content);
-        console.log("respones searchProduct", respones);
+        this.logger.log("Data searchProduct", respones.data.content);
+        this.logger.log("respones searchProduct", respones);
         this.totalCount = respones.data.totalCount;
         this.foundProducts = respones.data.content;
-        console.log(" totalCount", respones.data.totalCount);
+        this.logger.log(" totalCount", respones.data.totalCount);
       } else {
         alert(JSON.stringify(respones.errorMsg))
       }

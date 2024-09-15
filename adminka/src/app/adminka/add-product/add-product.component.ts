@@ -3,7 +3,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Product, ProductType, enProduct } from 'src/app/models/product';
 import { ResponseInfo } from 'src/app/models/responesInfo';
 import { ProductService } from 'src/app/services/product.service';
-
+import { NGXLogger } from "ngx-logger";
 
 @Component({
   selector: 'app-add-product',
@@ -20,7 +20,7 @@ export class AddProductComponent {
   idProductType: number;
   selectedButton: number | null = null;
 
-  constructor(public dialogRef: MatDialogRef<AddProductComponent>,
+  constructor(private logger: NGXLogger,public dialogRef: MatDialogRef<AddProductComponent>,
     @Inject(MAT_DIALOG_DATA) public data:any,
     private productService: ProductService){
 
@@ -34,9 +34,9 @@ export class AddProductComponent {
   getAllProductTypes(){
     this.productService.getAllProductTypes().subscribe((respones: ResponseInfo<ProductType[]>) => {
         if(respones.data !== null){
-          console.log("Data getAllProductTypes: ", respones.data);
+          this.logger.log("Data getAllProductTypes: ", respones.data);
           this.productTypes = respones.data;
-          console.log(" this.productTypes ",  this.productTypes);
+          this.logger.log(" this.productTypes ",  this.productTypes);
         } else {
           alert(JSON.stringify(respones.errorMsg))
         }
@@ -50,9 +50,9 @@ export class AddProductComponent {
   addProduct(event: Product) {
     this.productService.addDynamicProduct(event).subscribe(
         (response: ResponseInfo<Product>) => {
-            console.log("Data addProduct: ", response);
+            this.logger.log("Data addProduct: ", response);
             if (response.data !== null) {
-                console.log("Data addProduct: ", response.data);
+                this.logger.log("Data addProduct: ", response.data);
                 this.newProductList.push(response.data);
             }
         },
@@ -69,7 +69,7 @@ export class AddProductComponent {
   }
 
   pickProduct(m: string, idType:number) {
-    console.log(m);
+    this.logger.log(m);
     switch (m) {
       case enProduct.Motor.valueOf():
         this.product_selected = enProduct.Motor;

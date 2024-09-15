@@ -12,6 +12,7 @@ import { CommercialPropTerm } from 'src/app/models/commercialPropTerm';
 import { Product } from 'src/app/models/product';
 import { PaymentTerms } from 'src/app/models/paymentTerm';
 import { CommercialPropItem } from 'src/app/models/commercialPropItem';
+import { NGXLogger } from "ngx-logger";
 
 @Component({
   selector: 'app-search-page',
@@ -32,12 +33,13 @@ export class SearchPageComponent {
   selectedButton: number | null = null;
 
   constructor(private productService: ProductService,
+    private logger: NGXLogger,
     private commercialService: CommercialService,
     private managerService: ManagerService,
     public dialogRef: MatDialogRef<SearchPageComponent>,
     @Inject(MAT_DIALOG_DATA) public data:number) {
       this.idCommercialProp = data;
-      console.log('this.idCommercialProp',this.idCommercialProp);
+      this.logger.log('this.idCommercialProp',this.idCommercialProp);
       this.commercialProp = new CommercialProp;
       this.commercialProp.commercialPropItems = [];
   }
@@ -49,7 +51,7 @@ export class SearchPageComponent {
       this.getCommercialPropById(this.idCommercialProp);
     }
     else{
-      console.log('this.idCommercialProp == null',this.idCommercialProp);
+      this.logger.log('this.idCommercialProp == null',this.idCommercialProp);
     }
     if (!this.commercialProp.manager) {
       this.commercialProp.manager = null;
@@ -61,7 +63,7 @@ export class SearchPageComponent {
   getCommercialPropById(id:number){
     this.commercialService.getCommercialPropById(id).subscribe((respones: ResponseInfo<CommercialProp>)=>{
       if(respones.data !== null){
-        console.log("Data getCommercialPropById", respones.data);
+        this.logger.log("Data getCommercialPropById", respones.data);
         this.commercialProp = respones.data;
       } else {
         alert(JSON.stringify(respones.errorMsg))
@@ -78,9 +80,9 @@ export class SearchPageComponent {
   goToBackCommercialPageOk(){
     // this.commercialProp.timestamp = null;
     this.commercialService.saveCommercialProp(this.commercialProp).subscribe((respones: ResponseInfo<CommercialProp>)=>{
-      console.log('SaveData', this.commercialProp );
+      this.logger.log('SaveData', this.commercialProp );
       if(respones.data !== null){
-        console.log('ReturnSaveData', respones.data);
+        this.logger.log('ReturnSaveData', respones.data);
         this.dialogRef.close(respones.data);
       }
       else{
@@ -100,7 +102,7 @@ export class SearchPageComponent {
   getAllManagers(){
     this.managerService.getAllManagers().subscribe((respones: ResponseInfo<Manager[]>) => {
       if(respones.data !== null){
-        console.log("Data getAllNamagers: ", respones.data);
+        this.logger.log("Data getAllNamagers: ", respones.data);
         this.managers_list = respones.data;
       } else {
         alert(JSON.stringify(respones.errorMsg))
@@ -111,7 +113,7 @@ export class SearchPageComponent {
   getAllPaymentTerms(){
     this.commercialService.getPaymentTerms().subscribe((respones: ResponseInfo<PaymentTerms[]>) => {
       if(respones.data !== null){
-        console.log("Data getAllPaymentTerms: ", respones.data);
+        this.logger.log("Data getAllPaymentTerms: ", respones.data);
         this.payment_list = respones.data;
       } else {
         alert(JSON.stringify(respones.errorMsg))
@@ -122,12 +124,12 @@ export class SearchPageComponent {
   idManagerSelected(event: Event) {
     const selectedElement = event.target as HTMLSelectElement;
     const selectedValue = selectedElement.value;
-    console.log('Выбранное значение ManagerSelected:', selectedValue);
+    this.logger.log('Выбранное значение ManagerSelected:', selectedValue);
     const selectedManager = this.managers_list.find(type => type.shortName === selectedValue);
 
     if (selectedManager) {
       this.commercialProp.manager = selectedManager;
-      console.log('Выбранный менеджер:', selectedManager);
+      this.logger.log('Выбранный менеджер:', selectedManager);
     } else {
       console.error('Такой менеджер не найден');
     }
@@ -139,10 +141,10 @@ export class SearchPageComponent {
     const selectedPayment = this.payment_list.find(payment => payment.visibleName === selectedVisibleName);
 
     if (selectedPayment) {
-      console.log(selectedPayment);
+      this.logger.log(selectedPayment);
       commercialTerm.paymentTerms = selectedPayment;
     } else {
-      console.log('Payment не найден');
+      this.logger.log('Payment не найден');
     }
   }
 
@@ -150,9 +152,9 @@ export class SearchPageComponent {
   getAllProductTypes(){
     this.productService.getAllProductTypes().subscribe((respones: ResponseInfo<ProductType[]>) => {
       if(respones.data !== null){
-        console.log("Data getAllProductTypes: ", respones.data);
+        this.logger.log("Data getAllProductTypes: ", respones.data);
         this.productTypes = respones.data;
-        console.log(" this.productTypes ",  this.productTypes);
+        this.logger.log(" this.productTypes ",  this.productTypes);
       } else {
         alert(JSON.stringify(respones.errorMsg))
       }
@@ -198,9 +200,9 @@ export class SearchPageComponent {
 
   deleteSelectProduct(id: number){
     const oldItem = this.commercialProp.commercialPropItems.filter(i => i.idCommercialPropItem !== id);
-    console.log('Удаляем продукт с id:', id);
-    console.log('Старые элементы:', this.commercialProp.commercialPropItems);
-    console.log('Новые элементы:', oldItem);
+    this.logger.log('Удаляем продукт с id:', id);
+    this.logger.log('Старые элементы:', this.commercialProp.commercialPropItems);
+    this.logger.log('Новые элементы:', oldItem);
     this.commercialProp.commercialPropItems = oldItem;
 }
 
@@ -210,7 +212,7 @@ export class SearchPageComponent {
   }
 
   pickProduct(m: string, idType:number) {
-    console.log(m);
+    this.logger.log(m);
     switch (m) {
       case enProduct.Motor.valueOf():
         this.product_selected = enProduct.Motor;

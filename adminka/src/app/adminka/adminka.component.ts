@@ -19,7 +19,7 @@ import { MotorService } from '../services/motor.service';
 import { Page } from '../models/page';
 import { ReducerService } from '../services/reducer.service';
 import { ManagerService } from '../services/manager.service';
-
+import { NGXLogger } from "ngx-logger";
 
 @Component({
   selector: 'app-adminka',
@@ -42,14 +42,13 @@ export class AdminkaComponent {
   reducerMounting_list: MountingPoint[]
   reducerInstallationType_list: ReducerInstallationType[]
   reducerInputType_list: ReducerInputType[]
-  // reducerAdapterType_list: ReducerAdapterType[]
   manager_list:Manager[];
 
   searchData: string | null = null;
   totalCount: number;
   page: number = 0;
 
-  constructor(private http: HttpClient, private imageService: ImageService, public dialog:MatDialog, private motorService: MotorService, private productService: ProductService, private reducerService: ReducerService, private managerService: ManagerService) {
+  constructor(private http: HttpClient, private imageService: ImageService, private logger: NGXLogger, public dialog:MatDialog, private motorService: MotorService, private productService: ProductService, private reducerService: ReducerService, private managerService: ManagerService) {
     this.paymentTerms_list = new Array<PaymentTerms>();
     this.motor_list = new Array<Motor>();
     this.motorType_list = new Array<MotorType>();
@@ -106,7 +105,7 @@ export class AdminkaComponent {
     reader.onload = (e: any) => {
       const base64Image = e.target.result;
       const base64WithoutPrefix = base64Image.split(',')[1];
-      console.log('base64:', base64WithoutPrefix);
+      this.logger.log('base64:', base64WithoutPrefix);
 
       setTimeout(() => {
         product.imageString = base64WithoutPrefix;
@@ -125,51 +124,51 @@ export class AdminkaComponent {
   }
 
   onPageChange(event: any){
-    console.log("event.page", event.page);
+    this.logger.log("event.page", event.page);
     this.page = event.page;
     if(this.id == 0){
       this.getMotorList(event.page);
-      console.log('getMotorList', this.id, event.page);
+      this.logger.log('getMotorList', this.id, event.page);
     }
     else if(this.id == 2){
       this.getMotorAdapterTypeList(event.page);
-      console.log('getMotorAdapterTypeList', this.id, event.page);
+      this.logger.log('getMotorAdapterTypeList', this.id, event.page);
     }
     else if(this.id == 3){
       this.getProductList(event.page);
-      console.log('getProductList', this.id, event.page);
+      this.logger.log('getProductList', this.id, event.page);
     }
     else if(this.id == 5){
       this.getProductOption(event.page);
-      console.log('getProductOption', this.id, event.page);
+      this.logger.log('getProductOption', this.id, event.page);
     }
     else if(this.id == 6){
       this.getReducer(event.page);
-      console.log('getReducer', this.id, event.page);
+      this.logger.log('getReducer', this.id, event.page);
     }
     else if(this.id == 6){
       this.getReducer(event.page);
-      console.log('getReducer', this.id, event.page);
+      this.logger.log('getReducer', this.id, event.page);
     }
     else if(this.id == 8){
       this.getReducerSize(event.page);
-      console.log('getReducerSize', this.id, event.page);
+      this.logger.log('getReducerSize', this.id, event.page);
     }
     else if(this.id == 9){
       this.getReducerOutputShaft(event.page);
-      console.log('getReducerOutputShaft', this.id, event.page);
+      this.logger.log('getReducerOutputShaft', this.id, event.page);
     }
     else if(this.id ==11){
       this.getReducerInstallationType(event.page);
-      console.log('getReducerInstallationType', this.id, event.page);
+      this.logger.log('getReducerInstallationType', this.id, event.page);
     }
     else if(this.id ==12){
       this.getReducerInputType(event.page);
-      console.log('getReducerInputType', this.id, event.page);
+      this.logger.log('getReducerInputType', this.id, event.page);
     }
     else if(this.id ==13){
       this.getListManagers(event.page);
-      console.log('getListManagers', this.id, event.page);
+      this.logger.log('getListManagers', this.id, event.page);
     }
   }
 
@@ -185,66 +184,66 @@ export class AdminkaComponent {
       if(okOrNot){
         if(this.id == 0){
           this.deleteMotor(i);
-          console.log('deleteMotor', this.id, i);
+          this.logger.log('deleteMotor', this.id, i);
         }
         else if(this.id == 1){
           this.deleteMotorType(i);
-          console.log('deleteMotorType', this.id, i);
+          this.logger.log('deleteMotorType', this.id, i);
         }
         else if(this.id == 2){
           this.deleteMotorAdapterType(i);
-          console.log('deleteMotorAdapterType', this.id, i);
+          this.logger.log('deleteMotorAdapterType', this.id, i);
         }
         else if(this.id == 3){
           this.deleteProduct(i);
-          console.log('deleteProduct', this.id, i);
+          this.logger.log('deleteProduct', this.id, i);
         }
         else if(this.id == 4){
           this.deleteProductType(i);
-          console.log('deleteProductType', this.id, i);
+          this.logger.log('deleteProductType', this.id, i);
         }
         else if(this.id == 5){
           this.deleteProductOption(i);
-          console.log('deleteProductOption', this.id, i);
+          this.logger.log('deleteProductOption', this.id, i);
         }
         else if(this.id == 6){
           this.deleteReducer(i);
-          console.log('deleteReducer', this.id, i);
+          this.logger.log('deleteReducer', this.id, i);
         }
         else if(this.id == 7){
           this.deleteReducerType(i);
-          console.log('deleteReducerType', this.id, i);
+          this.logger.log('deleteReducerType', this.id, i);
         }
         else if(this.id == 8){
           this.deleteReducerSize(i);
-          console.log('deleteReducerSize', this.id, i);
+          this.logger.log('deleteReducerSize', this.id, i);
         }
         else if(this.id == 9){
           this.deleteReducerOutputShaft(i);
-          console.log('deleteReducerOutputShaft', this.id, i);
+          this.logger.log('deleteReducerOutputShaft', this.id, i);
         }
         else if(this.id == 10){
           this.deleteReducerMounting(i);
-          console.log('deleteReducerMounting', this.id, i);
+          this.logger.log('deleteReducerMounting', this.id, i);
         }
         else if(this.id == 11){
           this.deleteReducerInstallationType(i);
-          console.log('deleteReducerInstallationType', this.id, i);
+          this.logger.log('deleteReducerInstallationType', this.id, i);
         }
         else if(this.id == 12){
           this.deleteReducerInputType(i);
-          console.log('deleteReducerInputType', this.id, i);
+          this.logger.log('deleteReducerInputType', this.id, i);
         }
         else if(this.id == 13){
           this.deleteManager(i);
-          console.log('deleteManager', this.id, i);
+          this.logger.log('deleteManager', this.id, i);
         }
         else if(this.id == 14){
           this.deletePaymentTerm(i);
-          console.log('deletePaymentTerm', this.id, i);
+          this.logger.log('deletePaymentTerm', this.id, i);
         }
       } else{
-        console.log('Пользователь выбрал не удалять');
+        this.logger.log('Пользователь выбрал не удалять');
       }
 
     });
@@ -282,12 +281,14 @@ export class AdminkaComponent {
 
   goToDynamicAdd(){
     const dialogAddingNewStudent = this.dialog.open(AddProductComponent, {
-      width: '3000px',
-      height: '1300px',
+      // width: '3000px',
+      // height: '1300px',
+      width: '0px',
+      height: '0px',
       // data:
     });
     dialogAddingNewStudent.afterClosed().subscribe((addproducts: Product[]) => {
-        console.log('dialog goToDynamicAdd', addproducts);
+        this.logger.log('dialog goToDynamicAdd', addproducts);
         if(addproducts && addproducts.length>0){
             addproducts.forEach((e: { [x: string]: any; }) => {
               var product = new Product()
@@ -341,7 +342,7 @@ export class AdminkaComponent {
           this.paymentTerms_list.push(manager)
         })
       },
-      error: error => { console.log(error); }
+      error: error => { this.logger.log(error); }
     });
   }
 
@@ -351,10 +352,10 @@ export class AdminkaComponent {
   }
 
   savePaymentTerm(paymentTerm: PaymentTerms){
-    console.log(paymentTerm);
+    this.logger.log(paymentTerm);
     paymentTerm.save(this.http).subscribe((respones: ResponseInfo<PaymentTerms>) => {
 
-      console.log(respones.data);
+      this.logger.log(respones.data);
       const index = this.paymentTerms_list.findIndex(item => item.idPaymentTerms === paymentTerm.idPaymentTerms);
       if (index !== -1) {
           let  managerData = new PaymentTerms;
@@ -362,13 +363,13 @@ export class AdminkaComponent {
           managerData.idPaymentTerms = respones.data.idPaymentTerms;
 
           this.paymentTerms_list[index] = managerData;
-          console.log('paymentTerms_list', this.manager_list);
+          this.logger.log('paymentTerms_list', this.manager_list);
       } else {
           let  managerData2 = new PaymentTerms;
           managerData2 = paymentTerm;
           managerData2.idPaymentTerms = respones.data.idPaymentTerms;
           this.paymentTerms_list.push(managerData2);
-          console.log('datadata',respones.data);
+          this.logger.log('datadata',respones.data);
       }
     });
   }
@@ -439,7 +440,7 @@ export class AdminkaComponent {
   searchProductByName(){
     this.imageService.searchProduct(this.searchData).subscribe((respones: ResponseInfo<Product[]>)=>{
       if(respones.data !== null){
-        console.log("Data searchProductByName", respones.data);
+        this.logger.log("Data searchProductByName", respones.data);
         this.product_list = [];
         if(respones.data && respones.data.length>0){
           respones.data.forEach((e: { [x: string]: any; }) => {
@@ -897,7 +898,7 @@ export class AdminkaComponent {
           this.motorType_list.push(motorType)
         })
       },
-      error: error => { console.log(error); }
+      error: error => { this.logger.log(error); }
     });
   }
 
@@ -937,7 +938,7 @@ export class AdminkaComponent {
     //       this.manager_list.push(manager)
     //     })
     //   },
-    //   error: error => { console.log(error); }
+    //   error: error => { this.logger.log(error); }
     // });
     this.managerService.getPageManagers(offset).subscribe((respones: ResponseInfo<Page<any>>)=>{
       if(respones.data !== null){
@@ -971,10 +972,10 @@ export class AdminkaComponent {
   }
 
   saveManager(manager: Manager){
-    console.log(manager);
+    this.logger.log(manager);
     manager.save(this.http).subscribe((respones: ResponseInfo<Manager>) => {
 
-      console.log(respones.data);
+      this.logger.log(respones.data);
       const index = this.manager_list.findIndex(item => item.idManager === manager.idManager);
       if (index !== -1) {
           let  managerData = new Manager;
@@ -982,13 +983,13 @@ export class AdminkaComponent {
           managerData.idManager = respones.data.idManager;
 
           this.manager_list[index] = managerData;
-          console.log('manager_list', this.manager_list);
+          this.logger.log('manager_list', this.manager_list);
       } else {
           let  managerData2 = new Manager;
           managerData2 = manager;
           managerData2.idManager = respones.data.idManager;
           this.manager_list.push(managerData2);
-          console.log('datadata',respones.data);
+          this.logger.log('datadata',respones.data);
       }
     });
   }

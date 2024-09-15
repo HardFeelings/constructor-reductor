@@ -9,6 +9,7 @@ import { CommercialProp } from 'src/app/models/commercialProp';
 import { Manager } from 'src/app/models/manager';
 import { ResponseInfo } from 'src/app/models/responesInfo';
 import { Page } from 'src/app/models/page';
+import { NGXLogger } from "ngx-logger";
 
 @Component({
   selector: 'app-commercial-page',
@@ -22,7 +23,7 @@ export class CommercialPageComponent {
   searchManager: Manager;
   totalCount: number;
 
-  constructor(private commercialService: CommercialService, private dataService: DataService, private  router: Router, public dialog:MatDialog){
+  constructor(private commercialService: CommercialService, private dataService: DataService,private logger: NGXLogger, private  router: Router, public dialog:MatDialog){
     this.searchData = new CommercialProp;
     this.searchManager = new Manager;
   }
@@ -30,6 +31,10 @@ export class CommercialPageComponent {
 
   ngOnInit() {
     this.getAllcommercialProp();
+  }
+
+  navigateToUrl() {
+    window.location.href = 'http://localhost:8000';
   }
 
   goToSearchPage(id:number | null){
@@ -42,10 +47,10 @@ export class CommercialPageComponent {
     });
     dialogAddingNewStudent.afterClosed().subscribe((commercialProp: CommercialProp) => {
       if(commercialProp  !== null && commercialProp  !== undefined) {
-        console.log('dialog commercialProp', commercialProp);
+        this.logger.log('dialog commercialProp', commercialProp);
         this.getAllcommercialProp();
       } else{
-        console.log('Окно закрыто без изменений');
+        this.logger.log('Окно закрыто без изменений');
         this.getAllcommercialProp();
       }
 
@@ -65,7 +70,7 @@ export class CommercialPageComponent {
       if(okOrNot){
         this.commercialService.deleteCommercialProp(id).subscribe((respones: ResponseInfo<Boolean>) => {
           if(respones.data !== null){
-            console.log("Result deleteCommercial: ", respones.data);
+            this.logger.log("Result deleteCommercial: ", respones.data);
             this.commercialProp_list = this.commercialProp_list.filter(item => item.idCommercialProp !== id);
           } else {
             alert(JSON.stringify(respones.errorMsg))
@@ -73,7 +78,7 @@ export class CommercialPageComponent {
         });
       }
       else{
-        console.log('Пользователь выбрал не удалять');
+        this.logger.log('Пользователь выбрал не удалять');
       }
 
     });
@@ -82,7 +87,7 @@ export class CommercialPageComponent {
   // getAllcommercialProp() {
   //   this.commercialService.getAllCommercialProps().subscribe((respones: ResponseInfo<CommercialProp[]>) => {
   //     if(respones.data !== null){
-  //       console.log("Data getAllcommercialProp: ", respones.data);
+  //       this.logger.log("Data getAllcommercialProp: ", respones.data);
   //       this.commercialProp_list = respones.data;
   //     } else {
   //       alert(JSON.stringify(respones.errorMsg))
@@ -95,7 +100,7 @@ export class CommercialPageComponent {
     const defaultObj = new CommercialProp ();
     this.commercialService.filterPageProp(defaultObj,0).subscribe((respones: ResponseInfo<Page<CommercialProp>>) => {
       if(respones.data !== null){
-        console.log("Data getAllcommercialProp: ", respones.data);
+        this.logger.log("Data getAllcommercialProp: ", respones.data);
         this.commercialProp_list = respones.data.content;
         this.totalCount = respones.data.totalCount;
       } else {
@@ -119,7 +124,7 @@ export class CommercialPageComponent {
   }
 
   onPageChange(event: any){
-    console.log("event.page", event.page);
+    this.logger.log("event.page", event.page);
     this.searchProp(event.page);
   }
 
@@ -130,11 +135,11 @@ export class CommercialPageComponent {
     } else {
       this.searchData.manager = this.searchManager;
     }
-    console.log('searchData', this.searchData)
+    this.logger.log('searchData', this.searchData)
     // this.commercialService.filterProp(this.searchData).subscribe((respones: ResponseInfo<CommercialProp[]>) => {
     this.commercialService.filterPageProp(this.searchData,offset).subscribe((respones: ResponseInfo<Page<CommercialProp>>) => {
       if(respones.data !== null){
-        console.log("Result searchProp: ", respones.data);
+        this.logger.log("Result searchProp: ", respones.data);
         this.commercialProp_list = respones.data.content;
         this.totalCount = respones.data.totalCount;
       } else {

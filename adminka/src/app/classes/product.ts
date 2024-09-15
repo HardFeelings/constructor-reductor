@@ -1,8 +1,5 @@
-import { HttpClient, HttpParams } from "@angular/common/http"
-import { Motor } from "./motor"
+import { HttpClient } from "@angular/common/http"
 import { Observable } from 'rxjs';
-import { Page } from "../models/page";
-import { ResponseInfo } from "../models/responesInfo";
 
 export class Product {
     id: number
@@ -42,12 +39,12 @@ export class Product {
     }
 
     delete(http: HttpClient) : Observable<boolean>{
-        console.log(this)
+        // console.log(this)
         return http.delete<boolean>(`/api/v1/security/product/${this.id}`)
     }
 
     save(http: HttpClient): Observable<Product>{
-      console.log(this.ser())
+      // console.log(this.ser())
      return http.post<Product>('/api/v1/security/product', this.ser())
   }
 }
@@ -74,7 +71,7 @@ export class ProductType {
         http.get('/api/v1/productType')
             .subscribe({
                 next: (data: any) => {
-                    console.log("get all")
+                    // console.log("get all")
                     data.data.forEach((e: { [x: string]: any; }) => {
                         var productList = new ProductType()
                         productList.id = e["idProductType"]

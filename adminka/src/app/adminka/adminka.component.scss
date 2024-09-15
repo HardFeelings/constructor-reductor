@@ -50,6 +50,26 @@ body {
     padding-right: 10px;
 }
 
+.sidebar  .redirectButton{
+  display: block;
+  margin-bottom: 10px;
+  font-weight: bold;
+  color: #ffffff;
+  font-size: 14px;
+  cursor: pointer;
+  background-color: #083b57;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  text-align: center;
+  transition: background-color 0.3s ease;
+}
+
+ .sidebar .redirectButton:hover {
+  background-color: #0c547a;
+  color: #ffffff;
+}
+
 .sidebar span, .sidebar button {
     display: block;
     margin-bottom: 10px;
