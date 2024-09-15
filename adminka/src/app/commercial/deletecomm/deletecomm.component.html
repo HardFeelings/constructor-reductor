@@ -1,7 +1,7 @@
-
-<h1 class="configurator_header" style="font-size: 24px;">Вы желаете удалить КП  под номером: {{this.deleteNumber}}?</h1>
-<div class="button-container">
-  <button (click)="close()">Отмена</button>
-  <button (click)="deleteProp()">Удалить</button>
+<div class="dialog">
+  <h1 class="configurator_header" style="font-size: 24px;">Вы желаете удалить КП  под номером: {{this.deleteNumber}}?</h1>
+  <div class="button-container">
+    <button style="margin-bottom: 10px;" (click)="close()">Отмена</button>
+    <button style="margin-bottom: 10px;" (click)="deleteProp()">Удалить</button>
+  </div>
 </div>
-

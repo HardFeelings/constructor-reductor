@@ -34,8 +34,10 @@ export class CommercialPageComponent {
 
   goToSearchPage(id:number | null){
     const dialogAddingNewStudent = this.dialog.open(SearchPageComponent, {
-      width: '2000px',
-      height: '1500px',
+      // width: '2000px',
+      // height: '1500px',
+      width: '0px',
+      height: '0px',
       data: id,
     });
     dialogAddingNewStudent.afterClosed().subscribe((commercialProp: CommercialProp) => {
@@ -53,8 +55,10 @@ export class CommercialPageComponent {
 
   oKDelete(id: number, number:string | null){
     const dialogAddingNewStudent = this.dialog.open(DeletecommComponent, {
-      width: '600px',
-      height: '300px',
+      // width: '600px',
+      // height: '300px',
+      width: '0px',
+      height: '0px',
       data: number,
     });
     dialogAddingNewStudent.afterClosed().subscribe((okOrNot: boolean) => {

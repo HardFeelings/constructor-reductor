@@ -17,6 +17,8 @@ import { DeleteComponent } from '../delete/delete.component';
 import { PaymentTerms } from '../classes/paymentTerm';
 import { MotorService } from '../services/motor.service';
 import { Page } from '../models/page';
+import { ReducerService } from '../services/reducer.service';
+import { ManagerService } from '../services/manager.service';
 
 
 @Component({
@@ -45,8 +47,9 @@ export class AdminkaComponent {
 
   searchData: string | null = null;
   totalCount: number;
+  page: number = 0;
 
-  constructor(private http: HttpClient, private imageService: ImageService, public dialog:MatDialog, private motorService: MotorService) {
+  constructor(private http: HttpClient, private imageService: ImageService, public dialog:MatDialog, private motorService: MotorService, private productService: ProductService, private reducerService: ReducerService, private managerService: ManagerService) {
     this.paymentTerms_list = new Array<PaymentTerms>();
     this.motor_list = new Array<Motor>();
     this.motorType_list = new Array<MotorType>();
@@ -77,6 +80,25 @@ export class AdminkaComponent {
     });
   }
 
+  ngOnInit() {
+    this.getMotorList(0)
+    this.getMotorTypeList()
+    this.getMotorAdapterTypeList(0)
+    this.getProductList(0)
+    this.getProductType()
+    this.getProductOption(0)
+    this.getReducer(0)
+    this.getReducerSize(0)
+    this.getReducerType()
+    this.getReducerOutputShaft(0)
+    this.getReducerMounting()
+    this.getReducerInstallationType(0)
+    this.getReducerInputType(0)
+    this.getListManagers(0)
+    this.getListPaymentTerms()
+    this.setid(0);
+  }
+
   onFileSelected(event: any, product: Product) {
     const selectedFile = event.target.files[0];
     const reader = new FileReader();
@@ -104,13 +126,59 @@ export class AdminkaComponent {
 
   onPageChange(event: any){
     console.log("event.page", event.page);
-    this.getMotorList(event.page);
+    this.page = event.page;
+    if(this.id == 0){
+      this.getMotorList(event.page);
+      console.log('getMotorList', this.id, event.page);
+    }
+    else if(this.id == 2){
+      this.getMotorAdapterTypeList(event.page);
+      console.log('getMotorAdapterTypeList', this.id, event.page);
+    }
+    else if(this.id == 3){
+      this.getProductList(event.page);
+      console.log('getProductList', this.id, event.page);
+    }
+    else if(this.id == 5){
+      this.getProductOption(event.page);
+      console.log('getProductOption', this.id, event.page);
+    }
+    else if(this.id == 6){
+      this.getReducer(event.page);
+      console.log('getReducer', this.id, event.page);
+    }
+    else if(this.id == 6){
+      this.getReducer(event.page);
+      console.log('getReducer', this.id, event.page);
+    }
+    else if(this.id == 8){
+      this.getReducerSize(event.page);
+      console.log('getReducerSize', this.id, event.page);
+    }
+    else if(this.id == 9){
+      this.getReducerOutputShaft(event.page);
+      console.log('getReducerOutputShaft', this.id, event.page);
+    }
+    else if(this.id ==11){
+      this.getReducerInstallationType(event.page);
+      console.log('getReducerInstallationType', this.id, event.page);
+    }
+    else if(this.id ==12){
+      this.getReducerInputType(event.page);
+      console.log('getReducerInputType', this.id, event.page);
+    }
+    else if(this.id ==13){
+      this.getListManagers(event.page);
+      console.log('getListManagers', this.id, event.page);
+    }
   }
 
   oKDelete(id: number, i: any){
     const dialogAddingNewStudent = this.dialog.open(DeleteComponent, {
-      width: '600px',
-      height: '300px',
+      // width: '600px',
+      // height: '300px',
+      width: '0px',
+      height: '0px',
       data: id,
     });
     dialogAddingNewStudent.afterClosed().subscribe((okOrNot: boolean) => {
@@ -167,11 +235,11 @@ export class AdminkaComponent {
           this.deleteReducerInputType(i);
           console.log('deleteReducerInputType', this.id, i);
         }
-        else if(this.id == 14){
+        else if(this.id == 13){
           this.deleteManager(i);
           console.log('deleteManager', this.id, i);
         }
-        else if(this.id == 15){
+        else if(this.id == 14){
           this.deletePaymentTerm(i);
           console.log('deletePaymentTerm', this.id, i);
         }
@@ -196,25 +264,7 @@ export class AdminkaComponent {
     return this.http
   }
 
-  ngOnInit() {
-    this.getMotorList(0)
-    this.getMotorTypeList()
-    this.getMotorAdapterTypeList(0)
-    this.getProductList()
-    this.getProductType()
-    this.getProductOption()
-    this.getReducer()
-    this.getReducerSize()
-    this.getReducerType()
-    this.getReducerOutputShaft()
-    this.getReducerMounting()
-    this.getReducerInstallationType()
-    this.getReducerInputType()
-    // this.getReducerAdapterType()
-    this.getListManagers()
-    this.getListPaymentTerms()
-    this.setid(0);
-  }
+
 
   addMotor() {
     var motor = new Motor()
@@ -263,7 +313,7 @@ export class AdminkaComponent {
         this.reducer_list = [];
         this.motor_list = [];
         this.getMotorList(0)
-        this.getReducer()
+        this.getReducer(0)
 
     });
   }
@@ -272,6 +322,7 @@ export class AdminkaComponent {
     i.delete(this.http).subscribe((respones: ResponseInfo<boolean>) => {
       if(respones.data !== null) {
         this.motor_list = this.motor_list.filter(item => item.id !== i.id)
+        this.getMotorList(this.page);
       }
       else{
         alert(respones.errorMsg)
@@ -373,6 +424,7 @@ export class AdminkaComponent {
     i.delete(this.http).subscribe((data:boolean) => {
       if(data) {
         this.motorAdapterType_list = this.motorAdapterType_list.filter(item => item.id !== i.id)
+        this.getMotorAdapterTypeList(this.page);
       }
     })
   }
@@ -440,7 +492,8 @@ export class AdminkaComponent {
   deleteProduct(i : Product) {
     i.delete(this.http).subscribe((data:boolean) => {
       if(data) {
-        this.product_list = this.product_list.filter(item => item.id !== i.id)
+        this.product_list = this.product_list.filter(item => item.id !== i.id);
+        this.getProductList(this.page);
       }
     })
   }
@@ -471,8 +524,23 @@ export class AdminkaComponent {
     })
   }
 
-  getProductOption() {
-    this.productOption_list = ProductOption.getAll(this.http)
+  getProductOption(offset: number) {
+    // this.productOption_list = ProductOption.getAll(this.http)
+    this.productService.getPageProductOptions(offset).subscribe((respones: ResponseInfo<Page<any>>)=>{
+      if(respones.data !== null){
+        this.totalCount = respones.data.totalCount;
+        this.productOption_list = respones.data.content.map((e: any) => {
+          const productOption = new ProductOption();
+          productOption.idProductOption = e.idProductOption;
+          productOption.productOptionValue = e.productOptionValue;
+          productOption.productTypeId = e.productTypeId;
+          return productOption;
+        });
+      } else {
+        alert(JSON.stringify(respones.errorMsg))
+      }
+    });
+
   }
 
   saveProductOptions(i: ProductOption) {
@@ -492,13 +560,34 @@ export class AdminkaComponent {
   deleteProductOption(i: ProductOption) {
     i.delete(this.http).subscribe((data:boolean) => {
       if(data) {
-        this.productOption_list = this.productOption_list.filter(item => item.idProductOption !== i.idProductOption)
+        this.productOption_list = this.productOption_list.filter(item => item.idProductOption !== i.idProductOption);
+        this.getProductOption(this.page);
       }
     })
   }
 
-  getReducer() {
-    this.reducer_list = Reducer.getAll(this.http)
+  getReducer(offset: number) {
+    // this.reducer_list = Reducer.getAll(this.http)
+    this.reducerService.getPageReducers(offset).subscribe((respones: ResponseInfo<Page<any>>)=>{
+      if(respones.data !== null){
+        this.totalCount = respones.data.totalCount;
+        this.reducer_list = respones.data.content.map((e: any) => {
+          const reducer = new Reducer();
+          reducer.idReducer = e.idReducer;
+          reducer.reducerTypeId = e.reducerTypeId;
+          reducer.reducerSizeId = e.reducerSizeId;
+          reducer.reducerInputTypeId = e.reducerInputTypeId;
+          reducer.reducerOutputShaftTypeId = e.reducerOutputShaftTypeId;
+          reducer.reducerInstallationTypeId = e.reducerInstallationTypeId;
+          reducer.reducerMountingId = e.reducerMountingId;
+          reducer.diameterOutputShaft = e.diameterOutputShaft;
+          reducer.ratio = e.ratio;
+          return reducer;
+        });
+      } else {
+        alert(JSON.stringify(respones.errorMsg))
+      }
+    });
   }
 
   saveReducer(i: Reducer) {
@@ -515,18 +604,12 @@ export class AdminkaComponent {
     this.reducer_list.push(reducer)
   }
 
-  // deleteReducer(i: Reducer) {
-  //   i.delete(this.http).subscribe((data:boolean) => {
-  //     if(data) {
-  //       this.reducer_list = this.reducer_list.filter(item => item.idReducer !== i.idReducer)
-  //     }
-  //   })
-  // }
 
   deleteReducer(i : Reducer) {
     i.delete(this.http).subscribe((respones: ResponseInfo<boolean>) => {
       if(respones.data !== null) {
-        this.reducer_list = this.reducer_list.filter(item => item.idReducer !== i.idReducer)
+        this.reducer_list = this.reducer_list.filter(item => item.idReducer !== i.idReducer);
+        this.getReducer(0);
       }
       else{
         alert(respones.errorMsg)
@@ -555,13 +638,27 @@ export class AdminkaComponent {
   deleteReducerType(i: ReducerType) {
     i.delete(this.http).subscribe((data:boolean) => {
       if(data) {
-        this.reducerType_list = this.reducerType_list.filter(item => item.idReducerType !== i.idReducerType)
+        this.reducerType_list = this.reducerType_list.filter(item => item.idReducerType !== i.idReducerType);
       }
     })
   }
 
-  getReducerSize() {
-    this.reducerSize_list = ReducerSize.getAll(this.http)
+  getReducerSize(offset: number) {
+    // this.reducerSize_list = ReducerSize.getAll(this.http)
+    this.reducerService.getPageReducerSizes(offset).subscribe((respones: ResponseInfo<Page<any>>)=>{
+      if(respones.data !== null){
+        this.totalCount = respones.data.totalCount;
+        this.reducerSize_list = respones.data.content.map((e: any) => {
+          const reducerSize = new ReducerSize();
+          reducerSize.idReducerSize = e.idReducerSize
+          reducerSize.reducerSizeValue = e.reducerSizeValue
+          reducerSize.reducerTypeId = e.reducerTypeId
+          return reducerSize;
+        });
+      } else {
+        alert(JSON.stringify(respones.errorMsg))
+      }
+    });
   }
 
   saveReducerSize(i: ReducerSize) {
@@ -581,15 +678,28 @@ export class AdminkaComponent {
   deleteReducerSize(i: ReducerSize) {
     i.delete(this.http).subscribe((data:boolean) => {
       if(data) {
-        this.reducerSize_list = this.reducerSize_list.filter(item => item.idReducerSize !== i.idReducerSize)
+        this.reducerSize_list = this.reducerSize_list.filter(item => item.idReducerSize !== i.idReducerSize);
+        this.getReducerSize(0);
       }
     })
   }
 
-
-
-  getReducerOutputShaft() {
-    this.reducerOutput_list = ReducerOutputShaftType.getAll(this.http)
+  getReducerOutputShaft(offset: number) {
+    // this.reducerOutput_list = ReducerOutputShaftType.getAll(this.http)
+    this.reducerService.getPageReducerOutputShaftTypes(offset).subscribe((respones: ResponseInfo<Page<any>>)=>{
+      if(respones.data !== null){
+        this.totalCount = respones.data.totalCount;
+        this.reducerOutput_list = respones.data.content.map((e: any) => {
+          const reducerOutputShaftType = new ReducerOutputShaftType();
+          reducerOutputShaftType.idReducerOutputShaftType = e.idReducerOutputShaftType;
+          reducerOutputShaftType.value = e.reducerOutputShaftTypeValue;
+          reducerOutputShaftType.reducerTypeId = e.reducerTypeId;
+          return reducerOutputShaftType;
+        });
+      } else {
+        alert(JSON.stringify(respones.errorMsg))
+      }
+    });
   }
 
   saveReducerOutputShaft(i: ReducerOutputShaftType) {
@@ -609,7 +719,8 @@ export class AdminkaComponent {
   deleteReducerOutputShaft(i: ReducerOutputShaftType) {
     i.delete(this.http).subscribe((data:boolean) => {
       if(data) {
-        this.reducerOutput_list = this.reducerOutput_list.filter(item => item.idReducerOutputShaftType !== i.idReducerOutputShaftType)
+        this.reducerOutput_list = this.reducerOutput_list.filter(item => item.idReducerOutputShaftType !== i.idReducerOutputShaftType);
+        this.getReducerOutputShaft(0);
       }
     })
   }
@@ -640,8 +751,23 @@ export class AdminkaComponent {
     })
   }
 
-  getReducerInstallationType() {
-    this.reducerInstallationType_list = ReducerInstallationType.getAll(this.http)
+  getReducerInstallationType(offset:number) {
+    // this.reducerInstallationType_list = ReducerInstallationType.getAll(this.http)
+    this.reducerService.getPageReducerInstallationType(offset).subscribe((respones: ResponseInfo<Page<any>>)=>{
+      if(respones.data !== null){
+        this.totalCount = respones.data.totalCount;
+        this.reducerInstallationType_list = respones.data.content.map((e: any) => {
+          const reducerInstallationType = new ReducerInstallationType();
+          reducerInstallationType.idReducerInstallationType = e.idReducerInstallationType;
+          reducerInstallationType.value = e.reducerInstallationTypeValue;
+          reducerInstallationType.reducerTypeId = e.reducerTypeId;
+          return reducerInstallationType;
+        });
+      } else {
+        alert(JSON.stringify(respones.errorMsg))
+      }
+    });
+
   }
 
   saveReducerInstallationType(i: ReducerInstallationType) {
@@ -661,13 +787,29 @@ export class AdminkaComponent {
   deleteReducerInstallationType(i: ReducerInstallationType) {
     i.delete(this.http).subscribe((data:boolean) => {
       if(data) {
-        this.reducerInstallationType_list = this.reducerInstallationType_list.filter(item => item.idReducerInstallationType !== i.idReducerInstallationType)
+        this.reducerInstallationType_list = this.reducerInstallationType_list.filter(item => item.idReducerInstallationType !== i.idReducerInstallationType);
+        this.getReducerInstallationType(0);
       }
     })
   }
 
-  getReducerInputType() {
-    this.reducerInputType_list = ReducerInputType.getAll(this.http)
+  getReducerInputType(offset: number) {
+    // this.reducerInputType_list = ReducerInputType.getAll(this.http)
+    this.reducerService.getPageReducerInputType(offset).subscribe((respones: ResponseInfo<Page<any>>)=>{
+      if(respones.data !== null){
+        this.totalCount = respones.data.totalCount;
+        this.reducerInputType_list = respones.data.content.map((e: any) => {
+          const reducerInputType = new ReducerInputType();
+          reducerInputType.idReducerInputType = e.idReducerInputType;
+          reducerInputType.value = e.reducerInputTypeValue;
+          reducerInputType.reducerTypeId = e.reducerTypeId;
+          return reducerInputType;
+        });
+      } else {
+        alert(JSON.stringify(respones.errorMsg))
+      }
+    });
+
   }
 
   saveReducerInputType(i: ReducerInputType){
@@ -687,80 +829,13 @@ export class AdminkaComponent {
   deleteReducerInputType(i: ReducerInputType) {
     i.delete(this.http).subscribe((data:boolean) => {
       if(data) {
-        this.reducerInputType_list = this.reducerInputType_list.filter(item => item.idReducerInputType !== i.idReducerInputType)
+        this.reducerInputType_list = this.reducerInputType_list.filter(item => item.idReducerInputType !== i.idReducerInputType);
+        this.getReducerInputType(0);
       }
     })
   }
 
-  // getReducerAdapterType() {
-  //   this.reducerAdapterType_list = ReducerAdapterType.getAll(this.http)
-  // }
-
-  // saveReducerIAdapterType(i: ReducerAdapterType) {
-  //   i.save(this.http).subscribe((data:any) => {
-  //     const index = this.reducerAdapterType_list.findIndex(item => item.idReducerAdapterType === data.data.idReducerAdapterType);
-  //     if(index === -1 && this.reducerAdapterType_list[this.reducerAdapterType_list.length -1].idReducerAdapterType === 0){
-  //       this.reducerAdapterType_list[this.reducerAdapterType_list.length -1].idReducerAdapterType  = data.data.idReducerAdapterType ;
-  //     }
-  //   });
-  // }
-
-  // addReducerAdapterType() {
-  //   var reducerAdapterType = new ReducerAdapterType()
-  //   this.reducerAdapterType_list.push(reducerAdapterType)
-  // }
-
-  // deleteReducerAdapterType(i: ReducerAdapterType) {
-  //   i.delete(this.http).subscribe((data:boolean) => {
-  //     if(data) {
-  //       this.reducerAdapterType_list = this.reducerAdapterType_list.filter(item => item.idReducerAdapterType !== i.idReducerAdapterType)
-  //     }
-  //   })
-  // }
-
-  // getMotorList() {
-  //   this.http.get('/api/v1/motor').subscribe({
-  //     next: (data: any) => {
-  //       data.data.forEach((e: { [x: string]: any; }) => {
-  //         var motor = new Motor()
-  //         motor.id = e["idMotor"]
-  //         motor.frequency.value = e["frequency"]
-  //         motor.adapterType.id = e["motorAdapterTypeId"]
-  //         motor.power = e["power"]
-  //         motor.efficiency =  e["efficiency"]
-  //         motor.ratedCurrent =  e["ratedCurrent"]
-  //         // motor.posTerminalBox =  e["posTerminalBox"]
-  //         motor.momentOfInertia =  e["momentOfInertia"]
-  //         // motor.cableExitSide =  e["cableExitSide"]
-  //         motor.type.id = e["motorTypeId"]
-  //         this.motor_list.push(motor)
-  //       })
-  //     },
-  //     error: error => { console.log(error); }
-  //   });
-  // }
-
   getMotorList(offset: number) {
-    // this.http.get(`/api/v1/motor?offset=${offset}`).subscribe({
-    //   next: (data: any) => {
-    //     data.data.forEach((e: { [x: string]: any; }) => {
-    //       var motor = new Motor();
-    //       motor.id = e["idMotor"];
-    //       motor.frequency.value = e["frequency"];
-    //       motor.adapterType.id = e["motorAdapterTypeId"];
-    //       motor.power = e["power"];
-    //       motor.efficiency = e["efficiency"];
-    //       motor.ratedCurrent = e["ratedCurrent"];
-    //       // motor.posTerminalBox = e["posTerminalBox"];
-    //       motor.momentOfInertia = e["momentOfInertia"];
-    //       // motor.cableExitSide = e["cableExitSide"];
-    //       motor.type.id = e["motorTypeId"];
-    //       this.motor_list.push(motor);
-    //     });
-    //   },
-    //   error: error => { console.log(error); }
-    // });
-
     this.motorService.getPageMotor(offset).subscribe((respones: ResponseInfo<Page<Motor>>)=>{
       if(respones.data !== null){
         this.totalCount = respones.data.totalCount;
@@ -783,30 +858,32 @@ export class AdminkaComponent {
 
 }
 
-  getProductList() {
-    this.http.get('/api/v1/product').subscribe({
-      next: (data: any) => {
-        data.data.forEach((e: { [x: string]: any; }) => {
-          var product = new Product()
-          product.id = e["idProduct"]
-          product.productTypeId = e["productTypeId"]
-          product.name = e["name"]
-          product.weight = e["weight"]
-          product.price = e["price"]
-          product.reducerId = e["reducerId"]
-          product.motorId = e["motorId"]
-          product.optionsIds = e["optionsIds"]
-          product.imageEmpty = e["imageEmpty"]
-          product.imageString = e["imageString"]
-          product.imageChanged = e["imageChanged"]
-          product.rpm = e["rpm"]
-          product.torqueMoment = e["torqueMoment"]
-          product.serviceFactor = e["serviceFactor"]
+  getProductList(offset: number) {
+    this.productService.getPageProducts(offset).subscribe((respones: ResponseInfo<Page<any>>)=>{
+      if(respones.data !== null){
+        this.totalCount = respones.data.totalCount;
+        this.product_list = respones.data.content.map((e: any) => {
+          const product = new Product();
+          product.id = e.idProduct
+          product.productTypeId = e.productTypeId
+          product.name = e.name
+          product.weight = e.weight
+          product.price = e.price
+          product.reducerId = e.reducerId
+          product.motorId = e.motorId
+          product.optionsIds = e.optionsIds
+          product.imageEmpty = e.imageEmpty
+          product.imageString = e.imageString
+          product.imageChanged = e.imageChanged
+          product.rpm = e.rpm
+          product.torqueMoment = e.torqueMoment
+          product.serviceFactor = e.serviceFactor
           product.optionsString = (product.optionsIds ?? []).join(',');
-          this.product_list.push(product)
-        })
-      },
-      error: error => { console.log(error); }
+          return product;
+        });
+      } else {
+        alert(JSON.stringify(respones.errorMsg))
+      }
     });
   }
 
@@ -825,19 +902,6 @@ export class AdminkaComponent {
   }
 
   getMotorAdapterTypeList(offset: number) {
-    // this.http.get('/api/v1/motorAdapterType').subscribe({
-    //   next: (data: any) => {
-    //     data.data.forEach((e: { [x: string]: any; }) => {
-    //       var motorAdapterType = new MotorAdapterType()
-    //       motorAdapterType.id = e["idMotorAdapterType"]
-    //       motorAdapterType.value = e["motorAdapterTypeValue"]
-    //       motorAdapterType.typeid = e["motorTypeId"]
-    //       this.motorAdapterType_list.push(motorAdapterType)
-    //     })
-    //   },
-    //   error: error => { console.log(error); }
-    // });
-
     this.motorService.getPageMotorAdapterType(offset).subscribe((respones: ResponseInfo<Page<MotorAdapterType>>)=>{
       if(respones.data !== null){
         this.totalCount = respones.data.totalCount;
@@ -859,28 +923,49 @@ export class AdminkaComponent {
     this.manager_list.push(newManager)
   }
 
-  getListManagers() {
-    this.http.get('/api/v1/security/manager').subscribe({
-      next: (data: any) => {
-        data.data.forEach((e: { [x: string]: any; }) => {
-          var manager = new Manager()
-          manager.idManager =e["idManager"]
-          manager.shortName =e["shortName"]
-          manager.fullName =e["fullName"]
-          manager.position =e["position"]
-          manager.email =e["email"]
-          manager.phoneNumber =e["phoneNumber"]
-          this.manager_list.push(manager)
-        })
-      },
-      error: error => { console.log(error); }
+  getListManagers(offset: number) {
+    // this.http.get('/api/v1/security/manager').subscribe({
+    //   next: (data: any) => {
+    //     data.data.forEach((e: { [x: string]: any; }) => {
+    //       var manager = new Manager()
+    //       manager.idManager =e["idManager"]
+    //       manager.shortName =e["shortName"]
+    //       manager.fullName =e["fullName"]
+    //       manager.position =e["position"]
+    //       manager.email =e["email"]
+    //       manager.phoneNumber =e["phoneNumber"]
+    //       this.manager_list.push(manager)
+    //     })
+    //   },
+    //   error: error => { console.log(error); }
+    // });
+    this.managerService.getPageManagers(offset).subscribe((respones: ResponseInfo<Page<any>>)=>{
+      if(respones.data !== null){
+        this.totalCount = respones.data.totalCount;
+        this.manager_list = respones.data.content.map((e: any) => {
+          const manager = new Manager();
+          // motorAdapter.id = e.idMotorAdapterType;
+          // motorAdapter.value = e.motorAdapterTypeValue;
+          // motorAdapter.typeid = e.motorTypeId;
+          manager.idManager =e.idManager;
+          manager.shortName =e.shortName;
+          manager.fullName =e.fullName;
+          manager.position =e.position;
+          manager.email =e.email;
+          manager.phoneNumber =e.phoneNumber;
+          return manager;
+        });
+      } else {
+        alert(JSON.stringify(respones.errorMsg))
+      }
     });
   }
 
   deleteManager(i: Manager) {
     i.delete(this.http).subscribe((data:boolean) => {
       if(data) {
-        this.manager_list = this.manager_list.filter(item => item.idManager !== i.idManager)
+        this.manager_list = this.manager_list.filter(item => item.idManager !== i.idManager);
+        this.getListManagers(0);
       }
     })
   }

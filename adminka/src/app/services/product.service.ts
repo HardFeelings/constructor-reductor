@@ -35,6 +35,13 @@ export class ProductService extends ABaseServiceService{
     return this.getwp<ResponseInfo<Product[]>>(this.productUrl);
   }
 
+  getPageProducts(offset: number): Observable<ResponseInfo<Page<Product>>> {
+    let params = new HttpParams()
+        .set('offset', offset.toString())
+        // .set('limit', limit.toString());
+    return this.get<ResponseInfo<Page<Product>>>(this.productUrl,  params);
+}
+
   getProductById(id:number): Observable<ResponseInfo<Product>> {
     return this.getwp<ResponseInfo<Product>>(`${this.productUrl}/${id}`);
   }
@@ -51,6 +58,13 @@ export class ProductService extends ABaseServiceService{
 ///////////// ProductOption /////////////
   getAllProductOptions(): Observable<ResponseInfo<ProductOption[]>> {
     return this.getwp<ResponseInfo<ProductOption[]>>(this.productOptionUrl);
+  }
+
+  getPageProductOptions(offset:number): Observable<ResponseInfo<Page<ProductOption>>> {
+    let params = new HttpParams()
+    .set('offset', offset.toString())
+    // .set('limit', limit.toString())
+    return this.get<ResponseInfo<Page<ProductOption>>>(this.productOptionUrl, params);
   }
 
   getProductOptionById(id:number): Observable<ResponseInfo<ProductOption>> {

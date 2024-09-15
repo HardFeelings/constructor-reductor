@@ -59,34 +59,34 @@ export class Reducer {
         }
     }
 
-    public static getAll(http: HttpClient): Array<Reducer> {
-        var list: Reducer[] = new Array<Reducer>()
-        http.get('/api/v1/reducer')
-            .subscribe({
-                next: (data: any) => {
-                    console.log("get all")
-                    data.data.forEach((e: { [x: string]: any; }) => {
-                        var reducer = new Reducer()
-                        reducer.idReducer = e["idReducer"]
-                        reducer.reducerTypeId = e["reducerTypeId"]
-                        reducer.reducerSizeId = e["reducerSizeId"]
-                        reducer.reducerInputTypeId = e["reducerInputTypeId"]
-                        // reducer.reducerAdapterTypeId = e["reducerAdapterTypeId"]
-                        reducer.reducerOutputShaftTypeId = e["reducerOutputShaftTypeId"]
-                        reducer.reducerInstallationTypeId = e["reducerInstallationTypeId"]
-                        reducer.reducerMountingId = e["reducerMountingId"]
-                        // reducer.diameterInputShaft = e["diameterInputShaft"]
-                        reducer.diameterOutputShaft = e["diameterOutputShaft"]
-                        reducer.ratio = e["ratio"]
-                        list.push(reducer)
-                    })
-                },
-                error: error => {
-                    console.log(error)
-                }
-            });
-        return list;
-    }
+    // public static getAll(http: HttpClient): Array<Reducer> {
+    //     var list: Reducer[] = new Array<Reducer>()
+    //     http.get('/api/v1/reducer')
+    //         .subscribe({
+    //             next: (data: any) => {
+    //                 console.log("get all")
+    //                 data.data.forEach((e: { [x: string]: any; }) => {
+    //                     var reducer = new Reducer()
+    //                     reducer.idReducer = e["idReducer"]
+    //                     reducer.reducerTypeId = e["reducerTypeId"]
+    //                     reducer.reducerSizeId = e["reducerSizeId"]
+    //                     reducer.reducerInputTypeId = e["reducerInputTypeId"]
+    //                     // reducer.reducerAdapterTypeId = e["reducerAdapterTypeId"]
+    //                     reducer.reducerOutputShaftTypeId = e["reducerOutputShaftTypeId"]
+    //                     reducer.reducerInstallationTypeId = e["reducerInstallationTypeId"]
+    //                     reducer.reducerMountingId = e["reducerMountingId"]
+    //                     // reducer.diameterInputShaft = e["diameterInputShaft"]
+    //                     reducer.diameterOutputShaft = e["diameterOutputShaft"]
+    //                     reducer.ratio = e["ratio"]
+    //                     list.push(reducer)
+    //                 })
+    //             },
+    //             error: error => {
+    //                 console.log(error)
+    //             }
+    //         });
+    //     return list;
+    // }
 
     delete(http: HttpClient) : Observable<ResponseInfo<boolean>>{
        return http.delete<ResponseInfo<boolean>>(`/api/v1/security/reducer/${this.idReducer}`)
@@ -165,25 +165,25 @@ export class ReducerSize {
         }
     }
 
-    public static getAll(http: HttpClient): Array<ReducerSize> {
-        var list: ReducerSize[] = new Array<ReducerSize>()
-        http.get('/api/v1/reducerSize')
-            .subscribe({
-                next: (data: any) => {
-                    data.data.forEach((e: { [x: string]: any; }) => {
-                        var reducerSize = new ReducerSize()
-                        reducerSize.idReducerSize = e["idReducerSize"]
-                        reducerSize.reducerSizeValue = e["reducerSizeValue"]
-                        reducerSize.reducerTypeId = e["reducerTypeId"]
-                        list.push(reducerSize)
-                    })
-                },
-                error: error => {
-                    console.log(error)
-                }
-            });
-        return list;
-    }
+    // public static getAll(http: HttpClient): Array<ReducerSize> {
+    //     var list: ReducerSize[] = new Array<ReducerSize>()
+    //     http.get('/api/v1/reducerSize')
+    //         .subscribe({
+    //             next: (data: any) => {
+    //                 data.data.forEach((e: { [x: string]: any; }) => {
+    //                     var reducerSize = new ReducerSize()
+    //                     reducerSize.idReducerSize = e["idReducerSize"]
+    //                     reducerSize.reducerSizeValue = e["reducerSizeValue"]
+    //                     reducerSize.reducerTypeId = e["reducerTypeId"]
+    //                     list.push(reducerSize)
+    //                 })
+    //             },
+    //             error: error => {
+    //                 console.log(error)
+    //             }
+    //         });
+    //     return list;
+    // }
 
     delete(http: HttpClient) : Observable<boolean>{
         return http.delete<boolean>(`/api/v1/security/reducerSize/${this.idReducerSize}`)
@@ -235,25 +235,25 @@ export class ReducerInputType {
         }
     }
 
-    public static getAll(http: HttpClient): Array<ReducerInputType> {
-        var list: ReducerInputType[] = new Array<ReducerInputType>()
-        http.get('/api/v1/reducerInputType')
-            .subscribe({
-                next: (data: any) => {
-                    data.data.forEach((e: { [x: string]: any; }) => {
-                        var reducerInputType = new ReducerInputType()
-                        reducerInputType.idReducerInputType = e["idReducerInputType"]
-                        reducerInputType.value = e["reducerInputTypeValue"]
-                        reducerInputType.reducerTypeId = e["reducerTypeId"]
-                        list.push(reducerInputType)
-                    })
-                },
-                error: error => {
-                    console.log(error)
-                }
-            });
-        return list;
-    }
+    // public static getAll(http: HttpClient): Array<ReducerInputType> {
+    //     var list: ReducerInputType[] = new Array<ReducerInputType>()
+    //     http.get('/api/v1/reducerInputType')
+    //         .subscribe({
+    //             next: (data: any) => {
+    //                 data.data.forEach((e: { [x: string]: any; }) => {
+    //                     var reducerInputType = new ReducerInputType()
+    //                     reducerInputType.idReducerInputType = e["idReducerInputType"]
+    //                     reducerInputType.value = e["reducerInputTypeValue"]
+    //                     reducerInputType.reducerTypeId = e["reducerTypeId"]
+    //                     list.push(reducerInputType)
+    //                 })
+    //             },
+    //             error: error => {
+    //                 console.log(error)
+    //             }
+    //         });
+    //     return list;
+    // }
 
     delete(http: HttpClient) : Observable<boolean> {
         return http.delete<boolean>(`/api/v1/security/reducerInputType/${this.idReducerInputType}`)
@@ -336,25 +336,25 @@ export class ReducerOutputShaftType {
         }
     }
 
-    public static getAll(http: HttpClient): Array<ReducerOutputShaftType> {
-        var list: ReducerOutputShaftType[] = new Array<ReducerOutputShaftType>()
-        http.get('/api/v1/reducerOutputShaftType')
-            .subscribe({
-                next: (data: any) => {
-                    data.data.forEach((e: { [x: string]: any; }) => {
-                        var reducerOutputShaftType = new ReducerOutputShaftType()
-                        reducerOutputShaftType.idReducerOutputShaftType = e["idReducerOutputShaftType"]
-                        reducerOutputShaftType.value = e["reducerOutputShaftTypeValue"]
-                        reducerOutputShaftType.reducerTypeId = e["reducerTypeId"]
-                        list.push(reducerOutputShaftType)
-                    })
-                },
-                error: error => {
-                    console.log(error)
-                }
-            });
-        return list;
-    }
+    // public static getAll(http: HttpClient): Array<ReducerOutputShaftType> {
+    //     var list: ReducerOutputShaftType[] = new Array<ReducerOutputShaftType>()
+    //     http.get('/api/v1/reducerOutputShaftType')
+    //         .subscribe({
+    //             next: (data: any) => {
+    //                 data.data.forEach((e: { [x: string]: any; }) => {
+    //                     var reducerOutputShaftType = new ReducerOutputShaftType()
+    //                     reducerOutputShaftType.idReducerOutputShaftType = e["idReducerOutputShaftType"]
+    //                     reducerOutputShaftType.value = e["reducerOutputShaftTypeValue"]
+    //                     reducerOutputShaftType.reducerTypeId = e["reducerTypeId"]
+    //                     list.push(reducerOutputShaftType)
+    //                 })
+    //             },
+    //             error: error => {
+    //                 console.log(error)
+    //             }
+    //         });
+    //     return list;
+    // }
 
     delete(http: HttpClient) : Observable<boolean>{
       return  http.delete<boolean>(`/api/v1/security/reducerOutputShaftType/${this.idReducerOutputShaftType}`)
@@ -387,25 +387,25 @@ export class ReducerInstallationType {
         }
     }
 
-    public static getAll(http: HttpClient): Array<ReducerInstallationType> {
-        var list: ReducerInstallationType[] = new Array<ReducerInstallationType>()
-        http.get('/api/v1/reducerInstallationType')
-            .subscribe({
-                next: (data: any) => {
-                    data.data.forEach((e: { [x: string]: any; }) => {
-                        var reducerInstallationType = new ReducerInstallationType()
-                        reducerInstallationType.idReducerInstallationType = e["idReducerInstallationType"]
-                        reducerInstallationType.value = e["reducerInstallationTypeValue"]
-                        reducerInstallationType.reducerTypeId = e["reducerTypeId"]
-                        list.push(reducerInstallationType)
-                    })
-                },
-                error: error => {
-                    console.log(error)
-                }
-            });
-        return list;
-    }
+    // public static getAll(http: HttpClient): Array<ReducerInstallationType> {
+    //     var list: ReducerInstallationType[] = new Array<ReducerInstallationType>()
+    //     http.get('/api/v1/reducerInstallationType')
+    //         .subscribe({
+    //             next: (data: any) => {
+    //                 data.data.forEach((e: { [x: string]: any; }) => {
+    //                     var reducerInstallationType = new ReducerInstallationType()
+    //                     reducerInstallationType.idReducerInstallationType = e["idReducerInstallationType"]
+    //                     reducerInstallationType.value = e["reducerInstallationTypeValue"]
+    //                     reducerInstallationType.reducerTypeId = e["reducerTypeId"]
+    //                     list.push(reducerInstallationType)
+    //                 })
+    //             },
+    //             error: error => {
+    //                 console.log(error)
+    //             }
+    //         });
+    //     return list;
+    // }
 
     delete(http: HttpClient) : Observable<boolean>{
         return http.delete<boolean>(`/api/v1/security/reducerInstallationType/${this.idReducerInstallationType}`)

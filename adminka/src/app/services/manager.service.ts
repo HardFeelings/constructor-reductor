@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { ABaseServiceService } from './abase-service.service';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Manager } from '../models/manager';
 import { ResponseInfo } from '../models/responesInfo';
 import { Observable } from 'rxjs';
+import { Page } from '../models/page';
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +19,13 @@ export class ManagerService extends ABaseServiceService{
 
   getAllManagers(): Observable<ResponseInfo<Manager[]>> {
     return this.getwp<ResponseInfo<Manager[]>>(this.managerUrl);
+  }
+
+  getPageManagers(offset: number): Observable<ResponseInfo<Page<Manager>>> {
+    let params = new HttpParams()
+        .set('offset', offset.toString())
+        // .set('limit', limit.toString());
+    return this.get<ResponseInfo<Page<Manager>>>(this.managerUrl,  params);
   }
 
   deleteManager(id:number): Observable<ResponseInfo<Boolean>> {

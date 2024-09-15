@@ -1,6 +1,8 @@
-import { HttpClient } from "@angular/common/http"
+import { HttpClient, HttpParams } from "@angular/common/http"
 import { Motor } from "./motor"
 import { Observable } from 'rxjs';
+import { Page } from "../models/page";
+import { ResponseInfo } from "../models/responesInfo";
 
 export class Product {
     id: number
@@ -18,6 +20,7 @@ export class Product {
     rpm!: number;
     torqueMoment!:number;
     serviceFactor!: number;
+
 
     ser(): any {
         return {
@@ -106,6 +109,7 @@ export class ProductOption {
         this.idProductOption = 0
         this.productOptionValue = ""
         this.productTypeId = 0
+
     }
 
     ser(): any {
@@ -114,27 +118,6 @@ export class ProductOption {
             productOptionValue: this.productOptionValue,
             productTypeId: this.productTypeId
         }
-    }
-
-    public static getAll(http: HttpClient): Array<ProductOption> {
-        var list: ProductOption[] = new Array<ProductOption>()
-        http.get('/api/v1/productOption')
-            .subscribe({
-                next: (data: any) => {
-                    console.log("get all")
-                    data.data.forEach((e: { [x: string]: any; }) => {
-                        var productOption = new ProductOption()
-                        productOption.idProductOption = e["idProductOption"]
-                        productOption.productOptionValue = e["productOptionValue"]
-                        productOption.productTypeId = e["productTypeId"]
-                        list.push(productOption)
-                    })
-                },
-                error: error => {
-                    console.log(error)
-                }
-            });
-        return list;
     }
 
     delete(http: HttpClient) : Observable<boolean>{
