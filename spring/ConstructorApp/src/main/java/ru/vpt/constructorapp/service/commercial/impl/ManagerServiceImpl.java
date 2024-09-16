@@ -72,4 +72,12 @@ public class ManagerServiceImpl implements ManagerService {
         repo.deleteById(id);
         return true;
     }
+
+    @Override
+    public List<ManagerDto> getAllWithoutPagination() {
+        List<ManagerEntity> entites = repo.findAll();
+        List<ManagerDto> dtos = new ArrayList<>();
+        entites.forEach(item -> dtos.add(mapper.toDTO(item)));
+        return dtos;
+    }
 }

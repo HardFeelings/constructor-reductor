@@ -14,6 +14,6 @@ public interface AuthApi {
     @PostMapping("/auth")
     ResponseEntity<ResponseDto<LoginResponseDto>> createAuthToken(@RequestBody LoginDto loginDto);
 
-    @PostMapping("/registration")
+    @PostMapping("/security/admin/registration")
     ResponseEntity<ResponseDto<Boolean>> createNewUser(@RequestBody RegistrationDto registrationDto);
 }

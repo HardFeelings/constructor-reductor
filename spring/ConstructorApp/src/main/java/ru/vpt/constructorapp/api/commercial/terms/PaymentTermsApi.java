@@ -16,9 +16,9 @@ public interface PaymentTermsApi {
     @GetMapping("/security/paymentTerms/{id}")
     ResponseEntity<ResponseDto<PaymentTermsDto>> getById(@PathVariable("id") Long id);
 
-    @PostMapping("/security/paymentTerms")
+    @PostMapping("/security/admin/paymentTerms")
     ResponseEntity<ResponseDto<PaymentTermsDto>> save(@RequestBody PaymentTermsDto paymentTermsDto);
 
-    @DeleteMapping("/security/paymentTerms/{id}")
+    @DeleteMapping("/security/admin/paymentTerms/{id}")
     ResponseEntity<ResponseDto<Boolean>> delete(@PathVariable("id") Long id);
 }

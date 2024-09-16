@@ -14,7 +14,7 @@ public interface ProductApi {
                                                                      @RequestParam(value = "limit", defaultValue = "20") Integer limit);
     @GetMapping("/product/{id}")
     ResponseEntity<ResponseDto<ProductDto>> getById(@PathVariable("id") Long id);
-    @GetMapping("/product/getByName")
+    @GetMapping("/security/product/getByName")
     ResponseEntity<ResponseDto<ProductPaginationDto>> getByName(@RequestParam("name") String name,
                                                                 @RequestParam(value = "offset", defaultValue = "0") Integer offset,
                                                                 @RequestParam(value = "limit", defaultValue = "20") Integer limit);
@@ -28,7 +28,7 @@ public interface ProductApi {
     @DeleteMapping("/security/product/{id}")
     ResponseEntity<ResponseDto<Boolean>> delete(@PathVariable("id") Long id);
 
-    @GetMapping("/product/downloadImage/{id}")
+    @GetMapping("/security/product/downloadImage/{id}")
     ResponseEntity<Resource> getImage(@PathVariable("id") Long id);
 
 }

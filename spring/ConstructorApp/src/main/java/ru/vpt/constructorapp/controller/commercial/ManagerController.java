@@ -10,6 +10,8 @@ import ru.vpt.constructorapp.api.util.ResponseDto;
 import ru.vpt.constructorapp.controller.util.AbstractController;
 import ru.vpt.constructorapp.service.commercial.ManagerService;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 public class ManagerController extends AbstractController implements ManagerApi {
@@ -34,5 +36,10 @@ public class ManagerController extends AbstractController implements ManagerApi 
     @Override
     public ResponseEntity<ResponseDto<Boolean>> delete(Long id) {
         return response(service.delete(id));
+    }
+
+    @Override
+    public ResponseEntity<ResponseDto<List<ManagerDto>>> getAllWithoutPagination() {
+        return response(service.getAllWithoutPagination());
     }
 }
