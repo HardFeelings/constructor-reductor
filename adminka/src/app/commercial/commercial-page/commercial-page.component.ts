@@ -10,6 +10,7 @@ import { Manager } from 'src/app/models/manager';
 import { ResponseInfo } from 'src/app/models/responesInfo';
 import { Page } from 'src/app/models/page';
 import { NGXLogger } from "ngx-logger";
+import { jwtDecode } from 'jwt-decode';
 
 @Component({
   selector: 'app-commercial-page',
@@ -22,6 +23,7 @@ export class CommercialPageComponent {
   shortName: string | null = null;
   searchManager: Manager;
   totalCount: number;
+  isAdmin: boolean = false;
 
   constructor(private commercialService: CommercialService, private dataService: DataService,private logger: NGXLogger, private  router: Router, public dialog:MatDialog){
     this.searchData = new CommercialProp;
@@ -31,10 +33,20 @@ export class CommercialPageComponent {
 
   ngOnInit() {
     this.getAllcommercialProp();
+    console.log(localStorage);
+    const token = localStorage.getItem('jwt_token');
+
+    if (token) {
+      const decodedToken: any = jwtDecode(token);
+      const roles: string[] = decodedToken.roles || [];
+
+      this.isAdmin = roles.includes('ROLE_ADMIN');
+
+    }
   }
 
   navigateToUrl() {
-    window.location.href = 'http://localhost:8000';
+    window.location.href = 'http://localhost:8000/admin';
   }
 
   goToSearchPage(id:number | null){

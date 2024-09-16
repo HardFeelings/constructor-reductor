@@ -1,1 +1,46 @@
-<p>login works!</p>
+<img src="./login/cutlogo.png" class="header__logo" alt="Логотип" height="1188" width="1558">
+<div class="dialog">
+  <h2>Enter username and password</h2>
+  <form>
+    <div class="input-container">
+      <label>
+        Username:
+      </label>
+      <input type="text" [(ngModel)]="loginDto.username" name="username" required>
+    </div>
+    <div class="input-container">
+      <label>
+        Password:
+      </label>
+      <div class="password-input">
+        <input type="password" [(ngModel)]="loginDto.password" name="password" [type]="isPasswordVisible ? 'text' : 'password'" required>
+        <button type="button" (click)="togglePasswordVisibility()">
+          {{ isPasswordVisible ? 'Hide' : 'Show' }}
+        </button>
+      </div>
+    </div>
+    <div class="button-container">
+      <button (click)="onLogin()" type="submit">Login</button>
+    </div>
+  </form>
+</div>
+<!-- <h2>Register</h2>
+<form (ngSubmit)="onRegister()">
+  <label>
+    Username:
+    <input type="text" [(ngModel)]="registrationDto.username" name="regUsername" required>
+  </label>
+  <label>
+    Password:
+    <input type="password" [(ngModel)]="registrationDto.password" name="regPassword" required>
+  </label>
+  <label>
+    Confirm Password:
+    <input type="password" [(ngModel)]="registrationDto.confirmPassword" name="confirmPassword" required>
+  </label>
+  <label>
+    Is Admin:
+    <input type="checkbox" [(ngModel)]="registrationDto.isAdmin" name="isAdmin">
+  </label>
+  <button type="submit">Register</button>
+</form> -->

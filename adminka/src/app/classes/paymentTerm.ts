@@ -8,7 +8,7 @@ export class PaymentTerms {
   fullName: string;
 
   delete(http: HttpClient) : Observable<ResponseInfo<boolean>>  {
-    return http.delete<ResponseInfo<boolean>>(`/api/v1/security/paymentTerms/${this.idPaymentTerms}`)
+    return http.delete<ResponseInfo<boolean>>(`/api/v1/security/admin/paymentTerms/${this.idPaymentTerms}`)
 }
   ser(): any {
     return {
@@ -19,6 +19,6 @@ export class PaymentTerms {
   }
 
   save(http: HttpClient) : Observable<ResponseInfo<PaymentTerms>> {
-    return http.post<ResponseInfo<PaymentTerms>>('/api/v1/security/paymentTerms', this.ser())
+    return http.post<ResponseInfo<PaymentTerms>>('/api/v1/security/admin/paymentTerms', this.ser())
   }
 }

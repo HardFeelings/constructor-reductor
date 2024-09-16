@@ -11,7 +11,7 @@ export class Manager {
   phoneNumber: string;
 
   delete(http: HttpClient) : Observable<boolean> {
-    return http.delete<boolean>(`/api/v1/security/manager/${this.idManager}`)
+    return http.delete<boolean>(`/api/v1/security/admin/manager/${this.idManager}`)
 }
   ser(): any {
     return {
@@ -25,6 +25,6 @@ export class Manager {
   }
 
   save(http: HttpClient) : Observable<ResponseInfo<Manager>> {
-    return http.post<ResponseInfo<Manager>>('/api/v1/security/manager', this.ser())
+    return http.post<ResponseInfo<Manager>>('/api/v1/security/admin/manager', this.ser())
   }
 }

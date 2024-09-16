@@ -1,5 +1,3 @@
-
-
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
@@ -80,6 +78,7 @@ export class AdminkaComponent {
   }
 
   ngOnInit() {
+    console.log(localStorage);
     this.getMotorList(0)
     this.getMotorTypeList()
     this.getMotorAdapterTypeList(0)
@@ -135,7 +134,12 @@ export class AdminkaComponent {
       this.logger.log('getMotorAdapterTypeList', this.id, event.page);
     }
     else if(this.id == 3){
-      this.getProductList(event.page);
+      if(this.searchData == "" || this.searchData == null){
+          this.searchProductByName(event.page);
+       }
+      else {
+          this.getProductList(event.page);
+      }
       this.logger.log('getProductList', this.id, event.page);
     }
     else if(this.id == 5){
@@ -437,13 +441,13 @@ export class AdminkaComponent {
   }
 
 
-  searchProductByName(){
-    this.imageService.searchProduct(this.searchData).subscribe((respones: ResponseInfo<Product[]>)=>{
+  searchProductByName(offset: number){
+    this.imageService.getPagesearchProduct(offset,this.searchData).subscribe((respones: ResponseInfo<Page<Product>>)=>{
       if(respones.data !== null){
         this.logger.log("Data searchProductByName", respones.data);
         this.product_list = [];
-        if(respones.data && respones.data.length>0){
-          respones.data.forEach((e: { [x: string]: any; }) => {
+        if(respones.data && respones.data.content.length>0){
+          respones.data.content.forEach((e: { [x: string]: any; }) => {
             var product = new Product()
             product.id = e["idProduct"]
             product.productTypeId = e["productTypeId"]

@@ -10,7 +10,8 @@ import { Page } from '../models/page';
   providedIn: 'root'
 })
 export class ManagerService extends ABaseServiceService{
-  private  managerUrl = 'security/manager';
+  private  managerUrl = 'security/admin/manager';
+  private  managerWithoutPageUrl = 'security/manager';
 
 
   constructor(http: HttpClient) {
@@ -18,7 +19,7 @@ export class ManagerService extends ABaseServiceService{
   }
 
   getAllManagers(): Observable<ResponseInfo<Manager[]>> {
-    return this.getwp<ResponseInfo<Manager[]>>(this.managerUrl);
+    return this.getwp<ResponseInfo<Manager[]>>(this.managerWithoutPageUrl);
   }
 
   getPageManagers(offset: number): Observable<ResponseInfo<Page<Manager>>> {

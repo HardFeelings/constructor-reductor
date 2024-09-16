@@ -45,7 +45,7 @@ export class CommercialService extends ABaseServiceService{
     let params = new HttpParams()
         .set('offset', offset.toString())
     return this.post<ResponseInfo<Page<CommercialProp>>>(this.filterUrl, commercialProp,  params);
-}
+  }
 
   getPaymentTerms(): Observable<ResponseInfo<PaymentTerms[]>> {
     return this.getwp<ResponseInfo<PaymentTerms[]>>(this.paymentUrl);

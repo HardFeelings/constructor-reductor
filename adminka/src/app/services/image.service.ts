@@ -4,14 +4,15 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { ResponseInfo } from '../models/responesInfo';
 import { Observable } from 'rxjs';
 import { Product } from '../classes/product';
+import { Page } from '../models/page';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class ImageService extends ABaseServiceService {
-  private imageUrl = 'api/v1/product/downloadImage';
-  private searchUrl = 'product/getByName';
+  private imageUrl = 'api/v1/security/product/downloadImage';
+  private searchUrl = 'security/product/getByName';
 
   constructor(http: HttpClient) {
     super(http, 'api/v1');
@@ -46,4 +47,11 @@ export class ImageService extends ABaseServiceService {
     let params = new HttpParams().set('name', name ?? '');
     return this.get<ResponseInfo<Product[]>>(this.searchUrl, params);
   }
+
+  getPagesearchProduct(offset: number, name: string | null): Observable<ResponseInfo<Page<Product>>> {
+    let params = new HttpParams()
+        .set('offset', offset.toString())
+        .set('name', name ?? '');
+    return this.get<ResponseInfo<Page<Product>>>(this.searchUrl,  params);
+}
 }

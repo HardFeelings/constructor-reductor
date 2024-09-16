@@ -150,7 +150,7 @@
                     <button (click)="addProduct()"> Новый </button>
                     <button (click)="goToDynamicAdd()" style="margin-right: 50px;" > Dynamic Save </button>
                     <input [(ngModel)]="this.searchData" type="string" style="margin-right: 10px; border-radius: 5px; font-size: 24px;" />
-                    <button (click)="searchProductByName()"> Найти </button>
+                    <button (click)="searchProductByName(0)"> Найти </button>
                 </div>
                 <div class="table-container">
                     <table class="table">
@@ -158,7 +158,7 @@
                             <tr>
                                 <th>idProduct</th>
                                 <th>ProductType id</th>
-                                <th>name</th>
+                                <th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
                                 <th>weight</th>
                                 <th>price</th>
                                 <th>idReducer</th>
