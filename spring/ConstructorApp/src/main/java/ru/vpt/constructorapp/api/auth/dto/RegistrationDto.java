@@ -12,5 +12,6 @@ import lombok.*;
 public class RegistrationDto {
     private String username;
     private String password;
+    private String confirmPassword;
     private Boolean isAdmin;
 }

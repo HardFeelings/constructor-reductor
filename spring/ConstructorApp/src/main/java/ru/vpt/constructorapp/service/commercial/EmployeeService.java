@@ -1,13 +1,15 @@
 package ru.vpt.constructorapp.service.commercial;
 
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.vpt.constructorapp.api.auth.dto.RegistrationDto;
 import ru.vpt.constructorapp.store.entities.commercial.Employee;
 import ru.vpt.constructorapp.store.repo.commercial.EmployeeRepo;
 
@@ -16,11 +18,26 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-@RequiredArgsConstructor
 public class EmployeeService implements UserDetailsService {
 
-    private final EmployeeRepo employeeRepo;
-    private final RoleService roleService;
+    private EmployeeRepo employeeRepo;
+    private RoleService roleService;
+    private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    public void setEmployeeRepo(EmployeeRepo employeeRepo) {
+        this.employeeRepo = employeeRepo;
+    }
+
+    @Autowired
+    public void setRoleService(RoleService roleService) {
+        this.roleService = roleService;
+    }
+
+    @Autowired
+    public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
+        this.passwordEncoder = passwordEncoder;
+    }
 
     public Optional<Employee> findByLogin(String login) {
         return employeeRepo.findByLogin(login);
@@ -40,8 +57,15 @@ public class EmployeeService implements UserDetailsService {
         );
     }
 
-    public void createNewEmployee(Employee employee) {
-        employee.setRoles(List.of(roleService.findByName("ROLE_USER")));
+    public Boolean createNewEmployee(RegistrationDto registrationDto) {
+        Employee employee = new Employee();
+        employee.setLogin(registrationDto.getUsername());
+        employee.setPassword(passwordEncoder.encode(registrationDto.getPassword()));
+        if(registrationDto.getIsAdmin())
+            employee.setRoles(List.of(roleService.findByName("ROLE_ADMIN"), roleService.findByName("ROLE_USER")));
+        else
+            employee.setRoles(List.of(roleService.findByName("ROLE_USER")));
         employeeRepo.save(employee);
+        return true;
     }
 }

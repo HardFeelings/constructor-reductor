@@ -5,10 +5,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import ru.vpt.constructorapp.api.auth.dto.LoginDto;
+import ru.vpt.constructorapp.api.auth.dto.LoginResponseDto;
+import ru.vpt.constructorapp.api.auth.dto.RegistrationDto;
+import ru.vpt.constructorapp.api.util.ResponseDto;
 
 @RequestMapping
 public interface AuthApi {
     @PostMapping("/auth")
-    ResponseEntity<?> createAuthToken(@RequestBody LoginDto loginDto);
+    ResponseEntity<ResponseDto<LoginResponseDto>> createAuthToken(@RequestBody LoginDto loginDto);
 
+    @PostMapping("/registration")
+    ResponseEntity<ResponseDto<Boolean>> createNewUser(@RequestBody RegistrationDto registrationDto);
 }

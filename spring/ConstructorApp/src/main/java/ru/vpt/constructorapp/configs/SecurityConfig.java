@@ -1,6 +1,6 @@
 package ru.vpt.constructorapp.configs;
 
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
@@ -21,11 +21,20 @@ import ru.vpt.constructorapp.service.commercial.EmployeeService;
 
 @Configuration
 @EnableWebSecurity
-@RequiredArgsConstructor
 @EnableMethodSecurity
 public class SecurityConfig {
-    private final EmployeeService employeeService;
-    private final JwtRequestFilter jwtRequestFilter;
+    private EmployeeService employeeService;
+    private JwtRequestFilter jwtRequestFilter;
+
+    @Autowired
+    public void setEmployeeService(EmployeeService employeeService) {
+        this.employeeService = employeeService;
+    }
+
+    @Autowired
+    public void setJwtRequestFilter(JwtRequestFilter jwtRequestFilter) {
+        this.jwtRequestFilter = jwtRequestFilter;
+    }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
