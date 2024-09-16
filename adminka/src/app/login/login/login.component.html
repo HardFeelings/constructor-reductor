@@ -1,29 +1,32 @@
-<img src="./login/cutlogo.png" class="header__logo" alt="Логотип" height="1188" width="1558">
-<div class="dialog">
-  <h2>Enter username and password</h2>
-  <form>
-    <div class="input-container">
-      <label>
-        Username:
-      </label>
-      <input type="text" [(ngModel)]="loginDto.username" name="username" required>
-    </div>
-    <div class="input-container">
-      <label>
-        Password:
-      </label>
-      <div class="password-input">
-        <input type="password" [(ngModel)]="loginDto.password" name="password" [type]="isPasswordVisible ? 'text' : 'password'" required>
-        <button type="button" (click)="togglePasswordVisibility()">
-          {{ isPasswordVisible ? 'Hide' : 'Show' }}
-        </button>
+<img ngSrc="./assets/header/cutlogo.png"class="header__logo" alt="Логотип" height="790" width="1558">
+
+  <div class="dialog">
+    <h2>Enter username and password</h2>
+    <form>
+      <div class="input-container">
+        <label>
+          Username:
+        </label>
+        <input type="text" [(ngModel)]="loginDto.username" name="username" required>
       </div>
-    </div>
-    <div class="button-container">
-      <button (click)="onLogin()" type="submit">Login</button>
-    </div>
-  </form>
-</div>
+      <div class="input-container">
+        <label>
+          Password:
+        </label>
+        <div class="password-input">
+          <input type="password" [(ngModel)]="loginDto.password" name="password" [type]="isPasswordVisible ? 'text' : 'password'" required>
+          <button type="button" (click)="togglePasswordVisibility()">
+            {{ isPasswordVisible ? 'Hide' : 'Show' }}
+          </button>
+        </div>
+      </div>
+      <div class="button-container">
+        <button (click)="onLogin()" type="submit">Login</button>
+      </div>
+    </form>
+  </div>
+
+
 <!-- <h2>Register</h2>
 <form (ngSubmit)="onRegister()">
   <label>

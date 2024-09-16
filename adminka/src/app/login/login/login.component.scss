@@ -43,15 +43,28 @@
 //   }
 // }
 
-// .header__logo{
-//   position: fixed; /* или absolute */
-//   top: 10%;
+.header__logo{
+  position: fixed; /* или absolute */
+  top: 49%;
+  left: 45%;
+  transform: translate(-50%, -50%);
+}
+
+// .header__logo {
+//   position: fixed;
+//   top: 50%;
 //   left: 50%;
 //   transform: translate(-50%, -50%);
+//   background-image: url('/assets/header/cutlogo.png');
+//   background-size: cover;
+//   background-repeat: no-repeat;
+//   width: 1690px;
+//   height: 800px;
+//   z-index: 9999;
 // }
 
 .dialog {
-  position: fixed; /* или absolute */
+  position: fixed;
   top: 50%;
   left: 50%;
   width: 50%;
