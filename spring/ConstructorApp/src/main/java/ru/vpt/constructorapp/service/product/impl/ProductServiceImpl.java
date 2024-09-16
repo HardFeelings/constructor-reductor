@@ -143,12 +143,19 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<ProductDto> getByName(String name) {
+    public ProductPaginationDto getByName(String name, int offset, int limit) {
         if(Objects.isNull(name))
             name = "%";
         name = "%" + name + "%";
-        return productRepo.findAllByNameLike(name).stream().map(productMapper::toDTO)
-                .sorted(Comparator.comparingLong(ProductDto::getIdProduct)).collect(Collectors.toList());
+        Page<ProductEntity> page = productRepo.findAllByNameLike(name, PageRequest.of(offset, limit, Sort.by("idProduct")));
+        List<ProductDto> dtos = new ArrayList<>();
+        page.getContent().forEach(item -> dtos.add(productMapper.toDTO(item)));
+        ProductPaginationDto paginationDto = new ProductPaginationDto();
+        paginationDto.setContent(dtos);
+        paginationDto.setTotalCount(page.getTotalElements());
+        paginationDto.setTotalPages(page.getTotalPages());
+        paginationDto.setCurrentPage(offset);
+        return paginationDto;
     }
 
 }

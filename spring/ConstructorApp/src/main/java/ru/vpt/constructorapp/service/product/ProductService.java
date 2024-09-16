@@ -4,8 +4,6 @@ import ru.vpt.constructorapp.api.product.common.dto.ProductDto;
 import ru.vpt.constructorapp.api.product.common.dto.ProductPaginationDto;
 import ru.vpt.constructorapp.store.entities.product.ProductEntity;
 
-import java.util.List;
-
 public interface ProductService {
     ProductPaginationDto getAllProducts(int offset, int limit);
 
@@ -19,5 +17,5 @@ public interface ProductService {
 
     ProductDto dynamicSave(ProductDto productDto);
 
-    List<ProductDto> getByName(String name);
+    ProductPaginationDto getByName(String name, int offset, int limit);
 }

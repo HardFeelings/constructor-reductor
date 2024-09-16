@@ -35,8 +35,8 @@ public class ProductController extends AbstractController implements ProductApi 
     }
 
     @Override
-    public ResponseEntity<ResponseDto<List<ProductDto>>> getByName(String name) {
-        return response(productService.getByName(name));
+    public ResponseEntity<ResponseDto<ProductPaginationDto>> getByName(String name, Integer offset, Integer limit) {
+        return response(productService.getByName(name, offset, limit));
     }
 
     @Override
