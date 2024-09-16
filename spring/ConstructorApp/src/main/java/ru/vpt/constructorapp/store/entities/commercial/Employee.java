@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Collection;
+
 @Entity
 @Setter
 @Getter
@@ -18,13 +20,17 @@ public class Employee {
     @Column(name = "id_employee")
     private Long idEmployee;
 
-    @Column(name = "login")
+    @Column(name = "login", unique = true, nullable = false)
     private String login;
 
-    @Column(name = "password")
+    @Column(name = "password", nullable = false)
     private String password;
 
-    @ManyToOne
-    @JoinColumn(name = "id_role")
-    private Role role;
+    @ManyToMany
+    @JoinTable(
+            name = "users_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id")
+    )
+    private Collection<Role> roles;
 }
