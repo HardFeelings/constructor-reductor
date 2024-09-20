@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import ru.vpt.constructorapp.api.auth.dto.LoginDto;
 import ru.vpt.constructorapp.api.auth.dto.LoginResponseDto;
+import ru.vpt.constructorapp.api.auth.dto.RefreshTokenDto;
 import ru.vpt.constructorapp.api.auth.dto.RegistrationDto;
 import ru.vpt.constructorapp.api.util.ResponseDto;
 
@@ -16,4 +17,7 @@ public interface AuthApi {
 
     @PostMapping("/security/admin/registration")
     ResponseEntity<ResponseDto<Boolean>> createNewUser(@RequestBody RegistrationDto registrationDto);
+
+    @PostMapping("/refresh")
+    ResponseEntity<ResponseDto<LoginResponseDto>> refreshToken(@RequestBody RefreshTokenDto refreshTokenDto);
 }

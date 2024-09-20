@@ -68,4 +68,8 @@ public class EmployeeService implements UserDetailsService {
         employeeRepo.save(employee);
         return true;
     }
+
+    public Employee findById(Long id) {
+        return employeeRepo.findById(id).orElseThrow(() -> new UsernameNotFoundException("User with id " + id + " not found "));
+    }
 }

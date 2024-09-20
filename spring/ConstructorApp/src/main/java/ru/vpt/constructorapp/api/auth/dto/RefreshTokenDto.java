@@ -9,7 +9,6 @@ import lombok.*;
 @Setter
 @ToString
 @EqualsAndHashCode
-public class LoginResponseDto {
+public class RefreshTokenDto {
     private String token;
-    private String refreshToken;
 }

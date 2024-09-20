@@ -43,7 +43,7 @@ public class SecurityConfig {
                 .cors(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/security/**").authenticated()
-                        //                       .requestMatchers("/security/admin/**").hasRole("ADMIN")
+//                        .requestMatchers("/security/admin/**").hasRole("ADMIN")
 //                        .requestMatchers("/security/motorAdapterType/**").hasRole("ADMIN")
 //                        .requestMatchers("/security/motor**").hasRole("ADMIN")
 //                        .requestMatchers("/security/motorType**").hasRole("ADMIN")
