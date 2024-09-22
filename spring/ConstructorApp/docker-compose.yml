@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  constuctor-app:
+    image: constuctor-app
+    container_name: constructor-app1
+    ports:
+      - '4200:80'
+    networks:
+      - localnet
+    restart: unless-stopped
+
+  adminka-app:
+    image: adminka-app
+    container_name: adminka-app1
+    ports:
+      - '8000:80'
+    networks:
+      - localnet
+    restart: unless-stopped
+
+  springconst-app:
+    image: springconst-app
+    container_name: springconst-app1
+    ports:
+      - '8080:8080'
+    networks:
+      - localnet
+    restart: unless-stopped
+
+networks:
+  localnet:
+    driver: bridge
