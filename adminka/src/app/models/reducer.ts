@@ -1,14 +1,14 @@
 
 export class Reducer {
-    idReducer: number;
-    reducerTypeId: number | undefined;
-    reducerSizeId: number | undefined;
-    diameterOutputShaft!: number;
-    reducerInputTypeId: number | undefined;
-    reducerOutputShaftTypeId: number | undefined;
-    reducerInstallationTypeId: number | undefined;
-    reducerMountingId: number | undefined;
-    ratio!: number;
+  idReducer: number;
+  reducerTypeId: number | undefined;
+  reducerSizeId: number | undefined;
+  diameterOutputShaft!: number;
+  reducerInputTypeId: number | undefined;
+  reducerOutputShaftTypeId: number | undefined;
+  reducerInstallationTypeId: number | undefined;
+  reducerMountingId: number | undefined;
+  ratio!: number;
 }
 
 

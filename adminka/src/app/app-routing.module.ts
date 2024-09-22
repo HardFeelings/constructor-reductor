@@ -8,10 +8,9 @@ import { LoginComponent } from './login/login/login.component';
 import { AuthGuard } from './auth/auth.guard';
 
 
-// add another rote with path "admin" and compontnt AdminkaComponent
  const routes: Routes = [
     { path: 'admin', component: AdminkaComponent, canActivate: [AuthGuard]},
-    { path: 'comm', component: CommercialPageComponent },
+    { path: 'comm', component: CommercialPageComponent, canActivate: [AuthGuard]},
     { path: '', component: LoginComponent }
 ];
 

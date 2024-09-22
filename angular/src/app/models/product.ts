@@ -15,7 +15,6 @@ export class Product {
   imageEmpty!: boolean;
   rpm!: number;
   torqueMoment!:number;
-  // imageString:string | null;
 
 }
 export class ProductType{

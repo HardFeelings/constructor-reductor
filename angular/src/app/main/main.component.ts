@@ -35,9 +35,6 @@ export class MainComponent {
           alert(JSON.stringify(respones.errorMsg))
         }
       }
-      // (exepcion: any) => {
-      //   console.error("Error getAllProductTypes:", exepcion.error);
-      // }
     );
   }
 

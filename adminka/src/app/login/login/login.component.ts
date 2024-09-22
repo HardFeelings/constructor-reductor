@@ -5,6 +5,7 @@ import { jwtDecode } from 'jwt-decode';
 import { AuthService } from 'src/app/auth/auth.service';
 import { LoginDto } from 'src/app/auth/loginDto';
 import { LoginResponseDto } from 'src/app/auth/loginResponseDto';
+import { RefreshTokenDto } from 'src/app/auth/refreshTokenDto';
 import { RegistrationDto } from 'src/app/auth/registrationDto';
 import { ResponseInfo } from 'src/app/models/responesInfo';
 
@@ -15,15 +16,38 @@ import { ResponseInfo } from 'src/app/models/responesInfo';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent{
-  loginDto: LoginDto = { username: '', password: '' };
-  registrationDto: RegistrationDto = { username: '', password: '', confirmPassword: '', isAdmin: false };
+  loginDto: LoginDto;
   isPasswordVisible = false;
 
-  constructor(private authService: AuthService) {}
-
+  constructor(private authService: AuthService, private router: Router) {
+    this.loginDto = new LoginDto();
+  }
 
   ngOnInit(){
+    if(localStorage.getItem('jwt_token')){
+      const refreshToken = this.authService.getRefreshToken();
+      const newRefreshDto = new RefreshTokenDto;
+      newRefreshDto.token = refreshToken;
+      this.authService.getNewJwt(newRefreshDto).subscribe({
+        next: (response) => {
+          this.authService.updateLogin(response.data.token);
+          const decodedToken: any = jwtDecode(response.data.token);
+          const roles: string[] = decodedToken.roles || [];
+          if(roles.includes('ROLE_ADMIN')){
+            this.router.navigate(['/admin']);
+          }
+          else{
+            this.router.navigate(['/comm']);
+          }
 
+        },
+        error: (err) => {
+          this.authService.geleteRefreshToken();
+          localStorage.removeItem('jwt_token');
+          this.router.navigate(['/']);
+        }
+      });
+    }
   }
 
   togglePasswordVisibility() {
@@ -31,30 +55,21 @@ export class LoginComponent{
   }
 
   onLogin() {
-    this.authService.login(this.loginDto)
-      .subscribe({
+    this.authService.login(this.loginDto).subscribe({
         next: (response) => {
-          console.log('Login successful:', response);
-          const token = response.data.token;
-          const decodedToken = jwtDecode(token);
-          console.log('Decoded Token:', decodedToken);
-          // window.location.href = 'http://localhost:8000/comm';
+          const decodedToken: any = jwtDecode(response.data.token);
+          const roles: string[] = decodedToken.roles || [];
+          if(roles.includes('ROLE_ADMIN')){
+            this.router.navigate(['/comm']);
+          }
+          else{
+            this.router.navigate(['/admin']);
+          }
         },
         error: (err) => {
-          console.error('Login failed:', err);
+          // console.error('Login failed:', err);
         }
       });
   }
 
-  // onRegister() {
-  //   this.authService.createNewUser(this.registrationDto)
-  //     .subscribe({
-  //       next: (response) => {
-  //         console.log('Registration successful:', response);
-  //       },
-  //       error: (err) => {
-  //         console.error('Registration failed:', err);
-  //       }
-  //     });
-  // }
 }

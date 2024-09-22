@@ -5,17 +5,18 @@ import { LoginDto } from './loginDto';
 import { LoginResponseDto } from './loginResponseDto';
 import { Observable } from 'rxjs';
 import { ResponseInfo } from '../models/responesInfo';
-import { RegistrationDto } from './registrationDto';
-import * as moment from "moment";
-import { tap, shareReplay } from 'rxjs/operators';
+import { tap } from 'rxjs/operators';
+import { CookieService } from 'ngx-cookie-service';
+import { RefreshTokenDto } from './refreshTokenDto';
+
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService extends ABaseServiceService {
   private authUrl = 'auth';
-  private regUrl = 'registration';
+  private refreshUrl = 'refresh';
 
-  constructor(http: HttpClient) {
+  constructor(http: HttpClient, private cookieService: CookieService) {
     super(http, 'api/v1');
   }
 
@@ -25,30 +26,54 @@ login(loginDto: LoginDto): Observable<ResponseInfo<LoginResponseDto>> {
       if (response.data && response.data.token) {
         this.setSession(response.data.token);
       }
+      if (response.data && response.data.refreshToken) {
+        this.setRefresh(response.data.refreshToken);
+      }
     })
   );
 }
 
-// createNewUser(registration: RegistrationDto): Observable<ResponseInfo<Boolean>> {
-//   return this.postwp<ResponseInfo<Boolean>>(this.regUrl, registration);
-// }
-
 private setSession(token: string): void {
-  console.log(localStorage);
   localStorage.removeItem('jwt_token');
-  console.log(localStorage);
   localStorage.setItem('jwt_token', token);
-  console.log(localStorage);
 }
 
-// logout(): void {
-//   localStorage.removeItem('jwt_token');
-// }
+private setRefresh(token: string): void {
+  this.cookieService.delete('refresh_token');
+  this.cookieService.set('refresh_token', token);
+}
 
-// isLoggedIn(): boolean {
-//   localStorage.removeItem('jwt_token');
-//   const token = localStorage.getItem('jwt_token');
-//   return !!token;
-// }
+
+logout(): void {
+  localStorage.removeItem('jwt_token');
+  this.cookieService.delete('refresh_token');
+}
+
+getRefreshToken(): string | null {
+  return this.cookieService.get('refresh_token');
+}
+
+geleteRefreshToken(): void {
+  this.cookieService.delete('refresh_token');
+}
+
+
+getNewJwt(refreshToken: RefreshTokenDto): Observable<ResponseInfo<LoginResponseDto>> {
+  return this.postwp<ResponseInfo<LoginResponseDto>>(this.refreshUrl, refreshToken).pipe(
+    tap(response => {
+      if (response.data && response.data.token) {
+        this.setSession(response.data.token);
+      }
+      if (response.data && response.data.refreshToken) {
+        this.setRefresh(response.data.refreshToken);
+      }
+    })
+  );
+}
+
+updateLogin(newToken : string) {
+  localStorage.removeItem('jwt_token');
+  localStorage.setItem('jwt_token', newToken);
+}
 
 }

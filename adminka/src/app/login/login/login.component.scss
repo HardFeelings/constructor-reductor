@@ -1,67 +1,10 @@
-// .dialog {
-//   position: fixed; /* или absolute */
-//   top: 50%;
-//   left: 50%;
-//   width: 50%;
-//   height: 50%;
-//   margin: 10px;
-//   margin-top: -10px;
-//   border-radius: 10px;
-//   transform: translate(-50%, -50%);
-//   background-color: #ffffff;
-//   border: 1px solid black;
-// }
-
-// .input-container{
-//   display: flex;
-//   flex-direction: column;
-//   align-items: center;
-//   margin: 1% 0;
-// }
-
-// .button-container {
-//   display: flex;
-//   justify-content: space-between;
-//   margin-top: 20px;
-
-
-//   button {
-//     // width: 15%;
-//     // height: 40px;
-//     position: fixed; /* или absolute */
-//     top: 85%;
-//     left: 50%;
-//     width: 50%;
-//     height: 10%;
-//     transform: translate(-50%, -50%);
-//     background-color: #083b57 ;
-//     color: white;
-//     border-radius: 5px;
-//   }
-//   button:hover {
-//     background-color: #1e587a ;
-//   }
-// }
 
 .header__logo{
-  position: fixed; /* или absolute */
+  position: fixed;
   top: 49%;
   left: 45%;
   transform: translate(-50%, -50%);
 }
-
-// .header__logo {
-//   position: fixed;
-//   top: 50%;
-//   left: 50%;
-//   transform: translate(-50%, -50%);
-//   background-image: url('/assets/header/cutlogo.png');
-//   background-size: cover;
-//   background-repeat: no-repeat;
-//   width: 1690px;
-//   height: 800px;
-//   z-index: 9999;
-// }
 
 .dialog {
   position: fixed;
@@ -96,7 +39,6 @@
 
     input {
       width: 97%;
-      // max-width: 90%;
       padding: 10px;
       border: 1px solid #ccc;
       border-radius: 4px;
@@ -114,9 +56,7 @@
     position: relative;
 
     input {
-      // width: calc(100% - 100px);
       width: 97%;
-      // padding-right: 89px; /* Отступ для кнопки */
     }
 
     button {
@@ -126,7 +66,6 @@
       margin-right: -5px;
       height: 100%;
       border: none;
-      // background: #007bff;
       background: #007bff;
       color: white;
       cursor: pointer;
@@ -134,7 +73,6 @@
       border-radius: 0 4px 4px 0;
 
       &:hover {
-        // background: #0056b3;
         background: #0056b3;
       }
     }
@@ -149,13 +87,10 @@
       width: 100px;
       margin-top: 50px;
       border-radius: 4px;
-      // background: #28a745;
       background: #083b57;
       color: white;
       cursor: pointer;
-
       &:hover {
-        // background: #218838;
         background: #1e587a;
       }
     }

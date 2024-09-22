@@ -58,8 +58,6 @@ export class SearchPageComponent {
   }
   }
 
-
-
   getCommercialPropById(id:number){
     this.commercialService.getCommercialPropById(id).subscribe((respones: ResponseInfo<CommercialProp>)=>{
       if(respones.data !== null){
@@ -71,14 +69,11 @@ export class SearchPageComponent {
     });
   }
 
-
-
   goToBackCommercialPageCansel(): void {
     this.dialogRef.close();
   }
 
   goToBackCommercialPageOk(){
-    // this.commercialProp.timestamp = null;
     this.commercialService.saveCommercialProp(this.commercialProp).subscribe((respones: ResponseInfo<CommercialProp>)=>{
       this.logger.log('SaveData', this.commercialProp );
       if(respones.data !== null){

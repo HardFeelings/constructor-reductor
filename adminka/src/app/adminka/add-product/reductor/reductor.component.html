@@ -28,10 +28,6 @@
           <span>Передаточное отношение</span>
           <input  min="0" [(ngModel)]="this.ratio" type="number" (keypress)="preventNegative($event)"  />
         </div>
-        <!-- <div class="element_configurator">
-          <span>Диаметр входного вала</span>
-          <input min="0" [(ngModel)]="this.diamInput" type="number" />
-        </div> -->
         <div class="element_configurator">
           <span>Диаметр выходного вала</span>
           <input min="0" [(ngModel)]="this.diamOutput" type="number" (keypress)="preventNegative($event)"  />
@@ -46,13 +42,6 @@
             <option *ngFor="let type of reducerInputType" [value]="type.reducerInputTypeValue">{{ type.reducerInputTypeValue }}</option>
           </select>
         </div>
-        <!-- <div *ngIf="reducerTypeId && reducerTypeId !== null" class="element_configurator">
-          <span>Размер адаптера IEC</span>
-          <select [disabled]="!reducerTypeId" (change)="idReducerAdapterSelected($event)">
-            <option value="Select"  selected>Select</option>
-            <option *ngFor="let type of reducerAdapterType" [value]="type.reducerAdapterTypeValue">{{ type.reducerAdapterTypeValue }}</option>
-          </select>
-        </div> -->
         <div *ngIf="reducerTypeId && reducerTypeId !== null" class="element_configurator">
           <span>Форма выходного вала</span>
           <select [disabled]="!reducerTypeId" (change)="idReducerOutputShaftTypeSelected($event)">
@@ -88,32 +77,11 @@
         <span>Цена</span>
         <input min="0" [(ngModel)]="this.price"  type="number" (keypress)="preventNegative($event)"  />
       </div>
-      <!-- <div class="element_configurator">
-        <span>Число оборотов об/мин </span>
-        <select (change)="rpmSelected($event)">
-          <option value="" disabled selected>Select</option>
-          <option *ngFor="let value of rpmArray" [value]="value">{{ value }}</option>
-        </select>
-      </div> -->
       <div class="element_configurator">
         <span>Вес</span>
         <input  min="0" [(ngModel)]="this.weight"  type="number" (keypress)="preventNegative($event)"   />
       </div>
     </div>
-    <!-- <div class="container_element_configurator">
-      <div class="element_configurator">
-        <span>Коэффициент эксплуатации</span>
-        <input min="0"  [(ngModel)]="this.serviceFactor"  type="number" />
-      </div>
-      <div class="element_configurator">
-        <span>Крутящий момент</span>
-        <input min="0" [(ngModel)]="this.torqueMoment"  type="number" />
-      </div>
-      <div class="element_configurator">
-        <span>Число оборотов об/мин </span>
-        <input min="0"  [(ngModel)]="this.rpm"  type="number" />
-      </div>
-    </div> -->
     <br />
     <hr />
     <div class="element_configurator2">

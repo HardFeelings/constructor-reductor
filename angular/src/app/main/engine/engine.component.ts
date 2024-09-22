@@ -142,7 +142,6 @@ export class EngineComponent {
       if(respones.data !== null){
         this.logger.log("Data searchProduct", respones.data.content);
         this.logger.log("respones searchProduct", respones);
-        // this.foundProducts = respones.data;
         this.totalCount = respones.data.totalCount;
         this.foundProducts = respones.data.content;
         this.logger.log(" totalCount", respones.data.totalCount);

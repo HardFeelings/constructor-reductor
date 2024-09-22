@@ -10,20 +10,26 @@ export class AuthGuard implements CanActivate {
 
   constructor(private router: Router) {}
 
-  canActivate(): boolean {
-
+  canActivate(route: ActivatedRouteSnapshot): boolean {
     const token = localStorage.getItem('jwt_token');
 
-    if (token) {
-      const decodedToken: any = jwtDecode(token);
-
-      if (decodedToken.roles && Array.isArray(decodedToken.roles)) {
-        if (decodedToken.roles.includes('ROLE_ADMIN')) {
-          return true;
-        }
-      }
+    if (!token) {
+      this.router.navigate(['/']);
+      return false;
     }
-    this.router.navigate(['/']);
-    return false;
+
+    const decodedToken: any = jwtDecode(token);
+    const isAdmin = decodedToken.roles && Array.isArray(decodedToken.roles) && decodedToken.roles.includes('ROLE_ADMIN');
+
+    if (route.routeConfig?.path === 'admin' && !isAdmin) {
+      this.router.navigate(['/comm']);
+      return false;
+    }
+
+    if (route.routeConfig?.path === 'comm' && !isAdmin) {
+      return true;
+    }
+
+    return true;
   }
 }

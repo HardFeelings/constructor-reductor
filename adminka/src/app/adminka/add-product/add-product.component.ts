@@ -7,8 +7,6 @@ import { NGXLogger } from "ngx-logger";
 
 @Component({
   selector: 'app-add-product',
-  // standalone: true,
-  // imports: [],
   templateUrl: './add-product.component.html',
   styleUrls: ['./add-product.component.scss']
 })
@@ -41,27 +39,24 @@ export class AddProductComponent {
           alert(JSON.stringify(respones.errorMsg))
         }
       }
-      // (exepcion: any) => {
-      //   console.error("Error getAllProductTypes:", exepcion.error);
-      // }
     );
   }
 
   addProduct(event: Product) {
     this.productService.addDynamicProduct(event).subscribe(
-        (response: ResponseInfo<Product>) => {
-            this.logger.log("Data addProduct: ", response);
-            if (response.data !== null) {
-                this.logger.log("Data addProduct: ", response.data);
-                this.newProductList.push(response.data);
-            }
-        },
-        error => {
-          let errorMessage = error.error?.errorMsg || 'Неизвестная ошибка';
-          alert(errorMessage);
-        }
+      (response: ResponseInfo<Product>) => {
+          this.logger.log("Data addProduct: ", response);
+          if (response.data !== null) {
+              this.logger.log("Data addProduct: ", response.data);
+              this.newProductList.push(response.data);
+          }
+      },
+      error => {
+        let errorMessage = error.error?.errorMsg || 'Неизвестная ошибка';
+        alert(errorMessage);
+      }
     );
-}
+  }
 
 
   downloadImage(id:number,filename: string){

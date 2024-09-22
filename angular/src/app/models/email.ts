@@ -3,4 +3,5 @@ export class Email{
   email: string;
   phoneNumber: string;
   productName: string;
+  info: string | null;
 }

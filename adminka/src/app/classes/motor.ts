@@ -52,12 +52,10 @@ export class Motor {
     }
 
     delete(http: HttpClient) : Observable<ResponseInfo<boolean>> {
-        // console.log(this)
         return http.delete<ResponseInfo<boolean>>(`/api/v1/security/motor/${this.id}`)
     }
 
     save(http: HttpClient): Observable<Motor>{
-        // console.log(this)
         return http.post<Motor>('/api/v1/security/motor', this.ser())
     }
 }
@@ -81,12 +79,10 @@ export class MotorType {
     }
 
     save(http: HttpClient) :Observable<MotorType>{
-        // console.log(this)
        return http.post<MotorType>('/api/v1/security/motorType', this.ser())
     }
 
     delete(http: HttpClient): Observable<boolean> {
-        // console.log(this)
        return http.delete<boolean>(`/api/v1/security/motorType/${this.id}`)
     }
 }
@@ -113,12 +109,10 @@ export class MotorAdapterType {
     }
 
     save(http: HttpClient) : Observable<MotorAdapterType> {
-        // console.log(this)
         return http.post<MotorAdapterType>('/api/v1/security/motorAdapterType', this.ser())
     }
 
     delete(http: HttpClient): Observable<boolean> {
-        // console.log(this)
         return http.delete<boolean>(`/api/v1/security/motorAdapterType/${this.id}`)
     }
 }

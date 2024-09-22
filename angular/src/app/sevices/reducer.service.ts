@@ -36,7 +36,6 @@ export class ReducerService extends ABaseServiceService{
   getPageReducers(offset:number): Observable<ResponseInfo<Page<Reducer>>> {
     let params = new HttpParams()
     .set('offset', offset.toString())
-    // .set('limit', limit.toString())
     return this.get<ResponseInfo<Page<Reducer>>>(this.reductorUrl, params);
   }
 
@@ -65,7 +64,6 @@ export class ReducerService extends ABaseServiceService{
   getPageReducerInputType(offset:number): Observable<ResponseInfo<Page<ReducerInputType>>> {
     let params = new HttpParams()
     .set('offset', offset.toString())
-    // .set('limit', limit.toString())
     return this.get<ResponseInfo<Page<ReducerInputType>>>(this.reducerInputTypeUrl, params);
   }
 
@@ -85,7 +83,6 @@ export class ReducerService extends ABaseServiceService{
   getPageReducerInstallationType(offset:number): Observable<ResponseInfo<Page<ReducerInstallationType>>> {
     let params = new HttpParams()
     .set('offset', offset.toString())
-    // .set('limit', limit.toString())
     return this.get<ResponseInfo<Page<ReducerInstallationType>>>(this.reducerInstallationType, params);
   }
 
@@ -123,7 +120,6 @@ export class ReducerService extends ABaseServiceService{
   getPageReducerSizes(offset:number): Observable<ResponseInfo<Page<ReducerSize>>> {
     let params = new HttpParams()
     .set('offset', offset.toString())
-    // .set('limit', limit.toString())
     return this.get<ResponseInfo<Page<ReducerSize>>>(this.reducerSize, params);
   }
 
@@ -143,7 +139,6 @@ export class ReducerService extends ABaseServiceService{
   getPageReducerOutputShaftTypes(offset:number): Observable<ResponseInfo<Page<ReducerOutputShaftType>>> {
     let params = new HttpParams()
     .set('offset', offset.toString())
-    // .set('limit', limit.toString())
     return this.get<ResponseInfo<Page<ReducerOutputShaftType>>>(this.reducerOutputShaftType, params);
   }
 

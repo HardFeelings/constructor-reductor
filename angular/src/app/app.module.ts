@@ -27,9 +27,6 @@ import { LoggerModule, NgxLoggerLevel } from 'ngx-logger';
     EngineReductorComponent,
     ReductorComponent,
     EmailComponent
-
-
-
   ],
   imports: [
     BrowserModule,
@@ -46,9 +43,6 @@ import { LoggerModule, NgxLoggerLevel } from 'ngx-logger';
       disableConsoleLogging: false,
       serverLogLevel: NgxLoggerLevel.OFF,
     }),
-
-
-
   ],
   providers: [],
   bootstrap: [AppComponent]

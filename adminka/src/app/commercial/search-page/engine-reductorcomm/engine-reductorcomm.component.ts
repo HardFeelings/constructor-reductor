@@ -242,26 +242,6 @@ export class EngineReductorCommComponent {
     }
   }
 
-  // searchProduct(filter: Filter){
-  //   filter.rpm = this.rpm;
-  //   filter.power = this.power;
-  //   filter.diamOutput = this.diamOutput;
-  //   filter.diamOutputAllowance = this.diamOutputAllowance;
-  //   filter.ratio = this.ratio;
-  //   filter.torqueMoment = this.torqueMoment;
-  //   this.logger.log('filter', filter);
-  //   this.productService.postFilter(filter).subscribe((respones: ResponseInfo<Product[]>)=>{
-  //     if(respones.data !== null){
-  //       this.logger.log("Data searchProduct", respones.data);
-  //       this.logger.log("respones searchProduct", respones);
-  //       this.foundProducts = respones.data;
-  //     } else {
-  //       alert(JSON.stringify(respones.errorMsg))
-  //     }
-  //   });
-  // }
-
-
   onPageChange(event: any){
     this.logger.log("event.page", event.page);
     this.searchProduct(this.newFilter,event.page);

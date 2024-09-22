@@ -17,7 +17,7 @@ body {
 }
 
 .dialog {
-  position: fixed; /* или absolute */
+  position: fixed;
   top: 50%;
   left: 50%;
   width: 50%;
@@ -25,11 +25,9 @@ body {
 
 }
 
-
 .close-button:hover {
   color: red;
 }
-
 
 .containermain {
   width: 75%;
@@ -37,15 +35,11 @@ body {
   border-radius: 10px;
   background-color: #f0f0f0;
   border: 1px solid black;
-  /* box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1); */
   padding: 0;
   margin-top: -5px;
-  /* background-color: #ffffff; */
   overflow-y: auto;
   overflow-x: hidden;
 }
-
-
 
 .product {
     margin-bottom: 20px;

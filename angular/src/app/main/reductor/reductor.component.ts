@@ -267,7 +267,6 @@ export class ReductorComponent {
     filter.ratio = this.ratio;
     this.logger.log('filter', filter);
     this.newFilter = filter;
-    // this.productService.postFilter(filter).subscribe((respones: ResponseInfo<Product[]>)=>{
     this.productService.postPageFilter(filter, page).subscribe((respones: ResponseInfo<Page<Product>>)=>{
       if(respones.data !== null){
         this.logger.log("Data searchProduct", respones.data.content);

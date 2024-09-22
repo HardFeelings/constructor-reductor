@@ -1,7 +1,3 @@
-
-
-<!-- <br />
-<hr /> -->
 <body>
 <div class="table-container">
   <div class="buttons">
@@ -10,7 +6,6 @@
       <input [(ngModel)]="this.searchData.number"    (ngModelChange)="onNumberChange($event)"  type="string" placeholder="Номер"  style="margin-right: 5px; border-radius: 5px; font-size: 24px; height: 40px; width: 200px;" />
       <input [(ngModel)]="this.searchManager.shortName" (ngModelChange)="onShortNameChange($event)" type="string" placeholder="Менеджер" style="margin-right: 5px; border-radius: 5px; font-size: 24px; height: 40px; width: 200px;" />
       <input [(ngModel)]="this.searchData.partner" (ngModelChange)="onPartnerChange($event)" type="string" placeholder="Контрагент" style="margin-right: 5px; border-radius: 5px; font-size: 24px; height: 40px; width: 200px;" />
-      <!-- <input [(ngModel)]="this.searchData.marginRatio" (ngModelChange)="onMarginRatioChange($event)" type="number" min="0" placeholder="Маржа" style="margin-right: 5px; border-radius: 5px; font-size: 24px; height: 40px; width: 200px;"  (keypress)="preventNegative($event)" /> -->
       <input [(ngModel)]="this.searchData.timestamp" (ngModelChange)="onTimestampChange($event)" type="string" placeholder="xx.xx.xxxx" style="margin-right: 5px; border-radius: 5px; font-size: 24px; height: 40px; width: 200px;" />
     </div>
       <button (click)="searchProp(0)" style=" height: 45px;"> Найти </button>
@@ -18,36 +13,33 @@
       <button *ngIf="this.isAdmin === true" (click)="navigateToUrl()" class="redirectButton">
         Admin
       </button>
+      <button *ngIf="this.isAdmin === true" (click)="logout()" class="exitButton">
+        Exit
+      </button>
+      <button *ngIf="this.isAdmin === false" (click)="logout()" class="exitButtonComm">
+        Exit
+      </button>
   </div>
 <table class="table" *ngIf="commercialProp_list !== null || commercialProp_list !== []">
   <thead>
     <tr *ngIf="commercialProp_list !== []">
-        <!-- <th>id</th> -->
         <th>Номер</th>
         <th>Менеджер</th>
         <th>Контрагент</th>
         <th>Стоимость</th>
-        <!-- <th>Маржа</th> -->
         <th>Дата создания</th>
         <th></th>
     </tr>
 </thead>
   <tbody>
     <tr *ngFor="let commercial of commercialProp_list">
-      <!-- <td>{{commercial.idCommercialProp}}</td> -->
       <td>{{commercial.number}}</td>
       <td>{{commercial.manager?.shortName}}</td>
       <td>{{commercial.partner}}</td>
       <td>{{commercial.cost}}</td>
-      <!-- <td>{{commercial.marginRatio}}</td> -->
       <td>{{commercial.timestamp}}</td>
-      <!-- <td>{{ commercial.manager.fullName}}</td>
-      <td>{{ commercial.manager.position}}</td>
-      <td>{{ commercial.manager.email}}</td>
-      <td>{{ commercial.manager.phoneNumber}}</td> -->
       <td class="row-buttons">
         <button (click)="goToSearchPage(commercial.idCommercialProp)">Изменить</button>
-        <!-- <button (click)="deleteCommercial(commercial.idCommercialProp)">Удалить</button> -->
         <button (click)="oKDelete(commercial.idCommercialProp, commercial.number)">Удалить</button>
         <button (click)="downloadExcel(commercial)" >Excel</button>
         <button (click)="downloadPdf(commercial)">PDF</button>

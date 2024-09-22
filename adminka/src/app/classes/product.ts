@@ -39,12 +39,10 @@ export class Product {
     }
 
     delete(http: HttpClient) : Observable<boolean>{
-        // console.log(this)
         return http.delete<boolean>(`/api/v1/security/product/${this.id}`)
     }
 
     save(http: HttpClient): Observable<Product>{
-      // console.log(this.ser())
      return http.post<Product>('/api/v1/security/product', this.ser())
   }
 }

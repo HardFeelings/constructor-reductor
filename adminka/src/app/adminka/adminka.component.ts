@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Motor, MotorAdapterType, MotorType } from '../classes/motor';
-import { FormsModule } from '@angular/forms';
 import { Product, ProductOption, ProductType } from '../classes/product';
 import { MountingPoint, Reducer, ReducerAdapterType, ReducerInputType, ReducerInstallationType, ReducerOutputShaftType, ReducerSize, ReducerType } from '../classes/reducer';
 import { ImageService } from '../services/image.service';
@@ -18,6 +16,7 @@ import { Page } from '../models/page';
 import { ReducerService } from '../services/reducer.service';
 import { ManagerService } from '../services/manager.service';
 import { NGXLogger } from "ngx-logger";
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-adminka',
@@ -46,7 +45,7 @@ export class AdminkaComponent {
   totalCount: number;
   page: number = 0;
 
-  constructor(private http: HttpClient, private imageService: ImageService, private logger: NGXLogger, public dialog:MatDialog, private motorService: MotorService, private productService: ProductService, private reducerService: ReducerService, private managerService: ManagerService) {
+  constructor(private http: HttpClient, private  router: Router, private imageService: ImageService, private logger: NGXLogger, public dialog:MatDialog, private motorService: MotorService, private productService: ProductService, private reducerService: ReducerService, private managerService: ManagerService) {
     this.paymentTerms_list = new Array<PaymentTerms>();
     this.motor_list = new Array<Motor>();
     this.motorType_list = new Array<MotorType>();
@@ -61,7 +60,6 @@ export class AdminkaComponent {
     this.reducerMounting_list = new Array<MountingPoint>();
     this.reducerInstallationType_list = new Array<ReducerInstallationType>();
     this.reducerInputType_list = new Array<ReducerInputType>();
-    // this.reducerAdapterType_list = new Array<ReducerAdapterType>();
     this.manager_list = new Array<Manager>();
   }
 
@@ -78,7 +76,6 @@ export class AdminkaComponent {
   }
 
   ngOnInit() {
-    console.log(localStorage);
     this.getMotorList(0)
     this.getMotorTypeList()
     this.getMotorAdapterTypeList(0)
@@ -120,6 +117,10 @@ export class AdminkaComponent {
     if (fileInput) {
       fileInput.click();
     }
+  }
+
+  navigateToUrl() {
+    this.router.navigate(['/comm']);
   }
 
   onPageChange(event: any){
@@ -178,8 +179,6 @@ export class AdminkaComponent {
 
   oKDelete(id: number, i: any){
     const dialogAddingNewStudent = this.dialog.open(DeleteComponent, {
-      // width: '600px',
-      // height: '300px',
       width: '0px',
       height: '0px',
       data: id,
@@ -285,11 +284,8 @@ export class AdminkaComponent {
 
   goToDynamicAdd(){
     const dialogAddingNewStudent = this.dialog.open(AddProductComponent, {
-      // width: '3000px',
-      // height: '1300px',
       width: '0px',
       height: '0px',
-      // data:
     });
     dialogAddingNewStudent.afterClosed().subscribe((addproducts: Product[]) => {
         this.logger.log('dialog goToDynamicAdd', addproducts);
@@ -530,7 +526,6 @@ export class AdminkaComponent {
   }
 
   getProductOption(offset: number) {
-    // this.productOption_list = ProductOption.getAll(this.http)
     this.productService.getPageProductOptions(offset).subscribe((respones: ResponseInfo<Page<any>>)=>{
       if(respones.data !== null){
         this.totalCount = respones.data.totalCount;
@@ -572,7 +567,6 @@ export class AdminkaComponent {
   }
 
   getReducer(offset: number) {
-    // this.reducer_list = Reducer.getAll(this.http)
     this.reducerService.getPageReducers(offset).subscribe((respones: ResponseInfo<Page<any>>)=>{
       if(respones.data !== null){
         this.totalCount = respones.data.totalCount;
@@ -649,7 +643,6 @@ export class AdminkaComponent {
   }
 
   getReducerSize(offset: number) {
-    // this.reducerSize_list = ReducerSize.getAll(this.http)
     this.reducerService.getPageReducerSizes(offset).subscribe((respones: ResponseInfo<Page<any>>)=>{
       if(respones.data !== null){
         this.totalCount = respones.data.totalCount;
@@ -690,7 +683,6 @@ export class AdminkaComponent {
   }
 
   getReducerOutputShaft(offset: number) {
-    // this.reducerOutput_list = ReducerOutputShaftType.getAll(this.http)
     this.reducerService.getPageReducerOutputShaftTypes(offset).subscribe((respones: ResponseInfo<Page<any>>)=>{
       if(respones.data !== null){
         this.totalCount = respones.data.totalCount;
@@ -757,7 +749,6 @@ export class AdminkaComponent {
   }
 
   getReducerInstallationType(offset:number) {
-    // this.reducerInstallationType_list = ReducerInstallationType.getAll(this.http)
     this.reducerService.getPageReducerInstallationType(offset).subscribe((respones: ResponseInfo<Page<any>>)=>{
       if(respones.data !== null){
         this.totalCount = respones.data.totalCount;
@@ -799,7 +790,6 @@ export class AdminkaComponent {
   }
 
   getReducerInputType(offset: number) {
-    // this.reducerInputType_list = ReducerInputType.getAll(this.http)
     this.reducerService.getPageReducerInputType(offset).subscribe((respones: ResponseInfo<Page<any>>)=>{
       if(respones.data !== null){
         this.totalCount = respones.data.totalCount;
@@ -929,29 +919,11 @@ export class AdminkaComponent {
   }
 
   getListManagers(offset: number) {
-    // this.http.get('/api/v1/security/manager').subscribe({
-    //   next: (data: any) => {
-    //     data.data.forEach((e: { [x: string]: any; }) => {
-    //       var manager = new Manager()
-    //       manager.idManager =e["idManager"]
-    //       manager.shortName =e["shortName"]
-    //       manager.fullName =e["fullName"]
-    //       manager.position =e["position"]
-    //       manager.email =e["email"]
-    //       manager.phoneNumber =e["phoneNumber"]
-    //       this.manager_list.push(manager)
-    //     })
-    //   },
-    //   error: error => { this.logger.log(error); }
-    // });
     this.managerService.getPageManagers(offset).subscribe((respones: ResponseInfo<Page<any>>)=>{
       if(respones.data !== null){
         this.totalCount = respones.data.totalCount;
         this.manager_list = respones.data.content.map((e: any) => {
           const manager = new Manager();
-          // motorAdapter.id = e.idMotorAdapterType;
-          // motorAdapter.value = e.motorAdapterTypeValue;
-          // motorAdapter.typeid = e.motorTypeId;
           manager.idManager =e.idManager;
           manager.shortName =e.shortName;
           manager.fullName =e.fullName;

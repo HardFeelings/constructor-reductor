@@ -18,8 +18,6 @@ export class ImageService extends ABaseServiceService {
     super(http, 'api/v1');
   }
 
-
-
   downloadImageById(id: number, filename: string): void {
     this.http.get(`${this.imageUrl}/${id}`, { responseType: 'blob' }).subscribe(
       (blob: Blob) => {

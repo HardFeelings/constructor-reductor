@@ -11,6 +11,7 @@ import { ResponseInfo } from 'src/app/models/responesInfo';
 import { Page } from 'src/app/models/page';
 import { NGXLogger } from "ngx-logger";
 import { jwtDecode } from 'jwt-decode';
+import { AuthService } from 'src/app/auth/auth.service';
 
 @Component({
   selector: 'app-commercial-page',
@@ -25,7 +26,7 @@ export class CommercialPageComponent {
   totalCount: number;
   isAdmin: boolean = false;
 
-  constructor(private commercialService: CommercialService, private dataService: DataService,private logger: NGXLogger, private  router: Router, public dialog:MatDialog){
+  constructor(private commercialService: CommercialService,  private dataService: DataService,private logger: NGXLogger, private  router: Router, public dialog:MatDialog, private authService: AuthService){
     this.searchData = new CommercialProp;
     this.searchManager = new Manager;
   }
@@ -33,7 +34,6 @@ export class CommercialPageComponent {
 
   ngOnInit() {
     this.getAllcommercialProp();
-    console.log(localStorage);
     const token = localStorage.getItem('jwt_token');
 
     if (token) {
@@ -46,13 +46,16 @@ export class CommercialPageComponent {
   }
 
   navigateToUrl() {
-    window.location.href = 'http://localhost:8000/admin';
+    this.router.navigate(['/admin']);
+  }
+
+  logout() {
+    this.authService.logout();
+    this.router.navigate(['/']);
   }
 
   goToSearchPage(id:number | null){
     const dialogAddingNewStudent = this.dialog.open(SearchPageComponent, {
-      // width: '2000px',
-      // height: '1500px',
       width: '0px',
       height: '0px',
       data: id,
@@ -69,11 +72,8 @@ export class CommercialPageComponent {
     });
   }
 
-
   oKDelete(id: number, number:string | null){
     const dialogAddingNewStudent = this.dialog.open(DeletecommComponent, {
-      // width: '600px',
-      // height: '300px',
       width: '0px',
       height: '0px',
       data: number,
@@ -95,18 +95,6 @@ export class CommercialPageComponent {
 
     });
   }
-
-  // getAllcommercialProp() {
-  //   this.commercialService.getAllCommercialProps().subscribe((respones: ResponseInfo<CommercialProp[]>) => {
-  //     if(respones.data !== null){
-  //       this.logger.log("Data getAllcommercialProp: ", respones.data);
-  //       this.commercialProp_list = respones.data;
-  //     } else {
-  //       alert(JSON.stringify(respones.errorMsg))
-  //     }
-  //   });
-  // }
-
 
   getAllcommercialProp() {
     const defaultObj = new CommercialProp ();
@@ -141,14 +129,12 @@ export class CommercialPageComponent {
   }
 
   searchProp(offset: number){
-    // this.searchManager.shortName = this.shortName;
     if(this.searchManager.shortName == null){
       this.searchData.manager = null;
     } else {
       this.searchData.manager = this.searchManager;
     }
     this.logger.log('searchData', this.searchData)
-    // this.commercialService.filterProp(this.searchData).subscribe((respones: ResponseInfo<CommercialProp[]>) => {
     this.commercialService.filterPageProp(this.searchData,offset).subscribe((respones: ResponseInfo<Page<CommercialProp>>) => {
       if(respones.data !== null){
         this.logger.log("Result searchProp: ", respones.data);
@@ -172,9 +158,6 @@ export class CommercialPageComponent {
   onPartnerChange(value: string) {
     this.searchData.partner = value ? value : null;
   }
-  // onMarginRatioChange(value: number) {
-  //   this.searchData.marginRatio = value ? value : null;
-  // }
 
   onTimestampChange(value: string) {
     this.searchData.timestamp = value ? value : null;

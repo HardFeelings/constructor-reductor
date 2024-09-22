@@ -136,22 +136,6 @@ export class EngineCommComponent {
     }
   }
 
-
-  // searchProduct(filter: Filter){
-  //   filter.power = this.power;
-  //   filter.rpm = this.rpm;
-  //   this.logger.log('filter', filter);
-  //   this.productService.postFilter(filter).subscribe((respones: ResponseInfo<Product[]>)=>{
-  //     if(respones.data !== null){
-  //       this.logger.log("Data searchProduct", respones.data);
-  //       this.logger.log("respones searchProduct", respones);
-  //       this.foundProducts = respones.data;
-  //     } else {
-  //       alert(JSON.stringify(respones.errorMsg))
-  //     }
-  //   });
-  // }
-
   onPageChange(event: any){
     this.logger.log("event.page", event.page);
     this.searchProduct(this.newFilter,event.page);
@@ -166,7 +150,6 @@ export class EngineCommComponent {
       if(respones.data !== null){
         this.logger.log("Data searchProduct", respones.data.content);
         this.logger.log("respones searchProduct", respones);
-        // this.foundProducts = respones.data;
         this.totalCount = respones.data.totalCount;
         this.foundProducts = respones.data.content;
         this.logger.log(" totalCount", respones.data.totalCount);

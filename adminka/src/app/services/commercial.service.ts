@@ -21,10 +21,6 @@ export class CommercialService extends ABaseServiceService{
     super(http, 'api/v1');
   }
 
-  // getAllCommercialProps(): Observable<ResponseInfo<CommercialProp[]>> {
-  //   return this.getwp<ResponseInfo<CommercialProp[]>>(this.commercialUrl);
-  // }
-
   getCommercialPropById(id:number): Observable<ResponseInfo<CommercialProp>> {
     return this.getwp<ResponseInfo<CommercialProp>>(`${this.commercialUrl}/${id}`);
   }

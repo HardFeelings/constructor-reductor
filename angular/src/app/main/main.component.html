@@ -6,40 +6,26 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Product Configurator</title>
   <link rel="stylesheet" href="main.component.css">
-
 </head>
 
 <body>
-
-
   <main class="containermain">
-
     <div class="product">
       <h1>Продукт</h1>
       <div class="product_block">
         <button  [ngClass]="{ 'product_choise': true, 'active': selectedButton == productType.idProductType}" *ngFor="let productType of productTypes" (click)="pickProduct(productType.productTypeValue, productType.idProductType)">
           {{ productType.productTypeValue }}
         </button>
+      </div>
     </div>
-  </div>
-
     <div class="configurator" *ngIf="product_selected == product_enum.Motor">
       <app-engine [idProductType]="idProductType" ></app-engine>
-
     </div>
-
-
-
-
     <div class="configurator" *ngIf="product_selected == product_enum.Reducer">
       <app-reductor [idProductType]="idProductType"></app-reductor>
     </div>
-
-
     <div class="configurator" *ngIf="product_selected == product_enum.MotorReducer">
       <app-engine-reductor [idProductType]="idProductType"></app-engine-reductor>
     </div>
-
   </main>
-
 </body>

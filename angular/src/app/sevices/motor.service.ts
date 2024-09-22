@@ -27,7 +27,6 @@ export class MotorService extends ABaseServiceService{
   getPageMotor(offset:number): Observable<ResponseInfo<Page<Engine>>> {
     let params = new HttpParams()
     .set('offset', offset.toString())
-    // .set('limit', limit.toString())
     return this.get<ResponseInfo<Page<Engine>>>(this.motorUrl, params);
   }
 
@@ -52,7 +51,6 @@ export class MotorService extends ABaseServiceService{
   getPageMotorAdapterType(offset:number): Observable<ResponseInfo<Page<EngineAdapterType>>> {
     let params = new HttpParams()
     .set('offset', offset.toString())
-    // .set('limit', limit.toString())
     return this.get<ResponseInfo<Page<EngineAdapterType>>>(this.motorAdapterTypeUrl, params);
   }
 

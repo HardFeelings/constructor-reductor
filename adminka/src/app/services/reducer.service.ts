@@ -36,9 +36,8 @@ export class ReducerService extends ABaseServiceService{
   getPageReducers(offset: number): Observable<ResponseInfo<Page<Reducer>>> {
     let params = new HttpParams()
         .set('offset', offset.toString())
-        // .set('limit', limit.toString());
     return this.get<ResponseInfo<Page<Reducer>>>(this.reductorUrl,  params);
-}
+  }
 
   getReducerById(id:number): Observable<ResponseInfo<Reducer>> {
     return this.getwp<ResponseInfo<Reducer>>(`${this.reductorUrl}/${id}`);
@@ -65,7 +64,6 @@ export class ReducerService extends ABaseServiceService{
   getPageReducerInputType(offset: number): Observable<ResponseInfo<Page<ReducerInputType>>> {
     let params = new HttpParams()
         .set('offset', offset.toString())
-        // .set('limit', limit.toString());
     return this.get<ResponseInfo<Page<ReducerInputType>>>(this.reducerInputTypeUrl,  params);
   }
 
@@ -85,7 +83,6 @@ export class ReducerService extends ABaseServiceService{
   getPageReducerInstallationType(offset: number): Observable<ResponseInfo<Page<ReducerInstallationType>>> {
     let params = new HttpParams()
         .set('offset', offset.toString())
-        // .set('limit', limit.toString());
     return this.get<ResponseInfo<Page<ReducerInstallationType>>>(this.reducerInstallationType,  params);
   }
 
@@ -123,9 +120,8 @@ export class ReducerService extends ABaseServiceService{
   getPageReducerSizes(offset: number): Observable<ResponseInfo<Page<ReducerSize>>> {
     let params = new HttpParams()
         .set('offset', offset.toString())
-        // .set('limit', limit.toString());
     return this.get<ResponseInfo<Page<ReducerSize>>>(this.reducerSize,  params);
-}
+  }
 
   getReducerSizeById(id:number): Observable<ResponseInfo<ReducerSize>> {
     return this.getwp<ResponseInfo<ReducerSize>>(`${this.reducerSize}/${id}`);
@@ -143,9 +139,8 @@ export class ReducerService extends ABaseServiceService{
   getPageReducerOutputShaftTypes(offset: number): Observable<ResponseInfo<Page<ReducerOutputShaftType>>> {
     let params = new HttpParams()
         .set('offset', offset.toString())
-        // .set('limit', limit.toString());
     return this.get<ResponseInfo<Page<ReducerOutputShaftType>>>(this.reducerOutputShaftType,  params);
-}
+  }
 
   getReducerOutputShaftTypeById(id:number): Observable<ResponseInfo<ReducerOutputShaftType>> {
     return this.getwp<ResponseInfo<ReducerOutputShaftType>>(`${this.reducerOutputShaftType}/${id}`);

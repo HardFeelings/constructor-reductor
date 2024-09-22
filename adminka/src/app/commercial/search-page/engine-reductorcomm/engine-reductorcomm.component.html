@@ -7,12 +7,10 @@
           <option *ngFor="let type of reducerType" [value]="type.reducerTypeName">{{ type.reducerTypeName }}</option>
         </select>
       </div>
-
       <div class="element_configurator">
         <span>Крутящий момент</span>
         <input  min="0" [(ngModel)]="this.torqueMoment"  type="number" (keypress)="preventNegative($event)" />
       </div>
-
       <div class="element_configurator">
         <span>Передаточное отношение</span>
         <input min="0" [(ngModel)]="this.ratio" type="number" (keypress)="preventNegative($event)"/>
@@ -24,22 +22,16 @@
           <span>Число оборотов об/мин </span>
           <input min="0" [(ngModel)]="this.rpm"  type="number" (keypress)="preventNegative($event)" />
         </div>
-        <!-- <div class="rate_element_configurator"> -->
           <div class="element_configurator">
             <span>Диаметр выходного вала</span>
             <input min="0" [(ngModel)]="this.diamOutput" type="number" (keypress)="preventNegative($event)"/>
           </div>
-          <!-- <div class="element_configurator" style="margin-bottom: 20px">
-            <span class="rate_header">+-</span>
-          </div> -->
           <div class="element_configurator">
             <span>Возможный допуск диаметра, мм</span>
             <input min="0" [(ngModel)]="this.diamOutputAllowance" type="number" (keypress)="preventNegative($event)"/>
           </div>
-        <!-- </div> -->
       </div>
     <br />
-
     <br />
     <div class="container_element_configurator">
       <div class="element_configurator">
@@ -94,15 +86,12 @@
     <hr />
     <div class="button-container"><button (click)="searchProduct(this.filter,0)">Найти</button></div>
     <br />
-    <!-- <hr /> -->
   <div *ngIf="foundProducts && foundProducts.length > 0">
     <table class="table" *ngIf="foundProducts !== null || foundProducts !== []">
       <thead *ngIf="foundProducts && foundProducts.length > 0">
         <tr>
-            <!-- <th>id</th> -->
             <th>Наименование</th>
             <th>Мощность</th>
-            <!-- <th>Положение клеммной коробки</th> -->
             <th>Об/мин</th>
             <th>Передаточное отношение</th>
             <th>Крутящий момент</th>
@@ -114,19 +103,13 @@
     </thead>
     <tbody>
         <tr *ngFor="let product of foundProducts">
-            <!-- <td>{{ product.idProduct }}</td> -->
             <td>{{ product.name }}</td>
-
             <td >{{ product.motor?.power || 0 }}</td>
-            <!-- <td>{{ product.motor?.posTerminalBox || 0 }}</td> -->
             <td>{{ product.rpm || 0 }}</td>
-
             <td>{{ product.reducer?.ratio || 0 }}</td>
             <td>{{ product.torqueMoment || 0 }}</td>
             <td>{{ product.reducer?.diameterOutputShaft || 0 }}</td>
-
             <td>{{ product.weight || 0 }}</td>
-
             <td>
               <div class="button-containerrr">
                 <ng-container *ngIf="!product.imageEmpty; else noImage">

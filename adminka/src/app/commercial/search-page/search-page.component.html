@@ -9,7 +9,6 @@
 </head>
 
 <body class="dialog">
-
   <main class="containedata">
 
     <div class="container">
@@ -22,10 +21,6 @@
           <span>Контрагент</span>
           <input type="text" [(ngModel)]="commercialProp.partner">
         </div>
-        <!-- <div class="element_configurator">
-          <span>Маржа</span>
-          <input min="1" type="number" [(ngModel)]="commercialProp.marginRatio">
-        </div> -->
         <div class="element_configurator">
           <span>Менеджер</span>
           <select (change)="idManagerSelected($event)" [ngModel]="commercialProp.manager?.shortName">
@@ -53,7 +48,6 @@
       <table *ngIf="commercialProp != null && commercialProp != undefined">
         <tbody>
           <tr *ngFor="let commercialItem of commercialProp.commercialPropItems">
-            <!-- <td>{{ commercialItem.product.idProduct }}</td> -->
             <td style="font-size: 18px;">{{ commercialItem.product.name }}</td>
             <td style="font-size: 18px;">{{ commercialItem.product.price || '0' }} ¥</td>
             <td style="font-size: 18px;">{{ commercialItem.product.weight || '0' }} кг</td>
@@ -74,16 +68,11 @@
           </tr>
         </tbody>
       </table>
-
       <button *ngIf="!this.callSearch" class="plusbt" (click)="openSearch()">+</button>
       <button *ngIf="this.callSearch" class="plusbt" (click)="close()">-</button>
-
-
       <div *ngIf="this.callSearch" class="containermain">
         <div class="searchBlock">
         <div class="product">
-          <!-- <h1>Product</h1> -->
-          <!-- <div class="close-button" (click)="close()">&times;</div> -->
           <div class="product_block">
             <button [ngClass]="{ 'product_choise': true, 'active': selectedButton == productType.idProductType}"
                     *ngFor="let productType of productTypes"
@@ -92,7 +81,6 @@
             </button>
           </div>
         </div>
-
         <div class="configurator" *ngIf="product_selected == product_enum.Motor">
           <app-enginecomm (selectedProduct)="childSelectedProduct($event)" [idProductType]="idProductType"></app-enginecomm>
         </div>
@@ -106,14 +94,11 @@
         </div>
       </div>
     </div>
-
       <div class="termsBlock">
         <table *ngIf="commercialProp.commercialPropTerms != null && commercialProp != undefined">
           <tbody>
             <tr *ngFor="let commercialTerm of commercialProp.commercialPropTerms">
-              <!-- <td>{{ commercialItem.product.idProduct }}</td> -->
               <td style="font-size: 18px; width: 55px;">{{ commercialTerm.ord }}</td>
-              <!-- <td style="font-size: 18px;">{{ commercialTerm.paymentTerms || '0' }} ¥</td> -->
               <td class="amauntInpt" style=" width: 177px;"><select  style=" height:  50px;" (change)="selectedPayment($event, commercialTerm)" [ngModel]="commercialTerm.paymentTerms ? commercialTerm.paymentTerms.visibleName : ''">
                 <option value="" disabled>Select</option>
                 <option *ngFor="let payment of payment_list" [value]="payment.visibleName">{{ payment.visibleName }}</option>
@@ -121,14 +106,10 @@
               <td class="amauntInpt" style=" font-size: 20px; width: 100px;"><input class="amauntInpt" type="number" min="1" [(ngModel)]="commercialTerm.percent">&nbsp;&nbsp;%</td>
               <td class="amauntInpt" ><input style=" font-size: 20px;" class="amauntInpt" type="number" min="1"  [(ngModel)]="commercialTerm.days">&nbsp;&nbsp;Дней</td>
               <td class="amauntInpt"><button (click)="deleteTerm(commercialTerm.ord)">Удалить</button>
-              <!-- <div *ngIf="commercialItem.idCommercialPropItem == undefined" >Нужно сохранение</div>
-              </td> -->
           </tbody>
         </table>
       </div>
         <button class="plusbt2" (click)="addTerm()" >Добавить условие</button>
-
-
       <div class="button-container">
         <button (click)="goToBackCommercialPageCansel()">Отмена</button>
         <button (click)="goToBackCommercialPageOk()">Сохранить</button>

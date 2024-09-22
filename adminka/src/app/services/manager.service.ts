@@ -25,7 +25,6 @@ export class ManagerService extends ABaseServiceService{
   getPageManagers(offset: number): Observable<ResponseInfo<Page<Manager>>> {
     let params = new HttpParams()
         .set('offset', offset.toString())
-        // .set('limit', limit.toString());
     return this.get<ResponseInfo<Page<Manager>>>(this.managerUrl,  params);
   }
 

@@ -32,7 +32,6 @@ export class ProductService extends ABaseServiceService{
   getPageProducts(offset:number): Observable<ResponseInfo<Page<Product>>> {
     let params = new HttpParams()
     .set('offset', offset.toString())
-    // .set('limit', limit.toString())
     return this.get<ResponseInfo<Page<Product>>>(this.productUrl, params);
   }
 
@@ -57,7 +56,6 @@ export class ProductService extends ABaseServiceService{
   getPageProductOptions(offset:number): Observable<ResponseInfo<Page<ProductOption>>> {
     let params = new HttpParams()
     .set('offset', offset.toString())
-    // .set('limit', limit.toString())
     return this.get<ResponseInfo<Page<ProductOption>>>(this.productOptionUrl, params);
   }
 
@@ -79,9 +77,8 @@ export class ProductService extends ABaseServiceService{
   postPageFilter(filter: Filter, offset: number): Observable<ResponseInfo<Page<Product>>> {
     let params = new HttpParams()
         .set('offset', offset.toString())
-        // .set('limit', limit.toString());
     return this.post<ResponseInfo<Page<Product>>>(this.filterUrl, filter,  params);
-}
+  }
 
   ///////////// Email /////////////
   sendEmail(emailData: Email): Observable<ResponseInfo<boolean>> {
@@ -90,7 +87,7 @@ export class ProductService extends ABaseServiceService{
 
 ///////////// Image /////////////
 
-   downloadImageById(id: number, filename: string): void {
+  downloadImageById(id: number, filename: string): void {
     this.http.get(`${this.endpoint}/${this.imageUrl}/${id}`, { responseType: 'blob' }).subscribe(
       (blob: Blob) => {
         this.downloadBlob(blob, `${filename}.jpg`);

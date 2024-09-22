@@ -11,10 +11,10 @@
         type="text"
         required
       />
-      <div *ngIf="nameInput.invalid && (nameInput.dirty || nameInput.touched)">
+      <div style="margin-top: -7px;" *ngIf="nameInput.invalid && (nameInput.dirty || nameInput.touched)">
         <small class="error" *ngIf="nameInput.errors?.['required']">Имя обязательно для заполнения.</small>
       </div>
-      <div *ngIf="nameInput.untouched || nameInput.valid">
+      <div style="margin-top: -7px;" *ngIf="nameInput.untouched || nameInput.valid">
         <small class="hidden-text">Введите имя</small>
       </div>
     </div>
@@ -30,12 +30,12 @@
         required
         email
       />
-      <div *ngIf="emailInput.invalid && (emailInput.dirty || emailInput.touched)">
-        <small class="error" *ngIf="emailInput.errors?.['required']">Email обязателен.</small>
+      <div style="margin-top: -7px;" *ngIf="emailInput.invalid && (emailInput.dirty || emailInput.touched)">
+        <small class="error"  *ngIf="emailInput.errors?.['required']">Email обязателен.</small>
         <small class="error" *ngIf="emailInput.errors?.['email']">Email должен содержать &commat; и быть корректным.</small>
         <small class="success" *ngIf="!emailInput.errors?.['required']"></small>
       </div>
-      <div *ngIf="emailInput.untouched || emailInput.valid">
+      <div style="margin-top: -7px;" *ngIf="emailInput.untouched || emailInput.valid">
         <small class="hidden-text">Введите email</small>
       </div>
     </div>
@@ -52,32 +52,28 @@
         required
         pattern="^\+7\s?\d{3}\s?\d{3}\s?\d{2}\s?\d{2}$"
       />
-      <div *ngIf="phoneInput.invalid && (phoneInput.dirty || phoneInput.touched)">
+      <div style="margin-top: -7px;" *ngIf="phoneInput.invalid && (phoneInput.dirty || phoneInput.touched)">
         <small class="error" *ngIf="phoneInput.errors?.['required']">Номер телефона обязателен.</small>
         <small class="error" *ngIf="phoneInput.errors?.['pattern']">Номер телефона должен быть в формате +7 XXX XXX XX XX.</small>
         <small class="success" *ngIf="!phoneInput.errors?.['required']"></small>
       </div>
-      <div *ngIf="phoneInput.untouched || phoneInput.valid">
+      <div style="margin-top: -7px;" *ngIf="phoneInput.untouched || phoneInput.valid">
         <small class="hidden-text">Введите номер телефона</small>
       </div>
     </div>
   </div>
-  <!-- <div class="container_element_configurator">
-      <div class="element_configurator">
-        <span>Название продукта</span>
-        <input [(ngModel)]="this.nameProduct"  type="text" readonly disabled />
-      </div>
-  </div> -->
 
-
+  <div class="container_element_configurator">
+    <div class="element_configurator">
+      <textarea [(ngModel)]="email.info" name="info" placeholder="Дополнительная информация" rows="5" maxlength="200" class="limited-textarea"></textarea>
+    </div>
+  </div>
   <div class="button-container">
     <button (click)="close()">Отмена</button>
     <button [class.disabled]="phoneInput.invalid || emailInput.invalid || nameInput.invalid"
       [disabled]="phoneInput.invalid || emailInput.invalid || nameInput.invalid"
       (click)="send()"> Отправить</button> </div>
   </div>
-
-
 <div *ngIf="this.sendData == true">
   <h1 class="configurator_header" style="font-size: 24px;">Информация успешно отправлена!</h1>
   <div class="button-container2">

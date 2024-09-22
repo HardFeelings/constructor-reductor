@@ -5,7 +5,6 @@ export class Engine {
   frequency: number;
   efficiency:number;
   ratedCurrent:number;
-  // posTerminalBox:number;
   momentOfInertia:number;
   motorTypeId: EngineType;
   motorAdapterTypeId: EngineAdapterType;

@@ -24,10 +24,9 @@
             <span (click)="setid(10)">ReducerMounting</span>
             <span (click)="setid(11)">ReducerInstallationType</span>
             <span (click)="setid(12)">ReducerInputType</span>
-            <!-- <span (click)="setid(13)">ReducerAdapterType</span> -->
             <span (click)="setid(13)">Manager</span>
             <span (click)="setid(14)">PaymentTerms</span>
-            <span class="redirectButton" onclick="window.location.href='http://localhost:8000/comm'">
+            <span class="redirectButton" (click)="navigateToUrl()">
               Commercial
             </span>
         </div>
@@ -44,12 +43,8 @@
                                 <th>adapterType</th>
                                 <th>frequency</th>
                                 <th>power</th>
-                                <!-- <th>rpm</th> -->
                                 <th>efficiency</th>
                                 <th>ratedCurrent</th>
-                                <!-- <th>posTerminalBox</th> -->
-                                <!-- <th>momentOfInertia</th>
-                                <th>cableExitSide</th> -->
                                 <th>type</th>
                                 <th></th>
                             </tr>
@@ -60,16 +55,11 @@
                                 <td><textarea class="editable" [(ngModel)]="i.adapterType.id"></textarea></td>
                                 <td><textarea class="editable" [(ngModel)]="i.frequency.value"></textarea></td>
                                 <td><textarea class="editable" [(ngModel)]="i.power"></textarea></td>
-                                <!-- <td><textarea class="editable" [(ngModel)]="i.rpm.value"></textarea></td> -->
                                 <td><textarea class="editable" [(ngModel)]="i.efficiency"></textarea></td>
                                 <td><textarea class="editable" [(ngModel)]="i.ratedCurrent"></textarea></td>
-                                <!-- <td><textarea class="editable" [(ngModel)]="i.posTerminalBox"></textarea></td> -->
-                                <!-- <td><textarea class="editable" [(ngModel)]="i.momentOfInertia"></textarea></td>
-                                <td><textarea class="editable" [(ngModel)]="i.cableExitSide"></textarea></td> -->
                                 <td><textarea class="editable" [(ngModel)]="i.type.id"></textarea></td>
                                 <td class="row-buttons">
                                     <button (click)="saveMotor(i)"> Сохранить </button>
-                                    <!-- <button (click)="deleteMotor(i)"> Удалить </button> -->
                                     <button (click)="oKDelete(i.id,i)"> Удалить </button>
                                 </td>
                             </tr>
@@ -102,7 +92,6 @@
                                 <td><textarea class="editable" [(ngModel)]="i.value"></textarea></td>
                                 <td class="row-buttons">
                                     <button (click)="saveMotorType(i)"> Сохранить </button>
-                                    <!-- <button (click)="deleteMotorType(i)"> Удалить </button> -->
                                     <button (click)="oKDelete(i.id,i)"> Удалить </button>
                                 </td>
                             </tr>
@@ -131,7 +120,6 @@
                                 <td><textarea class="editable" [(ngModel)]="i.typeid"></textarea></td>
                                 <td class="row-buttons">
                                     <button (click)="saveMotorAdapterType(i)"> Сохранить </button>
-                                    <!-- <button (click)="deleteMotorAdapterType(i)"> Удалить </button> -->
                                     <button (click)="oKDelete(i.id,i)"> Удалить </button>
                                 </td>
                             </tr>
@@ -189,7 +177,6 @@
                                 <td  class="row-buttonstt" *ngIf="i.imageEmpty == false"><button (click)="downloadImage(i.id, i.name)">Скачать</button> <button (click)="deleteImage(i)">Удалить</button> </td>
                                 <td class="row-buttons">
                                     <button (click)="saveProduct(i)"> Сохранить </button>
-                                    <!-- <button (click)="deleteProduct(i)"> Удалить </button> -->
                                     <button (click)="oKDelete(i.id,i)"> Удалить </button>
                                 </td>
                             </tr>
@@ -204,27 +191,18 @@
                 </div>
             </div>
             <div *ngIf="id==4">
-                <!-- <div class="buttons">
-                    <button (click)="addProductType()"> Новый </button>
-                </div> -->
                 <div class="table-container">
                     <table class="table">
                         <thead>
                             <tr>
                                 <th>idProductType</th>
                                 <th>productTypeValue</th>
-                                <!-- <th></th> -->
                             </tr>
                         </thead>
                         <tbody>
                             <tr *ngFor="let i of productType_list">
                                 <td>{{i.id}}</td>
-                                <!-- <td><input class="editable" [(ngModel)]="i.value"></td> -->
                                 <td>{{i.value}}</td>
-                                <!-- <td class="row-buttons">
-                                    <button (click)="saveProductType(i)"> Сохранить </button>
-                                    <button (click)="deleteProductType(i)"> Удалить </button>
-                                </td> -->
                             </tr>
                         </tbody>
                     </table>
@@ -251,7 +229,6 @@
                                 <td><input class="editable" [(ngModel)]="i.productTypeId"></td>
                                 <td class="row-buttons">
                                     <button (click)="saveProductOptions(i)"> Сохранить </button>
-                                    <!-- <button (click)="deleteProductOption(i)"> Удалить </button> -->
                                     <button (click)="oKDelete(i.idProductOption,i)"> Удалить </button>
                                 </td>
                             </tr>
@@ -277,11 +254,9 @@
                                 <th>TypeId</th>
                                 <th>SizeId</th>
                                 <th>Input TypeId</th>
-                                <!-- <th>Adapter TypeId</th> -->
                                 <th>OutputShaft TypeId</th>
                                 <th>Installation TypeId</th>
                                 <th>MountingId</th>
-                                <!-- <th>ØInputShaft</th> -->
                                 <th>ØOutputShaft</th>
                                 <th>ratio</th>
                                 <th></th>
@@ -293,16 +268,13 @@
                                 <td><input class="editable" [(ngModel)]="i.reducerTypeId"></td>
                                 <td><input class="editable" [(ngModel)]="i.reducerSizeId"></td>
                                 <td><input class="editable" [(ngModel)]="i.reducerInputTypeId"></td>
-                                <!-- <td><input class="editable" [(ngModel)]="i.reducerAdapterTypeId"></td> -->
                                 <td><input class="editable" [(ngModel)]="i.reducerOutputShaftTypeId"></td>
                                 <td><input class="editable" [(ngModel)]="i.reducerInstallationTypeId"></td>
                                 <td><input class="editable" [(ngModel)]="i.reducerMountingId"></td>
-                                <!-- <td><input class="editable" [(ngModel)]="i.diameterInputShaft"></td> -->
                                 <td><input class="editable" [(ngModel)]="i.diameterOutputShaft"></td>
                                 <td><input class="editable" [(ngModel)]="i.ratio"></td>
                                 <td class="row-buttons">
                                     <button (click)="saveReducer(i)"> Сохранить </button>
-                                    <!-- <button (click)="deleteReducer(i)"> Удалить </button> -->
                                     <button (click)="oKDelete(i.idReducer,i)"> Удалить </button>
                                 </td>
                             </tr>
@@ -335,7 +307,6 @@
                                 <td><input class="editable" [(ngModel)]="i.reducerTypeName"></td>
                                 <td class="row-buttons">
                                     <button (click)="saveReducerType(i)"> Сохранить </button>
-                                    <!-- <button (click)="deleteReducerType(i)"> Удалить </button> -->
                                     <button (click)="oKDelete(i.idReducerType,i)"> Удалить </button>
                                 </td>
                             </tr>
@@ -364,7 +335,6 @@
                                 <td><input class="editable" [(ngModel)]="i.reducerTypeId"></td>
                                 <td class="row-buttons">
                                     <button (click)="saveReducerSize(i)"> Сохранить </button>
-                                    <!-- <button (click)="deleteReducerSize(i)"> Удалить </button> -->
                                     <button (click)="oKDelete(i.idReducerSize,i)"> Удалить </button>
                                 </td>
                             </tr>
@@ -399,7 +369,6 @@
                                 <td><input class="editable" [(ngModel)]="i.reducerTypeId"></td>
                                 <td class="row-buttons">
                                     <button (click)="saveReducerOutputShaft(i)"> Сохранить </button>
-                                    <!-- <button (click)="deleteReducerOutputShaft(i)"> Удалить </button> -->
                                     <button (click)="oKDelete(i.idReducerOutputShaftType,i)"> Удалить </button>
                                 </td>
                             </tr>
@@ -432,7 +401,6 @@
                                 <td><input class="editable" [(ngModel)]="i.value"></td>
                                 <td class="row-buttons">
                                     <button (click)="saveReducerMounting(i)"> Сохранить </button>
-                                    <!-- <button (click)="deleteReducerMounting(i)"> Удалить </button> -->
                                     <button (click)="oKDelete(i.idReducerMounting,i)"> Удалить </button>
                                 </td>
                             </tr>
@@ -461,7 +429,6 @@
                                 <td><input class="editable" [(ngModel)]="i.reducerTypeId"></td>
                                 <td class="row-buttons">
                                     <button (click)="saveReducerInstallationType(i)"> Сохранить </button>
-                                    <!-- <button (click)="deleteReducerInstallationType(i)"> Удалить </button> -->
                                     <button (click)="oKDelete(i.idReducerInstallationType,i)"> Удалить </button>
                                 </td>
                             </tr>
@@ -496,7 +463,6 @@
                                 <td><input class="editable" [(ngModel)]="i.reducerTypeId"></td>
                                 <td class="row-buttons">
                                     <button (click)="saveReducerInputType(i)"> Сохранить </button>
-                                    <!-- <button (click)="deleteReducerInputType(i)"> Удалить </button> -->
                                     <button (click)="oKDelete(i.idReducerInputType,i)"> Удалить </button>
                                 </td>
                             </tr>
@@ -510,34 +476,6 @@
                     </p-paginator>
                 </div>
             </div>
-            <!-- <div *ngIf="id==13">
-                <div class="buttons">
-                    <button (click)="addReducerAdapterType()"> Новый </button>
-                </div>
-                <div class="table-container">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>idReducerAdapterType</th>
-                                <th>value</th>
-                                <th>reducerTypeId</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr *ngFor="let i of reducerAdapterType_list">
-                                <td>{{i.idReducerAdapterType}}</td>
-                                <td><input class="editable" [(ngModel)]="i.value"></td>
-                                <td><input class="editable" [(ngModel)]="i.reducerTypeId"></td>
-                                <td class="row-buttons">
-                                    <button (click)="saveReducerIAdapterType(i)"> Сохранить </button>
-                                    <button (click)="deleteReducerAdapterType(i)"> Удалить </button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div> -->
             <div *ngIf="id==13">
               <div class="buttons">
                   <button (click)="addManager()"> Новый </button>
@@ -565,7 +503,6 @@
                               <td><input class="editable" [(ngModel)]="i.phoneNumber"></td>
                               <td class="row-buttons">
                                   <button (click)="saveManager(i)"> Сохранить </button>
-                                  <!-- <button (click)="deleteManager(i)"> Удалить </button> -->
                                   <button (click)="oKDelete(i.idManager,i)"> Удалить </button>
                               </td>
                           </tr>
@@ -579,7 +516,6 @@
                   </p-paginator>
               </div>
           </div>
-
           <div *ngIf="id==14">
             <div class="buttons">
                 <button (click)="addPaymentTerm()"> Новый </button>
@@ -601,7 +537,6 @@
                             <td><input class="editable" [(ngModel)]="i.fullName"></td>
                             <td class="row-buttons">
                                 <button (click)="savePaymentTerm(i)"> Сохранить </button>
-                                <!-- <button (click)="deleteManager(i)"> Удалить </button> -->
                                 <button (click)="oKDelete(i.idPaymentTerms,i)"> Удалить </button>
                             </td>
                         </tr>
@@ -611,7 +546,5 @@
         </div>
         </div>
     </div>
-
 </body>
-
 </html>
