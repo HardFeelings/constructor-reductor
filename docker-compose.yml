@@ -16,13 +16,13 @@ services:
     build:
       context: ./angular
     ports:
-      - "4200:4200"
+      - "4200:80"
 
   adminka:  
     build:
       context: ./adminka
     ports:
-      - "4210:4210"
+      - "4210:80"
 
   spring:  
     build:
