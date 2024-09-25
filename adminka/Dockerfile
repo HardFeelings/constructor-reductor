@@ -1,12 +1,34 @@
-FROM node:latest as build
+# FROM node:alpine as build
+
+# WORKDIR /usr/src/app
+
+# COPY package.json package-lock.json ./
+# RUN npm install
+
+# COPY . .
+# RUN npm run build --prod
+
+# FROM nginx:stable-alpine
+# COPY --from=build /usr/src/app/dist /usr/share/nginx/html
+# COPY nginx.conf /etc/nginx/conf.d/default.conf
+# EXPOSE 8000
+# CMD [ "nginx", "-g", "daemon off;" ]
+
+
+# Stage 1: Build
+FROM node:alpine as build
+
 WORKDIR /usr/src/app
+
 COPY package.json package-lock.json ./
-RUN npm install --legacy-peer-deps --force
+RUN npm install
+
 COPY . .
 RUN npm run build --prod
 
-# stage 2: Nginx environment
-FROM nginx:latest
-EXPOSE 8000
-COPY nginx.conf /etc/nginx/nginx.conf
-COPY --from=build /usr/src/app/dist/ /usr/share/nginx/html
+# Stage 2: Serve
+FROM nginx:stable-alpine
+COPY --from=build /usr/src/app/dist /usr/share/nginx/html
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]

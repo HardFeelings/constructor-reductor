@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  nginx:
+    image: nginx:stable-alpine
+    ports:
+      - "80:80"
+    volumes:
+      - './nginx.conf:/etc/nginx/nginx.conf'
+    depends_on:
+      - angular
+      - adminka
+      - spring    
+
+  angular: 
+    build:
+      context: ./angular
+    ports:
+      - "4200:4200"
+
+  adminka:  
+    build:
+      context: ./adminka
+    ports:
+      - "4210:4210"
+
+  spring:  
+    build:
+      context: ./spring/ConstructorApp
+    ports:
+      - "8080:80"
