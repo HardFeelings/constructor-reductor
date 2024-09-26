@@ -18,6 +18,7 @@ import { ResponseInfo } from 'src/app/models/responesInfo';
 export class LoginComponent{
   loginDto: LoginDto;
   isPasswordVisible = false;
+  errorMsg: string | null = null;
 
   constructor(private authService: AuthService, private router: Router) {
     this.loginDto = new LoginDto();
@@ -34,7 +35,7 @@ export class LoginComponent{
           const decodedToken: any = jwtDecode(response.data.token);
           const roles: string[] = decodedToken.roles || [];
           if(roles.includes('ROLE_ADMIN')){
-            this.router.navigate(['/admin']);
+            this.router.navigate(['/comm']);
           }
           else{
             this.router.navigate(['/comm']);
@@ -67,9 +68,11 @@ export class LoginComponent{
           }
         },
         error: (err) => {
-          // console.error('Login failed:', err);
+          this.errorMsg = err.error?.errorMsg || 'Login failed. Please try again.';
         }
       });
   }
+
+
 
 }

@@ -170,14 +170,48 @@ export class SearchPageComponent {
     }
   }
 
+  // addTerm() {
+  //   let newPropTerm = new CommercialPropTerm();
+  //   this.ordNow = this.commercialProp.commercialPropTerms.reduce((max, propTerm) => {
+  //     return propTerm.ord > max ? propTerm.ord : max;
+  //   }, 0);
+  //   newPropTerm.ord = this.ordNow + 1;
+  //   this.commercialProp.commercialPropTerms.push(newPropTerm);
+  // }
+
+
   addTerm() {
-    let newPropTerm = new CommercialPropTerm();
-    this.ordNow = this.commercialProp.commercialPropTerms.reduce((max, propTerm) => {
-      return propTerm.ord > max ? propTerm.ord : max;
-    }, 0);
-    newPropTerm.ord = this.ordNow + 1;
-    this.commercialProp.commercialPropTerms.push(newPropTerm);
-}
+    if (this.getTotalPercent() < 100) {
+      let newPropTerm = new CommercialPropTerm();
+      this.ordNow = this.commercialProp.commercialPropTerms.reduce((max, propTerm) => {
+        return propTerm.ord > max ? propTerm.ord : max;
+      }, 0);
+
+      newPropTerm.ord = this.ordNow + 1;
+      newPropTerm.percent = 0; // Задаем начальное значение процентов
+      newPropTerm.days = 0; // Задаем начальное значение дней
+      this.commercialProp.commercialPropTerms.push(newPropTerm);
+    } else {
+      alert('Невозможно добавить больше условий, так как сумма процентов превышает 100%');
+    }
+  }
+
+
+  getTotalPercent() {
+    return this.commercialProp.commercialPropTerms.reduce((sum, term) => sum + (term.percent || 0), 0);
+  }
+
+  getTotalPercentExceptCurrent(currentTerm: CommercialPropTerm) {
+    return this.getTotalPercent() - (currentTerm.percent || 0);
+  }
+
+  onPercentChange(commercialTerm : CommercialPropTerm) {
+    const totalPercent = this.getTotalPercent();
+    if (totalPercent > 100) {
+      commercialTerm.percent = 100 - (totalPercent - commercialTerm.percent);
+      alert('Сумма процентов не может превышать 100%');
+    }
+  }
 
   refreshOrd(ord: number) {
     this.commercialProp.commercialPropTerms.forEach(propTerm => {

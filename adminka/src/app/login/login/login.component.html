@@ -2,19 +2,20 @@
 
   <div class="dialog">
     <h2>Enter username and password</h2>
+
+
+    <div *ngIf="errorMsg" class="error-message">{{ errorMsg }}</div>
+    <div *ngIf="!errorMsg" class="error-message">&nbsp;&nbsp;&nbsp;&nbsp;</div>
+
     <form>
       <div class="input-container">
-        <label>
-          Username:
-        </label>
-        <input type="text" [(ngModel)]="loginDto.username" name="username" required>
+        <label>Username:</label>
+        <input type="text" [(ngModel)]="loginDto.username" name="username" [ngModelOptions]="{standalone: true}" required>
       </div>
       <div class="input-container">
-        <label>
-          Password:
-        </label>
+        <label>Password:</label>
         <div class="password-input">
-          <input type="password" [(ngModel)]="loginDto.password" name="password" [type]="isPasswordVisible ? 'text' : 'password'" required>
+          <input type="password" [(ngModel)]="loginDto.password" [type]="isPasswordVisible ? 'text' : 'password'" [ngModelOptions]="{standalone: true}" required>
           <button type="button" (click)="togglePasswordVisibility()">
             {{ isPasswordVisible ? 'Hide' : 'Show' }}
           </button>

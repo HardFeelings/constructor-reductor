@@ -42,8 +42,63 @@ export class AdminkaComponent {
   manager_list:Manager[];
 
   searchData: string | null = null;
-  totalCount: number;
+  // totalCount: number;
+  totalCountProductOption: number;
+  firstProductOption: number = 0;
+  rowsProductOption: number = 20;
+
+  totalCountReducer: number;
+  firstReducer: number = 0;
+  rowsReducer: number = 20;
+
+  totalCountReducerSize: number;
+  firstReducerSize: number = 0;
+  rowsReducerSize: number = 20;
+
+  totalCountReducerOutputShaft: number;
+  firstReducerOutputShaft: number = 0;
+  rowsReducerOutputShaft: number = 20;
+
+  totalCountReducerInstallationType:number;
+  firstReducerInstallationType:number = 0;
+  rowsReducerInstallationType:number = 20;
+
+  totalCountReducerInputType: number;
+  firstReducerInputType: number = 0;
+  rowsReducerInputType: number = 20;
+
+  totalCountMotorList:number;
+  firstMotorList:number = 0;
+  rowsMotorList:number = 20;
+
+  totalCountProductList: number;
+  firstProductList: number = 0;
+  rowsProductList: number = 20;
+
+
+  firstSearchList: number = 0;
+  rowsSearchList: number = 20;
+  totalCountSearchList: number;
+  isSearchMode = false;
+
+  totalCountMotorAdapterTypeList:number;
+  firstMotorAdapterTypeList:number = 0;
+  rowsMotorAdapterTypeList:number = 20;
+
+  totalCountListManagers:number;
+  firstListManagers:number = 0;
+  rowsListManagers:number = 20
+
   page: number = 0;
+  page2: number = 0;
+  page3: number = 0;
+  page5: number = 0;
+  page6: number = 0;
+  page8: number = 0;
+  page9: number = 0;
+  page11: number = 0;
+  page12: number = 0;
+  page13: number = 0;
 
   constructor(private http: HttpClient, private  router: Router, private imageService: ImageService, private logger: NGXLogger, public dialog:MatDialog, private motorService: MotorService, private productService: ProductService, private reducerService: ReducerService, private managerService: ManagerService) {
     this.paymentTerms_list = new Array<PaymentTerms>();
@@ -126,56 +181,98 @@ export class AdminkaComponent {
   onPageChange(event: any){
     this.logger.log("event.page", event.page);
     this.page = event.page;
-    if(this.id == 0){
-      this.getMotorList(event.page);
-      this.logger.log('getMotorList', this.id, event.page);
-    }
-    else if(this.id == 2){
-      this.getMotorAdapterTypeList(event.page);
-      this.logger.log('getMotorAdapterTypeList', this.id, event.page);
-    }
-    else if(this.id == 3){
-      if(this.searchData == "" || this.searchData == null){
-          this.searchProductByName(event.page);
-       }
-      else {
-          this.getProductList(event.page);
-      }
-      this.logger.log('getProductList', this.id, event.page);
-    }
-    else if(this.id == 5){
-      this.getProductOption(event.page);
-      this.logger.log('getProductOption', this.id, event.page);
-    }
-    else if(this.id == 6){
-      this.getReducer(event.page);
-      this.logger.log('getReducer', this.id, event.page);
-    }
-    else if(this.id == 6){
-      this.getReducer(event.page);
-      this.logger.log('getReducer', this.id, event.page);
-    }
-    else if(this.id == 8){
-      this.getReducerSize(event.page);
-      this.logger.log('getReducerSize', this.id, event.page);
-    }
-    else if(this.id == 9){
-      this.getReducerOutputShaft(event.page);
-      this.logger.log('getReducerOutputShaft', this.id, event.page);
-    }
-    else if(this.id ==11){
-      this.getReducerInstallationType(event.page);
-      this.logger.log('getReducerInstallationType', this.id, event.page);
-    }
-    else if(this.id ==12){
-      this.getReducerInputType(event.page);
-      this.logger.log('getReducerInputType', this.id, event.page);
-    }
-    else if(this.id ==13){
-      this.getListManagers(event.page);
-      this.logger.log('getListManagers', this.id, event.page);
+    this.firstMotorList = event.first;
+    this.rowsMotorList = event.rows;
+    this.getMotorList(event.page);
+    this.logger.log('getMotorList', this.id, event.page);
+  }
+
+  onPageChange2(event: any){
+    this.logger.log("event.page", event.page);
+    this.page2 = event.page;
+    this.firstMotorAdapterTypeList = event.first;
+    this.rowsMotorAdapterTypeList = event.rows;
+    this.getMotorAdapterTypeList(event.page);
+    this.logger.log('getMotorAdapterTypeList', this.id, event.page);
+  }
+
+  onPageChange3(event: any) {
+    if (this.isSearchMode) {
+      this.firstSearchList = event.first;
+      this.rowsSearchList = event.rows;
+      this.searchProductByName(event.page);
+    } else {
+      this.firstProductList = event.first;
+      this.rowsProductList = event.rows;
+      this.getProductList(event.page);
     }
   }
+
+  onPageChange5(event: any){
+    this.logger.log("event.page", event.page);
+    this.page5 = event.page;
+    this.firstProductOption = event.first;
+    this.rowsProductOption = event.rows;
+    this.getProductOption(event.page);
+    this.logger.log('getProductOption', this.id, event.page);
+  }
+
+  onPageChange6(event: any){
+    this.logger.log("event.page", event.page);
+    this.page6 = event.page;
+    this.firstReducer = event.first;
+    this.rowsReducer = event.rows;
+    this.getReducer(event.page);
+    this.logger.log('getReducer', this.id, event.page);
+  }
+
+  onPageChange8(event: any){
+    this.logger.log("event.page", event.page);
+    this.page8 = event.page;
+    this.firstReducerSize = event.first;
+    this.rowsReducerSize = event.rows;
+    this.getReducerSize(event.page);
+    this.logger.log('getReducerSize', this.id, event.page);
+  }
+
+
+  onPageChange9(event: any){
+    this.logger.log("event.page", event.page);
+    this.page9 = event.page;
+    this.firstReducerOutputShaft = event.first;
+    this.rowsReducerOutputShaft = event.rows;
+    this.getReducerOutputShaft(event.page);
+    this.logger.log('getReducerOutputShaft', this.id, event.page);
+  }
+
+
+  onPageChange11(event: any){
+    this.logger.log("event.page", event.page);
+    this.page11 = event.page;
+    this.firstReducerInstallationType = event.first;
+    this.rowsReducerInstallationType = event.rows;
+    this.getReducerInstallationType(event.page);
+    this.logger.log('getReducerInstallationType', this.id, event.page);
+  }
+
+  onPageChange12(event: any){
+    this.logger.log("event.page", event.page);
+    this.page12 = event.page;
+    this.firstReducerInputType = event.first;
+    this.rowsReducerInputType = event.rows;
+    this.getReducerInputType(event.page);
+    this.logger.log('getReducerInputType', this.id, event.page);
+  }
+
+  onPageChange13(event: any){
+    this.logger.log("event.page", event.page);
+    this.page13 = event.page;
+    this.firstListManagers= event.first;
+    this.rowsListManagers = event.rows;
+    this.getListManagers(event.page);
+    this.logger.log('getListManagers', this.id, event.page);
+  }
+
 
   oKDelete(id: number, i: any){
     const dialogAddingNewStudent = this.dialog.open(DeleteComponent, {
@@ -425,7 +522,7 @@ export class AdminkaComponent {
     i.delete(this.http).subscribe((data:boolean) => {
       if(data) {
         this.motorAdapterType_list = this.motorAdapterType_list.filter(item => item.id !== i.id)
-        this.getMotorAdapterTypeList(this.page);
+        this.getMotorAdapterTypeList(this.page2);
       }
     })
   }
@@ -436,35 +533,44 @@ export class AdminkaComponent {
     this.product_list.push(product)
   }
 
+  resetToProductList() {
+    this.isSearchMode = false;
+    this.firstProductList = 0;
+    this.getProductList(0);
+  }
 
-  searchProductByName(offset: number){
-    this.imageService.getPagesearchProduct(offset,this.searchData).subscribe((respones: ResponseInfo<Page<Product>>)=>{
-      if(respones.data !== null){
-        this.logger.log("Data searchProductByName", respones.data);
-        this.product_list = [];
-        if(respones.data && respones.data.content.length>0){
-          respones.data.content.forEach((e: { [x: string]: any; }) => {
-            var product = new Product()
-            product.id = e["idProduct"]
-            product.productTypeId = e["productTypeId"]
-            product.name = e["name"]
-            product.weight = e["weight"]
-            product.price = e["price"]
-            product.reducerId = e["reducerId"]
-            product.motorId = e["motorId"]
-            product.optionsIds = e["optionsIds"]
-            product.imageEmpty = e["imageEmpty"]
-            product.imageString = e["imageString"]
-            product.imageChanged = e["imageChanged"]
-            product.rpm = e["rpm"]
-            product.torqueMoment = e["torqueMoment"]
-            product.serviceFactor = e["serviceFactor"]
-            product.optionsString = (product.optionsIds ?? []).join(',');
-            this.product_list.push(product)
-        })
-      }
+
+  searchProductByName(offset: number = 0) {
+    if (!this.searchData || this.searchData.trim() === '') {
+      this.resetToProductList();
+      return;
+    }
+    this.isSearchMode = true;
+    this.firstSearchList = 0;
+    this.imageService.getPagesearchProduct(offset, this.searchData).subscribe((respones: ResponseInfo<Page<Product>>) => {
+      if (respones.data !== null) {
+        this.totalCountSearchList = respones.data.totalCount;
+        this.product_list = respones.data.content.map((e: any) => {
+          const product = new Product();
+          product.id = e.idProduct;
+          product.productTypeId = e.productTypeId;
+          product.name = e.name;
+          product.weight = e.weight;
+          product.price = e.price;
+          product.reducerId = e.reducerId;
+          product.motorId = e.motorId;
+          product.optionsIds = e.optionsIds;
+          product.imageEmpty = e.imageEmpty;
+          product.imageString = e.imageString;
+          product.imageChanged = e.imageChanged;
+          product.rpm = e.rpm;
+          product.torqueMoment = e.torqueMoment;
+          product.serviceFactor = e.serviceFactor;
+          product.optionsString = (product.optionsIds ?? []).join(',');
+          return product;
+        });
       } else {
-        alert(JSON.stringify(respones.errorMsg))
+        alert(JSON.stringify(respones.errorMsg));
       }
     });
   }
@@ -494,7 +600,7 @@ export class AdminkaComponent {
     i.delete(this.http).subscribe((data:boolean) => {
       if(data) {
         this.product_list = this.product_list.filter(item => item.id !== i.id);
-        this.getProductList(this.page);
+        this.getProductList(this.page3);
       }
     })
   }
@@ -528,7 +634,8 @@ export class AdminkaComponent {
   getProductOption(offset: number) {
     this.productService.getPageProductOptions(offset).subscribe((respones: ResponseInfo<Page<any>>)=>{
       if(respones.data !== null){
-        this.totalCount = respones.data.totalCount;
+        //this.totalCount = respones.data.totalCount;
+        this.totalCountProductOption = respones.data.totalCount;
         this.productOption_list = respones.data.content.map((e: any) => {
           const productOption = new ProductOption();
           productOption.idProductOption = e.idProductOption;
@@ -561,7 +668,7 @@ export class AdminkaComponent {
     i.delete(this.http).subscribe((data:boolean) => {
       if(data) {
         this.productOption_list = this.productOption_list.filter(item => item.idProductOption !== i.idProductOption);
-        this.getProductOption(this.page);
+        this.getProductOption(this.page5);
       }
     })
   }
@@ -569,7 +676,8 @@ export class AdminkaComponent {
   getReducer(offset: number) {
     this.reducerService.getPageReducers(offset).subscribe((respones: ResponseInfo<Page<any>>)=>{
       if(respones.data !== null){
-        this.totalCount = respones.data.totalCount;
+        //this.totalCount = respones.data.totalCount;
+        this.totalCountReducer = respones.data.totalCount;
         this.reducer_list = respones.data.content.map((e: any) => {
           const reducer = new Reducer();
           reducer.idReducer = e.idReducer;
@@ -645,7 +753,8 @@ export class AdminkaComponent {
   getReducerSize(offset: number) {
     this.reducerService.getPageReducerSizes(offset).subscribe((respones: ResponseInfo<Page<any>>)=>{
       if(respones.data !== null){
-        this.totalCount = respones.data.totalCount;
+        //this.totalCount = respones.data.totalCount;
+        this.totalCountReducerSize = respones.data.totalCount;
         this.reducerSize_list = respones.data.content.map((e: any) => {
           const reducerSize = new ReducerSize();
           reducerSize.idReducerSize = e.idReducerSize
@@ -685,7 +794,8 @@ export class AdminkaComponent {
   getReducerOutputShaft(offset: number) {
     this.reducerService.getPageReducerOutputShaftTypes(offset).subscribe((respones: ResponseInfo<Page<any>>)=>{
       if(respones.data !== null){
-        this.totalCount = respones.data.totalCount;
+        //this.totalCount = respones.data.totalCount;
+        this.totalCountReducerOutputShaft = respones.data.totalCount;
         this.reducerOutput_list = respones.data.content.map((e: any) => {
           const reducerOutputShaftType = new ReducerOutputShaftType();
           reducerOutputShaftType.idReducerOutputShaftType = e.idReducerOutputShaftType;
@@ -751,7 +861,8 @@ export class AdminkaComponent {
   getReducerInstallationType(offset:number) {
     this.reducerService.getPageReducerInstallationType(offset).subscribe((respones: ResponseInfo<Page<any>>)=>{
       if(respones.data !== null){
-        this.totalCount = respones.data.totalCount;
+        //this.totalCount = respones.data.totalCount;
+        this.totalCountReducerInstallationType = respones.data.totalCount;
         this.reducerInstallationType_list = respones.data.content.map((e: any) => {
           const reducerInstallationType = new ReducerInstallationType();
           reducerInstallationType.idReducerInstallationType = e.idReducerInstallationType;
@@ -792,7 +903,8 @@ export class AdminkaComponent {
   getReducerInputType(offset: number) {
     this.reducerService.getPageReducerInputType(offset).subscribe((respones: ResponseInfo<Page<any>>)=>{
       if(respones.data !== null){
-        this.totalCount = respones.data.totalCount;
+        //this.totalCount = respones.data.totalCount;
+        this.totalCountReducerInputType = respones.data.totalCount;
         this.reducerInputType_list = respones.data.content.map((e: any) => {
           const reducerInputType = new ReducerInputType();
           reducerInputType.idReducerInputType = e.idReducerInputType;
@@ -833,7 +945,8 @@ export class AdminkaComponent {
   getMotorList(offset: number) {
     this.motorService.getPageMotor(offset).subscribe((respones: ResponseInfo<Page<Motor>>)=>{
       if(respones.data !== null){
-        this.totalCount = respones.data.totalCount;
+        //this.totalCount = respones.data.totalCount;
+        this.totalCountMotorList = respones.data.totalCount;
         this.motor_list = respones.data.content.map((e: any) => {
           const motor = new Motor();
           motor.id = e.idMotor;
@@ -854,30 +967,30 @@ export class AdminkaComponent {
 }
 
   getProductList(offset: number) {
-    this.productService.getPageProducts(offset).subscribe((respones: ResponseInfo<Page<any>>)=>{
-      if(respones.data !== null){
-        this.totalCount = respones.data.totalCount;
+    this.productService.getPageProducts(offset).subscribe((respones: ResponseInfo<Page<any>>) => {
+      if (respones.data !== null) {
+        this.totalCountProductList = respones.data.totalCount;
         this.product_list = respones.data.content.map((e: any) => {
           const product = new Product();
-          product.id = e.idProduct
-          product.productTypeId = e.productTypeId
-          product.name = e.name
-          product.weight = e.weight
-          product.price = e.price
-          product.reducerId = e.reducerId
-          product.motorId = e.motorId
-          product.optionsIds = e.optionsIds
-          product.imageEmpty = e.imageEmpty
-          product.imageString = e.imageString
-          product.imageChanged = e.imageChanged
-          product.rpm = e.rpm
-          product.torqueMoment = e.torqueMoment
-          product.serviceFactor = e.serviceFactor
+          product.id = e.idProduct;
+          product.productTypeId = e.productTypeId;
+          product.name = e.name;
+          product.weight = e.weight;
+          product.price = e.price;
+          product.reducerId = e.reducerId;
+          product.motorId = e.motorId;
+          product.optionsIds = e.optionsIds;
+          product.imageEmpty = e.imageEmpty;
+          product.imageString = e.imageString;
+          product.imageChanged = e.imageChanged;
+          product.rpm = e.rpm;
+          product.torqueMoment = e.torqueMoment;
+          product.serviceFactor = e.serviceFactor;
           product.optionsString = (product.optionsIds ?? []).join(',');
           return product;
         });
       } else {
-        alert(JSON.stringify(respones.errorMsg))
+        alert(JSON.stringify(respones.errorMsg));
       }
     });
   }
@@ -899,7 +1012,8 @@ export class AdminkaComponent {
   getMotorAdapterTypeList(offset: number) {
     this.motorService.getPageMotorAdapterType(offset).subscribe((respones: ResponseInfo<Page<MotorAdapterType>>)=>{
       if(respones.data !== null){
-        this.totalCount = respones.data.totalCount;
+        //this.totalCount = respones.data.totalCount;
+        this.totalCountMotorAdapterTypeList = respones.data.totalCount;
         this.motorAdapterType_list = respones.data.content.map((e: any) => {
           const motorAdapter = new MotorAdapterType();
           motorAdapter.id = e.idMotorAdapterType;
@@ -921,7 +1035,8 @@ export class AdminkaComponent {
   getListManagers(offset: number) {
     this.managerService.getPageManagers(offset).subscribe((respones: ResponseInfo<Page<any>>)=>{
       if(respones.data !== null){
-        this.totalCount = respones.data.totalCount;
+        //this.totalCount = respones.data.totalCount;
+        this.totalCountListManagers = respones.data.totalCount;
         this.manager_list = respones.data.content.map((e: any) => {
           const manager = new Manager();
           manager.idManager =e.idManager;

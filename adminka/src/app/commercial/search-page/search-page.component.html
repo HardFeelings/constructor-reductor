@@ -94,22 +94,31 @@
         </div>
       </div>
     </div>
-      <div class="termsBlock">
-        <table *ngIf="commercialProp.commercialPropTerms != null && commercialProp != undefined">
-          <tbody>
-            <tr *ngFor="let commercialTerm of commercialProp.commercialPropTerms">
-              <td style="font-size: 18px; width: 55px;">{{ commercialTerm.ord }}</td>
-              <td class="amauntInpt" style=" width: 177px;"><select  style=" height:  50px;" (change)="selectedPayment($event, commercialTerm)" [ngModel]="commercialTerm.paymentTerms ? commercialTerm.paymentTerms.visibleName : ''">
+    <div class="termsBlock">
+      <table *ngIf="commercialProp.commercialPropTerms != null && commercialProp != undefined">
+        <tbody>
+          <tr *ngFor="let commercialTerm of commercialProp.commercialPropTerms">
+            <td style="font-size: 18px; width: 55px;">{{ commercialTerm.ord }}</td>
+            <td class="amauntInpt" style="width: 177px;">
+              <select style="height: 50px;" (change)="selectedPayment($event, commercialTerm)" [ngModel]="commercialTerm.paymentTerms ? commercialTerm.paymentTerms.visibleName : ''">
                 <option value="" disabled>Select</option>
                 <option *ngFor="let payment of payment_list" [value]="payment.visibleName">{{ payment.visibleName }}</option>
-              </select></td>
-              <td class="amauntInpt" style=" font-size: 20px; width: 100px;"><input class="amauntInpt" type="number" min="1" [(ngModel)]="commercialTerm.percent">&nbsp;&nbsp;%</td>
-              <td class="amauntInpt" ><input style=" font-size: 20px;" class="amauntInpt" type="number" min="1"  [(ngModel)]="commercialTerm.days">&nbsp;&nbsp;Дней</td>
-              <td class="amauntInpt"><button (click)="deleteTerm(commercialTerm.ord)">Удалить</button>
-          </tbody>
-        </table>
-      </div>
-        <button class="plusbt2" (click)="addTerm()" >Добавить условие</button>
+              </select>
+            </td>
+            <td class="amauntInpt" style="font-size: 20px; width: 100px;">
+              <input class="amauntInpt" type="number" min="1" max="{{ 100 - getTotalPercentExceptCurrent(commercialTerm) }}" [(ngModel)]="commercialTerm.percent" (ngModelChange)="onPercentChange(commercialTerm)">
+              &nbsp;&nbsp;%
+            </td>
+            <td class="amauntInpt">
+              <input style="font-size: 20px;" class="amauntInpt" type="number" min="1" [(ngModel)]="commercialTerm.days">
+              &nbsp;&nbsp;Дней
+            </td>
+            <td class="amauntInpt"><button (click)="deleteTerm(commercialTerm.ord)">Удалить</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <button class="plusbt2" (click)="addTerm()">Добавить условие</button>
       <div class="button-container">
         <button (click)="goToBackCommercialPageCansel()">Отмена</button>
         <button (click)="goToBackCommercialPageOk()">Сохранить</button>

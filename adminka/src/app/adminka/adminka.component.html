@@ -67,9 +67,9 @@
                     </table>
                     <p-paginator
                       (onPageChange)="onPageChange($event)"
-                      [first]="0"
-                      [rows]="20"
-                      [totalRecords]="totalCount">
+                      [first]="firstMotorList"
+                      [rows]="rowsMotorList"
+                      [totalRecords]="totalCountMotorList">
                   </p-paginator>
                 </div>
             </div>
@@ -126,10 +126,10 @@
                         </tbody>
                     </table>
                     <p-paginator
-                      (onPageChange)="onPageChange($event)"
-                      [first]="0"
-                      [rows]="20"
-                      [totalRecords]="totalCount">
+                      (onPageChange)="onPageChange2($event)"
+                      [first]="firstMotorAdapterTypeList"
+                      [rows]="rowsMotorAdapterTypeList"
+                      [totalRecords]="totalCountMotorAdapterTypeList">
                     </p-paginator>
                 </div>
             </div>
@@ -183,10 +183,10 @@
                         </tbody>
                     </table>
                     <p-paginator
-                      (onPageChange)="onPageChange($event)"
-                      [first]="0"
-                      [rows]="20"
-                      [totalRecords]="totalCount">
+                      (onPageChange)="onPageChange3($event)"
+                      [first]="isSearchMode ? firstSearchList : firstProductList"
+                      [rows]="isSearchMode ? rowsSearchList : rowsProductList"
+                      [totalRecords]="isSearchMode ? totalCountSearchList : totalCountProductList">
                     </p-paginator>
                 </div>
             </div>
@@ -235,10 +235,10 @@
                         </tbody>
                     </table>
                     <p-paginator
-                      (onPageChange)="onPageChange($event)"
-                      [first]="0"
-                      [rows]="20"
-                      [totalRecords]="totalCount">
+                      (onPageChange)="onPageChange5($event)"
+                      [first]="firstProductOption"
+                      [rows]="rowsProductOption"
+                      [totalRecords]="totalCountProductOption">
                     </p-paginator>
                 </div>
             </div>
@@ -281,10 +281,10 @@
                         </tbody>
                     </table>
                     <p-paginator
-                      (onPageChange)="onPageChange($event)"
-                      [first]="0"
-                      [rows]="20"
-                      [totalRecords]="totalCount">
+                      (onPageChange)="onPageChange6($event)"
+                      [first]="firstReducer"
+                      [rows]="rowsReducer"
+                      [totalRecords]="totalCountReducer">
                     </p-paginator>
                 </div>
             </div>
@@ -341,10 +341,10 @@
                         </tbody>
                     </table>
                     <p-paginator
-                      (onPageChange)="onPageChange($event)"
-                      [first]="0"
-                      [rows]="20"
-                      [totalRecords]="totalCount">
+                      (onPageChange)="onPageChange8($event)"
+                      [first]="firstReducerSize"
+                      [rows]="rowsReducerSize"
+                      [totalRecords]="totalCountReducerSize">
                     </p-paginator>
                 </div>
             </div>
@@ -375,10 +375,10 @@
                         </tbody>
                     </table>
                     <p-paginator
-                      (onPageChange)="onPageChange($event)"
-                      [first]="0"
-                      [rows]="20"
-                      [totalRecords]="totalCount">
+                      (onPageChange)="onPageChange9($event)"
+                      [first]="firstReducerOutputShaft"
+                      [rows]="rowsReducerOutputShaft"
+                      [totalRecords]="totalCountReducerOutputShaft">
                     </p-paginator>
                 </div>
             </div>
@@ -435,10 +435,10 @@
                         </tbody>
                     </table>
                     <p-paginator
-                      (onPageChange)="onPageChange($event)"
-                      [first]="0"
-                      [rows]="20"
-                      [totalRecords]="totalCount">
+                      (onPageChange)="onPageChange11($event)"
+                      [first]="firstReducerInstallationType"
+                      [rows]="rowsReducerInstallationType"
+                      [totalRecords]="totalCountReducerInstallationType">
                     </p-paginator>
                 </div>
             </div>
@@ -469,10 +469,10 @@
                         </tbody>
                     </table>
                     <p-paginator
-                      (onPageChange)="onPageChange($event)"
-                      [first]="0"
-                      [rows]="20"
-                      [totalRecords]="totalCount">
+                      (onPageChange)="onPageChange12($event)"
+                      [first]="firstReducerInputType"
+                      [rows]="rowsReducerInputType"
+                      [totalRecords]="totalCountReducerInputType">
                     </p-paginator>
                 </div>
             </div>
@@ -509,10 +509,10 @@
                       </tbody>
                   </table>
                   <p-paginator
-                    (onPageChange)="onPageChange($event)"
-                    [first]="0"
-                    [rows]="20"
-                    [totalRecords]="totalCount">
+                    (onPageChange)="onPageChange13($event)"
+                    [first]="firstListManagers"
+                    [rows]="rowsListManagers"
+                    [totalRecords]="totalCountListManagers">
                   </p-paginator>
               </div>
           </div>
