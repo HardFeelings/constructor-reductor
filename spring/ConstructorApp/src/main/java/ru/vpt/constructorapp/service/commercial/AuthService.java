@@ -48,22 +48,6 @@ public class AuthService {
         return new LoginResponseDto(token, refreshToken.getToken());
     }
 
-    public Boolean createNewUser(RegistrationDto registrationDto) {
-        if (Objects.isNull(registrationDto))
-            throw new BadRequestException("Невозможно зарегистрировать пользователя: dto равен null", 400);
-        if (Objects.isNull(registrationDto.getPassword()) || registrationDto.getPassword().isEmpty())
-            throw new BadRequestException("Невозможно зарегистрировать пользователя: пароль равен null", 400);
-        if (Objects.isNull(registrationDto.getConfirmPassword()) || !registrationDto.getConfirmPassword().equals(registrationDto.getPassword()))
-            throw new BadRequestException("Невозможно зарегистрировать пользователя: пароли должны совпадать", 400);
-        if (Objects.isNull(registrationDto.getUsername()) || registrationDto.getUsername().isEmpty())
-            throw new BadRequestException("Невозможно зарегистрировать пользователя: имя пользователя равно null", 400);
-        if (employeeService.findByLogin(registrationDto.getUsername()).isPresent())
-            throw new BadRequestException("Невозможно зарегистрировать пользователя: данный пользователь уже существует", 400);
-
-        return employeeService.createNewEmployee(registrationDto);
-
-    }
-
     public LoginResponseDto refreshToken(RefreshTokenDto refreshTokenDto) {
         if(Objects.isNull(refreshTokenDto))
             throw new BadRequestException("Refresh token is null", 400);

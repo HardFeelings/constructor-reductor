@@ -24,11 +24,6 @@ public class AuthController extends AbstractController implements AuthApi {
     }
 
     @Override
-    public ResponseEntity<ResponseDto<Boolean>> createNewUser(RegistrationDto registrationDto) {
-        return response(authService.createNewUser(registrationDto));
-    }
-
-    @Override
     public ResponseEntity<ResponseDto<LoginResponseDto>> refreshToken(RefreshTokenDto refreshTokenDto) {
         return response(authService.refreshToken(refreshTokenDto));
     }

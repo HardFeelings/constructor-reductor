@@ -33,7 +33,7 @@
               "src/styles.scss"
             ],
             "scripts": [],
-            "baseHref": "/admin/"
+            "baseHref": "/inner/"
           },
           "configurations": {
             "production": {
