@@ -14,7 +14,7 @@ public interface ReducerInstallationTypeApi {
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @GetMapping("/reducerInstallationType")
     ResponseEntity<ResponseDto<ReducerInstallationPaginationDto>> getAllReducerInstallationTypes(@RequestParam(value = "offset", defaultValue = "0") Integer offset,
-                                                                                                   @RequestParam(value = "limit", defaultValue = "20") Integer limit);
+                                                                                                   @RequestParam(value = "limit", defaultValue = "15") Integer limit);
 
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @GetMapping("/reducerInstallationType/{id}")

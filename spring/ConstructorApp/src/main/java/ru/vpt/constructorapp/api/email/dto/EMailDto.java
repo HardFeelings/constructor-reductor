@@ -14,4 +14,5 @@ public class EMailDto {
     private String email;
     private String phoneNumber;
     private String productName;
+    private String info;
 }

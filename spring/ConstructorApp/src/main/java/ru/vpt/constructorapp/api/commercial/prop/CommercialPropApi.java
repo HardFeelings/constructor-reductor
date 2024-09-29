@@ -21,7 +21,7 @@ public interface CommercialPropApi {
     @PostMapping("/security/commercialProp/getByFilter")
     ResponseEntity<ResponseDto<CommercialPropPaginationDto>> getByFilter(@RequestBody CommercialPropDto commercialPropDto,
                                                                          @RequestParam(value = "offset", defaultValue = "0") Integer offset,
-                                                                         @RequestParam(value = "limit", defaultValue = "20") Integer limit);
+                                                                         @RequestParam(value = "limit", defaultValue = "15") Integer limit);
     @DeleteMapping("/security/commercialProp/{id}")
     ResponseEntity<ResponseDto<Boolean>> delete(@PathVariable("id") Long id);
 

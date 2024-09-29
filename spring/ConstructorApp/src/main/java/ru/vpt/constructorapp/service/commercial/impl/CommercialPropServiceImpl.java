@@ -58,13 +58,17 @@ public class CommercialPropServiceImpl implements CommercialPropService {
     @Override
     public CommercialPropDto save(CommercialPropDto dto) {
         if (Objects.isNull(dto)) {
-            throw new BadRequestException("Невозможно сохранить опции продукта: dto равен null", 400);
+            throw new BadRequestException("Невозможно сохранить коммерческое предложение: dto равен null", 400);
         }
+        if (dto.getCommercialPropTerms() != null &&
+                dto.getCommercialPropTerms().stream().mapToDouble(CommercialPropTermsDto::getPercent).sum() != 100)
+            throw new BadRequestException("Невозможно сохранить коммерческое предложение: сумма процентов не равно 100", 400);
+
         CommercialPropEntity entity = mapper.toEntity(dto);
 
         double cost = 0;
-        for( CommercialPropItemDto item : dto.getCommercialPropItems()){
-            if(item.getProduct() != null && item.getProduct().getPrice() != null)
+        for (CommercialPropItemDto item : dto.getCommercialPropItems()) {
+            if (item.getProduct() != null && item.getProduct().getPrice() != null)
                 cost += item.getProduct().getPrice() * item.getAmount();
         }
         entity.setCost(BigDecimal.valueOf(cost));
@@ -79,7 +83,7 @@ public class CommercialPropServiceImpl implements CommercialPropService {
                 .map(item -> termsService.save(item, savedDto.getIdCommercialProp())).toList();
 
         savedDto.setCommercialPropTerms(commercialPropTermsDtos.stream()
-                        .sorted(Comparator.comparingLong(CommercialPropTermsDto::getOrd)).collect(Collectors.toList()));
+                .sorted(Comparator.comparingLong(CommercialPropTermsDto::getOrd)).collect(Collectors.toList()));
         savedDto.setCommercialPropItems(commercialPropItemDtos);
         return savedDto;
     }
@@ -110,7 +114,7 @@ public class CommercialPropServiceImpl implements CommercialPropService {
         if (!repo.existsById(id)) {
             throw new NotFoundException("Невозможно сформировать файл: не найден объект с id: " + id, 404);
         }
-        BufferedInputStream bufferedInputStream =  new BufferedInputStream(reportService.report(findById(id)));
+        BufferedInputStream bufferedInputStream = new BufferedInputStream(reportService.report(findById(id)));
         return bufferedInputStream;
     }
 

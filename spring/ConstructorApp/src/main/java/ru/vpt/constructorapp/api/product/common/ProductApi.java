@@ -13,7 +13,7 @@ public interface ProductApi {
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @GetMapping("/product")
     ResponseEntity<ResponseDto<ProductPaginationDto>> getAllProducts(@RequestParam(value = "offset", defaultValue = "0") Integer offset,
-                                                                     @RequestParam(value = "limit", defaultValue = "20") Integer limit);
+                                                                     @RequestParam(value = "limit", defaultValue = "15") Integer limit);
 
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @GetMapping("/product/{id}")
@@ -22,7 +22,7 @@ public interface ProductApi {
     @GetMapping("/security/product/getByName")
     ResponseEntity<ResponseDto<ProductPaginationDto>> getByName(@RequestParam("name") String name,
                                                                 @RequestParam(value = "offset", defaultValue = "0") Integer offset,
-                                                                @RequestParam(value = "limit", defaultValue = "20") Integer limit);
+                                                                @RequestParam(value = "limit", defaultValue = "15") Integer limit);
 
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @PostMapping("/security/product")

@@ -33,7 +33,8 @@ public class EMailService {
         sb.append("Имя пользователя: ").append(dto.getName()).append("\n")
                 .append("Почта: ").append(dto.getEmail()).append("\n")
                 .append("Телефон для связи: ").append(dto.getPhoneNumber()).append("\n")
-                .append("Оборудование: ").append(dto.getProductName());
+                .append("Оборудование: ").append(dto.getProductName()).append("\n")
+                .append("Описание: ").append(dto.getInfo());
         return sb.toString();
     }
 }

@@ -14,7 +14,7 @@ public interface ReducerSizeApi {
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @GetMapping("/reducerSize")
     ResponseEntity<ResponseDto<ReducerSizePaginationDto>> getAllReducerSizes(@RequestParam(value = "offset", defaultValue = "0") Integer offset,
-                                                                             @RequestParam(value = "limit", defaultValue = "20") Integer limit);
+                                                                             @RequestParam(value = "limit", defaultValue = "15") Integer limit);
 
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @GetMapping("/reducerSize/{id}")
