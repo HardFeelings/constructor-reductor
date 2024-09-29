@@ -13,6 +13,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -43,20 +44,6 @@ public class SecurityConfig {
                 .cors(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/security/**").authenticated()
-//                        .requestMatchers("/security/admin/**").hasRole("ADMIN")
-//                        .requestMatchers("/security/motorAdapterType/**").hasRole("ADMIN")
-//                        .requestMatchers("/security/motor**").hasRole("ADMIN")
-//                        .requestMatchers("/security/motorType**").hasRole("ADMIN")
-//                        .requestMatchers("/security/product**").hasRole("ADMIN")
-//                        .requestMatchers("/security/productOption**").hasRole("ADMIN")
-//                        .requestMatchers("/security/productType**").hasRole("ADMIN")
-//                        .requestMatchers("/security/reducer**").hasRole("ADMIN")
-//                        .requestMatchers("/security/reducerInputType**").hasRole("ADMIN")
-//                        .requestMatchers("/security/reducerInstallationType**").hasRole("ADMIN")
-//                        .requestMatchers("/security/reducerMounting**").hasRole("ADMIN")
-//                        .requestMatchers("/security/reducerOutputShaftType**").hasRole("ADMIN")
-//                        .requestMatchers("/security/reducerSize**").hasRole("ADMIN")
-//                        .requestMatchers("/security/reducerType**").hasRole("ADMIN")
                         .anyRequest().permitAll())
                 .sessionManagement((sessionManagement) -> sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .exceptionHandling((exceptionHandling) -> exceptionHandling.authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)))
@@ -74,8 +61,8 @@ public class SecurityConfig {
     }
 
     @Bean
-    public BCryptPasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
+    public NoOpPasswordEncoder passwordEncoder() {
+        return (NoOpPasswordEncoder) NoOpPasswordEncoder.getInstance();
     }
 
     @Bean

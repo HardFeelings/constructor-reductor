@@ -1,5 +1,8 @@
-/spring/ConstructorApp/target/*
-!/spring/ConstructorApp/target/ConstructorApp-0.0.1-SNAPSHOT.jar
+
+!spring/ConstructorApp/target/
+
+spring/ConstructorApp/target/*
+!spring/ConstructorApp/target/ConstructorApp-0.0.1-SNAPSHOT.jar
 
 
 # See http://help.github.com/ignore-files/ for more about ignoring files.
