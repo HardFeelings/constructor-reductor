@@ -17,6 +17,9 @@ import { ReducerService } from '../services/reducer.service';
 import { ManagerService } from '../services/manager.service';
 import { NGXLogger } from "ngx-logger";
 import { Router } from '@angular/router';
+import { EmployeeService } from '../services/employee.service';
+// import { Employee } from '../models/employee';
+import { Employee } from '../classes/employee';
 
 @Component({
   selector: 'app-adminka',
@@ -40,54 +43,60 @@ export class AdminkaComponent {
   reducerInstallationType_list: ReducerInstallationType[]
   reducerInputType_list: ReducerInputType[]
   manager_list:Manager[];
+  employee_list:Employee[];
 
   searchData: string | null = null;
   // totalCount: number;
   totalCountProductOption: number;
   firstProductOption: number = 0;
-  rowsProductOption: number = 20;
+  rowsProductOption: number = 15;
 
   totalCountReducer: number;
   firstReducer: number = 0;
-  rowsReducer: number = 20;
+  rowsReducer: number = 15;
 
   totalCountReducerSize: number;
   firstReducerSize: number = 0;
-  rowsReducerSize: number = 20;
+  rowsReducerSize: number = 15;
 
   totalCountReducerOutputShaft: number;
   firstReducerOutputShaft: number = 0;
-  rowsReducerOutputShaft: number = 20;
+  rowsReducerOutputShaft: number = 15;
 
   totalCountReducerInstallationType:number;
   firstReducerInstallationType:number = 0;
-  rowsReducerInstallationType:number = 20;
+  rowsReducerInstallationType:number = 15;
 
   totalCountReducerInputType: number;
   firstReducerInputType: number = 0;
-  rowsReducerInputType: number = 20;
+  rowsReducerInputType: number = 15;
 
   totalCountMotorList:number;
   firstMotorList:number = 0;
-  rowsMotorList:number = 20;
+  rowsMotorList:number = 15;
 
   totalCountProductList: number;
   firstProductList: number = 0;
-  rowsProductList: number = 20;
+  rowsProductList: number = 15;
 
 
   firstSearchList: number = 0;
-  rowsSearchList: number = 20;
+  rowsSearchList: number = 15;
   totalCountSearchList: number;
   isSearchMode = false;
 
   totalCountMotorAdapterTypeList:number;
   firstMotorAdapterTypeList:number = 0;
-  rowsMotorAdapterTypeList:number = 20;
+  rowsMotorAdapterTypeList:number = 15;
 
   totalCountListManagers:number;
   firstListManagers:number = 0;
-  rowsListManagers:number = 20
+  rowsListManagers:number = 15;
+
+  totalCountListEmployees:number;
+  firstListEmployees:number = 0;
+  rowsListEmployees:number = 15;
+
 
   page: number = 0;
   page2: number = 0;
@@ -99,8 +108,9 @@ export class AdminkaComponent {
   page11: number = 0;
   page12: number = 0;
   page13: number = 0;
+  page15: number = 0;
 
-  constructor(private http: HttpClient, private  router: Router, private imageService: ImageService, private logger: NGXLogger, public dialog:MatDialog, private motorService: MotorService, private productService: ProductService, private reducerService: ReducerService, private managerService: ManagerService) {
+  constructor(private http: HttpClient, private  router: Router, private employeeService: EmployeeService ,private imageService: ImageService, private logger: NGXLogger, public dialog:MatDialog, private motorService: MotorService, private productService: ProductService, private reducerService: ReducerService, private managerService: ManagerService) {
     this.paymentTerms_list = new Array<PaymentTerms>();
     this.motor_list = new Array<Motor>();
     this.motorType_list = new Array<MotorType>();
@@ -145,6 +155,7 @@ export class AdminkaComponent {
     this.getReducerInstallationType(0)
     this.getReducerInputType(0)
     this.getListManagers(0)
+    this.getListEmployees(0)
     this.getListPaymentTerms()
     this.setid(0);
   }
@@ -175,7 +186,7 @@ export class AdminkaComponent {
   }
 
   navigateToUrl() {
-    this.router.navigate(['/comm']);
+    this.router.navigate(['/commercial']);
   }
 
   onPageChange(event: any){
@@ -273,6 +284,15 @@ export class AdminkaComponent {
     this.logger.log('getListManagers', this.id, event.page);
   }
 
+  onPageChange15(event: any){
+    this.logger.log("event.page", event.page);
+    this.page15 = event.page;
+    this.firstListEmployees= event.first;
+    this.rowsListEmployees = event.rows;
+    this.getListEmployees(event.page);
+    this.logger.log('getListEmployees', this.id, event.page);
+  }
+
 
   oKDelete(id: number, i: any){
     const dialogAddingNewStudent = this.dialog.open(DeleteComponent, {
@@ -341,6 +361,10 @@ export class AdminkaComponent {
         else if(this.id == 14){
           this.deletePaymentTerm(i);
           this.logger.log('deletePaymentTerm', this.id, i);
+        }
+        else if(this.id == 15){
+          this.deleteEmployee(i);
+          this.logger.log('deleteEmployee', this.id, i);
         }
       } else{
         this.logger.log('Пользователь выбрал не удалять');
@@ -1027,6 +1051,62 @@ export class AdminkaComponent {
     });
   }
 
+  getListEmployees(offset: number) {
+    this.employeeService.getPageEmployees(offset).subscribe((respones: ResponseInfo<Page<any>>)=>{
+      if(respones.data !== null){
+        //this.totalCount = respones.data.totalCount;
+        this.totalCountListEmployees = respones.data.totalCount;
+        this.employee_list = respones.data.content.map((e: any) => {
+          const employee = new Employee();
+          employee.idEmployee =e.idEmployee;
+          employee.login =e.login;
+          employee.password =e.password;
+          employee.admin =e.admin;
+          return employee;
+        });
+      } else {
+        alert(JSON.stringify(respones.errorMsg))
+      }
+    });
+  }
+
+  deleteEmployee(i: Employee) {
+    i.delete(this.http).subscribe((data:boolean) => {
+      if(data) {
+        this.employee_list = this.employee_list.filter(item => item.idEmployee !== i.idEmployee);
+        this.getListEmployees(0);
+      }
+    })
+  }
+
+  saveEmployee(employee: Employee){
+    this.logger.log(employee);
+    employee.save(this.http).subscribe((respones: ResponseInfo<Employee>) => {
+
+      this.logger.log(respones.data);
+      const index = this.employee_list.findIndex(item => item.idEmployee === employee.idEmployee);
+      if (index !== -1) {
+          let  employeeData = new Employee;
+          employeeData = employee;
+          employeeData.idEmployee = respones.data.idEmployee;
+
+          this.employee_list[index] = employeeData;
+          this.logger.log('employee_list', this.employee_list);
+      } else {
+          let  employeeData2 = new Employee;
+          employeeData2 = employee;
+          employeeData2.idEmployee = respones.data.idEmployee;
+          this.employee_list.push(employeeData2);
+          this.logger.log('datadata',respones.data);
+      }
+    });
+  }
+
+  addEmployee(){
+    var newEmployee = new Employee()
+    this.employee_list.push(newEmployee)
+  }
+
   addManager(){
     var newManager = new Manager()
     this.manager_list.push(newManager)
@@ -1045,6 +1125,7 @@ export class AdminkaComponent {
           manager.position =e.position;
           manager.email =e.email;
           manager.phoneNumber =e.phoneNumber;
+          manager.idUser - e.idUser;
           return manager;
         });
       } else {

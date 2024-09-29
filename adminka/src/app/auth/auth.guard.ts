@@ -22,11 +22,11 @@ export class AuthGuard implements CanActivate {
     const isAdmin = decodedToken.roles && Array.isArray(decodedToken.roles) && decodedToken.roles.includes('ROLE_ADMIN');
 
     if (route.routeConfig?.path === 'admin' && !isAdmin) {
-      this.router.navigate(['/comm']);
+      this.router.navigate(['/commercial']);
       return false;
     }
 
-    if (route.routeConfig?.path === 'comm' && !isAdmin) {
+    if (route.routeConfig?.path === 'commercial' && !isAdmin) {
       return true;
     }
 

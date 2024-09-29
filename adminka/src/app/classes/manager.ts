@@ -9,6 +9,7 @@ export class Manager {
   position: string;
   email: string;
   phoneNumber: string;
+  idUser: number;
 
   delete(http: HttpClient) : Observable<boolean> {
     return http.delete<boolean>(`/api/v1/security/admin/manager/${this.idManager}`)
@@ -21,6 +22,7 @@ export class Manager {
       position: this.position,
       email: this.email,
       phoneNumber: this.phoneNumber,
+      idUser: this.idUser,
     }
   }
 

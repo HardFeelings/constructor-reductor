@@ -6,7 +6,6 @@ import { AuthService } from 'src/app/auth/auth.service';
 import { LoginDto } from 'src/app/auth/loginDto';
 import { LoginResponseDto } from 'src/app/auth/loginResponseDto';
 import { RefreshTokenDto } from 'src/app/auth/refreshTokenDto';
-import { RegistrationDto } from 'src/app/auth/registrationDto';
 import { ResponseInfo } from 'src/app/models/responesInfo';
 
 
@@ -35,10 +34,10 @@ export class LoginComponent{
           const decodedToken: any = jwtDecode(response.data.token);
           const roles: string[] = decodedToken.roles || [];
           if(roles.includes('ROLE_ADMIN')){
-            this.router.navigate(['/comm']);
+            this.router.navigate(['/commercial']);
           }
           else{
-            this.router.navigate(['/comm']);
+            this.router.navigate(['/commercial']);
           }
 
         },
@@ -61,7 +60,7 @@ export class LoginComponent{
           const decodedToken: any = jwtDecode(response.data.token);
           const roles: string[] = decodedToken.roles || [];
           if(roles.includes('ROLE_ADMIN')){
-            this.router.navigate(['/comm']);
+            this.router.navigate(['/commercial']);
           }
           else{
             this.router.navigate(['/admin']);

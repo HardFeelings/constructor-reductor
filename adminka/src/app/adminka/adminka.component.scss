@@ -56,7 +56,7 @@ body {
   color: #ffffff;
   font-size: 14px;
   cursor: pointer;
-  background-color: #083b57;
+  background-color: #1e587a;
   border: none;
   padding: 10px;
   border-radius: 5px;
@@ -65,7 +65,7 @@ body {
 }
 
  .sidebar .redirectButton:hover {
-  background-color: #0c547a;
+  background-color: #083b57;
   color: #ffffff;
 }
 
@@ -148,6 +148,37 @@ body {
 .editable:focus {
     border: 1px dashed #083b57;
 }
+
+
+.custom-checkbox {
+  width: 100%;
+  height: 50px;
+  -webkit-appearance: none;
+  background-color: white;
+  border: 2px solid #083b57;
+  border-radius: 5px;
+  cursor: pointer;
+  position: relative;
+  margin: 0px;
+}
+
+.custom-checkbox:checked {
+  background-color: #083b57;
+}
+
+.custom-checkbox:checked::after {
+  content: '';
+  display: block;
+  position: absolute;
+  top: 30%;
+  left: 45%;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 4px 4px 0;
+  transform: rotate(45deg);
+}
+
 
 button {
     width: 100px;

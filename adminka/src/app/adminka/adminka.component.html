@@ -26,6 +26,7 @@
             <span (click)="setid(12)">ReducerInputType</span>
             <span (click)="setid(13)">Manager</span>
             <span (click)="setid(14)">PaymentTerms</span>
+            <span (click)="setid(15)">Users</span>
             <span class="redirectButton" (click)="navigateToUrl()">
               Commercial
             </span>
@@ -52,12 +53,12 @@
                         <tbody>
                             <tr *ngFor="let i of motor_list">
                                 <td>{{i.id}}</td>
-                                <td><textarea class="editable" [(ngModel)]="i.adapterType.id"></textarea></td>
-                                <td><textarea class="editable" [(ngModel)]="i.frequency.value"></textarea></td>
-                                <td><textarea class="editable" [(ngModel)]="i.power"></textarea></td>
-                                <td><textarea class="editable" [(ngModel)]="i.efficiency"></textarea></td>
-                                <td><textarea class="editable" [(ngModel)]="i.ratedCurrent"></textarea></td>
-                                <td><textarea class="editable" [(ngModel)]="i.type.id"></textarea></td>
+                                <td><textarea class="editable" [(ngModel)]="i.adapterType.id" type="number" min="1"></textarea></td>
+                                <td><textarea class="editable" [(ngModel)]="i.frequency.value" type="number" min="0"></textarea></td>
+                                <td><textarea class="editable" [(ngModel)]="i.power" type="number" min="0"></textarea></td>
+                                <td><textarea class="editable" [(ngModel)]="i.efficiency" type="number" min="0"></textarea></td>
+                                <td><textarea class="editable" [(ngModel)]="i.ratedCurrent" type="number" min="0"></textarea></td>
+                                <td><textarea class="editable" [(ngModel)]="i.type.id" type="number" min="1"></textarea></td>
                                 <td class="row-buttons">
                                     <button (click)="saveMotor(i)"> Сохранить </button>
                                     <button (click)="oKDelete(i.id,i)"> Удалить </button>
@@ -117,7 +118,7 @@
                             <tr *ngFor="let i of motorAdapterType_list">
                                 <td>{{i.id}}</td>
                                 <td><textarea class="editable" [(ngModel)]="i.value"></textarea></td>
-                                <td><textarea class="editable" [(ngModel)]="i.typeid"></textarea></td>
+                                <td><textarea class="editable" [(ngModel)]="i.typeid" type="number" min="1"></textarea></td>
                                 <td class="row-buttons">
                                     <button (click)="saveMotorAdapterType(i)"> Сохранить </button>
                                     <button (click)="oKDelete(i.id,i)"> Удалить </button>
@@ -162,15 +163,15 @@
                         <tbody>
                             <tr *ngFor="let i of product_list">
                                 <td>{{i.id}}</td>
-                                <td><input class="editable" [(ngModel)]="i.productTypeId"></td>
+                                <td><input class="editable" [(ngModel)]="i.productTypeId" type="number" min="1"></td>
                                 <td><input class="editable" [(ngModel)]="i.name"></td>
-                                <td><input class="editable" [(ngModel)]="i.weight"></td>
-                                <td><input class="editable" [(ngModel)]="i.price"></td>
-                                <td><input class="editable" [(ngModel)]="i.reducerId"></td>
-                                <td><input class="editable" [(ngModel)]="i.motorId"></td>
-                                <td><input class="editable" [(ngModel)]="i.rpm"></td>
-                                <td><input class="editable" [(ngModel)]="i.torqueMoment"></td>
-                                <td><input class="editable" [(ngModel)]="i.serviceFactor"></td>
+                                <td><input class="editable" [(ngModel)]="i.weight" type="number" min="0"></td>
+                                <td><input class="editable" [(ngModel)]="i.price" type="number" min="0"></td>
+                                <td><input class="editable" [(ngModel)]="i.reducerId" type="number" min="1"></td>
+                                <td><input class="editable" [(ngModel)]="i.motorId" type="number" min="1"></td>
+                                <td><input class="editable" [(ngModel)]="i.rpm" type="number" min="0"></td>
+                                <td><input class="editable" [(ngModel)]="i.torqueMoment" type="number" min="0"></td>
+                                <td><input class="editable" [(ngModel)]="i.serviceFactor" type="number" min="0"></td>
                                 <td><input class="editable" [(ngModel)]="i.optionsString"></td>
                                 <td  class="row-buttonstt" *ngIf="i.imageEmpty == true"><input type="file" #fileInput style="display: none" (change)="onFileSelected($event, i)">
                                   <button (click)="openFilePicker(fileInput)">Загрузить</button></td>
@@ -226,7 +227,7 @@
                             <tr *ngFor="let i of productOption_list">
                                 <td>{{i.idProductOption}}</td>
                                 <td><input class="editable" [(ngModel)]="i.productOptionValue"></td>
-                                <td><input class="editable" [(ngModel)]="i.productTypeId"></td>
+                                <td><input class="editable" [(ngModel)]="i.productTypeId" type="number" min="1"></td>
                                 <td class="row-buttons">
                                     <button (click)="saveProductOptions(i)"> Сохранить </button>
                                     <button (click)="oKDelete(i.idProductOption,i)"> Удалить </button>
@@ -265,14 +266,14 @@
                         <tbody>
                             <tr *ngFor="let i of reducer_list">
                                 <td>{{i.idReducer}}</td>
-                                <td><input class="editable" [(ngModel)]="i.reducerTypeId"></td>
-                                <td><input class="editable" [(ngModel)]="i.reducerSizeId"></td>
-                                <td><input class="editable" [(ngModel)]="i.reducerInputTypeId"></td>
-                                <td><input class="editable" [(ngModel)]="i.reducerOutputShaftTypeId"></td>
-                                <td><input class="editable" [(ngModel)]="i.reducerInstallationTypeId"></td>
-                                <td><input class="editable" [(ngModel)]="i.reducerMountingId"></td>
-                                <td><input class="editable" [(ngModel)]="i.diameterOutputShaft"></td>
-                                <td><input class="editable" [(ngModel)]="i.ratio"></td>
+                                <td><input class="editable" [(ngModel)]="i.reducerTypeId" type="number" min="1"></td>
+                                <td><input class="editable" [(ngModel)]="i.reducerSizeId" type="number" min="1"></td>
+                                <td><input class="editable" [(ngModel)]="i.reducerInputTypeId" type="number" min="1"></td>
+                                <td><input class="editable" [(ngModel)]="i.reducerOutputShaftTypeId" type="number" min="1"></td>
+                                <td><input class="editable" [(ngModel)]="i.reducerInstallationTypeId" type="number" min="1"></td>
+                                <td><input class="editable" [(ngModel)]="i.reducerMountingId" type="number" min="1"></td>
+                                <td><input class="editable" [(ngModel)]="i.diameterOutputShaft" type="number"></td>
+                                <td><input class="editable" [(ngModel)]="i.ratio" type="number" min="0"></td>
                                 <td class="row-buttons">
                                     <button (click)="saveReducer(i)"> Сохранить </button>
                                     <button (click)="oKDelete(i.idReducer,i)"> Удалить </button>
@@ -332,7 +333,7 @@
                             <tr *ngFor="let i of reducerSize_list">
                                 <td>{{i.idReducerSize}}</td>
                                 <td><input class="editable" [(ngModel)]="i.reducerSizeValue"></td>
-                                <td><input class="editable" [(ngModel)]="i.reducerTypeId"></td>
+                                <td><input class="editable" [(ngModel)]="i.reducerTypeId" type="number" min="1"></td>
                                 <td class="row-buttons">
                                     <button (click)="saveReducerSize(i)"> Сохранить </button>
                                     <button (click)="oKDelete(i.idReducerSize,i)"> Удалить </button>
@@ -366,7 +367,7 @@
                             <tr *ngFor="let i of reducerOutput_list">
                                 <td>{{i.idReducerOutputShaftType}}</td>
                                 <td><input class="editable" [(ngModel)]="i.value"></td>
-                                <td><input class="editable" [(ngModel)]="i.reducerTypeId"></td>
+                                <td><input class="editable" [(ngModel)]="i.reducerTypeId" type="number" min="1"></td>
                                 <td class="row-buttons">
                                     <button (click)="saveReducerOutputShaft(i)"> Сохранить </button>
                                     <button (click)="oKDelete(i.idReducerOutputShaftType,i)"> Удалить </button>
@@ -426,7 +427,7 @@
                             <tr *ngFor="let i of reducerInstallationType_list">
                                 <td>{{i.idReducerInstallationType}}</td>
                                 <td><input class="editable" [(ngModel)]="i.value"></td>
-                                <td><input class="editable" [(ngModel)]="i.reducerTypeId"></td>
+                                <td><input class="editable" [(ngModel)]="i.reducerTypeId" type="number" min="1"></td>
                                 <td class="row-buttons">
                                     <button (click)="saveReducerInstallationType(i)"> Сохранить </button>
                                     <button (click)="oKDelete(i.idReducerInstallationType,i)"> Удалить </button>
@@ -460,7 +461,7 @@
                             <tr *ngFor="let i of reducerInputType_list">
                                 <td>{{i.idReducerInputType}}</td>
                                 <td><input class="editable" [(ngModel)]="i.value"></td>
-                                <td><input class="editable" [(ngModel)]="i.reducerTypeId"></td>
+                                <td><input class="editable" [(ngModel)]="i.reducerTypeId" type="number" min="1"></td>
                                 <td class="row-buttons">
                                     <button (click)="saveReducerInputType(i)"> Сохранить </button>
                                     <button (click)="oKDelete(i.idReducerInputType,i)"> Удалить </button>
@@ -490,6 +491,7 @@
                               <th>position</th>
                               <th>email</th>
                               <th>phoneNumber</th>
+                              <th>idUser</th>
                               <th></th>
                           </tr>
                       </thead>
@@ -501,6 +503,7 @@
                               <td><input class="editable" [(ngModel)]="i.position"></td>
                               <td><input class="editable" [(ngModel)]="i.email"></td>
                               <td><input class="editable" [(ngModel)]="i.phoneNumber"></td>
+                              <td><input class="editable" [(ngModel)]="i.idUser" type="number" min="1"></td>
                               <td class="row-buttons">
                                   <button (click)="saveManager(i)"> Сохранить </button>
                                   <button (click)="oKDelete(i.idManager,i)"> Удалить </button>
@@ -544,6 +547,44 @@
                 </table>
             </div>
         </div>
+        <div *ngIf="id==15">
+          <div class="buttons">
+              <button (click)="addEmployee()"> Новый </button>
+          </div>
+          <div class="table-container">
+              <table class="table">
+                  <thead>
+                      <tr>
+                          <th>idUser</th>
+                          <th>login</th>
+                          <th>password</th>
+                          <th>isAdmin</th>
+                          <th></th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      <tr *ngFor="let i of employee_list">
+                          <td>{{i.idEmployee}}</td>
+                          <td><input class="editable" [(ngModel)]="i.login"></td>
+                          <td><input class="editable" [(ngModel)]="i.password"></td>
+                          <td class="chek">
+                            <input type="checkbox" [(ngModel)]="i.admin" class="custom-checkbox">
+                          </td>
+                          <td class="row-buttons">
+                              <button (click)="saveEmployee(i)"> Сохранить </button>
+                              <button (click)="oKDelete(i.idEmployee,i)"> Удалить </button>
+                          </td>
+                      </tr>
+                  </tbody>
+              </table>
+              <p-paginator
+                (onPageChange)="onPageChange15($event)"
+                [first]="firstListEmployees"
+                [rows]="rowsListEmployees"
+                [totalRecords]="totalCountListEmployees">
+              </p-paginator>
+          </div>
+      </div>
         </div>
     </div>
 </body>
