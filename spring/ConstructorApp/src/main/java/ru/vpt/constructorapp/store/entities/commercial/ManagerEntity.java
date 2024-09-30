@@ -33,5 +33,8 @@ public class ManagerEntity {
     @Column(name = "phone_number")
     private String phoneNumber;
 
+    @OneToOne
+    @JoinColumn(name = "employee_id", referencedColumnName = "id_employee")
+    private Employee employee;
 
 }

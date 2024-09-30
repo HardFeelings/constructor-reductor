@@ -2,11 +2,13 @@ package ru.vpt.constructorapp.api.commercial.manager;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import ru.vpt.constructorapp.api.commercial.manager.dto.ManagerDto;
 import ru.vpt.constructorapp.api.commercial.manager.dto.ManagerPaginationDto;
 import ru.vpt.constructorapp.api.util.ResponseDto;
 
+import java.security.Principal;
 import java.util.List;
 
 @RequestMapping
@@ -26,5 +28,5 @@ public interface ManagerApi {
     ResponseEntity<ResponseDto<Boolean>> delete(@PathVariable("id") Long id);
 
     @GetMapping("/security/manager")
-    ResponseEntity<ResponseDto<List<ManagerDto>>> getAllWithoutPagination();
+    ResponseEntity<ResponseDto<List<ManagerDto>>> getAllWithoutPagination(@RequestHeader("Authorization") String token);
 }

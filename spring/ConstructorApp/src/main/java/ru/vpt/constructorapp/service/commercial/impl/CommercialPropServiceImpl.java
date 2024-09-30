@@ -5,23 +5,24 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import ru.vpt.constructorapp.api.commercial.item.dto.CommercialPropItemDto;
+import ru.vpt.constructorapp.api.commercial.manager.dto.ManagerDto;
 import ru.vpt.constructorapp.api.commercial.payment.dto.CommercialPropTermsDto;
 import ru.vpt.constructorapp.api.commercial.prop.dto.CommercialPropDto;
 import ru.vpt.constructorapp.api.commercial.prop.dto.CommercialPropPaginationDto;
 import ru.vpt.constructorapp.api.commercial.prop.mapper.CommercialPropMapper;
 import ru.vpt.constructorapp.api.exception.BadRequestException;
 import ru.vpt.constructorapp.api.exception.NotFoundException;
-import ru.vpt.constructorapp.service.commercial.CommercialPropItemService;
-import ru.vpt.constructorapp.service.commercial.CommercialPropService;
-import ru.vpt.constructorapp.service.commercial.CommercialPropTermsService;
-import ru.vpt.constructorapp.service.commercial.ReportService;
+import ru.vpt.constructorapp.service.commercial.*;
 import ru.vpt.constructorapp.store.entities.commercial.CommercialPropEntity;
+import ru.vpt.constructorapp.store.entities.commercial.ManagerEntity;
 import ru.vpt.constructorapp.store.repo.commercial.CommercialPropRepo;
+import ru.vpt.constructorapp.util.JwtUtils;
 
 import java.io.BufferedInputStream;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
@@ -34,6 +35,8 @@ public class CommercialPropServiceImpl implements CommercialPropService {
     private final CommercialPropMapper mapper;
     private final CommercialPropItemService itemService;
     private final CommercialPropTermsService termsService;
+    private final JwtUtils jwtUtils;
+    private final ManagerService managerService;
 
     private final ReportService reportService;
 
@@ -76,15 +79,18 @@ public class CommercialPropServiceImpl implements CommercialPropService {
         entity.setTimestamp(String.valueOf(dto.getTimestamp() == null ?
                 LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd.MM.yyyy")) : dto.getTimestamp()));
         CommercialPropDto savedDto = mapper.toDTO(repo.save(entity));
-        List<CommercialPropItemDto> commercialPropItemDtos = dto.getCommercialPropItems().stream()
-                .map(item -> itemService.save(item, savedDto.getIdCommercialProp())).toList();
+        if (!Objects.isNull(dto.getCommercialPropItems())) {
+            List<CommercialPropItemDto> commercialPropItemDtos = dto.getCommercialPropItems().stream()
+                    .map(item -> itemService.save(item, savedDto.getIdCommercialProp())).toList();
+            savedDto.setCommercialPropItems(commercialPropItemDtos);
+        }
+        if (!Objects.isNull(dto.getCommercialPropTerms())) {
 
-        List<CommercialPropTermsDto> commercialPropTermsDtos = dto.getCommercialPropTerms().stream()
-                .map(item -> termsService.save(item, savedDto.getIdCommercialProp())).toList();
-
-        savedDto.setCommercialPropTerms(commercialPropTermsDtos.stream()
-                .sorted(Comparator.comparingLong(CommercialPropTermsDto::getOrd)).collect(Collectors.toList()));
-        savedDto.setCommercialPropItems(commercialPropItemDtos);
+            List<CommercialPropTermsDto> commercialPropTermsDtos = dto.getCommercialPropTerms().stream()
+                    .map(item -> termsService.save(item, savedDto.getIdCommercialProp())).toList();
+            savedDto.setCommercialPropTerms(commercialPropTermsDtos.stream()
+                    .sorted(Comparator.comparingLong(CommercialPropTermsDto::getOrd)).collect(Collectors.toList()));
+        }
         return savedDto;
     }
 
@@ -119,7 +125,23 @@ public class CommercialPropServiceImpl implements CommercialPropService {
     }
 
     @Override
-    public CommercialPropPaginationDto getByFilter(CommercialPropDto commercialPropDto, int offset, int limit) {
+    public CommercialPropPaginationDto getByFilter(String token, CommercialPropDto commercialPropDto, int offset, int limit) {
+        List<String> roles = jwtUtils.getRoles(token.substring(7));
+        for (String role : roles) {
+            if (role.contains("ADMIN"))
+                return findByFilter(commercialPropDto, offset, limit);
+        }
+        String user = jwtUtils.getUsername(token.substring(7));
+        ManagerEntity managerEntity = managerService.getByUsername(user);
+        if (!Objects.isNull(commercialPropDto)) {
+            commercialPropDto.setManager(managerEntity);
+        }
+        return findByFilter(commercialPropDto, offset, limit);
+
+
+    }
+
+    private CommercialPropPaginationDto findByFilter(CommercialPropDto commercialPropDto, int offset, int limit) {
         Page<CommercialPropEntity> page = repo.findByFilter(commercialPropDto, PageRequest.of(offset, limit));
         CommercialPropPaginationDto paginationDto = new CommercialPropPaginationDto();
         paginationDto.setContent(page.getContent().stream().map(mapper::toDTOWithoutItems).collect(Collectors.toList()));

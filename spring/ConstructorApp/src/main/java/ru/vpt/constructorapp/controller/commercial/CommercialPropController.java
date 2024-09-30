@@ -39,8 +39,8 @@ public class CommercialPropController extends AbstractController implements Comm
     }
 
     @Override
-    public ResponseEntity<ResponseDto<CommercialPropPaginationDto>> getByFilter(CommercialPropDto commercialPropDto, Integer offset, Integer limit) {
-        return response(service.getByFilter(commercialPropDto, offset, limit));
+    public ResponseEntity<ResponseDto<CommercialPropPaginationDto>> getByFilter(String token, CommercialPropDto commercialPropDto, Integer offset, Integer limit) {
+        return response(service.getByFilter(token, commercialPropDto, offset, limit));
     }
 
     @Override

@@ -16,4 +16,5 @@ public class ManagerDto {
     private String position;
     private String email;
     private String phoneNumber;
+    private Long idUser;
 }

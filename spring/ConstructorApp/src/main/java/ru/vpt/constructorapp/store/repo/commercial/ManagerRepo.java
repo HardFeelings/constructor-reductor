@@ -11,4 +11,6 @@ import java.util.Optional;
 public interface ManagerRepo extends JpaRepository<ManagerEntity, Long> {
     List<ManagerEntity> findAll();
     Optional<ManagerEntity> findById(Long id);
+    List<ManagerEntity> findAllByEmployee_Login(String login);
+    Optional<ManagerEntity> findByEmployee_Login(String login);
 }

@@ -10,6 +10,7 @@ import ru.vpt.constructorapp.api.util.ResponseDto;
 import ru.vpt.constructorapp.controller.util.AbstractController;
 import ru.vpt.constructorapp.service.commercial.ManagerService;
 
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -39,7 +40,7 @@ public class ManagerController extends AbstractController implements ManagerApi 
     }
 
     @Override
-    public ResponseEntity<ResponseDto<List<ManagerDto>>> getAllWithoutPagination() {
-        return response(service.getAllWithoutPagination());
+    public ResponseEntity<ResponseDto<List<ManagerDto>>> getAllWithoutPagination(String token) {
+        return response(service.getAllWithoutPagination(token));
     }
 }

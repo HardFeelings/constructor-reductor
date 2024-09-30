@@ -9,9 +9,6 @@ import ru.vpt.constructorapp.api.util.ResponseDto;
 
 @RequestMapping
 public interface CommercialPropApi {
-//    @GetMapping("/security/commercialProp")
-//    ResponseEntity<ResponseDto<List<CommercialPropDto>>> getAll();
-
     @GetMapping("/security/commercialProp/{id}")
     ResponseEntity<ResponseDto<CommercialPropDto>> getById(@PathVariable("id") Long id);
 
@@ -19,9 +16,11 @@ public interface CommercialPropApi {
     ResponseEntity<ResponseDto<CommercialPropDto>> save(@RequestBody CommercialPropDto commercialPropDto);
 
     @PostMapping("/security/commercialProp/getByFilter")
-    ResponseEntity<ResponseDto<CommercialPropPaginationDto>> getByFilter(@RequestBody CommercialPropDto commercialPropDto,
+    ResponseEntity<ResponseDto<CommercialPropPaginationDto>> getByFilter(@RequestHeader("Authorization") String token,
+                                                                         @RequestBody CommercialPropDto commercialPropDto,
                                                                          @RequestParam(value = "offset", defaultValue = "0") Integer offset,
                                                                          @RequestParam(value = "limit", defaultValue = "15") Integer limit);
+
     @DeleteMapping("/security/commercialProp/{id}")
     ResponseEntity<ResponseDto<Boolean>> delete(@PathVariable("id") Long id);
 

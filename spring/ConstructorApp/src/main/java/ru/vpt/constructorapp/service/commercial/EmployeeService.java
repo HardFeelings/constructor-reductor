@@ -104,10 +104,10 @@ public class EmployeeService implements UserDetailsService {
 
         Employee employee = employeeMapper.toEntity(employeeDto);
         employee.setPassword(passwordEncoder.encode(employeeDto.getPassword()));
-        if (employeeDto.getAdmin())
-            employee.setRoles(List.of(roleService.findByName("ROLE_ADMIN"), roleService.findByName("ROLE_USER")));
-        else
+        if (Objects.isNull(employeeDto.getAdmin()) || !employeeDto.getAdmin())
             employee.setRoles(List.of(roleService.findByName("ROLE_USER")));
+        else
+            employee.setRoles(List.of(roleService.findByName("ROLE_ADMIN"), roleService.findByName("ROLE_USER")));
         return employeeMapper.toDTO(employeeRepo.save(employee));
     }
 

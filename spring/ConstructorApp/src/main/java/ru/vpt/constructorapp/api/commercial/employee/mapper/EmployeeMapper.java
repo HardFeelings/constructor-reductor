@@ -19,6 +19,7 @@ public interface EmployeeMapper {
     Employee toEntity(EmployeeDto dto);
 
     default Boolean toBoolean(Collection<Role> roles){
+        if(roles == null) return false;
         for(Role role : roles){
             if(role.getRole().equals("ROLE_ADMIN"))
                 return true;
