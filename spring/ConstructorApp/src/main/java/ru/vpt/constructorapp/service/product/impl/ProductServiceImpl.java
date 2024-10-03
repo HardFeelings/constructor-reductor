@@ -115,7 +115,12 @@ public class ProductServiceImpl implements ProductService {
         ProductEntity productEntity = productMapper.toEntity(productDto);
         productEntity.setProductType(productTypeService.findById(productDto.getProductTypeId())
                 .orElseThrow(() -> new NotFoundException("Невозможно сохранить продукт: не найден тип продукта с id: " + productDto.getProductTypeId(), 404)));
-        if (productDto.getMotor() != null) {
+        if(productDto.getMotorId() != null){
+            MotorEntity motorEntity = motorService.findById(productDto.getMotorId())
+                    .orElseThrow(() -> new NotFoundException("Невозможно сохранить продукт: не найден мотор с id: " + productDto.getMotorId(), 404));
+            productEntity.setMotor(motorEntity);
+        }
+        if (productDto.getMotorId() == null && productDto.getMotor() != null) {
             List<MotorEntity> motorEntities = motorService.findByFilter(productDto.getMotor());
             if (motorEntities.isEmpty()) {
                 MotorEntity motorEntity = motorService.saveMotorEntity(productDto.getMotor());
@@ -124,7 +129,14 @@ public class ProductServiceImpl implements ProductService {
                 productEntity.setMotor(motorEntities.get(0));
             }
         }
-        if (productDto.getReducer() != null) {
+
+        if(productDto.getReducerId() != null){
+            ReducerEntity reducerEntity = reducerService.findById(productDto.getReducerId())
+                    .orElseThrow(() -> new NotFoundException("Невозможно сохранить продукт: не найден редуктор с id: " + productDto.getReducerId(), 404));
+            productEntity.setReducer(reducerEntity);
+        }
+
+        if (productDto.getReducerId() == null && productDto.getReducer() != null) {
             List<ReducerEntity> reducerEntities = reducerService.findByFilter(productDto.getReducer());
             if (reducerEntities.isEmpty()) {
                 ReducerEntity reducerEntity = reducerService.saveReducerEntity(productDto.getReducer());

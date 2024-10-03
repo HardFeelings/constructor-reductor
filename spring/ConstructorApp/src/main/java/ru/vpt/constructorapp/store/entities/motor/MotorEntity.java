@@ -20,8 +20,8 @@ public class MotorEntity {
     private Long idMotor;
     @Column(name = "power")
     private Double power;
-    @Column(name = "frequency")
-    private Double frequency;
+    @Column(name = "poles_number")
+    private Integer polesNumber;
     @Column(name = "efficiency")
     private Double efficiency;
     @Column(name = "rated_current")

@@ -19,7 +19,7 @@ public interface MotorRepo extends JpaRepository<MotorEntity,Long> {
             "where case when :id_motor_adapter_type is null then m.id_motor_adapter_type is null else m.id_motor_adapter_type = :id_motor_adapter_type end\n" +
             "  and case when :id_motor_type is null then m.id_motor_type is null else m.id_motor_type = :id_motor_type end\n" +
             "  and case when :efficiency is null then m.efficiency is null else m.efficiency = :efficiency end\n" +
-            "  and case when :frequency is null then m.frequency is null else m.frequency = :frequency end\n" +
+            "  and case when :polesNumber is null then m.poles_number is null else m.poles_number = :polesNumber end\n" +
             "  and case when :moment_of_inertia is null then m.moment_of_inertia is null else m.moment_of_inertia = :moment_of_inertia end\n" +
             "  and case when :power is null then m.power is null else m.power = :power end\n" +
             "    and case when :rated_current is null then m.rated_current is null else m.rated_current = :rated_current end;", nativeQuery = true)
@@ -27,7 +27,7 @@ public interface MotorRepo extends JpaRepository<MotorEntity,Long> {
             @Param("id_motor_adapter_type") Long idMotorAdapterType,
             @Param("id_motor_type") Long idMotorType,
             @Param("efficiency") Double efficiency,
-            @Param("frequency") Double frequency,
+            @Param("polesNumber") Integer polesNumber,
             @Param("moment_of_inertia") Double momentOfInertia,
             @Param("power") Double power,
             @Param("rated_current") Double ratedCurrent);

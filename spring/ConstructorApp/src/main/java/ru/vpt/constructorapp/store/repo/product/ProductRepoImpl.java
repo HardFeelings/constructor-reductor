@@ -48,6 +48,7 @@ public class ProductRepoImpl extends QuerydslRepositorySupport implements Produc
                         .add(filter.getMotorTypeId(), productEntity.motor.idMotor::eq)
                         .add(filter.getMotorAdapterTypeId(), productEntity.motor.motorAdapterType.idMotorAdapterType::eq)
                         .add(filter.getPower(), productEntity.motor.power::eq)
+                        .add(filter.getPolucesNumber(), productEntity.motor.polesNumber::eq)
                         .add(filter.getIdReducerType(), productEntity.reducer.reducerType.idReducerType::eq)
                         .add(filter.getIdReducerSize(), productEntity.reducer.reducerSize.idReducerSize::eq)
                         .add(filter.getDiamOutput() == null ? null : filter.getDiamOutput() - filter.getDiamOutputAllowance(), productEntity.reducer.diameterOutputShaft::goe)

@@ -27,8 +27,8 @@ public class ProductDto {
     private Long reducerId;
     private Double serviceFactor;
     private ReducerDto reducer;
-    private Long motorId;
     private MotorDto motor;
+    private Long motorId;
    // private Set<ProductOptionDto> options;
     private Set<Long> optionsIds;
     private Boolean imageEmpty;

@@ -15,12 +15,13 @@ public class FilterDto {
     // product param
     private Long productTypeId;
     private List<Long> productOptions;
+    private Double rpm;
 
     // motor param
     private Long motorTypeId;
     private Long motorAdapterTypeId;
     private Double power;
-    private Double rpm;
+    private Integer polucesNumber;
 
     // reducer param
 

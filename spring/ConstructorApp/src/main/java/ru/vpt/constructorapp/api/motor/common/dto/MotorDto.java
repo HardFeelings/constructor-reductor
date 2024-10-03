@@ -14,7 +14,7 @@ import lombok.*;
 public class MotorDto {
     private Long idMotor;
     private Double power;
-    private Double frequency;
+    private Integer polesNumber;
     private Double efficiency;
     private Double ratedCurrent;
     private Double momentOfInertia;
