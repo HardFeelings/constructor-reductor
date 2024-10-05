@@ -2,7 +2,8 @@
 export class Engine {
   id: number;
   power:number;
-  frequency: number | undefined;
+  // frequency: number | undefined;
+  polesNumber:number | undefined;
   efficiency:number;
   ratedCurrent:number;
   momentOfInertia:number | undefined;

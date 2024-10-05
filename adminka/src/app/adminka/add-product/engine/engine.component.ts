@@ -18,6 +18,7 @@ export class EngineComponent {
   frequencyArray: number[]=[50,60, 100];
   posTerminalBoxArray: number[]=[90,180,270,360];
   rpmArray: number[]=[750, 1000, 1500, 3000];
+  polesNumberArray: number[] = [2,4,6,8,10];
   @Input() idProductType: number;
   @Output() dynamicProduct = new EventEmitter<Product>();
   motorTypeId: number | undefined;
@@ -104,21 +105,37 @@ export class EngineComponent {
     }
   }
 
-  frequencySelected(event: Event) {
+  polesSelected(event: Event){
     const selectedElement = event.target as HTMLSelectElement;
-    const selectedValue = selectedElement.value;
-    this.logger.log('Выбранное значение frequency:', selectedValue);
-    const intselectedValue: number = parseInt(selectedValue, 10);
-    this.logger.log('Выбранное значение int frequency:', selectedValue);
+      const selectedValue = selectedElement.value;
+      this.logger.log('Выбранное значение poles:', selectedValue);
+      const intselectedValue: number = parseInt(selectedValue, 10);
+      this.logger.log('Выбранное значение int poles:', selectedValue);
 
-    if (intselectedValue) {
-      this.newMotor.frequency = intselectedValue;
-    }
-    if(selectedValue == "Select"){
-      this.newMotor.frequency = undefined;
-       this.logger.log('undefined значение frequency:', this.newMotor.frequency);
-    }
+      if (intselectedValue) {
+        this.newMotor.polesNumber = intselectedValue;
+      }
+      if(selectedValue == "Select"){
+        this.newMotor.polesNumber = undefined;
+         this.logger.log('undefined значение poles:', this.newMotor.polesNumber);
+      }
   }
+
+  // frequencySelected(event: Event) {
+  //   const selectedElement = event.target as HTMLSelectElement;
+  //   const selectedValue = selectedElement.value;
+  //   this.logger.log('Выбранное значение frequency:', selectedValue);
+  //   const intselectedValue: number = parseInt(selectedValue, 10);
+  //   this.logger.log('Выбранное значение int frequency:', selectedValue);
+
+  //   if (intselectedValue) {
+  //     this.newMotor.frequency = intselectedValue;
+  //   }
+  //   if(selectedValue == "Select"){
+  //     this.newMotor.frequency = undefined;
+  //      this.logger.log('undefined значение frequency:', this.newMotor.frequency);
+  //   }
+  // }
 
   // cableExitSideSelected(event: Event) {
   //   const selectedElement = event.target as HTMLSelectElement;

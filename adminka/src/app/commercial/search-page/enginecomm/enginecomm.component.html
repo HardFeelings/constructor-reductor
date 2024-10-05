@@ -21,9 +21,16 @@
     </div>
     <br />
     <div class="container_element_configurator">
-      <div class="element_configurator">
+      <!-- <div class="element_configurator">
         <span>Число оборотов об/мин </span>
         <input min="0" [(ngModel)]="this.rpm"  type="number" (keypress)="preventNegative($event)"/>
+      </div> -->
+      <div class="element_configurator">
+        <span>  Количество полюсов </span>
+        <select (change)="polesSelected($event)">
+          <option value="Select"  selected>Select</option>
+          <option *ngFor="let value of polesNumberArray" [value]="value">{{ value }}</option>
+        </select>
       </div>
     </div>
       <br />
@@ -41,7 +48,7 @@
     <tr>
         <th>Наименование</th>
         <th>Мощность</th>
-        <th>Об/мин</th>
+        <th>Кол-во полюсов</th>
         <th>Вес</th>
         <th>Чертёж</th>
         <th></th>
@@ -51,7 +58,7 @@
   <tr *ngFor="let product of foundProducts">
     <td>{{ product.name }}</td>
     <td>{{ product.motor?.power || 0 }}</td>
-    <td>{{ product.rpm || 0 }}</td>
+    <td>{{ product.motor?.polesNumber }}</td>
     <td>{{ product.weight || 0 }}</td>
     <td class="tablebt">
       <ng-container *ngIf="product.imageEmpty; else downloadButton">

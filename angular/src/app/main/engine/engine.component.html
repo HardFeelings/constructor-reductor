@@ -9,7 +9,7 @@
         </div>
 
         <div *ngIf="motorTypeId && motorTypeId == 2" class="element_configurator">
-          <span>Тип Фланца</span>
+          <span>Тип крепления</span>
           <select (change)="idMotorAdapterTypeSelected($event)">
             <option value="Select"  selected>Select</option>
             <option *ngFor="let type of engineAdapterTypeByMotorTypeId" [value]="type.motorAdapterTypeValue">{{ type.motorAdapterTypeValue }}</option>
@@ -22,10 +22,20 @@
       </div>
 
       <br />
-      <div class="container_element_configurator">
+      <!-- <div class="container_element_configurator">
         <div class="element_configurator">
           <span>Число оборотов об/мин </span>
           <input min="0" [(ngModel)]="this.rpm"  type="number" (keypress)="preventNegative($event)" />
+        </div>
+      </div> -->
+
+      <div class="container_element_configurator">
+        <div class="element_configurator">
+          <span>Количество полюсов</span>
+          <select (change)="polesSelected($event)">
+            <option value="Select"  selected>Select</option>
+            <option *ngFor="let poles of polesNumberArray" [value]="poles">{{ poles }}</option>
+          </select>
         </div>
       </div>
       <br />
@@ -44,7 +54,7 @@
     <tr>
         <th>Наименование</th>
         <th>Мощность</th>
-        <th>Об/мин</th>
+        <th>Кол-во полюсов</th>
         <th>Вес</th>
         <th></th>
     </tr>
@@ -53,7 +63,7 @@
   <tr *ngFor="let product of foundProducts">
     <td>{{ product.name }}</td>
     <td>{{ product.motor?.power || 0 }}</td>
-    <td>{{ product.rpm || 0 }}</td>
+    <td>{{ product.motor?.polesNumber || 0 }}</td>
     <td>{{ product.weight || 0 }}</td>
     <td class="tablebt">
         <div class="button-containerrr">

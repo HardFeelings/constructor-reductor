@@ -39,7 +39,7 @@ import { LoggerModule, NgxLoggerLevel } from 'ngx-logger';
     NgOptimizedImage,
     PaginatorModule,
     LoggerModule.forRoot({
-      level: NgxLoggerLevel.OFF,
+      level: NgxLoggerLevel.LOG,
       disableConsoleLogging: false,
       serverLogLevel: NgxLoggerLevel.OFF,
     }),

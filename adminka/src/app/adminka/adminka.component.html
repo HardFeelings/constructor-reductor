@@ -42,7 +42,8 @@
                             <tr>
                                 <th>ID</th>
                                 <th>adapterType</th>
-                                <th>frequency</th>
+                                <!-- <th>frequency</th> -->
+                                <th>polesNumber</th>
                                 <th>power</th>
                                 <th>efficiency</th>
                                 <th>ratedCurrent</th>
@@ -54,7 +55,8 @@
                             <tr *ngFor="let i of motor_list">
                                 <td>{{i.id}}</td>
                                 <td><textarea class="editable" [(ngModel)]="i.adapterType.id" type="number" min="1"></textarea></td>
-                                <td><textarea class="editable" [(ngModel)]="i.frequency.value" type="number" min="0"></textarea></td>
+                                <!-- <td><textarea class="editable" [(ngModel)]="i.frequency.value" type="number" min="0"></textarea></td> -->
+                                <td><textarea class="editable" [(ngModel)]="i.polesNumber" type="number" min="0"></textarea></td>
                                 <td><textarea class="editable" [(ngModel)]="i.power" type="number" min="0"></textarea></td>
                                 <td><textarea class="editable" [(ngModel)]="i.efficiency" type="number" min="0"></textarea></td>
                                 <td><textarea class="editable" [(ngModel)]="i.ratedCurrent" type="number" min="0"></textarea></td>

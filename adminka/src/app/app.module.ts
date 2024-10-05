@@ -58,7 +58,7 @@ import { AuthInterceptor } from "./auth/auth-interceptor";
     PaginatorModule,
     ReactiveFormsModule,
     LoggerModule.forRoot({
-      level: NgxLoggerLevel.OFF,
+      level: NgxLoggerLevel.LOG,
       disableConsoleLogging: false,
       serverLogLevel: NgxLoggerLevel.OFF,
     }),

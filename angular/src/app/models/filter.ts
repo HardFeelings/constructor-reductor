@@ -2,12 +2,13 @@ export class Filter{
 
   productTypeId:number;
   productOptions:number[];
+  rpm!: number;
 
   // motor param
   motorTypeId: number | undefined;
   motorAdapterTypeId!: number | undefined;
   power!: number;
-  rpm!: number;
+  polesNumber:number;
 
   // reducer param
 

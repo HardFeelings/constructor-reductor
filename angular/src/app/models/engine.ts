@@ -2,7 +2,8 @@
 export class Engine {
   id: number;
   power:number;
-  frequency: number;
+  // frequency: number;
+  polesNumber:number;
   efficiency:number;
   ratedCurrent:number;
   momentOfInertia:number;

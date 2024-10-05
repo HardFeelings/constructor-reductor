@@ -130,6 +130,8 @@ export class AdminkaComponent {
 
   setid(id: number) {
     this.id = id;
+    localStorage.removeItem('id_page');
+    localStorage.setItem('id_page', id.toString());
     const spans = document.querySelectorAll('.sidebar span');
     spans.forEach((span, index) => {
         if (index === id) {
@@ -157,7 +159,13 @@ export class AdminkaComponent {
     this.getListManagers(0)
     this.getListEmployees(0)
     this.getListPaymentTerms()
-    this.setid(0);
+    const storedId = localStorage.getItem('id_page');
+    if (storedId) {
+      this.setid(parseInt(storedId, 10));
+    }
+    else{
+      this.setid(0);
+    }
   }
 
   onFileSelected(event: any, product: Product) {
@@ -974,7 +982,8 @@ export class AdminkaComponent {
         this.motor_list = respones.data.content.map((e: any) => {
           const motor = new Motor();
           motor.id = e.idMotor;
-          motor.frequency.value = e.frequency;
+          // motor.frequency.value = e.frequency;
+          motor.polesNumber = e.polesNumber;
           motor.adapterType.id = e.motorAdapterTypeId;
           motor.power = e.power;
           motor.efficiency = e.efficiency;

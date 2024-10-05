@@ -8,7 +8,7 @@
           </select>
         </div>
         <div *ngIf="motorTypeId && motorTypeId == 2" class="element_configurator">
-          <span>Тип Фланца</span>
+          <span>Тип крепления</span>
           <select (change)="idMotorAdapterTypeSelected($event)">
             <option value="Select"  selected>Select</option>
             <option *ngFor="let type of engineAdapterTypeByMotorTypeId" [value]="type.motorAdapterTypeValue">{{ type.motorAdapterTypeValue }}</option>
@@ -20,7 +20,7 @@
         </div>
       </div>
       <br />
-      <div class="container_element_configurator">
+      <!-- <div class="container_element_configurator">
         <div class="element_configurator">
           <span>Номинальный ток</span>
           <input min="0" [(ngModel)]="this.ratedCurrent"  type="number"  (keypress)="preventNegative($event)" />
@@ -34,13 +34,20 @@
           <input min="0" [(ngModel)]="this.efficiency"  type="number"  (keypress)="preventNegative($event)" />
         </div>
       </div>
-      <br />
+      <br /> -->
       <div class="container_element_configurator">
-        <div class="element_configurator">
+        <!-- <div class="element_configurator">
           <span>  Частота переменного тока Hz </span>
           <select (change)="frequencySelected($event)">
             <option value="Select"  selected>Select</option>
             <option *ngFor="let value of frequencyArray" [value]="value">{{ value }}</option>
+          </select>
+        </div> -->
+        <div class="element_configurator">
+          <span>  Количество полюсов </span>
+          <select (change)="polesSelected($event)">
+            <option value="Select"  selected>Select</option>
+            <option *ngFor="let value of polesNumberArray" [value]="value">{{ value }}</option>
           </select>
         </div>
       </div>

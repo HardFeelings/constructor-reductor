@@ -20,6 +20,8 @@ export class EngineCommComponent {
   rpmArray: number[]=[750, 1000, 1500, 3000];
   @Input() idProductType: number;
   motorTypeId: number | undefined;
+  polesNumberArray: number[] = [2,4,6,8,10];
+  selectedPoles: number;
   power!: number;
   options: number[] = [];
   filter: Filter = new Filter();
@@ -61,6 +63,21 @@ export class EngineCommComponent {
         alert(JSON.stringify(respones.errorMsg))
       }
     });
+  }
+
+
+  polesSelected(event: Event) {
+    const selectElement = event.target as HTMLSelectElement;
+    const selectedValue = selectElement.value;
+
+    if (selectedValue !== 'Select') {
+        const numberOfPoles = parseInt(selectedValue, 10);
+        this.selectedPoles = numberOfPoles;
+        console.log(`Вы выбрали количество полюсов: ${numberOfPoles}`);
+
+    } else {
+        console.log('Пожалуйста, выберите количество полюсов.');
+    }
   }
 
   getByProductTypeOptionId(id:number) {
@@ -143,7 +160,8 @@ export class EngineCommComponent {
 
   searchProduct(filter: Filter, page: number){
     filter.power = this.power;
-    filter.rpm = this.rpm
+    // filter.rpm = this.rpm
+    filter.polesNumber= this.selectedPoles;
     this.logger.log('filter', filter);
     this.newFilter = filter;
     this.productService.postPageFilter(filter, page).subscribe((respones: ResponseInfo<Page<Product>>)=>{
