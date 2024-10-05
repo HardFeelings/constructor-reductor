@@ -2,21 +2,21 @@
       <div class="container_element_configurator">
         <div class="element_configurator">
           <span>Тип двигателя</span>
-          <select (change)="idMotorTypeSelected($event)">
+          <select (change)="idMotorTypeSelected($event)" [disabled]="selectMot">
             <option value="Select" selected>Select</option>
             <option *ngFor="let type of motorType" [value]="type.motorTypeName">{{ type.motorTypeName }}</option>
           </select>
         </div>
         <div *ngIf="motorTypeId && motorTypeId == 2" class="element_configurator">
           <span>Тип крепления</span>
-          <select (change)="idMotorAdapterTypeSelected($event)">
+          <select (change)="idMotorAdapterTypeSelected($event)" [disabled]="selectMot">
             <option value="Select"  selected>Select</option>
             <option *ngFor="let type of engineAdapterTypeByMotorTypeId" [value]="type.motorAdapterTypeValue">{{ type.motorAdapterTypeValue }}</option>
           </select>
         </div>
         <div class="element_configurator">
           <span>Мощность</span>
-          <input  min="0" [(ngModel)]="this.power"  type="number"  (keypress)="preventNegative($event)" />
+          <input  min="0" [(ngModel)]="this.power"  type="number"  (keypress)="preventNegative($event)" [disabled]="selectMot"/>
         </div>
       </div>
       <br />
@@ -45,33 +45,87 @@
         </div> -->
         <div class="element_configurator">
           <span>  Количество полюсов </span>
-          <select (change)="polesSelected($event)">
+          <select (change)="polesSelected($event)" [disabled]="selectMot">
             <option value="Select"  selected>Select</option>
             <option *ngFor="let value of polesNumberArray" [value]="value">{{ value }}</option>
           </select>
         </div>
       </div>
       <br />
-      <hr />
+      <hr *ngIf="this.selectMot == false"  />
+      <div *ngIf="this.selectMot == false" class="button-container"><button (click)="searchMotors(this.filterMotors,0)">Найти</button></div>
+      <br />
+
+      <div *ngIf="foundProductsMotors && foundProductsMotors.length > 0">
+        <hr />
+      <table class="table" *ngIf="foundProductsMotors !== null || foundProductsMotors !== []">
+        <thead *ngIf="foundProductsMotors && foundProductsMotors.length > 0" >
+          <tr>
+              <th>ProductId</th>
+              <th>Name</th>
+              <th>Price</th>
+              <th>Weight</th>
+              <th>MotorId</th>
+              <th>AdapterTypeId</th>
+              <th>PolesNumber</th>
+              <th>Power</th>
+              <th>Efficiency</th>
+              <th>RatedCurrent</th>
+              <th>TypeId</th>
+              <th></th>
+          </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let motorMotor of foundProductsMotors">
+          <td>{{ motorMotor.idProduct }}</td>
+          <td>{{ motorMotor.name }}</td>
+          <td>{{ motorMotor.price }}</td>
+          <td>{{ motorMotor.weight }}</td>
+          <td>{{ motorMotor.motor?.idMotor }}</td>
+          <td>{{ motorMotor.motor?.motorAdapterTypeId }}</td>
+          <td>{{ motorMotor.motor?.polesNumber}}</td>
+          <td>{{ motorMotor.motor?.power || 0 }}</td>
+          <td>{{ motorMotor.motor?.efficiency }}</td>
+          <td>{{ motorMotor.motor?.ratedCurrent }}</td>
+          <td>{{ motorMotor.motor?.motorTypeId }}</td>
+          <td *ngIf="this.selectMot == false" class="tablebt">
+            <div  class="button-containerrr"><button class="plus-button"  (click)="selectMotors(motorMotor) ">+</button>
+          </div></td>
+          <td *ngIf="this.selectMot == true"class="tablebt">
+            <div  class="button-containerrr"><button class="plus-button"  (click)="deleteSelectMotors(motorMotor)">-</button>
+          </div></td>
+        </tr>
+      </tbody>
+      </table>
+      <br />
+        <p-paginator *ngIf="this.selectMot == false"
+          (onPageChange)="onPageChangeMotors($event)"
+          [first]="firstPageMotors"
+          [rows]="rowsPageMotors"
+          [totalRecords]="totalCountMotors"/>
+      </div>
+
+    <br />
+    <hr />
       <h1 class="configurator_header">Конфигурация редуктора</h1>
       <div class="container_element_configurator">
         <div class="element_configurator">
           <span>Тип редуктора</span>
-          <select (change)="idReducerTypeSelected($event)">
+          <select (change)="idReducerTypeSelected($event)" [disabled]="selectRed">
             <option value="Select" selected>Select</option>
             <option *ngFor="let type of reducerType" [value]="type.reducerTypeName">{{ type.reducerTypeName }}</option>
           </select>
         </div>
         <div *ngIf="reducerTypeId && reducerTypeId !== null" class="element_configurator">
           <span>Размер редуктора</span>
-          <select [disabled]="!reducerTypeId" (change)="idReducerSizeBSelected($event)">
+          <select [disabled]="!reducerTypeId" (change)="idReducerSizeBSelected($event)" [disabled]="selectRed">
             <option value="Select"  selected>Select</option>
             <option *ngFor="let type of resucerSize" [value]="type.reducerSizeValue">{{ type.reducerSizeValue }}</option>
           </select>
         </div>
         <div class="element_configurator">
           <span>Монтажное положение</span>
-          <select (change)="idReducerMountingSelected($event)">
+          <select (change)="idReducerMountingSelected($event)" [disabled]="selectRed">
             <option value="Select"  selected>Select</option>
             <option *ngFor="let type of reducerMounting" [value]="type.reducerMountingValue">{{ type.reducerMountingValue }}</option>
           </select>
@@ -81,42 +135,99 @@
       <div class="container_element_configurator">
         <div class="element_configurator">
           <span>Передаточное отношение</span>
-          <input  min="0" [(ngModel)]="this.ratio" type="number"  (keypress)="preventNegative($event)" />
+          <input  min="0" [(ngModel)]="this.ratio" type="number"  (keypress)="preventNegative($event)"  [disabled]="selectRed"/>
         </div>
         <div class="element_configurator">
           <span>Диаметр выходного вала</span>
-          <input min="0" [(ngModel)]="this.diamOutput" type="number"  (keypress)="preventNegative($event)" />
+          <input min="0" [(ngModel)]="this.diamOutput" type="number"  (keypress)="preventNegative($event)"  [disabled]="selectRed"/>
         </div>
       </div>
       <br />
       <div class="container_element_configurator">
         <div *ngIf="reducerTypeId && reducerTypeId !== null" class="element_configurator">
           <span>Тип входа</span>
-          <select [disabled]="!reducerTypeId" (change)="idReducerInputSelected($event)">
+          <select [disabled]="!reducerTypeId" (change)="idReducerInputSelected($event)" [disabled]="selectRed">
             <option value="Select"  selected>Select</option>
             <option *ngFor="let type of reducerInputType" [value]="type.reducerInputTypeValue">{{ type.reducerInputTypeValue }}</option>
           </select>
         </div>
         <div *ngIf="reducerTypeId && reducerTypeId !== null" class="element_configurator">
           <span>Форма выходного вала</span>
-          <select [disabled]="!reducerTypeId" (change)="idReducerOutputShaftTypeSelected($event)">
+          <select [disabled]="!reducerTypeId" (change)="idReducerOutputShaftTypeSelected($event)" [disabled]="selectRed">
             <option value="Select"  selected>Select</option>
             <option *ngFor="let type of reducerOutputShaftType" [value]="type.reducerOutputShaftTypeValue">{{ type.reducerOutputShaftTypeValue }}</option>
           </select>
         </div>
-      </div>
-      <br />
-       <div class="container_element_configurator">
+      <!-- </div>
+      <br /> -->
+       <!-- <div class="container_element_configurator"> -->
         <div *ngIf="reducerTypeId && reducerTypeId !== null" class="element_configurator">
           <span>Тип крепления редуктора</span>
-          <select [disabled]="!reducerTypeId" (change)="idReducerInstallationSelected($event)">
+          <select [disabled]="!reducerTypeId" (change)="idReducerInstallationSelected($event)" [disabled]="selectRed">
             <option value="Select"  selected>Select</option>
             <option *ngFor="let type of reducerInstallationType" [value]="type.reducerInstallationTypeValue">{{ type.reducerInstallationTypeValue }}</option>
           </select>
         </div>
       </div>
+      <hr *ngIf="this.selectRed == false"  />
+    <div class="button-container" *ngIf="this.selectRed == false"  ><button (click)="searchReducers(this.filterReducers,0)">Найти</button></div>
     <br />
+
+    <div *ngIf="foundProductsReducers && foundProductsReducers.length > 0">
       <hr />
+    <table class="table"  *ngIf="foundProductsReducers !== null || foundProductsReducers !== []">
+      <thead *ngIf="foundProductsReducers && foundProductsReducers.length > 0 ">
+        <tr>
+            <th>ProductId</th>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Weight</th>
+            <th>ReducerId</th>
+            <th>TypeId</th>
+            <th>SizeId</th>
+            <!-- <th>InputTypeId</th> -->
+            <!-- <th>OutputShaftTypeId</th>
+            <th>InstallationTypeId</th> -->
+            <th>MountingId</th>
+            <th>ØOutputShaft</th>
+            <th>ratio</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let product of foundProductsReducers">
+            <td>{{ product.idProduct }}</td>
+            <td>{{ product.name}}</td>
+            <td>{{ product.price }}</td>
+            <td>{{ product.weight }}</td>
+            <td>{{ product.reducer?.idReducer }}</td>
+            <td>{{ product.reducer?.reducerTypeId }}</td>
+            <td>{{ product.reducer?.reducerSizeId }}</td>
+            <!-- <td>{{ product.reducer?.reducerInputTypeId }}</td> -->
+            <!-- <td>{{ product.reducer?.reducerOutputShaftTypeId }}</td>
+            <td>{{ product.reducer?.reducerInstallationTypeId }}</td> -->
+            <td>{{ product.reducer?.reducerMountingId }}</td>
+            <td>{{ product.reducer?.diameterOutputShaft }}</td>
+            <td>{{ product.reducer?.ratio }}</td>
+            <td *ngIf="this.selectRed == false" class="tablebt">
+              <div  class="button-containerrr"><button class="plus-button"  (click)="selectReducers(product) ">+</button>
+            </div></td>
+            <td *ngIf="this.selectRed == true"class="tablebt">
+              <div  class="button-containerrr"><button class="plus-button"  (click)="deleteSelectReducers(product)">-</button>
+            </div></td>
+          </tr>
+    </tbody>
+    </table>
+    <br />
+    <p-paginator *ngIf="this.selectRed == false"
+        (onPageChange)="onPageChangeReducers($event)"
+        [first]="firstPageReductors"
+        [rows]="rowsPageReductors"
+        [totalRecords]="totalCountReductors">
+    </p-paginator>
+  </div>
+    <br />
+      <hr  />
       <h1 class="configurator_header">Конфигурация продукта</h1>
       <div class="container_element_configurator">
         <div class="element_configurator">

@@ -7,9 +7,9 @@ export class Product {
   name: string;
   weight: number;
   price: number;
-  reducerId!: number;
+  reducerId!: number | null;
   reducer!: Reducer|null;
-  motorId!: number;
+  motorId!: number | null;
   motor!: Engine | null;
   optionsIds: number[];
   imageEmpty!: boolean;

@@ -1,6 +1,6 @@
 
 export class Engine {
-  id: number;
+  idMotor: number;
   power:number;
   // frequency: number | undefined;
   polesNumber:number | undefined;
