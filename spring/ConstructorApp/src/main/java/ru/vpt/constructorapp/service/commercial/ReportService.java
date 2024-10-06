@@ -2,25 +2,22 @@ package ru.vpt.constructorapp.service.commercial;
 
 
 import org.apache.poi.hssf.usermodel.*;
-import org.apache.poi.ss.usermodel.CellStyle;
-import org.apache.poi.ss.usermodel.CellType;
-import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
+import org.apache.poi.util.IOUtils;
 import org.apache.poi.xssf.usermodel.*;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import ru.vpt.constructorapp.api.exception.BadRequestException;
-import ru.vpt.constructorapp.service.util.Tuple;
 import ru.vpt.constructorapp.store.entities.commercial.CommercialPropEntity;
 import ru.vpt.constructorapp.store.entities.commercial.CommercialPropItemEntity;
+import ru.vpt.constructorapp.store.entities.commercial.CommercialPropTermsEntity;
 import ru.vpt.constructorapp.store.entities.commercial.ManagerEntity;
 import ru.vpt.constructorapp.store.entities.motor.MotorEntity;
 import ru.vpt.constructorapp.store.entities.product.ProductOptionEntity;
 import ru.vpt.constructorapp.store.entities.reducer.ReducerEntity;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -33,7 +30,12 @@ public class ReportService {
     private XSSFWorkbook workbook;
     private int cursor;
     private final String SHEET_NAME = "КП";
-    private List<Tuple<Integer, Short>> heightList;
+    private int endRow = 0;
+    private int totalCost = 0;
+    private int totalWeight = 0;
+    private final String[] TERMS_PREFIXES = new String[]{
+            "Первый", "Второй", "Третий", "Четвертый", "Пятый", "Шестой", "Седьмой", "Восьмой", "Девятый", "Десятый"
+    };
 
 
     public ByteArrayInputStream report(CommercialPropEntity entity) {
@@ -42,10 +44,12 @@ public class ReportService {
             workbook = new XSSFWorkbook(Objects.requireNonNull(Model.class.getClassLoader().getResourceAsStream("reportTemplate.xlsx")));
             if (Objects.isNull(entity.getCommercialPropItems()) || entity.getCommercialPropItems().isEmpty())
                 throw new BadRequestException("Невозможно сформировать отчет, отсутствуют элементы", 400);
-            cursor = 56;
+            cursor = 86;
             fillHeader(entity.getManager(), entity.getNumber(), entity.getPartner(), entity.getTimestamp());
             fillCommItems(entity.getCommercialPropItems());
-            //deleteRow(workbook.getSheet(SHEET_NAME), 14, 55);
+            fillAdditionData(entity);
+            deleteRow(workbook.getSheet(SHEET_NAME), 14, 85);
+            setPrintArea();
             workbook.write(byteArrayOutputStream);
             byteArrayOutputStream.flush();
             byteArrayOutputStream.close();
@@ -63,8 +67,70 @@ public class ReportService {
         printCell(partner, 9, 9);
     }
 
-    private void fillAdditionData(String commNumber, String partner, String date, ManagerEntity manager) {
+    private void setPrintArea() {
+        workbook.setPrintArea(
+                0,
+                0,
+                10,
+                0,
+                workbook.getSheet(SHEET_NAME).getLastRowNum()
+        );
+        //set paper size
+        workbook.getSheet(SHEET_NAME).getPrintSetup().setPaperSize(XSSFPrintSetup.A4_PAPERSIZE);
 
+        //set display grid lines or not
+        //workbook.getSheet(SHEET_NAME).setDisplayGridlines(true);
+
+        //set print grid lines or not
+        //workbook.getSheet(SHEET_NAME).setPrintGridlines(true);
+
+    }
+
+    private void fillAdditionData(CommercialPropEntity entity) {
+        int startRow = cursor;
+        copyRows(14, 41, cursor, workbook.getSheet(SHEET_NAME));
+        cursor += 29;
+        printCell(String.valueOf(totalWeight), startRow, 8);
+        printCell(String.valueOf(totalCost), startRow + 1, 8);
+        printCell(String.valueOf((totalCost / 100) * 20), startRow + 2, 8);
+        printAllTerms(entity.getCommercialPropTerms(), startRow);
+        int termsRowsNum = entity.getCommercialPropTerms().size();
+        printCell("2. Срок поставки –  " + entity.getDeliveryTime() + " рабочих дней с момента оплаты первого платежа.",
+                startRow + 7 + termsRowsNum + 1, 1);
+        printCell("3. Условия доставки: " + entity.getDeliveryTerms(), startRow + 7 + termsRowsNum + 2, 1);
+        printCell("4. Оплата осуществляется с учетом НДС 20%.", startRow + 7 + termsRowsNum + 3, 1);
+        printCell("5. Гарантия " + entity.getGuarantee() + " месяца.", startRow + 7 + termsRowsNum + 4, 1);
+        printCell(entity.getManager().getPosition(), startRow + 7 + termsRowsNum + 11, 1);
+        printCell(entity.getManager().getFullName(), startRow + 7 + termsRowsNum + 12, 1);
+        printCell("Конт. Тел.: " + entity.getManager().getPhoneNumber(), startRow + 7 + termsRowsNum + 13, 1);
+        printCell("email: " + entity.getManager().getEmail(), startRow + 7 + termsRowsNum + 14, 1);
+    }
+
+    private void printAllTerms(List<CommercialPropTermsEntity> terms, int startRow) {
+        for (int i = 0; i < terms.size(); i++) {
+            if(i != terms.size() - 1){
+                insertRow(workbook.getSheet(SHEET_NAME),startRow + 7 + i + 1);
+                copyRows(startRow + 7, startRow + 7, startRow + 7 + i + 1, workbook.getSheet(SHEET_NAME));
+                cursor++;
+            }
+            printCell("    " + collectTermsString(terms.get(i)), startRow + 7 + i, 1);
+        }
+        printCell("    1." + (terms.size() + 1) + " Оплата производится в российских рублях по курсу ЦБ РФ на дату проведения оплаты.", startRow + 7 + terms.size(), 1);
+
+
+    }
+
+    private String collectTermsString(CommercialPropTermsEntity terms) {
+        String termsString = terms.getPaymentTerms().getFullName();
+        termsString = "1." + terms.getOrd() + " " + termsString;
+        if (terms.getOrd() > TERMS_PREFIXES.length)
+            termsString = termsString.replaceAll("<ord>", "");
+        else
+            termsString = termsString.replaceAll("<ord>", TERMS_PREFIXES[terms.getOrd() - 1]);
+
+        termsString = termsString.replaceAll("<percent>", terms.getPercent().toString());
+        termsString = termsString.replaceAll("<days>", terms.getDays().toString());
+        return termsString;
     }
 
     private void fillCommItems(List<CommercialPropItemEntity> items) {
@@ -82,15 +148,18 @@ public class ReportService {
 
     private void fillReducer(CommercialPropItemEntity item, int count) {
         int startRow = cursor;
-        copyRows(44, 55, cursor, workbook.getSheet(SHEET_NAME));
+        copyRows(74, 85, cursor, workbook.getSheet(SHEET_NAME));
         cursor += 12;
         printCell(String.valueOf(count), startRow, 1);
         if (!Objects.isNull(item.getProduct())) {
+            double costs = item.getProduct().getPrice() * item.getAmount();
+            totalCost += costs;
+            totalWeight += item.getProduct().getWeight();
             ReducerEntity reducer = item.getProduct().getReducer();
             printCell(item.getProduct().getName(), startRow, 2);
             printCell(String.valueOf(item.getAmount()), startRow, 4);
             printCell(String.valueOf(item.getProduct().getPrice()), startRow, 7);
-            printCell(String.valueOf(item.getProduct().getPrice() + item.getAmount()), startRow, 8);
+            printCell(String.valueOf(costs), startRow, 8);
             printCell(reducer.getReducerType().getReducerTypeName(), startRow + 2, 3);
             printCell(String.valueOf(reducer.getRatio()), startRow + 3, 3);
             printCell(reducer.getReducerMounting().getReducerMountingValue(), startRow + 4, 3);
@@ -98,75 +167,99 @@ public class ReportService {
                     reducer.getReducerInstallationType().getReducerInstallationTypeValue()
                             .toLowerCase().contains("флан") ? "Да" : "Нет", startRow + 5, 3);
             printCell(String.valueOf(reducer.getReducerOutputShaftType().getReducerOutputShaftTypeValue()), startRow + 7, 3);
-            printCell(String.valueOf(item.getProduct().getWeight()), startRow + 8, 3);
-            if (item.getProduct().getOptions() != null && !item.getProduct().getOptions().isEmpty()) {
-                for (ProductOptionEntity option : item.getProduct().getOptions()) {
-                    copyRows(startRow + 9, startRow + 10, cursor, workbook.getSheet(SHEET_NAME));
-                    printCell(option.getProductOptionValue(), startRow + 10, 3);
-                    cursor++;
-                }
-            }
-
-
+            printCell("Ø" + reducer.getDiameterOutputShaft(), startRow + 8, 3);
+            printCell(String.valueOf(item.getProduct().getWeight()), startRow + 9, 3);
+            printOptions(item, startRow, 10);
         }
-
     }
 
     private void fillMotor(CommercialPropItemEntity item, int count) {
         int startRow = cursor;
-        copyRows(32, 43, cursor, workbook.getSheet(SHEET_NAME));
+        copyRows(61, 72, cursor, workbook.getSheet(SHEET_NAME));
         cursor += 12;
         printCell(String.valueOf(count), startRow, 1);
         if (!Objects.isNull(item.getProduct())) {
+            double costs = item.getProduct().getPrice() * item.getAmount();
+            totalCost += costs;
+            totalWeight += item.getProduct().getWeight();
             MotorEntity motor = item.getProduct().getMotor();
             printCell(item.getProduct().getName(), startRow, 2);
             printCell(String.valueOf(item.getAmount()), startRow, 4);
             printCell(String.valueOf(item.getProduct().getPrice()), startRow, 7);
-            printCell(String.valueOf(item.getProduct().getPrice() + item.getAmount()), startRow, 8);
+            printCell(String.valueOf(costs), startRow, 8);
             printCell(String.valueOf(item.getProduct().getRpm()), startRow + 2, 3);
             printCell(String.valueOf(motor.getPower()), startRow + 3, 3);
             printCell(String.valueOf(motor.getEfficiency()), startRow + 4, 3);
             printCell(String.valueOf(motor.getRatedCurrent()), startRow + 5, 3);
             printCell(String.valueOf(motor.getMomentOfInertia()), startRow + 8, 3);
             printCell(String.valueOf(item.getProduct().getWeight()), startRow + 9, 3);
-            if (item.getProduct().getOptions() != null && !item.getProduct().getOptions().isEmpty()) {
-                if (item.getProduct().getOptions().size() > 1) {
-                    cancelMerged(workbook.getSheet(SHEET_NAME),startRow, cursor - 1, 1, 1);
-                    cancelMerged(workbook.getSheet(SHEET_NAME),startRow, cursor - 1, 4, 6);
-                    cancelMerged(workbook.getSheet(SHEET_NAME),startRow, cursor - 1, 7, 7);
-                    cancelMerged(workbook.getSheet(SHEET_NAME),startRow, cursor - 1, 8, 9);
-                    List<ProductOptionEntity> options = item.getProduct().getOptions().stream().toList();
-                    for (int i = 0; i < options.size(); i++) {
-                        if(i != options.size() - 1)
-                            copyRows(startRow + 11 + i, startRow + 11 + i, cursor, workbook.getSheet(SHEET_NAME));
-                        printCell(options.get(i).getProductOptionValue(), startRow + 11 + i, 3);
-                        cursor++;
-                    }
-                    workbook.getSheet(SHEET_NAME).addMergedRegion(new CellRangeAddress(startRow, cursor - 1, 1, 1));
-                    workbook.getSheet(SHEET_NAME).addMergedRegion(new CellRangeAddress(startRow, cursor - 1, 4, 6));
-                    workbook.getSheet(SHEET_NAME).addMergedRegion(new CellRangeAddress(startRow, cursor - 1, 7, 7));
-                    workbook.getSheet(SHEET_NAME).addMergedRegion(new CellRangeAddress(startRow, cursor - 1, 8, 9));
-                } else {
-                    ProductOptionEntity option = item.getProduct().getOptions().stream().findFirst().get();
-                    printCell(option.getProductOptionValue(), startRow + 11, 3);
-                }
-
-
-            }
-
+            printOptions(item, startRow, 10);
         }
-
     }
 
     private void fillMotorReducer(CommercialPropItemEntity item, int count) {
         int startRow = cursor;
-        copyRows(14, 31, cursor, workbook.getSheet(SHEET_NAME));
+        copyRows(42, 59, cursor, workbook.getSheet(SHEET_NAME));
         cursor += 18;
         printCell(String.valueOf(count), startRow, 1);
+        if (!Objects.isNull(item.getProduct())) {
+            double costs = item.getProduct().getPrice() * item.getAmount();
+            totalCost += costs;
+            totalWeight += item.getProduct().getWeight();
+            MotorEntity motor = item.getProduct().getMotor();
+            ReducerEntity reducer = item.getProduct().getReducer();
+            printCell(item.getProduct().getName(), startRow, 2);
+            printCell(String.valueOf(item.getAmount()), startRow, 4);
+            printCell(String.valueOf(item.getProduct().getPrice()), startRow, 7);
+            printCell(String.valueOf(costs), startRow, 8);
+            printCell(String.valueOf(reducer.getReducerType().getReducerTypeName()), startRow + 2, 3);
+            printCell(String.valueOf(item.getProduct().getRpm()), startRow + 3, 3);
+            printCell(String.valueOf(motor.getPower()), startRow + 4, 3);
+            printCell(String.valueOf(reducer.getRatio()), startRow + 5, 3);
+            printCell(String.valueOf(item.getProduct().getServiceFactor()), startRow + 6, 3);
+            printCell(String.valueOf(reducer.getReducerMounting().getReducerMountingValue()), startRow + 9, 3);
+            printCell((reducer.getReducerInstallationType().getReducerInstallationTypeValue()
+                    .toLowerCase().contains("флан") ? "Да" : "Нет"), startRow + 10, 3);
+            printCell(String.valueOf(reducer.getReducerOutputShaftType().getReducerOutputShaftTypeValue()), startRow + 12, 3);
+            printCell("Ø" + reducer.getDiameterOutputShaft(), startRow + 13, 3);
+            printCell(String.valueOf(item.getProduct().getTorqueMoment()), startRow + 14, 3);
+            printCell(String.valueOf(item.getProduct().getWeight()), startRow + 15, 3);
+            printOptions(item, startRow, 16);
+        }
+    }
+
+    private void printOptions(CommercialPropItemEntity item, int startRow, int firstItemRow) {
+        if (item.getProduct().getOptions() != null && !item.getProduct().getOptions().isEmpty()) {
+            if (item.getProduct().getOptions().size() > 1) {
+                cancelMerged(workbook.getSheet(SHEET_NAME), startRow, cursor - 1, 1, 1);
+                cancelMerged(workbook.getSheet(SHEET_NAME), startRow, cursor - 1, 4, 6);
+                cancelMerged(workbook.getSheet(SHEET_NAME), startRow, cursor - 1, 7, 7);
+                cancelMerged(workbook.getSheet(SHEET_NAME), startRow, cursor - 1, 8, 9);
+                List<ProductOptionEntity> options = item.getProduct().getOptions().stream().toList();
+                for (int i = 0; i < options.size(); i++) {
+                    if (i == 0)
+                        printCell(options.get(i).getProductOptionValue(), startRow + firstItemRow, 3);
+                    else {
+                        copyRows(startRow + firstItemRow + i, startRow + firstItemRow + i, cursor, workbook.getSheet(SHEET_NAME));
+                        printCell(options.get(i).getProductOptionValue(), startRow + firstItemRow + i, 3);
+                        cursor++;
+                    }
+                }
+                workbook.getSheet(SHEET_NAME).addMergedRegion(new CellRangeAddress(startRow, cursor - 1, 1, 1));
+                workbook.getSheet(SHEET_NAME).addMergedRegion(new CellRangeAddress(startRow, cursor - 1, 4, 6));
+                workbook.getSheet(SHEET_NAME).addMergedRegion(new CellRangeAddress(startRow, cursor - 1, 7, 7));
+                workbook.getSheet(SHEET_NAME).addMergedRegion(new CellRangeAddress(startRow, cursor - 1, 8, 9));
+            } else {
+                ProductOptionEntity option = item.getProduct().getOptions().stream().findFirst().get();
+                printCell(option.getProductOptionValue(), startRow + firstItemRow, 3);
+            }
+        } else {
+            printCell("Отсутствуют", startRow + firstItemRow, 3);
+        }
     }
 
     private void printCell(String value, int rowNumber, int cellNumber) {
-        if (value == null)
+        if (value == null || value.equals("null"))
             value = "";
         XSSFRow row = workbook.getSheet(SHEET_NAME).getRow(rowNumber);
         if (row == null) {
@@ -299,5 +392,4 @@ public class ReportService {
         int moveNumUp = moveNumDown + (endRow - startRow) + 1;
         sheet.shiftRows(startNumUp, endNumUp, -1 * moveNumUp, true, true);
     }
-
 }

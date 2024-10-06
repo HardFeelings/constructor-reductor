@@ -23,11 +23,6 @@ public class CommercialPropController extends AbstractController implements Comm
 
     private final CommercialPropService service;
 
-//    @Override
-//    public ResponseEntity<ResponseDto<List<CommercialPropDto>>> getAll() {
-//        return response(service.getAll());
-//    }
-
     @Override
     public ResponseEntity<ResponseDto<CommercialPropDto>> getById(Long id) {
         return response(service.getById(id));
@@ -54,6 +49,16 @@ public class CommercialPropController extends AbstractController implements Comm
         inputStream = service.report(id);
         HttpHeaders headers = new HttpHeaders();
         headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=report.xlsx");
+        headers.add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_OCTET_STREAM_VALUE);
+        return new ResponseEntity<>(new InputStreamResource(inputStream), headers, HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<Resource> reportPdfCommercialProp(Long id) {
+        BufferedInputStream inputStream = null;
+        inputStream = service.reportPdf(id);
+        HttpHeaders headers = new HttpHeaders();
+        headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=report.pdf");
         headers.add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_OCTET_STREAM_VALUE);
         return new ResponseEntity<>(new InputStreamResource(inputStream), headers, HttpStatus.OK);
     }

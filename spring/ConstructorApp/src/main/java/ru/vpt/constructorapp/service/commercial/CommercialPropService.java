@@ -15,4 +15,6 @@ public interface CommercialPropService {
     Boolean delete(Long id);
     BufferedInputStream report(Long id);
     CommercialPropPaginationDto getByFilter(String token, CommercialPropDto commercialPropDto, int offset, int limit);
+
+    BufferedInputStream reportPdf(Long id);
 }

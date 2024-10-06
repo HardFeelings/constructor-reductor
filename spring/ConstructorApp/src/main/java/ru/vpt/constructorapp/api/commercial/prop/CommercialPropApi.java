@@ -27,4 +27,7 @@ public interface CommercialPropApi {
     @GetMapping("/security/commercialProp/report/{id}")
     ResponseEntity<Resource> reportCommercialProp(@PathVariable("id") Long id);
 
+    @GetMapping("/security/commercialProp/reportPdf/{id}")
+    ResponseEntity<Resource> reportPdfCommercialProp(@PathVariable("id") Long id);
+
 }
