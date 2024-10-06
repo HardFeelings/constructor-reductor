@@ -13,5 +13,5 @@ export class CommercialProp {
   guarantee: number;
   deliveryTerms: string;
   commercialPropItems: CommercialPropItem[];
-  commercialPropTerms: CommercialPropTerm[];
+  commercialPropTerms: CommercialPropTerm[] = [];
 }

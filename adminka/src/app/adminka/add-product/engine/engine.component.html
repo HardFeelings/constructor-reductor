@@ -77,13 +77,13 @@
         <span>Цена</span>
         <input min="0" [(ngModel)]="this.price"  type="number"  (keypress)="preventNegative($event)" />
       </div>
-      <!-- <div class="element_configurator">
+      <div class="element_configurator">
         <span>Число оборотов об/мин </span>
         <select (change)="rpmSelected($event)">
           <option value="" disabled selected>Select</option>
           <option *ngFor="let value of rpmArray" [value]="value">{{ value }}</option>
         </select>
-      </div> -->
+      </div>
       <div class="element_configurator">
         <span>Вес</span>
         <input  min="0" [(ngModel)]="this.weight"  type="number"  (keypress)="preventNegative($event)"  />

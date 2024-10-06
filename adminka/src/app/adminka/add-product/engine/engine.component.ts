@@ -168,17 +168,17 @@ export class EngineComponent {
   //   }
   // }
 
-  // rpmSelected(event: Event) {
-  //   const selectedElement = event.target as HTMLSelectElement;
-  //   const selectedValue = selectedElement.value;
-  //   this.logger.log('Выбранное значение rpm:', selectedValue);
-  //   const intselectedValue: number = parseInt(selectedValue, 10);
-  //   this.logger.log('Выбранное значение int rpm:', selectedValue);
+  rpmSelected(event: Event) {
+    const selectedElement = event.target as HTMLSelectElement;
+    const selectedValue = selectedElement.value;
+    this.logger.log('Выбранное значение rpm:', selectedValue);
+    const intselectedValue: number = parseInt(selectedValue, 10);
+    this.logger.log('Выбранное значение int rpm:', selectedValue);
 
-  //   if (intselectedValue) {
-  //     this.newProduct.rpm = intselectedValue;
-  //   }
-  // }
+    if (intselectedValue) {
+      this.newProduct.rpm = intselectedValue;
+    }
+  }
 
   onCheckboxChange(event: Event, optionId: number) {
     const target = event.target as HTMLInputElement;
