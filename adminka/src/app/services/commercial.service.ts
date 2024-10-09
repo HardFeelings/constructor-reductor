@@ -123,7 +123,7 @@ export class CommercialService extends ABaseServiceService{
   // }
   downloadPdfById(comm: CommercialProp): void {
     this.http.get(`${this.endpoint}/${this.pdfUrl}/${comm.idCommercialProp}`, { responseType: 'blob' }).pipe(
-      timeout(300000),
+      timeout(300),
       catchError((error) => {
         if (error.name === 'TimeoutError') {
           //console.error('Запрос превысил время ожидания.');
