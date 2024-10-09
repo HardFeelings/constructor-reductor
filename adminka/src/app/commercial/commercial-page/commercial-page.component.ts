@@ -128,6 +128,7 @@ export class CommercialPageComponent {
     this.searchProp(event.page);
   }
 
+
   searchProp(offset: number){
     if(this.searchManager.shortName == null){
       this.searchData.manager = null;

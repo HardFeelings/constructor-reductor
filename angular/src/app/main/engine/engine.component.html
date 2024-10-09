@@ -55,6 +55,8 @@
         <th>Наименование</th>
         <th>Мощность</th>
         <th>Кол-во полюсов</th>
+        <th>Момент инерции</th>
+        <th>Номинальный ток</th>
         <th>Вес</th>
         <th></th>
     </tr>
@@ -64,6 +66,8 @@
     <td>{{ product.name }}</td>
     <td>{{ product.motor?.power || 0 }}</td>
     <td>{{ product.motor?.polesNumber || 0 }}</td>
+    <td>{{ product.motor?.momentOfInertia || 0 }}</td>
+    <td>{{ product.motor?.ratedCurrent || 0}}</td>
     <td>{{ product.weight || 0 }}</td>
     <td class="tablebt">
         <div class="button-containerrr">

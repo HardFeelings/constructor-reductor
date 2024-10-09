@@ -49,6 +49,8 @@
         <th>Наименование</th>
         <th>Мощность</th>
         <th>Кол-во полюсов</th>
+        <th>Момент инерции</th>
+        <th>Номинальный ток</th>
         <th>Вес</th>
         <th>Чертёж</th>
         <th></th>
@@ -59,7 +61,10 @@
     <td>{{ product.name }}</td>
     <td>{{ product.motor?.power || 0 }}</td>
     <td>{{ product.motor?.polesNumber }}</td>
+    <td>{{ product.motor?.momentOfInertia}}</td>
+    <td>{{ product.motor?.ratedCurrent}}</td>
     <td>{{ product.weight || 0 }}</td>
+
     <td class="tablebt">
       <ng-container *ngIf="product.imageEmpty; else downloadButton">
         <div>Нет чертежа</div>

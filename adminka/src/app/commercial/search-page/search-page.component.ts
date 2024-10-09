@@ -74,6 +74,10 @@ export class SearchPageComponent {
   }
 
   goToBackCommercialPageOk() {
+    if (!this.commercialProp.commercialPropItems || this.commercialProp.commercialPropItems.length === 0) {
+      alert('Список продуктов пуст. Пожалуйста, добавьте продукты перед сохранением.');
+      return;
+    }
     this.commercialService.saveCommercialProp(this.commercialProp).subscribe(
         (respones: ResponseInfo<CommercialProp>) => {
             this.logger.log('SaveData', this.commercialProp);

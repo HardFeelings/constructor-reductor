@@ -6,6 +6,10 @@ import { Observable } from 'rxjs';
 import { CommercialProp } from '../models/commercialProp';
 import { PaymentTerms } from '../models/paymentTerm';
 import { Page } from '../models/page';
+import { catchError, timeout } from 'rxjs/operators';
+import { throwError } from 'rxjs';
+import * as XLSX from 'xlsx';
+import { jsPDF } from 'jspdf';
 
 @Injectable({
   providedIn: 'root'
@@ -66,18 +70,72 @@ export class CommercialService extends ABaseServiceService{
         this.downloadBlob(blob, `КП${comm.number}-${comm.manager?.shortName}-${comm.partner}.xlsx`);
       },
       (error) => {
-        console.error('Error downloading the Excel file:', error);
+        //console.error('Error downloading the Excel file:', error);
       }
     );
   }
 
+  downloadPdf(comm: CommercialProp): void {
+    this.http.get(`${this.endpoint}/${this.excelUrl}/${comm.idCommercialProp}`, { responseType: 'blob' }).subscribe(
+      (blob: Blob) => {
+        const reader = new FileReader();
+
+        reader.onload = (e) => {
+          const data = new Uint8Array(reader.result as ArrayBuffer);
+          const workbook = XLSX.read(data, { type: 'array' });
+
+
+          const worksheet = workbook.Sheets[workbook.SheetNames[0]];
+          const json = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+
+
+          this.createPDF(json, `КП${comm.number}-${comm.manager?.shortName}-${comm.partner}.pdf`);
+        };
+
+        reader.readAsArrayBuffer(blob);
+      },
+      (error) => {
+        //console.error('Error downloading the Excel file:', error);
+      }
+    );
+  }
+
+  private createPDF(data: any[], filename: string): void {
+    const doc = new jsPDF();
+    data.forEach((row, index) => {
+      doc.text(row.join(' '), 10, 10 + (index * 10));
+    });
+
+    doc.save(filename);
+  }
+
+
+  // downloadPdfById(comm: CommercialProp): void {
+  //   this.http.get(`${this.endpoint}/${this.pdfUrl}/${comm.idCommercialProp}`, { responseType: 'blob' }).subscribe(
+
+  //     (blob: Blob) => {
+  //       this.downloadBlob(blob, `КП${comm.number}-${comm.manager?.shortName}-${comm.partner}.pdf`);
+  //     },
+  //     (error) => {
+  //       console.error('Error downloading the Pdf file:', error);
+  //     }
+  //   );
+  // }
   downloadPdfById(comm: CommercialProp): void {
-    this.http.get(`${this.endpoint}/${this.pdfUrl}/${comm.idCommercialProp}`, { responseType: 'blob' }).subscribe(
+    this.http.get(`${this.endpoint}/${this.pdfUrl}/${comm.idCommercialProp}`, { responseType: 'blob' }).pipe(
+      timeout(300000),
+      catchError((error) => {
+        if (error.name === 'TimeoutError') {
+          //console.error('Запрос превысил время ожидания.');
+        }
+        alert('Error downloading the Pdf file');
+        return throwError(error);
+      })
+    ).subscribe(
       (blob: Blob) => {
         this.downloadBlob(blob, `КП${comm.number}-${comm.manager?.shortName}-${comm.partner}.pdf`);
       },
       (error) => {
-        console.error('Error downloading the Pdf file:', error);
       }
     );
   }
