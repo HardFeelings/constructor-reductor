@@ -1,7 +1,7 @@
 FROM alpine:3.20
 RUN apk add --no-cache fontconfig
 COPY ./fonts /usr/share/fonts/truetype/
-RUN fc-cache -f -v
+#RUN fc-cache -f -v
 
 FROM openjdk:17-jdk
 
