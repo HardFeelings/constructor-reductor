@@ -9,26 +9,15 @@ services:
       - angular
       - adminka
       - spring
-    dns:
-      - 8.8.8.8
-      - 8.8.4.4
 
   angular: 
     build:
       context: ./angular
-    dns:
-      - 8.8.8.8
-      - 8.8.4.4
 
   adminka:  
     build:
       context: ./adminka
-    dns:
-      - 8.8.8.8
-      - 8.8.4.4
+
   spring:  
     build:
       context: ./spring/ConstructorApp
-    dns:
-      - 8.8.8.8
-      - 8.8.4.4
