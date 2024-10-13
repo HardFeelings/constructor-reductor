@@ -1,16 +1,9 @@
-#
-#FROM maven:3.8.4-openjdk-17-slim AS build
-#
-#WORKDIR /app
-#COPY pom.xml .
-#COPY src ./src
-#RUN mvn clean package
-#
-#
-#FROM openjdk:17-slim
-#WORKDIR /app
-#COPY --from=build /app/target/ConstructorApp-0.0.1-SNAPSHOT.jar .
-#CMD ["java", "-jar", "ConstructorApp-0.0.1-SNAPSHOT.jar"]
+FROM ubuntu:20.04
+
+RUN apt-get update && apt-get install -y \
+       freetype2-dev \
+       && apt-get clean \
+       && rm -rf /var/lib/apt/lists/*
 
 FROM openjdk:17.0.2-jdk-slim-buster
 ARG JAR_FILE=target/*.jar
