@@ -1,9 +1,6 @@
-FROM ubuntu:20.04
+FROM alpine:latest
 
-RUN apt-get update && apt-get install -y \
-       freetype2-dev \
-       && apt-get clean \
-       && rm -rf /var/lib/apt/lists/*
+RUN apk add --no-cache freetype-dev
 
 FROM openjdk:17.0.2-jdk-slim-buster
 ARG JAR_FILE=target/*.jar
