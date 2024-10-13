@@ -1,3 +1,5 @@
+networks:
+  dev:
 services:
   nginx:
     image: nginx:stable-alpine
@@ -8,16 +10,24 @@ services:
     depends_on:
       - angular
       - adminka
-      - spring    
+      - spring
+    networks:
+      - dev
 
   angular: 
     build:
       context: ./angular
+    networks:
+      - dev
 
   adminka:  
     build:
       context: ./adminka
+    networks:
+      - dev
 
   spring:  
     build:
       context: ./spring/ConstructorApp
+    networks:
+      - dev
