@@ -1,9 +1,8 @@
 # Базовый образ с Ubuntu
-FROM debian:bullseye-slim
+FROM alpine
+RUN apk add --no-cache freetype freetype-dev
+RUN apk add --no-cache fontconfig
 
-RUN apt-get update && \
-    apt-get install -y fontconfig && \
-    rm -rf /var/lib/apt/lists/*
 
 # Копируем шрифты
 COPY ./fonts /usr/share/fonts/truetype/
