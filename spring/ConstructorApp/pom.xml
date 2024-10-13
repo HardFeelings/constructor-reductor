@@ -19,6 +19,13 @@
         <lombok-mapstruct-binding.version>0.2.0</lombok-mapstruct-binding.version>
         <lombok.version>1.18.30</lombok.version>
     </properties>
+    <repositories>
+        <repository>
+            <id>AsposeJavaAPI</id>
+            <name>Aspose Java API</name>
+            <url>https://repository.aspose.cloud/repo/</url>
+        </repository>
+    </repositories>
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -122,9 +129,9 @@
             <version>0.11.5</version>
         </dependency>
         <dependency>
-            <groupId>com.convertapi.client</groupId>
-            <artifactId>convertapi</artifactId>
-            <version>2.10</version>
+            <groupId>com.aspose</groupId>
+            <artifactId>aspose-cells-cloud</artifactId>
+            <version>22.5</version>
         </dependency>
     </dependencies>
 
