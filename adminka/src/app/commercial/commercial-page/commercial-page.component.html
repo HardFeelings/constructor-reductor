@@ -41,8 +41,11 @@
       <td class="row-buttons">
         <button (click)="goToSearchPage(commercial.idCommercialProp)">Изменить</button>
         <button (click)="oKDelete(commercial.idCommercialProp, commercial.number)">Удалить</button>
+        <!-- <button   [ngClass]="{'inactive-button': !commercial.commercialPropTerms || !commercial.commercialPropItems || commercial.commercialPropTerms.length<=0 || commercial.commercialPropItems.length<=0 }" [disabled]="!commercial.commercialPropTerms || !commercial.commercialPropItems || commercial.commercialPropTerms.length<=0 || commercial.commercialPropItems.length<=0" (click)="downloadExcel(commercial)" >Excel</button>
+        <button  [ngClass]="{'inactive-button': !commercial.commercialPropTerms || !commercial.commercialPropItems || commercial.commercialPropTerms.length<=0 || commercial.commercialPropItems.length<=0}" [disabled]="!commercial.commercialPropTerms || !commercial.commercialPropItems || commercial.commercialPropTerms.length<=0|| commercial.commercialPropItems.length<=0" (click)="downloadPdf(commercial)">PDF</button> -->
         <button (click)="downloadExcel(commercial)" >Excel</button>
         <button (click)="downloadPdf(commercial)">PDF</button>
+
       </td>
     </tr>
   </tbody>

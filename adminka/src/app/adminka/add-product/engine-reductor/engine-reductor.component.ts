@@ -102,7 +102,6 @@ export class EngineReductorComponent {
         const filteredProducts = respones.data.content.filter(product => product.motor !== null);
         const filteredProducts2 = respones.data.content.filter(product => product.reducer == null);
         if (filteredProducts.length > 0 && filteredProducts2.length > 0) {
-          // Объединяем оба фильтра в одном
           this.foundProductsMotors = respones.data.content.filter(product =>
               product.motor !== null && product.reducer == null
           );
@@ -172,7 +171,7 @@ export class EngineReductorComponent {
           //     this.foundProductsReducers = filteredProducts;
           // }
           if (filteredProducts.length > 0 && filteredProducts2.length > 0) {
-            // Объединяем оба фильтра в одном
+
             this.foundProductsReducers = respones.data.content.filter(product =>
                 product.reducer !== null && product.motor == null
             );
@@ -260,7 +259,7 @@ export class EngineReductorComponent {
         this.getMotorAdapterByMotorTypeId(this.motorTypeId);
       }
     } else {
-      console.error('Такой тип двигателя не найден');
+      //console.error('Такой тип двигателя не найден');
        this.motorTypeId = undefined;
        this.logger.log('undefined выбранного типа двигателя:', this.motorTypeId);
     }
@@ -276,7 +275,7 @@ export class EngineReductorComponent {
       this.motorAdapterTypeId = selectedAdapter.idMotorAdapterType;
       this.logger.log('ID выбранного фланца двигателя:', selectedAdapter.idMotorAdapterType);
     } else {
-      console.error('Такой фланц двигателя не найден');
+      //console.error('Такой фланц двигателя не найден');
       this.motorAdapterTypeId = undefined;
        this.logger.log('undefined выбранного фланца двигателя:', this.motorAdapterTypeId);
     }
@@ -343,7 +342,7 @@ export class EngineReductorComponent {
       this.getReducerOutputShaftTypeByReducerTypeId(this.reducerTypeId);
       this.getReducerInstallationByReducerTypeId(this.reducerTypeId);
     } else {
-      console.error('Такой тип редуктора не найден');
+      //console.error('Такой тип редуктора не найден');
       this.reducerTypeId = undefined;
       this.newReducer.reducerTypeId = undefined;
       this.logger.log('undefined id выбранного типа редуктора:', this.reducerTypeId);
@@ -371,7 +370,7 @@ export class EngineReductorComponent {
       this.newReducer.reducerInputTypeId = selectedInput.idReducerInputType;
       this.logger.log('ID выбранного типа входа:', selectedInput.idReducerInputType);
     } else {
-      console.error('Такого типа входа не найдено');
+      //console.error('Такого типа входа не найдено');
       this.newReducer.reducerInputTypeId = undefined;
       this.logger.log('undefined выбранного типа входа:', this.newReducer.reducerInputTypeId);
     }
@@ -409,7 +408,7 @@ export class EngineReductorComponent {
       this.newReducer.reducerOutputShaftTypeId = selectedOutputShaft.idReducerOutputShaftType;
       this.logger.log('ID выбранноой формы выходного вала:', selectedOutputShaft.idReducerOutputShaftType);
     } else {
-      console.error('Такой формы не найдено');
+      //console.error('Такой формы не найдено');
       this.newReducer.reducerOutputShaftTypeId = undefined;
       this.logger.log('undefined выбранноой формы выходного вала:', this.newReducer.reducerOutputShaftTypeId);
     }
@@ -436,7 +435,7 @@ export class EngineReductorComponent {
       this.newReducer.reducerInstallationTypeId = selectedInstallation.idReducerInstallationType;
       this.logger.log('ID выбранного типа крепления:', selectedInstallation.idReducerInstallationType);
     } else {
-      console.error('Такое крепление не найдено');
+      //console.error('Такое крепление не найдено');
       this.newReducer.reducerInstallationTypeId = undefined;
       this.logger.log('undefined выбранного типа крепления:', this.newReducer.reducerInstallationTypeId);
     }
@@ -463,7 +462,7 @@ export class EngineReductorComponent {
       this.newReducer.reducerMountingId = selectedMounting.idReducerMounting;
       this.logger.log('ID выбранного монтажного положения:', selectedMounting.idReducerMounting);
     } else {
-      console.error('Такое положение не найдено');
+      //console.error('Такое положение не найдено');
       this.newReducer.reducerMountingId = undefined;
       this.logger.log('undefined выбранного монтажного положения:', this.newReducer.reducerMountingId);
     }
@@ -490,7 +489,7 @@ export class EngineReductorComponent {
       this.newReducer.reducerSizeId = selectedSize.idReducerSize;
       this.logger.log('ID выбранного размера редуктора:', selectedSize.idReducerSize);
     } else {
-      console.error('Такой размер не найден');
+      //console.error('Такой размер не найден');
       this.newReducer.reducerSizeId = undefined;
       this.logger.log('undefined выбранного размера редуктора:', this.newReducer.reducerSizeId);
     }

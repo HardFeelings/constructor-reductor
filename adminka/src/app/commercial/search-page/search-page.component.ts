@@ -73,18 +73,27 @@ export class SearchPageComponent {
     this.dialogRef.close();
   }
 
-  goToBackCommercialPageOk(){
-    this.commercialService.saveCommercialProp(this.commercialProp).subscribe((respones: ResponseInfo<CommercialProp>)=>{
-      this.logger.log('SaveData', this.commercialProp );
-      if(respones.data !== null){
-        this.logger.log('ReturnSaveData', respones.data);
-        this.dialogRef.close(respones.data);
-      }
-      else{
-        alert(JSON.stringify(respones.errorMsg))
-      }
-    });
-  }
+  goToBackCommercialPageOk() {
+    if (!this.commercialProp.commercialPropItems || this.commercialProp.commercialPropItems.length === 0) {
+      alert('Список продуктов пуст. Пожалуйста, добавьте продукты перед сохранением.');
+      return;
+    }
+    this.commercialService.saveCommercialProp(this.commercialProp).subscribe(
+        (respones: ResponseInfo<CommercialProp>) => {
+            this.logger.log('SaveData', this.commercialProp);
+            if (respones.data !== null) {
+                this.logger.log('ReturnSaveData', respones.data);
+                this.dialogRef.close(respones.data);
+            } else {
+                alert(respones.errorMsg || 'Неизвестная ошибка');
+            }
+        },
+        (error) => {
+          const errorMsg = error.error ? error.error.errorMsg : 'Неизвестная ошибка. Пожалуйста, попробуйте еще раз.';
+          alert(errorMsg);
+        }
+    );
+}
 
   downloadImage(id:number,filename: string){
     this.productService.downloadImageById(id,filename);
@@ -198,6 +207,9 @@ export class SearchPageComponent {
 
 
   getTotalPercent() {
+    if (!this.commercialProp.commercialPropTerms || !Array.isArray(this.commercialProp.commercialPropTerms)) {
+      return 0;
+    }
     return this.commercialProp.commercialPropTerms.reduce((sum, term) => sum + (term.percent || 0), 0);
   }
 

@@ -89,10 +89,10 @@
           <td>{{ motorMotor.motor?.ratedCurrent }}</td>
           <td>{{ motorMotor.motor?.motorTypeId }}</td>
           <td *ngIf="this.selectMot == false" class="tablebt">
-            <div  class="button-containerrr"><button class="plus-button"  (click)="selectMotors(motorMotor) ">+</button>
+            <div  class="button-containerrr"><button class="plus-button"  (click)="selectMotors(motorMotor) ">Выбрать</button>
           </div></td>
           <td *ngIf="this.selectMot == true"class="tablebt">
-            <div  class="button-containerrr"><button class="plus-button"  (click)="deleteSelectMotors(motorMotor)">-</button>
+            <div  class="button-containerrr"><button class="plus-button"  (click)="deleteSelectMotors(motorMotor)">Отменить</button>
           </div></td>
         </tr>
       </tbody>
@@ -210,10 +210,10 @@
             <td>{{ product.reducer?.diameterOutputShaft }}</td>
             <td>{{ product.reducer?.ratio }}</td>
             <td *ngIf="this.selectRed == false" class="tablebt">
-              <div  class="button-containerrr"><button class="plus-button"  (click)="selectReducers(product) ">+</button>
+              <div  class="button-containerrr"><button class="plus-button"  (click)="selectReducers(product) ">Выбрать</button>
             </div></td>
             <td *ngIf="this.selectRed == true"class="tablebt">
-              <div  class="button-containerrr"><button class="plus-button"  (click)="deleteSelectReducers(product)">-</button>
+              <div  class="button-containerrr"><button class="plus-button"  (click)="deleteSelectReducers(product)">Отменить</button>
             </div></td>
           </tr>
     </tbody>

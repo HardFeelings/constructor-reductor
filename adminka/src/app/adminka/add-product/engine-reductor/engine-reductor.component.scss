@@ -277,9 +277,23 @@ button:hover {
   align-items: center;
   justify-content: center;
   height: 100%;
+  .plus-button{
+    width: 120px;
+    margin-left: -5px;
+    color: white;
+    background-color: #fcb331;
+  }
+
+  .plus-button:hover{
+    color: white;
+    background-color:#0c547a;
+  }
+
 }
 
 .table th {
   background-color: #083b57;
   color: #ffffff;
 }
+
+
