@@ -1,11 +1,9 @@
 # Базовый образ с Ubuntu
-FROM ubuntu:20.04
+FROM debian:bullseye-slim
 
-# Устанавливаем необходимые пакеты для работы с шрифтами
 RUN apt-get update && \
-    apt-get install -y \
-    fontconfig \
-    && rm -rf /var/lib/apt/lists/*
+    apt-get install -y fontconfig && \
+    rm -rf /var/lib/apt/lists/*
 
 # Копируем шрифты
 COPY ./fonts /usr/share/fonts/truetype/
