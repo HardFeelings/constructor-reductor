@@ -37,9 +37,7 @@ public class CommercialPropServiceImpl implements CommercialPropService {
     private final CommercialPropTermsService termsService;
     private final JwtUtils jwtUtils;
     private final ManagerService managerService;
-
     private final ReportService reportService;
-    private final ReportPdfService reportPdfService;
 
     @Override
     public List<CommercialPropDto> getAll() {
@@ -124,19 +122,6 @@ public class CommercialPropServiceImpl implements CommercialPropService {
         BufferedInputStream bufferedInputStream = new BufferedInputStream(reportService.report(findById(id)));
         return bufferedInputStream;
     }
-
-    @Override
-    public BufferedInputStream reportPdf(Long id) {
-        if (Objects.isNull(id)) {
-            throw new BadRequestException("Невозможно сформировать файл: id равен null", 400);
-        }
-        if (!repo.existsById(id)) {
-            throw new NotFoundException("Невозможно сформировать файл: не найден объект с id: " + id, 404);
-        }
-        BufferedInputStream bufferedInputStream = new BufferedInputStream(reportPdfService.report(findById(id)));
-        return bufferedInputStream;
-    }
-
     @Override
     public CommercialPropPaginationDto getByFilter(String token, CommercialPropDto commercialPropDto, int offset, int limit) {
         List<String> roles = jwtUtils.getRoles(token.substring(7));

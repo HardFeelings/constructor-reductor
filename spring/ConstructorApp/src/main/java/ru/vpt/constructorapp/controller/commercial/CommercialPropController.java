@@ -52,14 +52,4 @@ public class CommercialPropController extends AbstractController implements Comm
         headers.add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_OCTET_STREAM_VALUE);
         return new ResponseEntity<>(new InputStreamResource(inputStream), headers, HttpStatus.OK);
     }
-
-    @Override
-    public ResponseEntity<Resource> reportPdfCommercialProp(Long id) {
-        BufferedInputStream inputStream = null;
-        inputStream = service.reportPdf(id);
-        HttpHeaders headers = new HttpHeaders();
-        headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=report.pdf");
-        headers.add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_OCTET_STREAM_VALUE);
-        return new ResponseEntity<>(new InputStreamResource(inputStream), headers, HttpStatus.OK);
-    }
 }
