@@ -248,12 +248,46 @@ export class EngineReductorCommComponent {
   }
 
   searchProduct(filter: Filter, page: number){
+   //filter.rpm = this.rpm;
+   if(this.rpm == 0){
+    filter.rpm = undefined;
+  }
+  else{
     filter.rpm = this.rpm;
+  }
+  //filter.power = this.power;
+
+  if(this.power == 0){
+    filter.power = undefined;
+  }
+  else{
     filter.power = this.power;
+  }
+  if(this.diamOutput == 0){
+    filter.diamOutput = undefined;
+  }
+  else {
     filter.diamOutput = this.diamOutput;
+  }
+  if(this.diamOutputAllowance == undefined || this.diamOutputAllowance == null){
+    filter.diamOutputAllowance = 0;
+  }
+  else{
     filter.diamOutputAllowance = this.diamOutputAllowance;
+  }
+  if(this.ratio == 0){
+    filter.ratio = undefined;
+  }
+  else{
     filter.ratio = this.ratio;
+  }
+  if(this.torqueMoment == 0){
+    filter.torqueMoment = undefined;
+  }
+  else{
     filter.torqueMoment = this.torqueMoment;
+  }
+  //filter.torqueMoment = this.torqueMoment;
     this.logger.log('filter', filter);
     this.newFilter = filter;
     this.productService.postPageFilter(filter, page).subscribe((respones: ResponseInfo<Page<Product>>)=>{

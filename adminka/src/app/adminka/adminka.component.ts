@@ -1134,7 +1134,7 @@ export class AdminkaComponent {
           manager.position =e.position;
           manager.email =e.email;
           manager.phoneNumber =e.phoneNumber;
-          manager.idUser - e.idUser;
+          manager.idUser = e.idUser;
           return manager;
         });
       } else {

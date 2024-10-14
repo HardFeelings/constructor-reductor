@@ -9,5 +9,6 @@ export class Manager {
   position: string;
   email: string;
   phoneNumber: string;
+  idUser: number;
 
 }

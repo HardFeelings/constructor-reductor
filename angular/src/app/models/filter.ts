@@ -2,24 +2,24 @@ export class Filter{
 
   productTypeId:number;
   productOptions:number[];
-  rpm!: number;
+  rpm!: number | undefined;
 
   // motor param
   motorTypeId: number | undefined;
   motorAdapterTypeId!: number | undefined;
-  power!: number;
+  power!: number | undefined;
   polesNumber:number;
 
   // reducer param
 
   idReducerType: number | undefined;
   idReducerSize: number | undefined;
-  diamOutput:number;
+  diamOutput:number | undefined;
   diamOutputAllowance: number;
   idReducerInputType: number | undefined;
   idReducerOutputShaftType: number | undefined;
-  torqueMoment: number;
-  ratio: number;
+  torqueMoment: number | undefined;
+  ratio: number | undefined;
   idReducerInstallationType: number | undefined;
   idReducerMounting: number | undefined;
 }

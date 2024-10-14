@@ -262,9 +262,24 @@ export class ReductorComponent {
   }
 
   searchProduct(filter: Filter, page: number){
-    filter.diamOutput = this.diamOutput;
-    filter.diamOutputAllowance = this.diamOutputAllowance;
-    filter.ratio = this.ratio;
+    if(this.diamOutput == 0){
+      filter.diamOutput = undefined;
+    }
+    else {
+      filter.diamOutput = this.diamOutput;
+    }
+    if(this.diamOutputAllowance == undefined || this.diamOutputAllowance == null){
+      filter.diamOutputAllowance = 0;
+    }
+    else{
+      filter.diamOutputAllowance = this.diamOutputAllowance;
+    }
+    if(this.ratio == 0){
+      filter.ratio = undefined;
+    }
+    else{
+      filter.ratio = this.ratio;
+    }
     this.logger.log('filter', filter);
     this.newFilter = filter;
     this.productService.postPageFilter(filter, page).subscribe((respones: ResponseInfo<Page<Product>>)=>{

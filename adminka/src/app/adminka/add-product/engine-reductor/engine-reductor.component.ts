@@ -63,7 +63,7 @@ export class EngineReductorComponent {
   foundProductsReducers: Product[];
   filterMotors: Filter = new Filter();
   filterReducers: Filter = new Filter();
-  selectedPoles: number;
+  selectedPoles: number | undefined;
   newFilterMotors: Filter;
   newFilterReductor: Filter;
   rowsPageMotors: number = 15;
@@ -76,6 +76,12 @@ export class EngineReductorComponent {
   selectedReducerId: number | null | undefined;
   selectMot: boolean = false;
   selectRed: boolean = false;
+
+  reducerInstallId: number | undefined;
+  reducerInputId: number | undefined;
+  reducerOutShaftId: number | undefined;
+  reducerMountingId: number| undefined
+  reducerSizeId: number | undefined;
 
   constructor(private logger: NGXLogger,private reducerService: ReducerService, private productService: ProductService, private motorService: MotorService){
     this.newProduct = new Product;
@@ -90,36 +96,75 @@ export class EngineReductorComponent {
     this.getByProductTypeOptionId(this.idProductType);
   }
 
-  searchMotors(filter: Filter, page: number){
-    filter.power = this.power;
-    // filter.rpm = this.rpm
-    filter.polesNumber= this.selectedPoles;
-    this.logger.log('filter', filter);
-    this.newFilterMotors = filter;
-    this.productService.postPageFilter(filter, page).subscribe((respones: ResponseInfo<Page<Product>>)=>{
-      if (respones.data !== null && respones.data.content !== null) {
+//   searchMotors(filter: Filter, page: number){
+//     if( this.power == 0){
+//       filter.power = undefined;
+//     }
+//     else {
+//       filter.power = this.power;
+//     }
 
-        const filteredProducts = respones.data.content.filter(product => product.motor !== null);
-        const filteredProducts2 = respones.data.content.filter(product => product.reducer == null);
-        if (filteredProducts.length > 0 && filteredProducts2.length > 0) {
-          this.foundProductsMotors = respones.data.content.filter(product =>
-              product.motor !== null && product.reducer == null
-          );
+//     // filter.rpm = this.rpm
+//     filter.polesNumber = this.selectedPoles;
+//     filter.productTypeId = 1;
+//     filter.motorTypeId = this.motorTypeId;
+//     filter.motorAdapterTypeId = this.motorAdapterTypeId
+//     this.logger.log('filter', filter);
+//     this.newFilterMotors = filter;
+//     this.productService.postPageFilter(filter, page).subscribe((respones: ResponseInfo<Page<Product>>)=>{
+//       if (respones.data !== null && respones.data.content !== null) {
 
-          this.logger.log("Data searchReducers", this.foundProductsMotors);
-          this.logger.log("respones searchReducers", respones);
-          this.totalCountMotors = respones.data.totalCount;
-      } else {
-          alert("Моторы не найдены");
-            this.foundProductsMotors = [];
-        }
-    } else {
-        this.logger.log("Response data is null");
-        alert("Список пуст");
-        this.foundProductsMotors = [];
-    }
-});
+//         const filteredProducts = respones.data.content.filter(product => product.motor !== null);
+//         const filteredProducts2 = respones.data.content.filter(product => product.reducer == null);
+//         if (filteredProducts.length > 0 && filteredProducts2.length > 0) {
+//           this.foundProductsMotors = respones.data.content.filter(product =>
+//               product.motor !== null && product.reducer == null
+//           );
+
+//           this.logger.log("Data searchReducers", this.foundProductsMotors);
+//           this.logger.log("respones searchReducers", respones);
+//           this.totalCountMotors = respones.data.totalCount;
+//       } else {
+//           alert("Моторы не найдены");
+//             this.foundProductsMotors = [];
+//         }
+//     } else {
+//         this.logger.log("Response data is null");
+//         alert("Список пуст");
+//         this.foundProductsMotors = [];
+//     }
+// });
+//   }
+
+searchMotors(filter2: Filter, page: number){
+  let filter = new Filter();
+  if( this.power == 0){
+    filter.power = undefined;
   }
+  else {
+    filter.power = this.power;
+  }
+
+  // filter.rpm = this.rpm
+  filter.polesNumber = this.selectedPoles;
+  filter.productTypeId = 1;
+  filter.motorTypeId = this.motorTypeId;
+  filter.motorAdapterTypeId = this.motorAdapterTypeId
+  this.logger.log('filter', filter);
+  this.newFilterMotors = filter;
+  this.productService.postPageFilter(filter, page).subscribe((respones: ResponseInfo<Page<Product>>)=>{
+    if(respones.data !== null){
+      this.logger.log("Data searchProduct", respones.data.content);
+      this.logger.log("respones searchProduct", respones);
+      this.totalCountMotors = respones.data.totalCount;
+      this.foundProductsMotors = respones.data.content;
+      this.logger.log(" totalCount", respones.data.totalCount);
+    } else {
+      alert(JSON.stringify(respones.errorMsg))
+    }
+  });
+}
+
 
   onPageChangeMotors(event: any){
     this.logger.log("event.page", event.page);
@@ -152,50 +197,107 @@ export class EngineReductorComponent {
   }
 
 
-  searchReducers(filter: Filter, page: number){
-    filter.diamOutput = this.diamOutput;
-    filter.diamOutputAllowance = this.diamOutputAllowance;
-    filter.ratio = this.ratio;
+  // searchReducers(filter: Filter, page: number){
+  //   if (this.diamOutput == 0){
+  //     filter.diamOutput == undefined;
+  //   }
+  //   else{
+  //     filter.diamOutput = this.diamOutput;
+  //   }
+  //   filter.diamOutputAllowance = 0;
+  //   if (this.ratio == 0){
+  //     filter.ratio = undefined;
+  //   }
+  //   else {
+  //     filter.ratio = this.ratio;
+  //   }
+
+  //   filter.idReducerType = this.reducerTypeId
+  //   filter.idReducerSize = this.reducerSizeId;
+  //   filter.idReducerInputType = this.reducerInputId;
+  //   filter.idReducerMounting = this.reducerMountingId;
+  //   filter.idReducerOutputShaftType = this.reducerOutShaftId;
+  //   filter.idReducerInstallationType = this.reducerInstallId;
+  //   filter.productTypeId = 2;
+  //   this.logger.log('filter', filter);
+  //   this.newFilterReductor = filter;
+  //   this.productService.postPageFilter(filter, page).subscribe((respones: ResponseInfo<Page<Product>>) => {
+  //     if (respones.data !== null && respones.data.content !== null) {
+
+  //         const filteredProducts = respones.data.content.filter(product => product.reducer !== null);
+  //         const filteredProducts2 = respones.data.content.filter(product => product.motor == null);
+
+  //         // if (filteredProducts.length > 0 && filteredProducts2.length > 0) {
+  //         //     this.logger.log("Data searchReducers", filteredProducts);
+  //         //     this.logger.log("respones searchReducers", respones);
+  //         //     this.totalCountReductors = respones.data.totalCount;
+  //         //     this.foundProductsReducers = filteredProducts;
+  //         // }
+  //         if (filteredProducts.length > 0 && filteredProducts2.length > 0) {
+
+  //           this.foundProductsReducers = respones.data.content.filter(product =>
+  //               product.reducer !== null && product.motor == null
+  //           );
+
+  //           this.logger.log("Data searchReducers", this.foundProductsMotors);
+  //           this.logger.log("respones searchReducers", respones);
+  //           this.totalCountReductors = respones.data.totalCount;
+  //       }
+  //         else {
+  //             this.logger.log("No valid products found");
+  //             alert("Редукторы не найдены");
+  //             this.foundProductsReducers = [];
+  //         }
+  //     } else {
+  //         this.logger.log("Response data is null");
+  //         alert("Список пуст");
+  //         this.foundProductsReducers = [];
+  //     }
+  // });
+  // }
+
+
+  searchReducers(filter2: Filter, page: number){
+    let filter = new Filter();
+    if (this.diamOutput == 0){
+      filter.diamOutput == undefined;
+    }
+    else{
+      filter.diamOutput = this.diamOutput;
+    }
+    filter.diamOutputAllowance = 0;
+    if (this.ratio == 0){
+      filter.ratio = undefined;
+    }
+    else {
+      filter.ratio = this.ratio;
+    }
+
+    filter.idReducerType = this.reducerTypeId
+    filter.idReducerSize = this.reducerSizeId;
+    filter.idReducerInputType = this.reducerInputId;
+    filter.idReducerMounting = this.reducerMountingId;
+    filter.idReducerOutputShaftType = this.reducerOutShaftId;
+    filter.idReducerInstallationType = this.reducerInstallId;
+    filter.productTypeId = 2;
     this.logger.log('filter', filter);
     this.newFilterReductor = filter;
-    this.productService.postPageFilter(filter, page).subscribe((respones: ResponseInfo<Page<Product>>) => {
-      if (respones.data !== null && respones.data.content !== null) {
-
-          const filteredProducts = respones.data.content.filter(product => product.reducer !== null);
-          const filteredProducts2 = respones.data.content.filter(product => product.motor == null);
-
-          // if (filteredProducts.length > 0 && filteredProducts2.length > 0) {
-          //     this.logger.log("Data searchReducers", filteredProducts);
-          //     this.logger.log("respones searchReducers", respones);
-          //     this.totalCountReductors = respones.data.totalCount;
-          //     this.foundProductsReducers = filteredProducts;
-          // }
-          if (filteredProducts.length > 0 && filteredProducts2.length > 0) {
-
-            this.foundProductsReducers = respones.data.content.filter(product =>
-                product.reducer !== null && product.motor == null
-            );
-
-            this.logger.log("Data searchReducers", this.foundProductsMotors);
-            this.logger.log("respones searchReducers", respones);
-            this.totalCountReductors = respones.data.totalCount;
-        }
-          else {
-              this.logger.log("No valid products found");
-              alert("Редукторы не найдены");
-              this.foundProductsReducers = [];
-          }
+    this.productService.postPageFilter(filter, page).subscribe((respones: ResponseInfo<Page<Product>>)=>{
+      if(respones.data !== null){
+        this.logger.log("Data searchProduct", respones.data.content);
+        this.logger.log("respones searchProduct", respones);
+        this.totalCountReductors = respones.data.totalCount;
+        this.foundProductsReducers = respones.data.content;
+        this.logger.log(" totalCount", respones.data.totalCount);
       } else {
-          this.logger.log("Response data is null");
-          alert("Список пуст");
-          this.foundProductsReducers = [];
+        alert(JSON.stringify(respones.errorMsg))
       }
-  });
+    });
   }
 
   onPageChangeReducers(event: any){
     this.logger.log("event.page", event.page);
-    this.searchMotors(this.newFilterMotors,event.page);
+    this.searchReducers(this.newFilterMotors,event.page);
   }
 
 
@@ -306,9 +408,11 @@ export class EngineReductorComponent {
 
       if (intselectedValue) {
         this.newMotor.polesNumber = intselectedValue;
+        this.selectedPoles = intselectedValue;
       }
       if(selectedValue == "Select"){
         this.newMotor.polesNumber = undefined;
+        this.selectedPoles = undefined;
          this.logger.log('undefined значение poles:', this.newMotor.polesNumber);
       }
   }
@@ -368,10 +472,12 @@ export class EngineReductorComponent {
 
     if (selectedInput) {
       this.newReducer.reducerInputTypeId = selectedInput.idReducerInputType;
+      this.reducerInputId = selectedInput.idReducerInputType;
       this.logger.log('ID выбранного типа входа:', selectedInput.idReducerInputType);
     } else {
       //console.error('Такого типа входа не найдено');
       this.newReducer.reducerInputTypeId = undefined;
+      this.reducerInputId = undefined;
       this.logger.log('undefined выбранного типа входа:', this.newReducer.reducerInputTypeId);
     }
   }
@@ -406,10 +512,12 @@ export class EngineReductorComponent {
 
     if (selectedOutputShaft) {
       this.newReducer.reducerOutputShaftTypeId = selectedOutputShaft.idReducerOutputShaftType;
+      this.reducerOutShaftId = selectedOutputShaft.idReducerOutputShaftType;
       this.logger.log('ID выбранноой формы выходного вала:', selectedOutputShaft.idReducerOutputShaftType);
     } else {
       //console.error('Такой формы не найдено');
       this.newReducer.reducerOutputShaftTypeId = undefined;
+      this.reducerOutShaftId = undefined;
       this.logger.log('undefined выбранноой формы выходного вала:', this.newReducer.reducerOutputShaftTypeId);
     }
   }
@@ -433,10 +541,12 @@ export class EngineReductorComponent {
 
     if (selectedInstallation) {
       this.newReducer.reducerInstallationTypeId = selectedInstallation.idReducerInstallationType;
+      this.reducerInstallId =  selectedInstallation.idReducerInstallationType;
       this.logger.log('ID выбранного типа крепления:', selectedInstallation.idReducerInstallationType);
     } else {
       //console.error('Такое крепление не найдено');
       this.newReducer.reducerInstallationTypeId = undefined;
+      this.reducerInstallId  = undefined;
       this.logger.log('undefined выбранного типа крепления:', this.newReducer.reducerInstallationTypeId);
     }
   }
@@ -460,10 +570,12 @@ export class EngineReductorComponent {
 
     if (selectedMounting) {
       this.newReducer.reducerMountingId = selectedMounting.idReducerMounting;
+      this.reducerMountingId = selectedMounting.idReducerMounting;
       this.logger.log('ID выбранного монтажного положения:', selectedMounting.idReducerMounting);
     } else {
       //console.error('Такое положение не найдено');
       this.newReducer.reducerMountingId = undefined;
+      this.reducerMountingId = undefined;
       this.logger.log('undefined выбранного монтажного положения:', this.newReducer.reducerMountingId);
     }
   }
@@ -487,10 +599,12 @@ export class EngineReductorComponent {
 
     if (selectedSize) {
       this.newReducer.reducerSizeId = selectedSize.idReducerSize;
+      this.reducerSizeId = selectedSize.idReducerSize;
       this.logger.log('ID выбранного размера редуктора:', selectedSize.idReducerSize);
     } else {
       //console.error('Такой размер не найден');
       this.newReducer.reducerSizeId = undefined;
+      this.reducerSizeId = undefined;
       this.logger.log('undefined выбранного размера редуктора:', this.newReducer.reducerSizeId);
     }
   }

@@ -151,7 +151,12 @@ export class EngineComponent {
   }
 
   searchProduct(filter: Filter, page: number){
-    filter.power = this.power;
+    if(this.power == 0){
+      filter.power = undefined;
+    }
+    else{
+      filter.power = this.power;
+    }
     // filter.rpm = this.rpm
     filter.polesNumber = this.selectedPoles;
     this.logger.log('filter', filter);

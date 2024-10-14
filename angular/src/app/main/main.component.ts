@@ -23,6 +23,7 @@ export class MainComponent {
 
   ngOnInit() {
     this.getAllProductTypes();
+    this.pickProduct('Мотор', 1);
   }
 
   getAllProductTypes(){

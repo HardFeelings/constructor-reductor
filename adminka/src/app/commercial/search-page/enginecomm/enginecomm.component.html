@@ -7,7 +7,7 @@
           <option *ngFor="let type of motorType" [value]="type.motorTypeName">{{ type.motorTypeName }}</option>
         </select>
       </div>
-      <div *ngIf="motorTypeId && motorTypeId == 2" class="element_configurator">
+      <div *ngIf="(engineAdapterTypeByMotorTypeId ?? []).length > 0 && this.motorTypeId !== undefined" class="element_configurator">
         <span>Тип Фланца</span>
         <select (change)="idMotorAdapterTypeSelected($event)">
           <option value="Select"  selected>Select</option>
