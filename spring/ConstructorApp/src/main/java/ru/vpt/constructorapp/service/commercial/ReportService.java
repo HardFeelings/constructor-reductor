@@ -18,6 +18,9 @@ import ru.vpt.constructorapp.store.entities.product.ProductOptionEntity;
 import ru.vpt.constructorapp.store.entities.reducer.ReducerEntity;
 
 import java.io.*;
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -31,8 +34,8 @@ public class ReportService {
     private int cursor;
     private final String SHEET_NAME = "КП";
     private int endRow = 0;
-    private int totalCost = 0;
-    private int totalWeight = 0;
+    private double totalCost = 0;
+    private double totalWeight = 0;
     private final String[] TERMS_PREFIXES = new String[]{
             "Первый", "Второй", "Третий", "Четвертый", "Пятый", "Шестой", "Седьмой", "Восьмой", "Девятый", "Десятый"
     };
@@ -44,11 +47,11 @@ public class ReportService {
             workbook = new XSSFWorkbook(Objects.requireNonNull(Model.class.getClassLoader().getResourceAsStream("reportTemplate.xlsx")));
             if (Objects.isNull(entity.getCommercialPropItems()) || entity.getCommercialPropItems().isEmpty())
                 throw new BadRequestException("Невозможно сформировать отчет, отсутствуют элементы", 400);
-            cursor = 86;
+            cursor = 85;
             fillHeader(entity.getManager(), entity.getNumber(), entity.getPartner(), entity.getTimestamp());
             fillCommItems(entity.getCommercialPropItems());
             fillAdditionData(entity);
-            deleteRow(workbook.getSheet(SHEET_NAME), 14, 85);
+            deleteRow(workbook.getSheet(SHEET_NAME), 13, 84);
             setPrintArea();
             workbook.write(byteArrayOutputStream);
             byteArrayOutputStream.flush();
@@ -60,11 +63,11 @@ public class ReportService {
     }
 
     private void fillHeader(ManagerEntity manager, String number, String partner, String timestamp) {
-        printCell(number, 10, 5);
-        printCell(timestamp, 10, 7);
+        printCell(number, 9, 5);
+        printCell(timestamp, 9, 7);
         if (!Objects.isNull(manager))
-            printCell(manager.getShortName(), 8, 9);
-        printCell(partner, 9, 9);
+            printCell(manager.getShortName(), 7, 9);
+        printCell(partner, 8, 9);
     }
 
     private void setPrintArea() {
@@ -75,24 +78,17 @@ public class ReportService {
                 0,
                 workbook.getSheet(SHEET_NAME).getLastRowNum()
         );
-        //set paper size
         workbook.getSheet(SHEET_NAME).getPrintSetup().setPaperSize(XSSFPrintSetup.A4_PAPERSIZE);
-
-        //set display grid lines or not
-        //workbook.getSheet(SHEET_NAME).setDisplayGridlines(true);
-
-        //set print grid lines or not
-        //workbook.getSheet(SHEET_NAME).setPrintGridlines(true);
 
     }
 
     private void fillAdditionData(CommercialPropEntity entity) {
         int startRow = cursor;
-        copyRows(14, 41, cursor, workbook.getSheet(SHEET_NAME));
+        copyRows(13, 40, cursor, workbook.getSheet(SHEET_NAME));
         cursor += 29;
         printCell(String.valueOf(totalWeight), startRow, 8);
-        printCell(String.valueOf(totalCost), startRow + 1, 8);
-        printCell(String.valueOf((totalCost / 100) * 20), startRow + 2, 8);
+        printCell(formatMoney(totalCost), startRow + 1, 8);
+        printCell(formatMoney((totalCost / 100) * 20), startRow + 2, 8);
         printAllTerms(entity.getCommercialPropTerms(), startRow);
         int termsRowsNum = entity.getCommercialPropTerms().size();
         printCell("2. Срок поставки –  " + entity.getDeliveryTime() + " рабочих дней с момента оплаты первого платежа.",
@@ -148,18 +144,19 @@ public class ReportService {
 
     private void fillReducer(CommercialPropItemEntity item, int count) {
         int startRow = cursor;
-        copyRows(74, 85, cursor, workbook.getSheet(SHEET_NAME));
+        copyRows(73, 84, cursor, workbook.getSheet(SHEET_NAME));
         cursor += 12;
         printCell(String.valueOf(count), startRow, 1);
         if (!Objects.isNull(item.getProduct())) {
             double costs = item.getProduct().getPrice() * item.getAmount();
-            totalCost += costs;
-            totalWeight += item.getProduct().getWeight();
+            double totalWeight = item.getProduct().getWeight() * item.getAmount();
+            this.totalCost += costs;
+            this.totalWeight += totalWeight;
             ReducerEntity reducer = item.getProduct().getReducer();
             printCell(item.getProduct().getName(), startRow, 2);
             printCell(String.valueOf(item.getAmount()), startRow, 4);
-            printCell(String.valueOf(item.getProduct().getPrice()), startRow, 7);
-            printCell(String.valueOf(costs), startRow, 8);
+            printCell(formatMoney(item.getProduct().getPrice()), startRow, 7);
+            printCell(formatMoney(costs), startRow, 8);
             printCell(reducer.getReducerType().getReducerTypeName(), startRow + 2, 3);
             printCell(String.valueOf(reducer.getRatio()), startRow + 3, 3);
             printCell(reducer.getReducerMounting().getReducerMountingValue(), startRow + 4, 3);
@@ -175,18 +172,19 @@ public class ReportService {
 
     private void fillMotor(CommercialPropItemEntity item, int count) {
         int startRow = cursor;
-        copyRows(61, 72, cursor, workbook.getSheet(SHEET_NAME));
+        copyRows(60, 71, cursor, workbook.getSheet(SHEET_NAME));
         cursor += 12;
         printCell(String.valueOf(count), startRow, 1);
         if (!Objects.isNull(item.getProduct())) {
             double costs = item.getProduct().getPrice() * item.getAmount();
-            totalCost += costs;
-            totalWeight += item.getProduct().getWeight();
+            double totalWeight = item.getProduct().getWeight() * item.getAmount();
+            this.totalCost += costs;
+            this.totalWeight += totalWeight;
             MotorEntity motor = item.getProduct().getMotor();
             printCell(item.getProduct().getName(), startRow, 2);
             printCell(String.valueOf(item.getAmount()), startRow, 4);
-            printCell(String.valueOf(item.getProduct().getPrice()), startRow, 7);
-            printCell(String.valueOf(costs), startRow, 8);
+            printCell(formatMoney(item.getProduct().getPrice()), startRow, 7);
+            printCell(formatMoney(costs), startRow, 8);
             printCell(String.valueOf(item.getProduct().getRpm()), startRow + 2, 3);
             printCell(String.valueOf(motor.getPower()), startRow + 3, 3);
             printCell(String.valueOf(motor.getEfficiency()), startRow + 4, 3);
@@ -199,19 +197,20 @@ public class ReportService {
 
     private void fillMotorReducer(CommercialPropItemEntity item, int count) {
         int startRow = cursor;
-        copyRows(42, 59, cursor, workbook.getSheet(SHEET_NAME));
+        copyRows(41, 58, cursor, workbook.getSheet(SHEET_NAME));
         cursor += 18;
         printCell(String.valueOf(count), startRow, 1);
         if (!Objects.isNull(item.getProduct())) {
             double costs = item.getProduct().getPrice() * item.getAmount();
-            totalCost += costs;
-            totalWeight += item.getProduct().getWeight();
+            double totalWeight = item.getProduct().getWeight() * item.getAmount();
+            this.totalCost += costs;
+            this.totalWeight += totalWeight;
             MotorEntity motor = item.getProduct().getMotor();
             ReducerEntity reducer = item.getProduct().getReducer();
             printCell(item.getProduct().getName(), startRow, 2);
             printCell(String.valueOf(item.getAmount()), startRow, 4);
-            printCell(String.valueOf(item.getProduct().getPrice()), startRow, 7);
-            printCell(String.valueOf(costs), startRow, 8);
+            printCell(formatMoney(item.getProduct().getPrice()), startRow, 7);
+            printCell(formatMoney(costs), startRow, 8);
             printCell(String.valueOf(reducer.getReducerType().getReducerTypeName()), startRow + 2, 3);
             printCell(String.valueOf(item.getProduct().getRpm()), startRow + 3, 3);
             printCell(String.valueOf(motor.getPower()), startRow + 4, 3);
@@ -272,6 +271,13 @@ public class ReportService {
             row.getCell(cellNumber).setCellValue(value);
         }
         row.getCell(cellNumber).setCellValue(value);
+    }
+
+    private String formatMoney(Double money) {
+        DecimalFormatSymbols symbols = new DecimalFormatSymbols();
+        symbols.setGroupingSeparator(' ');
+        DecimalFormat df = new DecimalFormat("###,###.00", symbols);
+        return df.format(money);
     }
 
     public static void copyRows(int startRow, int endRow, int pPosition, XSSFSheet sheet) {
