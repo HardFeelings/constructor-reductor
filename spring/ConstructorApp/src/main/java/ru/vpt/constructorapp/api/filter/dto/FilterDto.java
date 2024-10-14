@@ -21,7 +21,7 @@ public class FilterDto {
     private Long motorTypeId;
     private Long motorAdapterTypeId;
     private Double power;
-    private Integer polucesNumber;
+    private Integer polesNumber;
 
     // reducer param
 
