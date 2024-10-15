@@ -37,7 +37,7 @@ public class ReportService {
     private double totalCost = 0;
     private double totalWeight = 0;
     private final String[] TERMS_PREFIXES = new String[]{
-            "Первый", "Второй", "Третий", "Четвертый", "Пятый", "Шестой", "Седьмой", "Восьмой", "Девятый", "Десятый"
+            "Первый платеж", "Второй платеж", "Третий платеж", "Четвертый платеж", "Пятый платеж", "Шестой платеж", "Седьмой платеж", "Восьмой платеж", "Девятый платеж", "Десятый платеж"
     };
 
 
@@ -103,30 +103,54 @@ public class ReportService {
     }
 
     private void printAllTerms(List<CommercialPropTermsEntity> terms, int startRow) {
-        for (int i = 0; i < terms.size(); i++) {
-            if(i != terms.size() - 1){
-                insertRow(workbook.getSheet(SHEET_NAME),startRow + 7 + i + 1);
-                copyRows(startRow + 7, startRow + 7, startRow + 7 + i + 1, workbook.getSheet(SHEET_NAME));
-                cursor++;
+        if (terms.size() != 1) {
+            for (int i = 0; i < terms.size(); i++) {
+                if (i != terms.size() - 1) {
+                    insertRow(workbook.getSheet(SHEET_NAME), startRow + 7 + i + 1);
+                    copyRows(startRow + 7, startRow + 7, startRow + 7 + i + 1, workbook.getSheet(SHEET_NAME));
+                    cursor++;
+                }
+                printCell("    " + collectTermsString(terms.get(i), false), startRow + 7 + i, 1);
             }
-            printCell("    " + collectTermsString(terms.get(i)), startRow + 7 + i, 1);
+        } else {
+            printCell("    " + collectTermsString(terms.get(0), true), startRow + 7, 1);
+            copyRows(startRow + 7, startRow + 7, startRow + 7 + 1, workbook.getSheet(SHEET_NAME));
+            cursor++;
         }
         printCell("    1." + (terms.size() + 1) + " Оплата производится в российских рублях по курсу ЦБ РФ на дату проведения оплаты.", startRow + 7 + terms.size(), 1);
 
 
     }
 
-    private String collectTermsString(CommercialPropTermsEntity terms) {
+    private String collectTermsString(CommercialPropTermsEntity terms, boolean isOne) {
         String termsString = terms.getPaymentTerms().getFullName();
         termsString = "1." + terms.getOrd() + " " + termsString;
-        if (terms.getOrd() > TERMS_PREFIXES.length)
-            termsString = termsString.replaceAll("<ord>", "");
-        else
-            termsString = termsString.replaceAll("<ord>", TERMS_PREFIXES[terms.getOrd() - 1]);
+        if (!isOne) {
+            if (terms.getOrd() > TERMS_PREFIXES.length)
+                termsString = termsString.replaceAll("<ord>", "");
+            else
+                termsString = termsString.replaceAll("<ord>", TERMS_PREFIXES[terms.getOrd() - 1]);
+        } else {
+            termsString = termsString.replaceAll("<ord>", "Платёж");
+        }
 
-        termsString = termsString.replaceAll("<percent>", terms.getPercent().toString());
-        termsString = termsString.replaceAll("<days>", terms.getDays().toString());
+        termsString = termsString.replaceAll("<percent>", String.valueOf(terms.getPercent().intValue()));
+        if(terms.getDays() == 90 || terms.getDays() == 100)
+            termsString = termsString.replaceAll("<days>", terms.getDays() + "-та рабочих дней");
+        else if(terms.getDays() == 40)
+            termsString = termsString.replaceAll("<days>", terms.getDays() + "-ка рабочих дней");
+        else if(findLastDigits(terms.getDays()) == 1 && terms.getDays() != 11 && terms.getDays() != 111)
+            termsString = termsString.replaceAll("<days>", terms.getDays() + "-го рабочего дня");
+        else if (findLastDigits(terms.getDays()) == 2 || findLastDigits(terms.getDays()) == 3 || findLastDigits(terms.getDays()) == 4)
+            termsString = termsString.replaceAll("<days>", terms.getDays() + "-х рабочих дней");
+        else
+            termsString = termsString.replaceAll("<days>", terms.getDays() + "-ти рабочих дней");
         return termsString;
+    }
+
+    private int findLastDigits(int number){
+        int lastDigit = number % 10;
+        return lastDigit;
     }
 
     private void fillCommItems(List<CommercialPropItemEntity> items) {
@@ -148,8 +172,8 @@ public class ReportService {
         cursor += 12;
         printCell(String.valueOf(count), startRow, 1);
         if (!Objects.isNull(item.getProduct())) {
-            double costs = item.getProduct().getPrice() * item.getAmount();
-            double totalWeight = item.getProduct().getWeight() * item.getAmount();
+            double costs = item.getProduct().getPrice() == null ? 0 : item.getProduct().getPrice() * item.getAmount();
+            double totalWeight = item.getProduct().getWeight() == null ? 0 : item.getProduct().getWeight() * item.getAmount();
             this.totalCost += costs;
             this.totalWeight += totalWeight;
             ReducerEntity reducer = item.getProduct().getReducer();
@@ -176,8 +200,8 @@ public class ReportService {
         cursor += 12;
         printCell(String.valueOf(count), startRow, 1);
         if (!Objects.isNull(item.getProduct())) {
-            double costs = item.getProduct().getPrice() * item.getAmount();
-            double totalWeight = item.getProduct().getWeight() * item.getAmount();
+            double costs = item.getProduct().getPrice() == null ? 0 : item.getProduct().getPrice() * item.getAmount();
+            double totalWeight = item.getProduct().getWeight() == null ? 0 : item.getProduct().getWeight() * item.getAmount();
             this.totalCost += costs;
             this.totalWeight += totalWeight;
             MotorEntity motor = item.getProduct().getMotor();
@@ -201,8 +225,8 @@ public class ReportService {
         cursor += 18;
         printCell(String.valueOf(count), startRow, 1);
         if (!Objects.isNull(item.getProduct())) {
-            double costs = item.getProduct().getPrice() * item.getAmount();
-            double totalWeight = item.getProduct().getWeight() * item.getAmount();
+            double costs = item.getProduct().getPrice() == null ? 0 : item.getProduct().getPrice() * item.getAmount();
+            double totalWeight = item.getProduct().getWeight() == null ? 0 : item.getProduct().getWeight() * item.getAmount();
             this.totalCost += costs;
             this.totalWeight += totalWeight;
             MotorEntity motor = item.getProduct().getMotor();
