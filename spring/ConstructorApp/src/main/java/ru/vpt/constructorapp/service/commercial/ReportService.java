@@ -91,8 +91,21 @@ public class ReportService {
         printCell(formatMoney((totalCost / 100) * 20), startRow + 2, 8);
         printAllTerms(entity.getCommercialPropTerms(), startRow);
         int termsRowsNum = entity.getCommercialPropTerms().size();
-        printCell("2. Срок поставки –  " + entity.getDeliveryTime() + " рабочих дней с момента оплаты первого платежа.",
-                startRow + 7 + termsRowsNum + 1, 1);
+        if (entity.getDeliveryTime() == 90 || entity.getDeliveryTime() == 100)
+            printCell("2. Срок поставки –  " + entity.getDeliveryTime() + "-та рабочих дней с момента оплаты первого платежа.",
+                    startRow + 7 + termsRowsNum + 1, 1);
+        else if (entity.getDeliveryTime() == 40)
+            printCell("2. Срок поставки –  " + entity.getDeliveryTime() + "-ка рабочих дней с момента оплаты первого платежа.",
+                    startRow + 7 + termsRowsNum + 1, 1);
+        else if (findLastDigits(entity.getDeliveryTime()) == 1 && entity.getDeliveryTime() != 11 && entity.getDeliveryTime() != 111)
+            printCell("2. Срок поставки –  " + entity.getDeliveryTime() + "-го рабочих дней с момента оплаты первого платежа.",
+                    startRow + 7 + termsRowsNum + 1, 1);
+        else if (findLastDigits(entity.getDeliveryTime()) == 2 || findLastDigits(entity.getDeliveryTime()) == 3 || findLastDigits(entity.getDeliveryTime()) == 4)
+            printCell("2. Срок поставки –  " + entity.getDeliveryTime() + "-х рабочих дней с момента оплаты первого платежа.",
+                    startRow + 7 + termsRowsNum + 1, 1);
+        else
+            printCell("2. Срок поставки –  " + entity.getDeliveryTime() + "-ти рабочих дней с момента оплаты первого платежа.",
+                    startRow + 7 + termsRowsNum + 1, 1);
         printCell("3. Условия доставки: " + entity.getDeliveryTerms(), startRow + 7 + termsRowsNum + 2, 1);
         printCell("4. Оплата осуществляется с учетом НДС 20%.", startRow + 7 + termsRowsNum + 3, 1);
         printCell("5. Гарантия " + entity.getGuarantee() + " месяца.", startRow + 7 + termsRowsNum + 4, 1);
@@ -135,11 +148,11 @@ public class ReportService {
         }
 
         termsString = termsString.replaceAll("<percent>", String.valueOf(terms.getPercent().intValue()));
-        if(terms.getDays() == 90 || terms.getDays() == 100)
+        if (terms.getDays() == 90 || terms.getDays() == 100)
             termsString = termsString.replaceAll("<days>", terms.getDays() + "-та рабочих дней");
-        else if(terms.getDays() == 40)
+        else if (terms.getDays() == 40)
             termsString = termsString.replaceAll("<days>", terms.getDays() + "-ка рабочих дней");
-        else if(findLastDigits(terms.getDays()) == 1 && terms.getDays() != 11 && terms.getDays() != 111)
+        else if (findLastDigits(terms.getDays()) == 1 && terms.getDays() != 11 && terms.getDays() != 111)
             termsString = termsString.replaceAll("<days>", terms.getDays() + "-го рабочего дня");
         else if (findLastDigits(terms.getDays()) == 2 || findLastDigits(terms.getDays()) == 3 || findLastDigits(terms.getDays()) == 4)
             termsString = termsString.replaceAll("<days>", terms.getDays() + "-х рабочих дней");
@@ -148,7 +161,7 @@ public class ReportService {
         return termsString;
     }
 
-    private int findLastDigits(int number){
+    private int findLastDigits(int number) {
         int lastDigit = number % 10;
         return lastDigit;
     }
