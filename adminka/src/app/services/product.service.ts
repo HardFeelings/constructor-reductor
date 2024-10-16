@@ -17,7 +17,7 @@ export class ProductService extends ABaseServiceService{
   private productTypeOptionIdUrl = 'byProductTypeId';
   private filterUrl = 'filter';
   private addProsuctUrl = 'security/product/dynamicSave';
-  private imageUrl = 'product/downloadImage';
+  private imageUrl = 'security/product/downloadImage';
 
   constructor(http: HttpClient) {
     super(http, 'api/v1');

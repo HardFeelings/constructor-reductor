@@ -442,7 +442,7 @@ searchMotors(filter2: Filter, page: number){
       this.logger.log('ID выбранного типа редуктора:', this.reducerTypeId);
       this.getReducerSizeByReducerTypeId(this.reducerTypeId);
       this.getReducerInputByReducerTypeId(this.reducerTypeId);
-      this.getReducerAdapterByReducerTypeId(this.reducerTypeId);
+      //this.getReducerAdapterByReducerTypeId(this.reducerTypeId);
       this.getReducerOutputShaftTypeByReducerTypeId(this.reducerTypeId);
       this.getReducerInstallationByReducerTypeId(this.reducerTypeId);
     } else {

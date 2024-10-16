@@ -69,7 +69,7 @@ export class ReductorComponent {
       this.getReducerSizeByReducerTypeId(this.reducerTypeId);
 
       this.getReducerInputByReducerTypeId(this.reducerTypeId);
-      this.getReducerAdapterByReducerTypeId(this.reducerTypeId);
+      //this.getReducerAdapterByReducerTypeId(this.reducerTypeId);
       this.getReducerOutputShaftTypeByReducerTypeId(this.reducerTypeId);
       this.getReducerInstallationByReducerTypeId(this.reducerTypeId);
     } else {
