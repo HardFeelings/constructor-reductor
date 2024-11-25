@@ -1,0 +1,171 @@
+/* @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap'); */
+
+body {
+  font-family: 'Roboto';
+  color: #000000;
+  margin: 0;
+  padding: 0;
+}
+
+.close-button {
+position: absolute;
+top: 10px;
+right: 10px;
+font-size: 24px;
+cursor: pointer;
+color: black;
+}
+
+.dialog {
+position: fixed;
+top: 50%;
+left: 50%;
+width: 50%;
+transform: translate(-50%, -50%);
+
+}
+
+.close-button:hover {
+color: red;
+}
+
+.button-container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+  margin: 10px;
+
+
+
+  button {
+    width: 15%;
+    height: 40px;
+    background-color: #083b57 ;
+    color: white;
+    border-radius: 5px;
+    font-size: 14px;
+  }
+  button:hover {
+    background-color: #1e587a ;
+  }
+
+  button:disabled {
+    background-color: #cccccc;
+    color: #666666;
+    cursor: not-allowed;
+    opacity: 0.7;
+  }
+
+}
+
+.right-button {
+  margin-left: auto;
+  /* width: 15%;
+    height: 40px;
+    background-color: #083b57 ;
+    color: white;
+    border-radius: 5px;
+    font-size: 14px; */
+
+}
+/* .right-button:hover {
+  background-color: #1e587a ;
+} */
+.containermain {
+  width: 50%;
+  height: 70vh;
+  border-radius: 10px;
+  background-color: #f0f0f0;
+  border: 1px solid black;
+  display: flex;
+  flex-direction: column;
+}
+
+.table-container {
+  flex-grow: 1;
+  overflow-y: auto;
+  border-bottom: 1px solid black;
+}
+
+.product {
+  margin-bottom: 20px;
+}
+
+.product_block {
+  display: flex;
+  gap: 5%;
+  margin-bottom: 20px;
+  justify-content: center;
+}
+
+.product_choise {
+  background-color: #fcb331;
+  color: #ffffff;
+  border: none;
+  padding: 15px 40px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 150px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.active {
+background-color: #083b57;
+}
+
+
+.product_choise:hover {
+  background-color: #083b57;
+}
+
+select:focus, input[type="number"]:focus {
+  border-color: #083b57;
+  outline: none;
+}
+
+::selection {
+  background-color: #fcb331;
+  color: #ffffff;
+}
+
+.select {
+background-color: #083b57;
+color: #ffffff;
+outline: none;
+}
+.noselect {
+background-color: #fcb331;
+color: #ffffff;
+}
+
+button {
+  width: 100px;
+  height:50px;
+  background-color: #083b57;
+  color: #ffffff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-size: 16px;
+}
+
+button:hover {
+  background-color: #1e587a;
+}
+
+hr {
+  border: 0;
+  height: 1px;
+  background: #ccc;
+  margin: 20px 0;
+}
+
+
+

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product Configurator</title>
+  <link rel="stylesheet" href="price-update.component.css">
+</head>
+
+<body>
+  <main class="containermain dialog">
+    <div class="product">
+      <h1 *ngIf="!priceUpdated">Введите значения</h1>
+      <h1 *ngIf="priceUpdated">Изменённые продукты</h1>
+    </div>
+
+    <div *ngIf="!priceUpdated" class="container_element_configurator">
+      <div class="element_configurator">
+        <span>Начало или полное название</span>
+        <input [(ngModel)]="this.prefix" type="text" required />
+      </div>
+      <div class="element_configurator">
+        <span>Коэффициент</span>
+        <input min="0" [(ngModel)]="this.percent" type="number" (keypress)="preventNegative($event)" required />
+      </div>
+    </div>
+
+    <div class="table-container">
+      <table class="table" *ngIf="(newProductList !== null || newProductList !== []) && priceUpdated">
+        <thead *ngIf="newProductList && newProductList.length > 0">
+          <tr>
+            <th>id</th>
+            <th>name</th>
+            <th>price</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let product of newProductList">
+            <td>{{ product.idProduct }}</td>
+            <td>{{ product.name }}</td>
+            <td>{{ product.price }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div *ngIf="!priceUpdated" class="button-container">
+      <button (click)="close(false)">Отмена</button>
+      <button (click)="update()" [disabled]="!isFormValid()">Пересчитать</button>
+    </div>
+
+    <div *ngIf="priceUpdated" class="button-container">
+      <button style="background-color:#f0f0f0;"></button>
+      <button (click)="close(true)">Закрыть</button>
+    </div>
+
+  </main>
+
+</body>
+
+</html>

@@ -24,6 +24,7 @@ import { EngineReductorCommComponent } from "./commercial/search-page/engine-red
 import { LoggerModule, NgxLoggerLevel } from 'ngx-logger';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from "./auth/auth-interceptor";
+import { PriceUpdateComponent } from "./adminka/price-update/price-update.component";
 
 
 @NgModule({
@@ -42,7 +43,7 @@ import { AuthInterceptor } from "./auth/auth-interceptor";
     EngineCommComponent,
     ReductorCommComponent,
     EngineReductorCommComponent,
-
+    PriceUpdateComponent,
 
 
 

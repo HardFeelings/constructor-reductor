@@ -6,6 +6,7 @@ import { ResponseInfo } from '../models/responesInfo';
 import { Observable } from 'rxjs';
 import { Filter } from '../models/filter';
 import { Page } from '../models/page';
+import { Percent } from '../models/percent';
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +19,7 @@ export class ProductService extends ABaseServiceService{
   private filterUrl = 'filter';
   private addProsuctUrl = 'security/product/dynamicSave';
   private imageUrl = 'security/product/downloadImage';
+  private percentUrl = 'security/product/priceUpdate'
 
   constructor(http: HttpClient) {
     super(http, 'api/v1');
@@ -76,6 +78,12 @@ export class ProductService extends ABaseServiceService{
   ///////////// Add  Product/////////////
   addDynamicProduct(product: Product): Observable<ResponseInfo<Product>> {
     return this.postwp<ResponseInfo<Product>>(`${this.addProsuctUrl}`, product);
+  }
+
+
+   ///////////// Dynamic  price update/////////////
+   sendPercent(data: Percent): Observable<ResponseInfo<Product[]>> {
+    return this.postwp<ResponseInfo<Product[]>>(`${this.percentUrl}`, data);
   }
 
 ///////////// Image /////////////

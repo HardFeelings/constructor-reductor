@@ -20,6 +20,7 @@ import { Router } from '@angular/router';
 import { EmployeeService } from '../services/employee.service';
 // import { Employee } from '../models/employee';
 import { Employee } from '../classes/employee';
+import { PriceUpdateComponent } from './price-update/price-update.component';
 
 @Component({
   selector: 'app-adminka',
@@ -128,6 +129,25 @@ export class AdminkaComponent {
     this.manager_list = new Array<Manager>();
   }
 
+  goToPriceUpdate(){
+    const dialogPriceUpdateComponent = this.dialog.open(PriceUpdateComponent, {
+      width: '0px',
+      height: '0px',
+    });
+    dialogPriceUpdateComponent.afterClosed().subscribe((result: boolean) => {
+        this.logger.log('dialog goToPriceUpdate', result);
+        const savedPage3 = localStorage.getItem('prod');
+        if (savedPage3 !== null) {
+            this.page3 = Number(savedPage3);
+            this.firstProductList = this.page3 * this.rowsProductList;
+        } else {
+            this.page3 = 0;
+            this.firstProductList = 0;
+        }
+       this.getProductList(this.page3)
+    });
+  }
+
   setid(id: number) {
     this.id = id;
     localStorage.removeItem('id_page');
@@ -143,21 +163,109 @@ export class AdminkaComponent {
   }
 
   ngOnInit() {
-    this.getMotorList(0)
+    const savedPage = localStorage.getItem('motors');
+    if (savedPage !== null) {
+        this.page = Number(savedPage);
+        this.firstMotorList = this.page * this.rowsMotorList;
+    } else {
+        this.page = 0;
+        this.firstMotorList = 0;
+    }
+    const savedPage2 = localStorage.getItem('motadapttypelist');
+    if (savedPage2 !== null) {
+        this.page2 = Number(savedPage2);
+        this.firstMotorAdapterTypeList = this.page2 * this.rowsMotorAdapterTypeList;
+    } else {
+        this.page2 = 0;
+        this.firstMotorAdapterTypeList = 0;
+    }
+    const savedPage3 = localStorage.getItem('prod');
+    if (savedPage3 !== null) {
+        this.page3 = Number(savedPage3);
+        this.firstProductList = this.page3 * this.rowsProductList;
+    } else {
+        this.page3 = 0;
+        this.firstProductList = 0;
+    }
+    const savedPage5 = localStorage.getItem('prodoption');
+    if (savedPage5 !== null) {
+        this.page5 = Number(savedPage5);
+        this.firstProductOption = this.page5 * this.rowsProductOption;
+    } else {
+        this.page5 = 0;
+        this.firstProductOption = 0;
+    }
+    const savedPage6 = localStorage.getItem('reducers');
+    if (savedPage6 !== null) {
+        this.page6 = Number(savedPage6);
+        this.firstReducer = this.page6 * this.rowsReducer;
+    } else {
+        this.page6 = 0;
+        this.firstReducer = 0;
+    }
+    const savedPage8 = localStorage.getItem('resize');
+    if (savedPage8 !== null) {
+        this.page8 = Number(savedPage8);
+        this.firstReducerSize = this.page8 * this.rowsReducerSize;
+    } else {
+        this.page8 = 0;
+        this.firstReducerSize = 0;
+    }
+    const savedPage9 = localStorage.getItem('reoutshaft');
+    if (savedPage9 !== null) {
+        this.page9 = Number(savedPage9);
+        this.firstReducerOutputShaft = this.page9 * this.rowsReducerOutputShaft;
+    } else {
+        this.page9 = 0;
+        this.firstReducerOutputShaft = 0;
+    }
+    const savedPage11 = localStorage.getItem('reinstltype');
+    if (savedPage11 !== null) {
+        this.page11 = Number(savedPage11);
+        this.firstReducerInstallationType = this.page11 * this.rowsReducerInstallationType;
+    } else {
+        this.page11 = 0;
+        this.firstReducerInstallationType = 0;
+    }
+    const savedPage12 = localStorage.getItem('reinputtype');
+    if (savedPage12 !== null) {
+        this.page12 = Number(savedPage12);
+        this.firstReducerInputType = this.page12 * this.rowsReducerInputType;
+    } else {
+        this.page12 = 0;
+        this.firstReducerInputType = 0;
+    }
+    const savedPage13 = localStorage.getItem('managers');
+    if (savedPage13 !== null) {
+        this.page13 = Number(savedPage13);
+        this.firstListManagers = this.page13 * this.rowsListManagers;
+    } else {
+        this.page13 = 0;
+        this.firstListManagers = 0;
+    }
+    const savedPage15 = localStorage.getItem('employees');
+    if (savedPage15 !== null) {
+        this.page15 = Number(savedPage15);
+        this.firstListEmployees = this.page15 * this.rowsListEmployees;
+    } else {
+        this.page15 = 0;
+        this.firstListEmployees = 0;
+    }
+    this.getMotorList(this.page)
     this.getMotorTypeList()
-    this.getMotorAdapterTypeList(0)
-    this.getProductList(0)
+    this.getMotorAdapterTypeList(this.page2)
+    this.getProductList(this.page3)
     this.getProductType()
-    this.getProductOption(0)
-    this.getReducer(0)
-    this.getReducerSize(0)
+    this.getProductOption(this.page5)
+    this.getReducer(this.page6)
+    this.getReducerSize(this.page8)
     this.getReducerType()
-    this.getReducerOutputShaft(0)
+    this.getReducerOutputShaft(this.page9)
     this.getReducerMounting()
-    this.getReducerInstallationType(0)
-    this.getReducerInputType(0)
-    this.getListManagers(0)
-    this.getListEmployees(0)
+    this.getReducerInstallationType(this.page11)
+    this.getReducerInputType(this.page12)
+    this.getListManagers(this.page13)
+    this.getListEmployees(this.page15)
     this.getListPaymentTerms()
     const storedId = localStorage.getItem('id_page');
     if (storedId) {
@@ -202,6 +310,7 @@ export class AdminkaComponent {
     this.page = event.page;
     this.firstMotorList = event.first;
     this.rowsMotorList = event.rows;
+    localStorage.setItem('motors', event.page.toString());
     this.getMotorList(event.page);
     this.logger.log('getMotorList', this.id, event.page);
   }
@@ -211,6 +320,7 @@ export class AdminkaComponent {
     this.page2 = event.page;
     this.firstMotorAdapterTypeList = event.first;
     this.rowsMotorAdapterTypeList = event.rows;
+    localStorage.setItem('motadapttypelist', event.page.toString());
     this.getMotorAdapterTypeList(event.page);
     this.logger.log('getMotorAdapterTypeList', this.id, event.page);
   }
@@ -219,10 +329,12 @@ export class AdminkaComponent {
     if (this.isSearchMode) {
       this.firstSearchList = event.first;
       this.rowsSearchList = event.rows;
+      localStorage.setItem('prod', event.page.toString());
       this.searchProductByName(event.page);
     } else {
       this.firstProductList = event.first;
       this.rowsProductList = event.rows;
+      localStorage.setItem('prod', event.page.toString());
       this.getProductList(event.page);
     }
   }
@@ -232,6 +344,7 @@ export class AdminkaComponent {
     this.page5 = event.page;
     this.firstProductOption = event.first;
     this.rowsProductOption = event.rows;
+    localStorage.setItem('prodoption', event.page.toString());
     this.getProductOption(event.page);
     this.logger.log('getProductOption', this.id, event.page);
   }
@@ -241,6 +354,7 @@ export class AdminkaComponent {
     this.page6 = event.page;
     this.firstReducer = event.first;
     this.rowsReducer = event.rows;
+    localStorage.setItem('reducers', event.page.toString());
     this.getReducer(event.page);
     this.logger.log('getReducer', this.id, event.page);
   }
@@ -250,6 +364,7 @@ export class AdminkaComponent {
     this.page8 = event.page;
     this.firstReducerSize = event.first;
     this.rowsReducerSize = event.rows;
+    localStorage.setItem('resize', event.page.toString());
     this.getReducerSize(event.page);
     this.logger.log('getReducerSize', this.id, event.page);
   }
@@ -260,6 +375,7 @@ export class AdminkaComponent {
     this.page9 = event.page;
     this.firstReducerOutputShaft = event.first;
     this.rowsReducerOutputShaft = event.rows;
+    localStorage.setItem('reoutshaft', event.page.toString());
     this.getReducerOutputShaft(event.page);
     this.logger.log('getReducerOutputShaft', this.id, event.page);
   }
@@ -270,6 +386,7 @@ export class AdminkaComponent {
     this.page11 = event.page;
     this.firstReducerInstallationType = event.first;
     this.rowsReducerInstallationType = event.rows;
+    localStorage.setItem('reinstltype', event.page.toString());
     this.getReducerInstallationType(event.page);
     this.logger.log('getReducerInstallationType', this.id, event.page);
   }
@@ -279,6 +396,7 @@ export class AdminkaComponent {
     this.page12 = event.page;
     this.firstReducerInputType = event.first;
     this.rowsReducerInputType = event.rows;
+    localStorage.setItem('reinputtype', event.page.toString());
     this.getReducerInputType(event.page);
     this.logger.log('getReducerInputType', this.id, event.page);
   }
@@ -288,6 +406,7 @@ export class AdminkaComponent {
     this.page13 = event.page;
     this.firstListManagers= event.first;
     this.rowsListManagers = event.rows;
+    localStorage.setItem('managers', event.page.toString());
     this.getListManagers(event.page);
     this.logger.log('getListManagers', this.id, event.page);
   }
@@ -297,6 +416,7 @@ export class AdminkaComponent {
     this.page15 = event.page;
     this.firstListEmployees= event.first;
     this.rowsListEmployees = event.rows;
+    localStorage.setItem('employees', event.page.toString());
     this.getListEmployees(event.page);
     this.logger.log('getListEmployees', this.id, event.page);
   }
@@ -452,6 +572,14 @@ export class AdminkaComponent {
     i.delete(this.http).subscribe((respones: ResponseInfo<boolean>) => {
       if(respones.data !== null) {
         this.motor_list = this.motor_list.filter(item => item.id !== i.id)
+        const savedPage = localStorage.getItem('motors');
+        if (savedPage !== null) {
+            this.page = Number(savedPage);
+            this.firstMotorList = this.page * this.rowsMotorList;
+        } else {
+            this.page = 0;
+            this.firstMotorList = 0;
+        }
         this.getMotorList(this.page);
       }
       else{
@@ -554,6 +682,14 @@ export class AdminkaComponent {
     i.delete(this.http).subscribe((data:boolean) => {
       if(data) {
         this.motorAdapterType_list = this.motorAdapterType_list.filter(item => item.id !== i.id)
+        const savedPage2 = localStorage.getItem('motadapttypelist');
+        if (savedPage2 !== null) {
+            this.page2 = Number(savedPage2);
+            this.firstMotorAdapterTypeList = this.page2 * this.rowsMotorAdapterTypeList;
+        } else {
+            this.page2 = 0;
+            this.firstMotorAdapterTypeList = 0;
+        }
         this.getMotorAdapterTypeList(this.page2);
       }
     })
@@ -632,6 +768,14 @@ export class AdminkaComponent {
     i.delete(this.http).subscribe((data:boolean) => {
       if(data) {
         this.product_list = this.product_list.filter(item => item.id !== i.id);
+        const savedPage3 = localStorage.getItem('prod');
+        if (savedPage3 !== null) {
+            this.page3 = Number(savedPage3);
+            this.firstProductList = this.page3 * this.rowsProductList;
+        } else {
+            this.page3 = 0;
+            this.firstProductList = 0;
+        }
         this.getProductList(this.page3);
       }
     })
@@ -700,6 +844,14 @@ export class AdminkaComponent {
     i.delete(this.http).subscribe((data:boolean) => {
       if(data) {
         this.productOption_list = this.productOption_list.filter(item => item.idProductOption !== i.idProductOption);
+        const savedPage5 = localStorage.getItem('prodoption');
+        if (savedPage5 !== null) {
+            this.page5 = Number(savedPage5);
+            this.firstProductOption = this.page5 * this.rowsProductOption;
+        } else {
+            this.page5 = 0;
+            this.firstProductOption = 0;
+        }
         this.getProductOption(this.page5);
       }
     })
@@ -748,7 +900,15 @@ export class AdminkaComponent {
     i.delete(this.http).subscribe((respones: ResponseInfo<boolean>) => {
       if(respones.data !== null) {
         this.reducer_list = this.reducer_list.filter(item => item.idReducer !== i.idReducer);
-        this.getReducer(0);
+        const savedPage6 = localStorage.getItem('reducers');
+        if (savedPage6 !== null) {
+            this.page6 = Number(savedPage6);
+            this.firstReducer = this.page6 * this.rowsReducer;
+        } else {
+            this.page6 = 0;
+            this.firstReducer = 0;
+        }
+        this.getReducer(this.page6);
       }
       else{
         alert(respones.errorMsg)
@@ -818,7 +978,15 @@ export class AdminkaComponent {
     i.delete(this.http).subscribe((data:boolean) => {
       if(data) {
         this.reducerSize_list = this.reducerSize_list.filter(item => item.idReducerSize !== i.idReducerSize);
-        this.getReducerSize(0);
+        const savedPage8 = localStorage.getItem('resize');
+        if (savedPage8 !== null) {
+            this.page8 = Number(savedPage8);
+            this.firstReducerSize = this.page8 * this.rowsReducerSize;
+        } else {
+            this.page8 = 0;
+            this.firstReducerSize = 0;
+        }
+        this.getReducerSize(this.page8);
       }
     })
   }
@@ -859,7 +1027,15 @@ export class AdminkaComponent {
     i.delete(this.http).subscribe((data:boolean) => {
       if(data) {
         this.reducerOutput_list = this.reducerOutput_list.filter(item => item.idReducerOutputShaftType !== i.idReducerOutputShaftType);
-        this.getReducerOutputShaft(0);
+        const savedPage9 = localStorage.getItem('reoutshaft');
+        if (savedPage9 !== null) {
+            this.page9 = Number(savedPage9);
+            this.firstReducerOutputShaft = this.page9 * this.rowsReducerOutputShaft;
+        } else {
+            this.page9 = 0;
+            this.firstReducerOutputShaft = 0;
+        }
+        this.getReducerOutputShaft(this.page9);
       }
     })
   }
@@ -927,7 +1103,15 @@ export class AdminkaComponent {
     i.delete(this.http).subscribe((data:boolean) => {
       if(data) {
         this.reducerInstallationType_list = this.reducerInstallationType_list.filter(item => item.idReducerInstallationType !== i.idReducerInstallationType);
-        this.getReducerInstallationType(0);
+        const savedPage11 = localStorage.getItem('reinstltype');
+        if (savedPage11 !== null) {
+            this.page11 = Number(savedPage11);
+            this.firstReducerInstallationType = this.page11 * this.rowsReducerInstallationType;
+        } else {
+            this.page11 = 0;
+            this.firstReducerInstallationType = 0;
+        }
+        this.getReducerInstallationType(this.page11);
       }
     })
   }
@@ -969,7 +1153,15 @@ export class AdminkaComponent {
     i.delete(this.http).subscribe((data:boolean) => {
       if(data) {
         this.reducerInputType_list = this.reducerInputType_list.filter(item => item.idReducerInputType !== i.idReducerInputType);
-        this.getReducerInputType(0);
+        const savedPage12 = localStorage.getItem('reinputtype');
+        if (savedPage12 !== null) {
+            this.page12 = Number(savedPage12);
+            this.firstReducerInputType = this.page12 * this.rowsReducerInputType;
+        } else {
+            this.page12 = 0;
+            this.firstReducerInputType = 0;
+        }
+        this.getReducerInputType(this.page12);
       }
     })
   }
@@ -1083,7 +1275,15 @@ export class AdminkaComponent {
     i.delete(this.http).subscribe((data:boolean) => {
       if(data) {
         this.employee_list = this.employee_list.filter(item => item.idEmployee !== i.idEmployee);
-        this.getListEmployees(0);
+        const savedPage15 = localStorage.getItem('employees');
+        if (savedPage15 !== null) {
+            this.page15 = Number(savedPage15);
+            this.firstListEmployees = this.page15 * this.rowsListEmployees;
+        } else {
+            this.page15 = 0;
+            this.firstListEmployees = 0;
+        }
+        this.getListEmployees(this.page15);
       }
     })
   }
@@ -1147,7 +1347,15 @@ export class AdminkaComponent {
     i.delete(this.http).subscribe((data:boolean) => {
       if(data) {
         this.manager_list = this.manager_list.filter(item => item.idManager !== i.idManager);
-        this.getListManagers(0);
+        const savedPage13 = localStorage.getItem('managers');
+        if (savedPage13 !== null) {
+            this.page13 = Number(savedPage13);
+            this.firstListManagers = this.page13 * this.rowsListManagers;
+        } else {
+            this.page13 = 0;
+            this.firstListManagers = 0;
+        }
+        this.getListManagers(this.page13);
       }
     })
   }
