@@ -34,7 +34,8 @@ public class EMailService {
                 .append("Почта: ").append(dto.getEmail()).append("\n")
                 .append("Телефон для связи: ").append(dto.getPhoneNumber()).append("\n")
                 .append("Оборудование: ").append(dto.getProductName()).append("\n")
-                .append("Описание: ").append(dto.getInfo());
+                .append("Описание: ").append(dto.getInfo()).append("\n")
+                .append("Выбранные характеристики: ").append(dto.getFields());
         return sb.toString();
     }
 }

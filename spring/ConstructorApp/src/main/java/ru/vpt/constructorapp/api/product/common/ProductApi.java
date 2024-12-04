@@ -6,7 +6,10 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import ru.vpt.constructorapp.api.product.common.dto.ProductDto;
 import ru.vpt.constructorapp.api.product.common.dto.ProductPaginationDto;
+import ru.vpt.constructorapp.api.product.common.dto.ProductPriceUpdateDto;
 import ru.vpt.constructorapp.api.util.ResponseDto;
+
+import java.util.List;
 
 @RequestMapping
 public interface ProductApi {
@@ -39,4 +42,7 @@ public interface ProductApi {
     @GetMapping("/security/product/downloadImage/{id}")
     ResponseEntity<Resource> getImage(@PathVariable("id") Long id);
 
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    @PostMapping("/security/product/priceUpdate")
+    ResponseEntity<ResponseDto<List<ProductDto>>> priceUpdate(@RequestBody ProductPriceUpdateDto priceUpdateDto);
 }

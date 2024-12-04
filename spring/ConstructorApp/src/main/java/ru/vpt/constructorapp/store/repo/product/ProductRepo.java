@@ -14,6 +14,7 @@ import java.util.Optional;
 public interface ProductRepo extends JpaRepository<ProductEntity, Long>, ProductCustomRepo,
         QuerydslPredicateExecutor<ProductEntity> {
     List<ProductEntity> findAll();
-    Page<ProductEntity> findAllByNameLike(String name, Pageable pageable);
+    Page<ProductEntity> findAllByNameLikeIgnoreCase(String name, Pageable pageable);
     Optional<ProductEntity> findById(Long id);
+    List<ProductEntity> findAllByNameContainingIgnoreCase(String name);
 }

@@ -9,6 +9,7 @@ import ru.vpt.constructorapp.api.exception.BadRequestException;
 import ru.vpt.constructorapp.api.exception.NotFoundException;
 import ru.vpt.constructorapp.api.product.common.dto.ProductDto;
 import ru.vpt.constructorapp.api.product.common.dto.ProductPaginationDto;
+import ru.vpt.constructorapp.api.product.common.dto.ProductPriceUpdateDto;
 import ru.vpt.constructorapp.api.product.common.mapper.ProductMapper;
 import ru.vpt.constructorapp.service.motor.impl.MotorServiceImpl;
 import ru.vpt.constructorapp.service.product.ProductService;
@@ -159,7 +160,7 @@ public class ProductServiceImpl implements ProductService {
         if(Objects.isNull(name))
             name = "%";
         name = "%" + name + "%";
-        Page<ProductEntity> page = productRepo.findAllByNameLike(name, PageRequest.of(offset, limit, Sort.by("idProduct")));
+        Page<ProductEntity> page = productRepo.findAllByNameLikeIgnoreCase(name, PageRequest.of(offset, limit, Sort.by("idProduct")));
         List<ProductDto> dtos = new ArrayList<>();
         page.getContent().forEach(item -> dtos.add(productMapper.toDTO(item)));
         ProductPaginationDto paginationDto = new ProductPaginationDto();
@@ -168,6 +169,28 @@ public class ProductServiceImpl implements ProductService {
         paginationDto.setTotalPages(page.getTotalPages());
         paginationDto.setCurrentPage(offset);
         return paginationDto;
+    }
+
+    @Override
+    public List<ProductDto> dynamicUpdate(ProductPriceUpdateDto priceUpdateDto) {
+        if (Objects.isNull(priceUpdateDto)) {
+            throw new BadRequestException("Невозможно обновить продукт: dto равен null", 400);
+        }
+        if (Objects.isNull(priceUpdateDto.getPercent()) || Objects.isNull(priceUpdateDto.getPrefix()) ) {
+            throw new BadRequestException("Невозможно обновить продукт: не заполнены необходимые поля", 400);
+        }
+        List<ProductEntity> entities = productRepo.findAllByNameContainingIgnoreCase(priceUpdateDto.getPrefix());
+        if (Objects.isNull(entities) || entities.isEmpty()) {
+            throw new NotFoundException("Невозможно обновить продукт: не найдены соответствующие объекты", 404);
+        }
+        List<ProductEntity> resulList = new ArrayList<>();
+        for (ProductEntity entity : entities) {
+            if (entity.getName().toLowerCase().startsWith(priceUpdateDto.getPrefix().toLowerCase())) {
+                entity.setPrice(entity.getPrice() * priceUpdateDto.getPercent());
+                resulList.add(entity);
+            }
+        }
+        return productRepo.saveAllAndFlush(resulList).stream().map(productMapper::toDTO).collect(Collectors.toList());
     }
 
 }

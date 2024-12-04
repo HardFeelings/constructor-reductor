@@ -46,19 +46,16 @@ public class ProductRepoImpl extends QuerydslRepositorySupport implements Produc
                         .add(filter.getRpm() != null ? filter.getRpm() - 5 : null, productEntity.rpm::goe)
                         .add(filter.getRpm() != null ? filter.getRpm() + 5 : null, productEntity.rpm::loe)
                         .add(filter.getMotorTypeId(), productEntity.motor.motorType.idMotorType::eq)
-                        .add(filter.getMotorAdapterTypeId(), productEntity.motor.motorAdapterType.idMotorAdapterType::eq)
                         .add(filter.getPower(), productEntity.motor.power::eq)
                         .add(filter.getPolesNumber(), productEntity.motor.polesNumber::eq)
                         .add(filter.getIdReducerType(), productEntity.reducer.reducerType.idReducerType::eq)
                         .add(filter.getIdReducerSize(), productEntity.reducer.reducerSize.idReducerSize::eq)
                         .add(filter.getDiamOutput() == null ? null : filter.getDiamOutput() - filter.getDiamOutputAllowance(), productEntity.reducer.diameterOutputShaft::goe)
                         .add(filter.getDiamOutput() == null ? null : filter.getDiamOutput() + filter.getDiamOutputAllowance(), productEntity.reducer.diameterOutputShaft::loe)
-                        .add(filter.getIdReducerInputType(), productEntity.reducer.reducerInputType.idReducerInputType::eq)
                         .add(filter.getIdReducerOutputShaftType(), productEntity.reducer.reducerOutputShaftType.idReducerOutputShaftType::eq)
                         .add(filter.getRatio() != null ? filter.getRatio() - 5 : null, productEntity.reducer.ratio::goe)
                         .add(filter.getRatio() != null ? filter.getRatio() + 5 : null, productEntity.reducer.ratio::loe)
                         .add(filter.getIdReducerInstallationType(), productEntity.reducer.reducerInstallationType.idReducerInstallationType::eq)
-                        .add(filter.getIdReducerMounting(), productEntity.reducer.reducerMounting.idReducerMounting::eq)
                         .buildAnd());
 
     }
