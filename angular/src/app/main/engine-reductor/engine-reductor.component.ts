@@ -30,7 +30,6 @@ export class EngineReductorComponent {
   resucerSize: ReducerSize[];
   reducerOutputShaftType: ReducerOutputShaftType[];
   reducerInstallationType: ReducerInstallationType[];
-  // reducerMounting: ReducerMounting[];
   reducerMounting: ReducerMounting[] = [
     { idReducerMounting: 1, reducerMountingValue: 'М1 - Горизонтальная установка, основание внизу' },
     { idReducerMounting: 2, reducerMountingValue: 'М2 - Вертикальная установка вниз' },
@@ -53,7 +52,6 @@ export class EngineReductorComponent {
   ngOnInit() {
     this.getAllMotorType();
     this.getAllReducerType();
-    // this.getAllReducerMounting();
     this.getByProductTypeOptionId(this.idProductType);
     this.filter.productTypeId = this.idProductType;
   }
@@ -200,19 +198,6 @@ export class EngineReductorComponent {
     }
   }
 
-
-  // getAllReducerMounting(){
-  //   this.reducerService.getAllReducerMounting().subscribe((respones: ResponseInfo<ReducerMounting[]>) => {
-  //     if(respones.data !== null){
-  //       this.logger.log("Data getAllReducerMounting: ", respones.data);
-  //       this.reducerMounting = respones.data;
-  //     } else {
-  //       alert(JSON.stringify(respones.errorMsg))
-  //     }
-  //   });
-  // }
-
-
   idReducerMountingSelected(event: Event) {
     const selectedElement = event.target as HTMLSelectElement;
     const selectedValue = selectedElement.value;
@@ -220,12 +205,9 @@ export class EngineReductorComponent {
     const selectedMounting= this.reducerMounting.find(type => type.reducerMountingValue === selectedValue);
 
     if (selectedMounting) {
-      // this.filter.idReducerMounting = selectedMounting.idReducerMounting;
       this.logger.log('ID выбранного монтажного положения:', selectedMounting.idReducerMounting);
     } else {
       console.error('Такое положение не найдено');
-      // this.filter.idReducerMounting = undefined;
-      // this.logger.log('undefined выбранного монтажного положения:',   this.filter.idReducerMounting);
     }
   }
 
@@ -254,15 +236,12 @@ export class EngineReductorComponent {
   }
 
   searchProduct(filter: Filter, page: number){
-    //filter.rpm = this.rpm;
     if(this.rpm == 0){
       filter.rpm = undefined;
     }
     else{
       filter.rpm = this.rpm;
     }
-    //filter.power = this.power;
-
     if(this.power == 0){
       filter.power = undefined;
     }

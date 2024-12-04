@@ -20,7 +20,6 @@ export class ReductorCommComponent {
   filter: Filter = new Filter();
   productOption: ProductOption[];
   resucerSize: ReducerSize[];
-  // reducerMounting: ReducerMounting[];
   reducerMounting: ReducerMounting[] = [
     { idReducerMounting: 1, reducerMountingValue: 'М1 - Горизонтальная установка, основание внизу' },
     { idReducerMounting: 2, reducerMountingValue: 'М2 - Вертикальная установка вниз' },
@@ -29,7 +28,6 @@ export class ReductorCommComponent {
     { idReducerMounting: 5, reducerMountingValue: 'М5 - Горизонтально с креплением к правой стороне'},
     { idReducerMounting: 6, reducerMountingValue: 'М6 - Горизонтально с креплением к левой стороне'}
   ];
-  // reducerInputType: ReducerInputType[];
   reducerInputType: ReducerInputType[] = [
     {idReducerInputType: 1,reducerInputTypeValue: 'Прямое подключение'},
     {idReducerInputType: 2,reducerInputTypeValue: 'Цельный входной вал'},
@@ -53,7 +51,6 @@ export class ReductorCommComponent {
 
   ngOnInit(){
     this.getAllReducerType();
-    // this.getAllReducerMounting();
     this.getByProductTypeOptionId(this.idProductType);
     this.filter.productTypeId = this.idProductType;
   }
@@ -87,9 +84,6 @@ export class ReductorCommComponent {
       this.filter.idReducerType = selectedReducer.idReducerType;
       this.logger.log('ID выбранного типа редуктора:', this.reducerTypeId);
       this.getReducerSizeByReducerTypeId(this.reducerTypeId);
-
-      // this.getReducerInputByReducerTypeId(this.reducerTypeId);
-      //this.getReducerAdapterByReducerTypeId(this.reducerTypeId);
       this.getReducerOutputShaftTypeByReducerTypeId(this.reducerTypeId);
       this.getReducerInstallationByReducerTypeId(this.reducerTypeId);
     } else {
@@ -100,17 +94,6 @@ export class ReductorCommComponent {
     }
   }
 
-  // getReducerInputByReducerTypeId(id:number) {
-  //   this.reducerService.getReducerInputByReducerTypeId(id).subscribe((respones: ResponseInfo<ReducerInputType[]>)=>{
-  //     if(respones.data !== null){
-  //       this.logger.log("Data getReducerInputByReducerTypeId", respones.data);
-  //       // this.reducerInputType = respones.data;
-  //     } else {
-  //       alert(JSON.stringify(respones.errorMsg))
-  //     }
-  //   });
-  // }
-
   idReducerInputSelected(event: Event) {
     const selectedElement = event.target as HTMLSelectElement;
     const selectedValue = selectedElement.value;
@@ -118,12 +101,9 @@ export class ReductorCommComponent {
     const selectedInput= this.reducerInputType.find(type => type.reducerInputTypeValue === selectedValue);
 
     if (selectedInput) {
-      // this.filter.idReducerInputType = selectedInput.idReducerInputType;
       this.logger.log('ID выбранного типа входа:', selectedInput.idReducerInputType);
     } else {
       console.error('Такого типа входа не найдено');
-      // this.filter.idReducerInputType = undefined;
-      // this.logger.log('undefined выбранного типа входа:', this.filter.idReducerInputType);
     }
   }
 
@@ -192,30 +172,15 @@ export class ReductorCommComponent {
     }
   }
 
-  // getAllReducerMounting(){
-  //   this.reducerService.getAllReducerMounting().subscribe((respones: ResponseInfo<ReducerMounting[]>) => {
-  //     if(respones.data !== null){
-  //       this.logger.log("Data getAllReducerMounting: ", respones.data);
-  //       this.reducerMounting = respones.data;
-  //     } else {
-  //       alert(JSON.stringify(respones.errorMsg))
-  //     }
-  //   });
-  // }
-
   idReducerMountingSelected(event: Event) {
     const selectedElement = event.target as HTMLSelectElement;
     const selectedValue = selectedElement.value;
     this.logger.log('Выбранное значение ReducerMounting:', selectedValue);
     const selectedMounting= this.reducerMounting.find(type => type.reducerMountingValue === selectedValue);
-
     if (selectedMounting) {
-      // this.filter.idReducerMounting = selectedMounting.idReducerMounting;
       this.logger.log('ID выбранного монтажного положения:', selectedMounting.idReducerMounting);
     } else {
       console.error('Такое положение не найдено');
-      // this.filter.idReducerMounting = undefined;
-      // this.logger.log('undefined выбранного монтажного положения:',   this.filter.idReducerMounting);
     }
   }
 

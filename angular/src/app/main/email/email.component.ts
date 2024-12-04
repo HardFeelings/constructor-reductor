@@ -16,9 +16,6 @@ export class EmailComponent {
  productObj: any;
  sendData: boolean | null = null;
  email: Email;
-
-//  form: FormGroup;
-
  selectEmail: string;
  selecetNumber: string;
  selectName: string;
@@ -39,7 +36,6 @@ export class EmailComponent {
       this.logger.log('EmailData', this.email );
       if(respones.data !== null){
         this.logger.log('result SendEmail', respones.data);
-        // this.dialogRef.close(respones.data);
         this.sendData = true;
       }
       else{
