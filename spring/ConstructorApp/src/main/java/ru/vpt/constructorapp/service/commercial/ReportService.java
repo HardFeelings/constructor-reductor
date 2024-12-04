@@ -52,7 +52,7 @@ public class ReportService {
             fillHeader(entity.getManager(), entity.getNumber(), entity.getPartner(), entity.getTimestamp());
             fillCommItems(entity.getCommercialPropItems());
             fillAdditionData(entity);
-            deleteRow(workbook.getSheet(SHEET_NAME), 13, 84);
+            deleteRow(workbook.getSheet(SHEET_NAME), 13, 83);
             setPrintArea();
             workbook.write(byteArrayOutputStream);
             byteArrayOutputStream.flush();
