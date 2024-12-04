@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import ru.vpt.constructorapp.api.product.common.ProductApi;
 import ru.vpt.constructorapp.api.product.common.dto.ProductDto;
 import ru.vpt.constructorapp.api.product.common.dto.ProductPaginationDto;
+import ru.vpt.constructorapp.api.product.common.dto.ProductPriceUpdateDto;
 import ru.vpt.constructorapp.api.util.ResponseDto;
 import ru.vpt.constructorapp.controller.util.AbstractController;
 import ru.vpt.constructorapp.service.product.ProductService;
@@ -62,5 +63,10 @@ public class ProductController extends AbstractController implements ProductApi 
         headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
         headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + entity.getName() + ".jpeg");
         return new ResponseEntity<>(bar, headers, HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<ResponseDto<List<ProductDto>>> priceUpdate(ProductPriceUpdateDto priceUpdateDto) {
+        return response(productService.dynamicUpdate(priceUpdateDto));
     }
 }

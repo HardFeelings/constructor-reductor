@@ -1,10 +1,8 @@
 package ru.vpt.constructorapp.service.commercial;
 
 
-import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
-import org.apache.poi.util.IOUtils;
 import org.apache.poi.xssf.usermodel.*;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
@@ -18,13 +16,11 @@ import ru.vpt.constructorapp.store.entities.product.ProductOptionEntity;
 import ru.vpt.constructorapp.store.entities.reducer.ReducerEntity;
 
 import java.io.*;
-import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
+
+import static java.util.Map.entry;
 
 
 @Service
@@ -39,15 +35,20 @@ public class ReportService {
     private final String[] TERMS_PREFIXES = new String[]{
             "Первый платеж", "Второй платеж", "Третий платеж", "Четвертый платеж", "Пятый платеж", "Шестой платеж", "Седьмой платеж", "Восьмой платеж", "Девятый платеж", "Десятый платеж"
     };
-
-
+    private Map<Integer, Integer> polesToRPM = Map.ofEntries(
+            entry(2, 3000),
+            entry(4, 1500),
+            entry(6, 1000),
+            entry(8, 750),
+            entry(10, 600)
+    );
     public ByteArrayInputStream report(CommercialPropEntity entity) {
         try {
             ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
             workbook = new XSSFWorkbook(Objects.requireNonNull(Model.class.getClassLoader().getResourceAsStream("reportTemplate.xlsx")));
             if (Objects.isNull(entity.getCommercialPropItems()) || entity.getCommercialPropItems().isEmpty())
                 throw new BadRequestException("Невозможно сформировать отчет, отсутствуют элементы", 400);
-            cursor = 85;
+            cursor = 84;
             fillHeader(entity.getManager(), entity.getNumber(), entity.getPartner(), entity.getTimestamp());
             fillCommItems(entity.getCommercialPropItems());
             fillAdditionData(entity);
@@ -84,8 +85,8 @@ public class ReportService {
 
     private void fillAdditionData(CommercialPropEntity entity) {
         int startRow = cursor;
-        copyRows(13, 40, cursor, workbook.getSheet(SHEET_NAME));
-        cursor += 29;
+        copyRows(13, 39, cursor, workbook.getSheet(SHEET_NAME));
+        cursor += 28;
         printCell(String.valueOf(totalWeight), startRow, 8);
         printCell(formatMoney(totalCost), startRow + 1, 8);
         printCell(formatMoney((totalCost / 100) * 20), startRow + 2, 8);
@@ -109,10 +110,10 @@ public class ReportService {
         printCell("3. Условия доставки: " + entity.getDeliveryTerms(), startRow + 7 + termsRowsNum + 2, 1);
         printCell("4. Оплата осуществляется с учетом НДС 20%.", startRow + 7 + termsRowsNum + 3, 1);
         printCell("5. Гарантия " + entity.getGuarantee() + " месяца.", startRow + 7 + termsRowsNum + 4, 1);
-        printCell(entity.getManager().getPosition(), startRow + 7 + termsRowsNum + 11, 1);
-        printCell(entity.getManager().getFullName(), startRow + 7 + termsRowsNum + 12, 1);
-        printCell("Конт. Тел.: " + entity.getManager().getPhoneNumber(), startRow + 7 + termsRowsNum + 13, 1);
-        printCell("email: " + entity.getManager().getEmail(), startRow + 7 + termsRowsNum + 14, 1);
+        printCell(entity.getManager().getPosition(), startRow + 7 + termsRowsNum + 10, 1);
+        printCell(entity.getManager().getFullName(), startRow + 7 + termsRowsNum + 11, 1);
+        printCell("Конт. Тел.: " + entity.getManager().getPhoneNumber(), startRow + 7 + termsRowsNum + 12, 1);
+        printCell("email: " + entity.getManager().getEmail(), startRow + 7 + termsRowsNum + 13, 1);
     }
 
     private void printAllTerms(List<CommercialPropTermsEntity> terms, int startRow) {
@@ -181,7 +182,7 @@ public class ReportService {
 
     private void fillReducer(CommercialPropItemEntity item, int count) {
         int startRow = cursor;
-        copyRows(73, 84, cursor, workbook.getSheet(SHEET_NAME));
+        copyRows(72, 83, cursor, workbook.getSheet(SHEET_NAME));
         cursor += 12;
         printCell(String.valueOf(count), startRow, 1);
         if (!Objects.isNull(item.getProduct())) {
@@ -209,7 +210,7 @@ public class ReportService {
 
     private void fillMotor(CommercialPropItemEntity item, int count) {
         int startRow = cursor;
-        copyRows(60, 71, cursor, workbook.getSheet(SHEET_NAME));
+        copyRows(59, 70, cursor, workbook.getSheet(SHEET_NAME));
         cursor += 12;
         printCell(String.valueOf(count), startRow, 1);
         if (!Objects.isNull(item.getProduct())) {
@@ -222,7 +223,7 @@ public class ReportService {
             printCell(String.valueOf(item.getAmount()), startRow, 4);
             printCell(formatMoney(item.getProduct().getPrice()), startRow, 7);
             printCell(formatMoney(costs), startRow, 8);
-            printCell(String.valueOf(item.getProduct().getRpm()), startRow + 2, 3);
+            printCell(String.valueOf(polesToRPM.containsKey(motor.getPolesNumber()) ? polesToRPM.get(motor.getPolesNumber()) : ""), startRow + 2, 3);
             printCell(String.valueOf(motor.getPower()), startRow + 3, 3);
             printCell(String.valueOf(motor.getEfficiency()), startRow + 4, 3);
             printCell(String.valueOf(motor.getRatedCurrent()), startRow + 5, 3);
@@ -234,7 +235,7 @@ public class ReportService {
 
     private void fillMotorReducer(CommercialPropItemEntity item, int count) {
         int startRow = cursor;
-        copyRows(41, 58, cursor, workbook.getSheet(SHEET_NAME));
+        copyRows(40, 57, cursor, workbook.getSheet(SHEET_NAME));
         cursor += 18;
         printCell(String.valueOf(count), startRow, 1);
         if (!Objects.isNull(item.getProduct())) {
