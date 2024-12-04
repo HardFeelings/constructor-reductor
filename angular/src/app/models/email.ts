@@ -4,4 +4,5 @@ export class Email{
   phoneNumber: string;
   productName: string;
   info: string | null;
+  fields: string;
 }

@@ -41,7 +41,7 @@ export class ReducerSize {
 export class ReducerInputType {
   idReducerInputType: number
   reducerInputTypeValue!: string
-  reducerTypeId: number
+  reducerTypeId?: number
 }
 
 export class ReducerOutputShaftType {

@@ -13,6 +13,7 @@ import { NGXLogger } from "ngx-logger";
 })
 export class EmailComponent {
  nameProduct: string;
+ productObj: any;
  sendData: boolean | null = null;
  email: Email;
 
@@ -22,35 +23,16 @@ export class EmailComponent {
  selecetNumber: string;
  selectName: string;
 
-  constructor( private logger: NGXLogger, public dialogRef: MatDialogRef<EmailComponent>, @Inject(MAT_DIALOG_DATA) public data:string, private productService: ProductService,){
-      this.nameProduct = data;
+  constructor( private logger: NGXLogger, public dialogRef: MatDialogRef<EmailComponent>, @Inject(MAT_DIALOG_DATA) public data: { obj: any; name: string }, private productService: ProductService,){
+      this.nameProduct = data.name;
+      this.productObj = data.obj;
       this.email = new Email;
   }
-
-
-  // ngOnInit() {
-  //   this.form = new FormGroup({
-  //     phone: new FormControl('')
-  //   })
-
-  //   let phoneControl = this.form.controls['phone'];
-
-  //   phoneControl.valueChanges.subscribe(() => {
-  //     if (phoneControl.value === "") {
-  //       phoneControl.setValidators(null);
-  //     } else {
-  //       phoneControl.setValidators(this.phoneValidator());
-  //     }
-  //     phoneControl.updateValueAndValidity({emitEvent: false});
-  //   });
-
-
-  // }
-
 
   send(){
     this.email.email = this. selectEmail;
     this.email.name = this.selectName;
+    this.email.fields = JSON.stringify(this.productObj);
     this.email.phoneNumber = this.selecetNumber;
     this.email.productName = this.nameProduct;
     this.productService.sendEmail(this.email).subscribe((respones: ResponseInfo<boolean>)=>{
@@ -70,30 +52,5 @@ export class EmailComponent {
   close(){
     this.dialogRef.close(this.sendData);
   }
-
-
-  // isValidPhoneNumber(phoneNumber: string) {
-  //   return new RegExp(/^[ 0 ]{1,1}?[0-9- ]{9,15}$/).test(phoneNumber);
-  // }
-
-  // onSubmit() {
-  //   this.logger.log('valid', this.form.valid);
-  // }
-
-
-
-  // phoneValidator(): ValidatorFn {
-  //   return (control): ValidationErrors => {
-  //     if (!this.isValidPhoneNumber(control.value)) {
-  //       return {
-  //         'invalidPhone': true
-  //       }
-  //     } else {
-  //       return {
-  //         'invalidPhone': false
-  //       }
-  //     }
-  //   }
-  // }
 
 }

@@ -30,7 +30,15 @@ export class EngineReductorComponent {
   resucerSize: ReducerSize[];
   reducerOutputShaftType: ReducerOutputShaftType[];
   reducerInstallationType: ReducerInstallationType[];
-  reducerMounting: ReducerMounting[];
+  // reducerMounting: ReducerMounting[];
+  reducerMounting: ReducerMounting[] = [
+    { idReducerMounting: 1, reducerMountingValue: 'М1 - Горизонтальная установка, основание внизу' },
+    { idReducerMounting: 2, reducerMountingValue: 'М2 - Вертикальная установка вниз' },
+    { idReducerMounting: 3, reducerMountingValue: 'М3 - Горизонтальная установка, основание вверху' },
+    { idReducerMounting: 4, reducerMountingValue: 'М4 - Вертикальная установка вверх'},
+    { idReducerMounting: 5, reducerMountingValue: 'М5 - Горизонтально с креплением к правой стороне'},
+    { idReducerMounting: 6, reducerMountingValue: 'М6 - Горизонтально с креплением к левой стороне'}
+  ];
   filter: Filter = new Filter();
   foundProducts: Product[];
   options: number[] = [];
@@ -45,7 +53,7 @@ export class EngineReductorComponent {
   ngOnInit() {
     this.getAllMotorType();
     this.getAllReducerType();
-    this.getAllReducerMounting();
+    // this.getAllReducerMounting();
     this.getByProductTypeOptionId(this.idProductType);
     this.filter.productTypeId = this.idProductType;
   }
@@ -193,16 +201,16 @@ export class EngineReductorComponent {
   }
 
 
-  getAllReducerMounting(){
-    this.reducerService.getAllReducerMounting().subscribe((respones: ResponseInfo<ReducerMounting[]>) => {
-      if(respones.data !== null){
-        this.logger.log("Data getAllReducerMounting: ", respones.data);
-        this.reducerMounting = respones.data;
-      } else {
-        alert(JSON.stringify(respones.errorMsg))
-      }
-    });
-  }
+  // getAllReducerMounting(){
+  //   this.reducerService.getAllReducerMounting().subscribe((respones: ResponseInfo<ReducerMounting[]>) => {
+  //     if(respones.data !== null){
+  //       this.logger.log("Data getAllReducerMounting: ", respones.data);
+  //       this.reducerMounting = respones.data;
+  //     } else {
+  //       alert(JSON.stringify(respones.errorMsg))
+  //     }
+  //   });
+  // }
 
 
   idReducerMountingSelected(event: Event) {
@@ -212,12 +220,12 @@ export class EngineReductorComponent {
     const selectedMounting= this.reducerMounting.find(type => type.reducerMountingValue === selectedValue);
 
     if (selectedMounting) {
-      this.filter.idReducerMounting = selectedMounting.idReducerMounting;
+      // this.filter.idReducerMounting = selectedMounting.idReducerMounting;
       this.logger.log('ID выбранного монтажного положения:', selectedMounting.idReducerMounting);
     } else {
       console.error('Такое положение не найдено');
-      this.filter.idReducerMounting = undefined;
-      this.logger.log('undefined выбранного монтажного положения:',   this.filter.idReducerMounting);
+      // this.filter.idReducerMounting = undefined;
+      // this.logger.log('undefined выбранного монтажного положения:',   this.filter.idReducerMounting);
     }
   }
 
@@ -312,11 +320,11 @@ export class EngineReductorComponent {
     });
   }
 
-  goSendEmail(name:string){
+  goSendEmail(obj: any, name:string){
     const dialogAddingNewStudent = this.dialog.open(EmailComponent, {
       width: '600px',
       height: '550px',
-      data: name,
+      data: { obj: obj, name: name },
     });
     dialogAddingNewStudent.afterClosed().subscribe((result: boolean) => {
       if(result  !== null && result  !== undefined || result == true){

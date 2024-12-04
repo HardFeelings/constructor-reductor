@@ -14,7 +14,12 @@ import { NGXLogger } from "ngx-logger";
   styleUrls: ['./enginecomm.component.scss']
 })
 export class EngineCommComponent {
-  engineAdapterTypeByMotorTypeId: EngineAdapterType[];
+  // engineAdapterTypeByMotorTypeId: EngineAdapterType[];
+  engineAdapterTypeByMotorTypeId: EngineAdapterType[] = [
+    { idMotorAdapterType: 1, motorAdapterTypeValue: 'Фланец B5'},
+    { idMotorAdapterType: 2, motorAdapterTypeValue: 'Фланец B14'},
+    { idMotorAdapterType: 3, motorAdapterTypeValue: 'Лапы'}
+  ];
   motorType: EngineType[];
   productOption: ProductOption[];
   rpmArray: number[]=[750, 1000, 1500, 3000];
@@ -54,16 +59,16 @@ export class EngineCommComponent {
     });
   }
 
-  getMotorAdapterByMotorTypeId(id:number) {
-    this.motorService.getMotorAdapterByMotorTypeId(id).subscribe((respones: ResponseInfo<EngineAdapterType[]>)=>{
-      if(respones.data !== null){
-        this.logger.log("Data getMotorAdapterByMotorTypeId", respones.data);
-        this.engineAdapterTypeByMotorTypeId = respones.data;
-      } else {
-        alert(JSON.stringify(respones.errorMsg))
-      }
-    });
-  }
+  // getMotorAdapterByMotorTypeId(id:number) {
+  //   this.motorService.getMotorAdapterByMotorTypeId(id).subscribe((respones: ResponseInfo<EngineAdapterType[]>)=>{
+  //     if(respones.data !== null){
+  //       this.logger.log("Data getMotorAdapterByMotorTypeId", respones.data);
+  //       this.engineAdapterTypeByMotorTypeId = respones.data;
+  //     } else {
+  //       alert(JSON.stringify(respones.errorMsg))
+  //     }
+  //   });
+  // }
 
 
   polesSelected(event: Event) {
@@ -101,9 +106,9 @@ export class EngineCommComponent {
       this.motorTypeId = selectedMotor.idMotorType;
       this.filter.motorTypeId = selectedMotor.idMotorType;
       this.logger.log('ID выбранного типа двигателя:', this.motorTypeId);
-      if(selectedMotor.idMotorType && selectedMotor.idMotorType !== 1){
-        this.getMotorAdapterByMotorTypeId(this.motorTypeId);
-      }
+      // if(selectedMotor.idMotorType && selectedMotor.idMotorType !== 1){
+      //   this.getMotorAdapterByMotorTypeId(this.motorTypeId);
+      // }
     } else {
       console.error('Такой тип двигателя не найден');
       this.motorTypeId = undefined;
@@ -119,12 +124,12 @@ export class EngineCommComponent {
     const selectedAdapter = this.engineAdapterTypeByMotorTypeId.find(type => type.motorAdapterTypeValue === selectedValue);
 
     if (selectedAdapter) {
-      this.filter.motorAdapterTypeId = selectedAdapter.idMotorAdapterType;
+      // this.filter.motorAdapterTypeId = selectedAdapter.idMotorAdapterType;
       this.logger.log('ID выбранного фланца двигателя:', selectedAdapter.idMotorAdapterType);
     } else {
       console.error('Такой фланц двигателя не найден');
-      this.filter.motorAdapterTypeId = undefined;
-      this.logger.log('undefined выбранного фланца двигателя:',  this.filter.motorAdapterTypeId);
+      // this.filter.motorAdapterTypeId = undefined;
+      // this.logger.log('undefined выбранного фланца двигателя:',  this.filter.motorAdapterTypeId);
     }
   }
 

@@ -20,5 +20,5 @@ export class EngineType {
 export class EngineAdapterType {
   idMotorAdapterType:number;
   motorAdapterTypeValue: string;
-  motorTypeId: EngineType;
+  motorTypeId?: EngineType;
 }
