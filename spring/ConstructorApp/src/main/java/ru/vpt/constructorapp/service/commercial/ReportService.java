@@ -19,6 +19,7 @@ import java.io.*;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static java.util.Map.entry;
 
@@ -191,7 +192,7 @@ public class ReportService {
             this.totalCost += costs;
             this.totalWeight += totalWeight;
             ReducerEntity reducer = item.getProduct().getReducer();
-            printCell(item.getProduct().getName(), startRow, 2);
+            printCell("Редуктор " + item.getProduct().getName(), startRow, 2);
             printCell(String.valueOf(item.getAmount()), startRow, 4);
             printCell(formatMoney(item.getProduct().getPrice()), startRow, 7);
             printCell(formatMoney(costs), startRow, 8);
@@ -219,7 +220,7 @@ public class ReportService {
             this.totalCost += costs;
             this.totalWeight += totalWeight;
             MotorEntity motor = item.getProduct().getMotor();
-            printCell(item.getProduct().getName(), startRow, 2);
+            printCell("Электродвигатель " + item.getProduct().getName(), startRow, 2);
             printCell(String.valueOf(item.getAmount()), startRow, 4);
             printCell(formatMoney(item.getProduct().getPrice()), startRow, 7);
             printCell(formatMoney(costs), startRow, 8);
@@ -245,7 +246,7 @@ public class ReportService {
             this.totalWeight += totalWeight;
             MotorEntity motor = item.getProduct().getMotor();
             ReducerEntity reducer = item.getProduct().getReducer();
-            printCell(item.getProduct().getName(), startRow, 2);
+            printCell("Мотор-редуктор " + item.getProduct().getName(), startRow, 2);
             printCell(String.valueOf(item.getAmount()), startRow, 4);
             printCell(formatMoney(item.getProduct().getPrice()), startRow, 7);
             printCell(formatMoney(costs), startRow, 8);
