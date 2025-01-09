@@ -11,8 +11,6 @@ export class Reducer {
   ratio!: number;
 }
 
-
-
 export class ReducerType {
   idReducerType: number;
   reducerTypeName!: string;

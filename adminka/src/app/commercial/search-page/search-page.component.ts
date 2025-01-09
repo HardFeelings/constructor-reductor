@@ -179,16 +179,6 @@ export class SearchPageComponent {
     }
   }
 
-  // addTerm() {
-  //   let newPropTerm = new CommercialPropTerm();
-  //   this.ordNow = this.commercialProp.commercialPropTerms.reduce((max, propTerm) => {
-  //     return propTerm.ord > max ? propTerm.ord : max;
-  //   }, 0);
-  //   newPropTerm.ord = this.ordNow + 1;
-  //   this.commercialProp.commercialPropTerms.push(newPropTerm);
-  // }
-
-
   addTerm() {
     if (this.getTotalPercent() < 100) {
       let newPropTerm = new CommercialPropTerm();
@@ -197,8 +187,8 @@ export class SearchPageComponent {
       }, 0);
 
       newPropTerm.ord = this.ordNow + 1;
-      newPropTerm.percent = 0; // Задаем начальное значение процентов
-      newPropTerm.days = 0; // Задаем начальное значение дней
+      newPropTerm.percent = 0;
+      newPropTerm.days = 0;
       this.commercialProp.commercialPropTerms.push(newPropTerm);
     } else {
       alert('Невозможно добавить больше условий, так как сумма процентов превышает 100%');

@@ -18,7 +18,6 @@ import { ManagerService } from '../services/manager.service';
 import { NGXLogger } from "ngx-logger";
 import { Router } from '@angular/router';
 import { EmployeeService } from '../services/employee.service';
-// import { Employee } from '../models/employee';
 import { Employee } from '../classes/employee';
 import { PriceUpdateComponent } from './price-update/price-update.component';
 
@@ -47,7 +46,6 @@ export class AdminkaComponent {
   employee_list:Employee[];
 
   searchData: string | null = null;
-  // totalCount: number;
   totalCountProductOption: number;
   firstProductOption: number = 0;
   rowsProductOption: number = 15;
@@ -810,7 +808,6 @@ export class AdminkaComponent {
   getProductOption(offset: number) {
     this.productService.getPageProductOptions(offset).subscribe((respones: ResponseInfo<Page<any>>)=>{
       if(respones.data !== null){
-        //this.totalCount = respones.data.totalCount;
         this.totalCountProductOption = respones.data.totalCount;
         this.productOption_list = respones.data.content.map((e: any) => {
           const productOption = new ProductOption();
@@ -860,7 +857,6 @@ export class AdminkaComponent {
   getReducer(offset: number) {
     this.reducerService.getPageReducers(offset).subscribe((respones: ResponseInfo<Page<any>>)=>{
       if(respones.data !== null){
-        //this.totalCount = respones.data.totalCount;
         this.totalCountReducer = respones.data.totalCount;
         this.reducer_list = respones.data.content.map((e: any) => {
           const reducer = new Reducer();
@@ -945,7 +941,6 @@ export class AdminkaComponent {
   getReducerSize(offset: number) {
     this.reducerService.getPageReducerSizes(offset).subscribe((respones: ResponseInfo<Page<any>>)=>{
       if(respones.data !== null){
-        //this.totalCount = respones.data.totalCount;
         this.totalCountReducerSize = respones.data.totalCount;
         this.reducerSize_list = respones.data.content.map((e: any) => {
           const reducerSize = new ReducerSize();
@@ -994,7 +989,6 @@ export class AdminkaComponent {
   getReducerOutputShaft(offset: number) {
     this.reducerService.getPageReducerOutputShaftTypes(offset).subscribe((respones: ResponseInfo<Page<any>>)=>{
       if(respones.data !== null){
-        //this.totalCount = respones.data.totalCount;
         this.totalCountReducerOutputShaft = respones.data.totalCount;
         this.reducerOutput_list = respones.data.content.map((e: any) => {
           const reducerOutputShaftType = new ReducerOutputShaftType();
@@ -1069,7 +1063,6 @@ export class AdminkaComponent {
   getReducerInstallationType(offset:number) {
     this.reducerService.getPageReducerInstallationType(offset).subscribe((respones: ResponseInfo<Page<any>>)=>{
       if(respones.data !== null){
-        //this.totalCount = respones.data.totalCount;
         this.totalCountReducerInstallationType = respones.data.totalCount;
         this.reducerInstallationType_list = respones.data.content.map((e: any) => {
           const reducerInstallationType = new ReducerInstallationType();
@@ -1119,7 +1112,6 @@ export class AdminkaComponent {
   getReducerInputType(offset: number) {
     this.reducerService.getPageReducerInputType(offset).subscribe((respones: ResponseInfo<Page<any>>)=>{
       if(respones.data !== null){
-        //this.totalCount = respones.data.totalCount;
         this.totalCountReducerInputType = respones.data.totalCount;
         this.reducerInputType_list = respones.data.content.map((e: any) => {
           const reducerInputType = new ReducerInputType();
@@ -1169,12 +1161,10 @@ export class AdminkaComponent {
   getMotorList(offset: number) {
     this.motorService.getPageMotor(offset).subscribe((respones: ResponseInfo<Page<Motor>>)=>{
       if(respones.data !== null){
-        //this.totalCount = respones.data.totalCount;
         this.totalCountMotorList = respones.data.totalCount;
         this.motor_list = respones.data.content.map((e: any) => {
           const motor = new Motor();
           motor.id = e.idMotor;
-          // motor.frequency.value = e.frequency;
           motor.polesNumber = e.polesNumber;
           motor.adapterType.id = e.motorAdapterTypeId;
           motor.power = e.power;
@@ -1237,7 +1227,6 @@ export class AdminkaComponent {
   getMotorAdapterTypeList(offset: number) {
     this.motorService.getPageMotorAdapterType(offset).subscribe((respones: ResponseInfo<Page<MotorAdapterType>>)=>{
       if(respones.data !== null){
-        //this.totalCount = respones.data.totalCount;
         this.totalCountMotorAdapterTypeList = respones.data.totalCount;
         this.motorAdapterType_list = respones.data.content.map((e: any) => {
           const motorAdapter = new MotorAdapterType();
@@ -1255,7 +1244,6 @@ export class AdminkaComponent {
   getListEmployees(offset: number) {
     this.employeeService.getPageEmployees(offset).subscribe((respones: ResponseInfo<Page<any>>)=>{
       if(respones.data !== null){
-        //this.totalCount = respones.data.totalCount;
         this.totalCountListEmployees = respones.data.totalCount;
         this.employee_list = respones.data.content.map((e: any) => {
           const employee = new Employee();
@@ -1324,7 +1312,6 @@ export class AdminkaComponent {
   getListManagers(offset: number) {
     this.managerService.getPageManagers(offset).subscribe((respones: ResponseInfo<Page<any>>)=>{
       if(respones.data !== null){
-        //this.totalCount = respones.data.totalCount;
         this.totalCountListManagers = respones.data.totalCount;
         this.manager_list = respones.data.content.map((e: any) => {
           const manager = new Manager();

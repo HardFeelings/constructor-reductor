@@ -16,7 +16,6 @@ import { NGXLogger } from "ngx-logger";
   styleUrls: ['./engine.component.scss']
 })
 export class EngineComponent {
-  // engineAdapterTypeByMotorTypeId: EngineAdapterType[];
   engineAdapterTypeByMotorTypeId: EngineAdapterType[] = [
     { idMotorAdapterType: 1, motorAdapterTypeValue: 'Фланец B5'},
     { idMotorAdapterType: 2, motorAdapterTypeValue: 'Фланец B14'},
@@ -57,17 +56,6 @@ export class EngineComponent {
     });
   }
 
-  // getMotorAdapterByMotorTypeId(id:number) {
-  //   this.motorService.getMotorAdapterByMotorTypeId(id).subscribe((respones: ResponseInfo<EngineAdapterType[]>)=>{
-  //     if(respones.data !== null){
-  //       this.logger.log("Data getMotorAdapterByMotorTypeId", respones.data);
-  //       this.engineAdapterTypeByMotorTypeId = respones.data;
-  //     } else {
-  //       alert(JSON.stringify(respones.errorMsg))
-  //     }
-  //   });
-  // }
-
   getByProductTypeOptionId(id:number) {
     this.productService.getByProductTypeOptionId(id).subscribe((respones: ResponseInfo<ProductOption[]>)=>{
       if(respones.data !== null){
@@ -104,9 +92,6 @@ export class EngineComponent {
       this.motorTypeId = selectedMotor.idMotorType;
       this.filter.motorTypeId = selectedMotor.idMotorType;
       this.logger.log('ID выбранного типа двигателя:', this.motorTypeId);
-      // if(selectedMotor.idMotorType && selectedMotor.idMotorType !== 1){
-      //   this.getMotorAdapterByMotorTypeId(this.motorTypeId);
-      // }
     } else {
       console.error('Такой тип двигателя не найден');
       this.motorTypeId = undefined;
@@ -122,12 +107,9 @@ export class EngineComponent {
     const selectedAdapter = this.engineAdapterTypeByMotorTypeId.find(type => type.motorAdapterTypeValue === selectedValue);
 
     if (selectedAdapter) {
-      // this.filter.motorAdapterTypeId = selectedAdapter.idMotorAdapterType;
       this.logger.log('ID выбранного фланца двигателя:', selectedAdapter.idMotorAdapterType);
     } else {
       console.error('Такой фланц двигателя не найден');
-      // this.filter.motorAdapterTypeId = undefined;
-      // this.logger.log('undefined выбранного фланца двигателя:',  this.filter.motorAdapterTypeId);
     }
   }
 
@@ -162,7 +144,7 @@ export class EngineComponent {
     else{
       filter.power = this.power;
     }
-    // filter.rpm = this.rpm
+
     filter.polesNumber = this.selectedPoles;
     this.logger.log('filter', filter);
     this.newFilter = filter;

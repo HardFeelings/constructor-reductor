@@ -121,53 +121,6 @@ export class EngineComponent {
       }
   }
 
-  // frequencySelected(event: Event) {
-  //   const selectedElement = event.target as HTMLSelectElement;
-  //   const selectedValue = selectedElement.value;
-  //   this.logger.log('Выбранное значение frequency:', selectedValue);
-  //   const intselectedValue: number = parseInt(selectedValue, 10);
-  //   this.logger.log('Выбранное значение int frequency:', selectedValue);
-
-  //   if (intselectedValue) {
-  //     this.newMotor.frequency = intselectedValue;
-  //   }
-  //   if(selectedValue == "Select"){
-  //     this.newMotor.frequency = undefined;
-  //      this.logger.log('undefined значение frequency:', this.newMotor.frequency);
-  //   }
-  // }
-
-  // cableExitSideSelected(event: Event) {
-  //   const selectedElement = event.target as HTMLSelectElement;
-  //   const selectedValue = selectedElement.value;
-  //   this.logger.log('Выбранное значение  cableExitSide:', selectedValue);
-  //   this.logger.log('Выбранное значение int  cableExitSide:', selectedValue);
-
-  //   if (selectedValue) {
-  //     this.newMotor.cableExitSide = selectedValue;
-  //   }
-  //   if(selectedValue == "Select"){
-  //     this.newMotor.cableExitSide = undefined;
-  //     this.logger.log('undefined значение cableExitSide:',  this.newMotor.cableExitSide);
-  //   }
-  // }
-
-  // posTerminalSelected(event: Event) {
-  //   const selectedElement = event.target as HTMLSelectElement;
-  //   const selectedValue = selectedElement.value;
-  //   this.logger.log('Выбранное значение posTerminal:', selectedValue);
-  //   const intselectedValue: number = parseInt(selectedValue, 10);
-  //   this.logger.log('Выбранное значение int posTerminal:', selectedValue);
-
-  //   if (intselectedValue) {
-  //     this.newMotor.posTerminalBox = intselectedValue;
-  //   }
-  //   if(selectedValue == "Select"){
-  //     this.newMotor.posTerminalBox = undefined;
-  //     this.logger.log('undefined значение posTerminalBox:',  this.newMotor.posTerminalBox);
-  //   }
-  // }
-
   rpmSelected(event: Event) {
     const selectedElement = event.target as HTMLSelectElement;
     const selectedValue = selectedElement.value;
