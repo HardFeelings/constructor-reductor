@@ -4,6 +4,7 @@ package ru.vpt.constructorapp.service.commercial;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.*;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import ru.vpt.constructorapp.api.exception.BadRequestException;
@@ -19,7 +20,6 @@ import java.io.*;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.*;
-import java.util.stream.Collectors;
 
 import static java.util.Map.entry;
 
@@ -30,9 +30,8 @@ public class ReportService {
     private XSSFWorkbook workbook;
     private int cursor;
     private final String SHEET_NAME = "КП";
-    private int endRow = 0;
-    private double totalCost = 0;
-    private double totalWeight = 0;
+    private double totalCost;
+    private double totalWeight;
     private final String[] TERMS_PREFIXES = new String[]{
             "Первый платеж", "Второй платеж", "Третий платеж", "Четвертый платеж", "Пятый платеж", "Шестой платеж", "Седьмой платеж", "Восьмой платеж", "Девятый платеж", "Десятый платеж"
     };
@@ -169,6 +168,8 @@ public class ReportService {
     }
 
     private void fillCommItems(List<CommercialPropItemEntity> items) {
+        this.totalCost = 0;
+        this.totalWeight = 0;
         int count = 1;
         for (CommercialPropItemEntity item : items) {
             if (item.getProduct().getProductType().getIdProductType().equals(1L))

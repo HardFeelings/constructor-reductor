@@ -3,6 +3,7 @@ package ru.vpt.constructorapp.service.commercial.impl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import ru.vpt.constructorapp.api.commercial.item.dto.CommercialPropItemDto;
 import ru.vpt.constructorapp.api.commercial.manager.dto.ManagerDto;
@@ -139,10 +140,8 @@ public class CommercialPropServiceImpl implements CommercialPropService {
 
     }
 
-
-
     private CommercialPropPaginationDto findByFilter(CommercialPropDto commercialPropDto, int offset, int limit) {
-        Page<CommercialPropEntity> page = repo.findByFilter(commercialPropDto, PageRequest.of(offset, limit));
+        Page<CommercialPropEntity> page = repo.findByFilter(commercialPropDto, PageRequest.of(offset, limit, Sort.by("timestamp").descending()));
         CommercialPropPaginationDto paginationDto = new CommercialPropPaginationDto();
         paginationDto.setContent(page.getContent().stream().map(mapper::toDTOWithoutItems).collect(Collectors.toList()));
         paginationDto.setCurrentPage(offset);

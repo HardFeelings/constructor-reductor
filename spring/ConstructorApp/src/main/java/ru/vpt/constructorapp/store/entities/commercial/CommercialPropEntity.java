@@ -40,6 +40,7 @@ public class CommercialPropEntity {
 
     @Column(name = "delivery_terms")
     private String deliveryTerms;
+
     @Column(name = "timestamp")
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(pattern = "dd.MM.yyyy")

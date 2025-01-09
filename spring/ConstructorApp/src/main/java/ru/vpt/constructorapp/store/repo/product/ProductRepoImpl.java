@@ -43,8 +43,8 @@ public class ProductRepoImpl extends QuerydslRepositorySupport implements Produc
                 .where(QPredicates.builder()
                         .add(filter.getProductTypeId(), productEntity.productType.idProductType::eq)
                         .add(filter.getTorqueMoment(), productEntity.torqueMoment::eq)
-                        .add(filter.getRpm() != null ? filter.getRpm() - 5 : null, productEntity.rpm::goe)
-                        .add(filter.getRpm() != null ? filter.getRpm() + 5 : null, productEntity.rpm::loe)
+                        .add(filter.getRpm() != null ? filter.getRpm() - ((filter.getRpm() / 100) * 10) : null, productEntity.rpm::goe)
+                        .add(filter.getRpm() != null ? filter.getRpm() + ((filter.getRpm() / 100) * 10) : null, productEntity.rpm::loe)
                         .add(filter.getMotorTypeId(), productEntity.motor.motorType.idMotorType::eq)
                         .add(filter.getPower(), productEntity.motor.power::eq)
                         .add(filter.getPolesNumber(), productEntity.motor.polesNumber::eq)
@@ -53,8 +53,8 @@ public class ProductRepoImpl extends QuerydslRepositorySupport implements Produc
                         .add(filter.getDiamOutput() == null ? null : filter.getDiamOutput() - filter.getDiamOutputAllowance(), productEntity.reducer.diameterOutputShaft::goe)
                         .add(filter.getDiamOutput() == null ? null : filter.getDiamOutput() + filter.getDiamOutputAllowance(), productEntity.reducer.diameterOutputShaft::loe)
                         .add(filter.getIdReducerOutputShaftType(), productEntity.reducer.reducerOutputShaftType.idReducerOutputShaftType::eq)
-                        .add(filter.getRatio() != null ? filter.getRatio() - 5 : null, productEntity.reducer.ratio::goe)
-                        .add(filter.getRatio() != null ? filter.getRatio() + 5 : null, productEntity.reducer.ratio::loe)
+                        .add(filter.getRatio() != null ? filter.getRatio() - ((filter.getRatio() / 100) * 10) : null, productEntity.reducer.ratio::goe)
+                        .add(filter.getRatio() != null ? filter.getRatio() + ((filter.getRatio() / 100) * 10): null, productEntity.reducer.ratio::loe)
                         .add(filter.getIdReducerInstallationType(), productEntity.reducer.reducerInstallationType.idReducerInstallationType::eq)
                         .buildAnd());
 
