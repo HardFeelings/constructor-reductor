@@ -143,7 +143,7 @@ public class CommercialPropServiceImpl implements CommercialPropService {
     }
 
     private CommercialPropPaginationDto findByFilter(CommercialPropDto commercialPropDto, int offset, int limit) {
-        Page<CommercialPropEntity> page = repo.findByFilter(commercialPropDto, PageRequest.of(offset, limit, Sort.by("correctly_timestamp").descending()));
+        Page<CommercialPropEntity> page = repo.findByFilter(commercialPropDto, PageRequest.of(offset, limit, Sort.by("correctlyTimestamp").descending()));
         CommercialPropPaginationDto paginationDto = new CommercialPropPaginationDto();
         paginationDto.setContent(page.getContent().stream().map(mapper::toDTOWithoutItems).collect(Collectors.toList()));
         paginationDto.setCurrentPage(offset);
