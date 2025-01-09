@@ -5,6 +5,7 @@ import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
@@ -46,6 +47,11 @@ public class CommercialPropEntity {
     @DateTimeFormat(pattern = "dd.MM.yyyy")
     @Getter(AccessLevel.NONE)
     private String timestamp;
+
+    @Column(name = "correctly_timestamp")
+    @Temporal(TemporalType.TIMESTAMP)
+    @DateTimeFormat(pattern = "dd.MM.yyyy")
+    private LocalDateTime correctlyTimestamp;
 
     @ManyToOne
     @JoinColumn(name = "id_manager")

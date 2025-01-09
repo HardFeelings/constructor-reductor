@@ -78,6 +78,8 @@ public class CommercialPropServiceImpl implements CommercialPropService {
 
         entity.setTimestamp(String.valueOf(dto.getTimestamp() == null ?
                 LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd.MM.yyyy")) : dto.getTimestamp()));
+        if(entity.getTimestamp() == null)
+            entity.setCorrectlyTimestamp(LocalDateTime.now());
         CommercialPropDto savedDto = mapper.toDTO(repo.save(entity));
         if (!Objects.isNull(dto.getCommercialPropItems())) {
             List<CommercialPropItemDto> commercialPropItemDtos = dto.getCommercialPropItems().stream()
@@ -141,7 +143,7 @@ public class CommercialPropServiceImpl implements CommercialPropService {
     }
 
     private CommercialPropPaginationDto findByFilter(CommercialPropDto commercialPropDto, int offset, int limit) {
-        Page<CommercialPropEntity> page = repo.findByFilter(commercialPropDto, PageRequest.of(offset, limit, Sort.by("timestamp").descending()));
+        Page<CommercialPropEntity> page = repo.findByFilter(commercialPropDto, PageRequest.of(offset, limit, Sort.by("correctly_timestamp").descending()));
         CommercialPropPaginationDto paginationDto = new CommercialPropPaginationDto();
         paginationDto.setContent(page.getContent().stream().map(mapper::toDTOWithoutItems).collect(Collectors.toList()));
         paginationDto.setCurrentPage(offset);
