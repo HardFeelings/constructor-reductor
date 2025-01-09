@@ -78,7 +78,7 @@ public class CommercialPropServiceImpl implements CommercialPropService {
 
         entity.setTimestamp(String.valueOf(dto.getTimestamp() == null ?
                 LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd.MM.yyyy")) : dto.getTimestamp()));
-        if(entity.getTimestamp() == null)
+        if(dto.getTimestamp() == null)
             entity.setCorrectlyTimestamp(LocalDateTime.now());
         CommercialPropDto savedDto = mapper.toDTO(repo.save(entity));
         if (!Objects.isNull(dto.getCommercialPropItems())) {
